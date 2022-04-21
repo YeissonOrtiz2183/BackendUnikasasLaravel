@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\EventoController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Evento;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('ModuloEventos', EventoController::class);
+
+Route::get('/disponibilidad', function () {
+    return view('ModuloEventos.disponibilidad');
+});
+
+Route::get('/reporteEventos', function () {
+    return view('ModuloEventos.crearReporteEvent');
+});
+
+Route::get('/visualizarEventos', function () {
+    return view('ModuloEventos.visualizarEvento');
+});
+
+// Route::get('/disponibilidad', EventoController::class);
