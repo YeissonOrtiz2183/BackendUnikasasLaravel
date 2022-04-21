@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/proyectos/moduloInicioProyecto.css') }}">
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto">
+    <link href="https://fonts.googleapis.com/icon?family=Material+
+    
+    Icons"
+    rel="stylesheet">
+    <title>Proyectos Unikasas</title>
+</head>
+<body>
+        <h1 class="titleModule">Proyectos</h1>
+        <form class="searchForm" action="">
+            <label for="itemSearch">Buscar proyecto:</label>
+            <input type="text" name="searchBar" id="searchBar">
+            <input type="submit" value="Buscar">
+            <div class="filter">
+            <input type="text" class="campomedio" list="encargado" placeholder="Filtrar por:">
+                <datalist id="encargado">
+                    <option value="Fecha de creación">
+                    <option value="Estado">
+                </datalist>
+            </div>
+        </form>
+        <div class="container">
+            <aside>
+                <div class="button">
+                    <a class="buttonCreateProject" href="{{ url('/proyectos/create') }}">Crear proyecto</a>
+                </div>
+                <div class="button">
+                    <a class="buttonArchived" href="../archivadosProyecto/index.html">Archivados</a>
+                </div>
+                <div class="button">
+                    <a class="buttonCreateReport" href="../CrearReporte/crearReporteEventos.html">Crear reporte</a>
+                </div>
+            </aside>
+            <div class="proyectos">
+                <section>
+                    <div class="contenedor">
+                        <img src="https://img.search.brave.com/H_moi5qTltIjfS8Ifq18CneKXCGe_krpbJHe1Fm5MuY/rs:fit:1200:1200:1/g:ce/aHR0cDovL3d3dy5j/b25zb2xpZGFjaW9u/ZXN5Y29udHJhdGFz/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAxNy8wMi8yLmpw/Zw">
+                        <div class="section__infoProyecto">
+                            <h2 class="info">Nombre proyecto</h2>
+                            <h4 class="info">Encargado: <span>Nelson Fierro</span></h4>
+                            <h4 class="info">Cliente: <span>Yeisson Ortiz</span></h4>
+                            <h4 class="info">Fecha inicio: <span>22/10/2021</span></h4>
+                            <h4 class="info">Etapa actual: <span>Diseño</span></h4>
+                        </div>
+                        <a href="../Visualizar proyecto/index.html" class="button visualizar">Visualizar</a>
+                    </div>
+                </section>
+                <section>
+                    <div class="contenedor">
+                        <img src="https://img.search.brave.com/H_moi5qTltIjfS8Ifq18CneKXCGe_krpbJHe1Fm5MuY/rs:fit:1200:1200:1/g:ce/aHR0cDovL3d3dy5j/b25zb2xpZGFjaW9u/ZXN5Y29udHJhdGFz/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAxNy8wMi8yLmpw/Zw">
+                        <div class="section__infoProyecto">
+                            <h2 class="info">Nombre proyecto</h2>
+                            <h4 class="info">Encargado: <span>Nelson Fierro</span></h4>
+                            <h4 class="info">Cliente: <span>Yeisson Ortiz</span></h4>
+                            <h4 class="info">Fecha inicio: <span>22/10/2021</span></h4>
+                            <h4 class="info">Etapa actual: <span>Diseño</span></h4>
+                        </div>
+                        <a href="#" class="button visualizar">Visualizar</a>
+                    </div>
+                </section>
+                <section>
+                    <div class="contenedor">
+                        <img src="https://img.search.brave.com/H_moi5qTltIjfS8Ifq18CneKXCGe_krpbJHe1Fm5MuY/rs:fit:1200:1200:1/g:ce/aHR0cDovL3d3dy5j/b25zb2xpZGFjaW9u/ZXN5Y29udHJhdGFz/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAxNy8wMi8yLmpw/Zw">
+                        <div class="section__infoProyecto">
+                            <h2 class="info">Nombre proyecto</h2>
+                            <h4 class="info">Encargado: <span>Nelson Fierro</span></h4>
+                            <h4 class="info">Cliente: <span>Yeisson Ortiz</span></h4>
+                            <h4 class="info">Fecha inicio: <span>22/10/2021</span></h4>
+                            <h4 class="info">Etapa actual: <span>Diseño</span></h4>
+                        </div>
+                        <a href="#" class="button visualizar">Visualizar</a>
+                    </div>
+                </section>
+                <section>
+                    <div class="contenedor">
+                        <img src="https://img.search.brave.com/H_moi5qTltIjfS8Ifq18CneKXCGe_krpbJHe1Fm5MuY/rs:fit:1200:1200:1/g:ce/aHR0cDovL3d3dy5j/b25zb2xpZGFjaW9u/ZXN5Y29udHJhdGFz/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAxNy8wMi8yLmpw/Zw">
+                        <div class="section__infoProyecto">
+                            <h2 class="info">Nombre proyecto</h2>
+                            <h4 class="info">Encargado: <span>Nelson Fierro</span></h4>
+                            <h4 class="info">Cliente: <span>Yeisson Ortiz</span></h4>
+                            <h4 class="info">Fecha inicio: <span>22/10/2021</span></h4>
+                            <h4 class="info">Etapa actual: <span>Diseño</span></h4>
+                        </div>
+                        <a href="#" class="button visualizar">Visualizar</a>
+                    </div>
+                </section>
+                <section>
+                    <div class="contenedor">
+                        <img src="https://img.search.brave.com/H_moi5qTltIjfS8Ifq18CneKXCGe_krpbJHe1Fm5MuY/rs:fit:1200:1200:1/g:ce/aHR0cDovL3d3dy5j/b25zb2xpZGFjaW9u/ZXN5Y29udHJhdGFz/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAxNy8wMi8yLmpw/Zw">
+                        <div class="section__infoProyecto">
+                            <h2 class="info">Nombre proyecto</h2>
+                            <h4 class="info">Encargado: <span>Nelson Fierro</span></h4>
+                            <h4 class="info">Cliente: <span>Yeisson Ortiz</span></h4>
+                            <h4 class="info">Fecha inicio: <span>22/10/2021</span></h4>
+                            <h4 class="info">Etapa actual: <span>Diseño</span></h4>
+                        </div>
+                        <a href="#" class="button visualizar">Visualizar</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+</body>
+<script src="moduloInicioProyecto.js"></script>
+</html>

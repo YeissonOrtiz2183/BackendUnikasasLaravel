@@ -1,0 +1,220 @@
+*{
+    font-family: Roboto;
+}
+
+body{
+    margin: 0px;
+}
+
+.header__navBar__iconsleft{
+    display: inline-flex;
+    justify-content: left;
+    align-items: center;
+    width: 50%;
+}
+
+.header__navBar{
+    display: block;
+    background: #EA411D;
+    width: 100%;
+    position: fixed;
+}
+
+.material-icons.md-200 {
+    font-size: 200%;
+    color: rgb(0, 0, 0);
+    display: inline;
+    padding: 10px;
+}
+
+#menu{
+    color: white;
+}
+
+.header__navBar__iconsleft__userName{
+    display: inline-block;
+    font-size: 150%;
+    color: black;
+    margin: 0px;
+}
+
+
+.header__navBar #userIcon{
+    margin-left: 13%;
+    color: black;
+}
+
+.header__navBar__iconsRight{
+    display: inline-flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    width: 15%;
+    margin-left: 33%;
+}
+
+.navLateral{
+    background: #EA411D;
+    width: 10%;
+    height: 100%;
+    display: inline-block;
+    justify-content: center;
+    position: fixed;
+    margin-top: 2.7%;
+}
+
+.navLateral__sidebar{
+    display: inline;
+    margin-top: 0px;
+    margin-bottom: 0%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.material-icons.md-100 {
+    vertical-align: top;
+    font-size: 100px;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+li{
+    list-style-type: none;
+    padding-bottom: 11%;
+    color: white;
+    text-align: center;
+}
+
+li a{
+    color: white;
+    font-size: 120%;
+    text-decoration: none;
+}
+
+a:link{
+    text-decoration: none;
+}
+
+
+.titleModule{
+    text-align: center;
+    margin: 0px;
+    font-size: 48px;
+}
+
+.searchForm{
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 30px;
+}
+
+form #searchBar{
+    width: 40%;
+    padding: 5px;
+    border-radius: 10px;
+    border-color: black;
+}
+
+form input[type= submit]{
+    height: 30px;
+    background: orange;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+}
+
+.filter{
+    display: inline;
+}
+
+.filter input{
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+aside{
+    display: inline-block;
+    margin-left: 2%;
+    width: auto;
+}
+
+.button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: orange;
+    width: 150px;
+    height: 40px;
+    margin-bottom: 20px;
+    color: black;
+    text-decoration: none;
+}
+
+.buttonCreateProject, .buttonArchived, .buttonCreateReport{
+    color: black;
+    text-transform: uppercase;
+}
+
+.container{
+    display: flex;
+    vertical-align: top;
+}
+
+.proyectos{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+section{
+    display: inline-block;
+    border: 2px solid;
+    border-radius: 10px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2%;
+}
+
+.contenedor{
+    display: flex;
+    width: 100%;
+}
+
+.contenedor a{
+    margin-top: 13%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+}
+
+@media (min-width: 1600px){
+    .contenedor a{
+        margin-top: 12%;
+    }
+}
+
+section img{
+    padding: 2%;
+    display: inline-block;
+    width: 20%;
+    height: auto;
+}
+
+.section__infoProyecto{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto auto;
+    width: 50%;
+    justify-content: end;
+    padding-left: 2%;
+}
+
+.info:nth-child(1){
+    grid-column: 1 / 3;
+}
