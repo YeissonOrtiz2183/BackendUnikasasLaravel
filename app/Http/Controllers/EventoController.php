@@ -11,7 +11,7 @@ class EventoController extends Controller
     //
     public function index()
     {
-        $datos['eventos'] = Evento::paginate(5);
+        $datos['eventos'] = Evento::paginate(10);
         return view('ModuloEventos.indexEventos', $datos);
     }
 
@@ -20,12 +20,18 @@ class EventoController extends Controller
         return view('ModuloEventos.formCrearEvento');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $datosEvento = request()->except('_token');
         // return response()->json($datosEvento);
-        // extraer fechas 
-        // $fechaEvento = $request->fecha_evento;
         Evento::insert($datosEvento);
         return view('ModuloEventos.indexEventos');
+    }
+
+    public function show($id)
+    {
+        $evento = Evento::findOrFail($id);
+        return view('ModuloEventos.visualizarEvento', compact('evento'));
+        
     }
 }

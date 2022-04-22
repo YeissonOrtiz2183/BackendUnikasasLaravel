@@ -44,9 +44,9 @@
                 <section>
                     <div class="contenedor">
                             <div class="contenedor-secundario">
-                                <time class="dia" datetime="13">13</time> 
-                                <time class="fecha" datetime="02-2021">02-2021</time>
-                                <time class="hora" datetime="03:00 pm">{{ $evento->hora_inicio. ' - ' .$evento->hora_fin }}</time>
+                                <time class="dia">{{ date('d', strtotime($evento->fecha_evento)) }}</time> 
+                                <time class="fecha">{{ date('m - Y', strtotime($evento->fecha_evento)) }}</time>
+                                <time class="hora">{{ date('h:i', strtotime($evento->hora_inicio)) }} {{' - '.date('h:i', strtotime($evento->hora_fin)) }}</time>
                             </div>
                             <div class="section__infoEvento">
                                 <h2 class="info responsive">Nombre evento: <span>{{ $evento->nombre_evento }}</span></h2>
@@ -54,43 +54,10 @@
                                 <h4 class="info">Asistentes: <span>{{ $evento->invitados_evento }}</span></h4>
                                 <h4 class="info">Proyecto: <span>{{ $evento->proyecto_id }}</span></h4>
                             </div>
-                        <a href="{{ url('/visualizarEventos')}}" class="button visualizar">Visualizar</a>
-                    </div>
-                    
-                </section>   @endforeach
-                {{-- </section>
-                <section>
-                    <div class="contenedor">
-                        <div class="contenedor-secundario">
-                            <time class="dia" datetime="13">13</time> 
-                            <time class="fecha" datetime="02-2021">02-2021</time>
-                            <time class="hora" datetime="03:00 pm">03:00 - 03:30 pm</time>
-                        </div>
-                        <div class="section__infoEvento">
-                            <h2 class="info responsive">Nombre evento: <span>Reunión de formalización de contrato</span></h2>
-                            <h4 class="info">Lugar: <span>Oficinas de la empresa</span></h4>
-                            <h4 class="info">Asistentes: <span>Fabio Nelson Fierro Cubillos, Andres Camilo Torres Garzón</span></h4>
-                            <h4 class="info">Proyecto: <span>Casa tipo chalet 80m2</span></h4>
-                        </div>
-                        <a href="visualizarEvento.html" class="button visualizar">Visualizar</a>
-                    </div>
+                        <a href="{{ url('/ModuloEventos/'.$evento->evento_id.'/show') }}" class="button visualizar">Visualizar</a>
+                    </div> 
                 </section>
-                <section>
-                    <div class="contenedor">
-                        <div class="contenedor-secundario">
-                            <time class="dia" datetime="13">13</time> 
-                            <time class="fecha" datetime="02-2021">02-2021</time>
-                            <time class="hora" datetime="03:00 pm">03:00 - 03:30 pm</time>
-                        </div>
-                        <div class="section__infoEvento">
-                            <h2 class="info">Nombre evento: <span class="responsive">Reunión de formalización de contrato</span></h2>
-                            <h4 class="info">Lugar: <span>Oficinas de la empresa</span></h4>
-                            <h4 class="info">Asistentes: <span>Fabio Nelson Fierro Cubillos, Andres Camilo Torres Garzón</span></h4>
-                            <h4 class="info">Proyecto: <span>Casa tipo chalet 80m2</span></h4>
-                        </div>
-                        <a href="visualizarEvento.html" class="button visualizar">Visualizar</a>
-                    </div>
-                </section> --}}
+                @endforeach
 
             </main>
         </div>

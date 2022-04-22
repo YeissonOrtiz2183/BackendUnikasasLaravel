@@ -29,8 +29,6 @@ Route::get('/reporteEventos', function () {
     return view('ModuloEventos.crearReporteEvent');
 });
 
-Route::get('/visualizarEventos', function () {
+Route::get('/ModuloEventos/visualizarEvento/{id}', function () {
     return view('ModuloEventos.visualizarEvento');
 });
-
-// Route::get('/disponibilidad', EventoController::class);

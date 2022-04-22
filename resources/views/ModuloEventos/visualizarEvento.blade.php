@@ -16,25 +16,28 @@
             <h1 class="titleModule">Visualizar evento</h1>
         </div>
         <div class="">
-            <form action="">
+            <form action="" method="post">
+                @csrf
+                @foreach ($evento as $event)
                 <div class="contenedor-campos contenedor">
                     <div class="section__infoEvento">
-                        <h2 class="info block">Nombre:&nbsp;<span>Reunión de formalización de contrato</span></h2>
-                        <h4 class="info">Fecha: <span>01/02/2022</span></h4>
-                        <h4 class="info">Horario: <span>03:00 pm - 03:30 pm</span></h4>
-                        <h4 class="info">Proyecto: <span>Proyecto casa tipo chalet 80m2 sector rural Fusagasuga</span></h4>
-                        <h4 class="info">Notificación: <span>30 minutos antes</span></h4>
-                        <h4 class="info">Asistentes: <span>Fabio Nelson Fierro Cubillos, Andres Camilo Torres Garzón</span></h4>
-                        <h4 class="info">Lugar: <span>Oficinas de la empresa</span></h4>
-                        <h4 class="info">Asunto: <span>Reunion inicial del proyecto para hablar sobre el proyecto a desarrollar.</span></h4>
-                        <h4 class="info">Mensaje: <span>Por favor traer los documentos del contrato y una fotocopia del documento la matricula catastral del terreno en donde se va a realizar el proyecto.</span></h4>
+                        <h2 class="info block">Nombre:&nbsp;<span>{{ $event->nombre_evento }}</span></h2>
+                        <h4 class="info">Fecha: <span>{{ date('d - m - Y', strtotime($event->fecha_evento)) }}</span></h4>
+                        <h4 class="info">Horario: <span>{{ date('h:i', strtotime($event->hora_inicio)) }} {{' - '.date('h:i', strtotime($evento->hora_fin)) }}</span></h4>
+                        <h4 class="info">Proyecto: <span>{{ $event->proyecto_id}}</span></h4>
+                        <h4 class="info">Notificación: <span>{{ $event->notificacion_evento }}</span></h4>
+                        <h4 class="info">Asistentes: <span>{{ $event->invitados_evento }}</span></h4>
+                        <h4 class="info">Lugar: <span>{{ $event->lugar_evento }}</span></h4>
+                        <h4 class="info">Asunto: <span>{{ $event->asunto_evento }}</span></h4>
+                        <h4 class="info">Mensaje: <span>{{ $event->mensaje_evento }}</span></h4>
                     </div>
-
+                @endforeach
                     <div class="botones">
                         <a href="modificarEvento.html"><input type="button" value="Modificar evento" class="modificar"></a>
                         <a href="formularioCancelarEvento.html"><input type="button" value="Cancelar evento" class="cancelar" action=""></a>
                     </div>
                 </div>
+                
             </form>
         </div>
     </div>
