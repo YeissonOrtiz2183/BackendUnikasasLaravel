@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('nombre_producto');
             $table->string('descripcion_producto');
             $table->bigInteger('precio_producto');
+            $table->date('fecha_registroP');
+            $table->boolean('estado');
 
             $table->timestamps();
         });
