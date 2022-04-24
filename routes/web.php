@@ -29,6 +29,6 @@ Route::get('/reporteEventos', function () {
     return view('ModuloEventos.crearReporteEvent');
 });
 
-Route::get('/ModuloEventos/visualizarEvento/{id}', function () {
-    return view('ModuloEventos.visualizarEvento');
-});
+Route::get('/ModuloEventos/{moduloEvento}', [App\Http\Controllers\EventoController::class, 'show'])->name('ModuloEventos.show');
+
+Route::get('/ModuloEventos/{moduloEvento}/cancel', [App\Http\Controllers\EventoController::class, 'cancel'])->name('ModuloEventos.cancel');

@@ -18,23 +18,23 @@
         <div class="">
             <form action="" method="post">
                 @csrf
-                @foreach ($evento as $event)
                 <div class="contenedor-campos contenedor">
                     <div class="section__infoEvento">
-                        <h2 class="info block">Nombre:&nbsp;<span>{{ $event->nombre_evento }}</span></h2>
-                        <h4 class="info">Fecha: <span>{{ date('d - m - Y', strtotime($event->fecha_evento)) }}</span></h4>
-                        <h4 class="info">Horario: <span>{{ date('h:i', strtotime($event->hora_inicio)) }} {{' - '.date('h:i', strtotime($evento->hora_fin)) }}</span></h4>
-                        <h4 class="info">Proyecto: <span>{{ $event->proyecto_id}}</span></h4>
-                        <h4 class="info">Notificación: <span>{{ $event->notificacion_evento }}</span></h4>
-                        <h4 class="info">Asistentes: <span>{{ $event->invitados_evento }}</span></h4>
-                        <h4 class="info">Lugar: <span>{{ $event->lugar_evento }}</span></h4>
-                        <h4 class="info">Asunto: <span>{{ $event->asunto_evento }}</span></h4>
-                        <h4 class="info">Mensaje: <span>{{ $event->mensaje_evento }}</span></h4>
+                        <h2 class="info block">Nombre:&nbsp;<span>{{ $evento->nombre_evento }}</span></h2>
+                        <h4 class="info">Fecha: <span>{{ date('d - m - Y', strtotime($evento->fecha_evento)) }}</span></h4>
+                        <h4 class="info">Horario: <span>{{ date('h:i', strtotime($evento->hora_inicio)) }} {{' - '.date('h:i', strtotime($evento->hora_fin)) }}</span></h4>
+                        <h4 class="info">Proyecto: <span>{{ $evento->proyecto_id}}</span></h4>
+                        <h4 class="info">Notificación: <span>{{ $evento->notificacion_evento }}</span></h4>
+                        <h4 class="info">Asistentes: <span>{{ $evento->invitados_evento }}</span></h4>
+                        <h4 class="info">Lugar: <span>{{ $evento->lugar_evento }}</span></h4>
+                        <h4 class="info">Asunto: <span>{{ $evento->asunto_evento }}</span></h4>
+                        <h4 class="info">Mensaje: <span>{{ $evento->mensaje_evento }}</span></h4>
+                        <h4 class="info">Estado del evento: <span>{{ $evento->estado_evento }}</span></h4>
                     </div>
-                @endforeach
+        
                     <div class="botones">
-                        <a href="modificarEvento.html"><input type="button" value="Modificar evento" class="modificar"></a>
-                        <a href="formularioCancelarEvento.html"><input type="button" value="Cancelar evento" class="cancelar" action=""></a>
+                        <a href="{{ url('/ModuloEventos/'.$evento->id.'/edit')}}"><input type="button" value="Modificar evento" class="modificar"></a>
+                        <a href="{{ url('/ModuloEventos/'.$evento->id.'/cancel') }}"><input type="button" value="Cancelar evento" class="cancelar"></a>
                     </div>
                 </div>
                 

@@ -46,6 +46,8 @@ a:link{
     padding: 5px;
     border-radius: 10px;
     border-color: var(--black);
+    padding: 5px;
+    font-size: 16px;
 }
 
 .workspace form input[type= submit]{
@@ -57,16 +59,21 @@ a:link{
     text-decoration: none;
     border: none;
     border-radius: 10px;
+    cursor: pointer;
+    padding: 7px;
+    font-size: 16px;
 }
 
 .filter{
     display: inline;
 }
 
-.filter input{
+.filter select{
     border: 2px solid black;
     border-radius: 10px;
     padding: 5px;
+    padding: 5px;
+    font-size: 16px;
 }
 
 .workspace aside{
@@ -206,6 +213,7 @@ div h2 {
         margin-top: 10%;
     }
 }
+
 
 /*--
 .section__infoProyecto{

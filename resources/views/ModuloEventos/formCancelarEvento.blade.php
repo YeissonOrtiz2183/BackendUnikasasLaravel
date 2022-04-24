@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cancelar evento</title>
-    <link rel="stylesheet" href="../ModuloEventos/css/formulacioCancelarEvento.css">
+    <link rel="stylesheet" href="{{ asset('css/formularioCancelarEvento.css') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -17,13 +17,16 @@
             <h1 class="titleModule">Cancelar evento</h1>
         </div>
         <div class="formulario">
-            <form action="#" method="post">
+            <form action="{{ url('/ModuloEventos/'.$evento->id) }}" method="post">
+                @csrf {{-- token de seguridad para el formulario  --}}
+
+                {{ method_field('PATCH') }}
                 <div class="contenedor-campos">
-                    
                     <div class="campo">
                         <label for="eventName" style="padding-left: 1%;">Nombre del evento:</label>
                         <div class="inputValidate">
-                            <input type="text" placeholder="Reunión de inicio de proyecto" readonly id="eventName" name="eventName" style="width: 98%;">
+                            <input type="text" readonly id="eventName" name="eventName" 
+                            value="{{ isset($evento->nombre_evento)?$evento->nombre_evento:old('nombre_evento') }}" style="width: 98%;">
                             <span id="eventName_error_message" class="error_form"></span>
                         </div>
                     </div>
@@ -44,12 +47,13 @@
 
                     <div class="campo">
                         <label for="eventProyect">Proyecto:</label>
-                        <input type="text" placeholder="Proyecto casa tipo chalet proyecto 80m2 zona rural fusagasuga" readonly id="eventProyect" name="eventProyect" style="width: 94%;">
+                        <input type="text" id="eventProyect" name="eventProyect" readonly 
+                        value="{{ isset($evento->proyecto_id)?$evento->proyecto_id:old('proyecto_id') }}" style="width: 94%;">
                     </div>
 
                     <div class="campo campoCompartido">
                         <label for="eventAssistant">Invitados:</label>
-                        <textarea cols="120" rows="10" placeholder="Nelson Fierro Cubillos, Alejandro Gomez Herrera Torrez" readonly id="eventAssistant" name="eventAssistant" style="width: 98%;"></textarea>
+                        <textarea cols="120" rows="10" id="eventAssistant" name="eventAssistant" readonly style="width: 98%;">{{ isset($evento->invitados_evento)?$evento->invitados_evento:old('invitados_evento') }}</textarea>
                     </div>
                     
                     <div class="campo campoCompartido">
@@ -60,14 +64,16 @@
                         </div>
                     </div>
 
+                    <input type="hidden" id="estado_evento" name="estado_evento" value="Cancelado">
+
                     <div class="botones">
-                        <input type="submit" href="moduloEventosInicio.html" value="CONFIRMAR" id="submit" disabled>
-                        <a href="moduloEventosInicio.html">CANCELAR</a>
+                        <input type="submit" value="CONFIRMAR" id="submit" disabled>
+                        <a href="{{ url('ModuloEventos') }}">CANCELAR</a>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <script type="text/javascript" src="validateCancelEvent.js"></script>
+    <script type="text/javascript" src="{{ asset('js/validateCancelEvent.js')}}"></script>
 </body>
 </html>
