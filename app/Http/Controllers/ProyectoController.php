@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Proyecto;
 
 class ProyectoController extends Controller
 {
@@ -13,7 +14,10 @@ class ProyectoController extends Controller
      */
     public function index()
     {
-        return view('proyectos.moduloInicioProyecto');
+        // $proyectoBusqueda = $request->get('searchBar');
+        // $proyectos = \App\Proyecto::where('nombre', 'LIKE', '%' . $proyectoBusqueda . '%')->get();
+
+        return view('proyectos.index');
     }
 
     /**
@@ -34,10 +38,9 @@ class ProyectoController extends Controller
      */
     public function store(Request $request)
     {
+        $datosProyecto = request()->except('_token');
 
-        User::create([
-            
-        ])
+        Proyecto::insert($datosProyecto);
     }
 
     /**
@@ -48,7 +51,7 @@ class ProyectoController extends Controller
      */
     public function show($id)
     {
-        //
+        $proyecto = Proyecto::findOrfail($id);
     }
 
     /**
@@ -59,7 +62,7 @@ class ProyectoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $proyecto = Proyecto::findOrfail($id);
     }
 
     /**
@@ -71,7 +74,9 @@ class ProyectoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $datosProyecto = request()->except(['_token', '_method']);
+
+        Proyecto::where('id', '=', $id)->update($datosProyecto);
     }
 
     /**
@@ -82,6 +87,6 @@ class ProyectoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $proyecto = Proyecto::findOrfail($id);
     }
 }

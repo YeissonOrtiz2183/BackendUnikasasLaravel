@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CrearProyecto</title>
     <link rel="stylesheet" href="{{ asset('css/proyectos/crearProyecto.css') }}">
-    <link rel="stylesheet" href="{{https://fonts.googleapis.com/css?family=Roboto}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -41,20 +41,20 @@
                             <span id="projectCost_error_message" class="error_form"></span>
                         </div>
                     </div>
-                    
+
                     <div class="campo campoDoble">
                             <label>Ciudad:</label>
                             <div class="inputValidate">
                                 <input type="text" class="city" name="city" id="projectCity">
                                 <span id="projectCity_error_message" class="error_form"></span>
                             </div>
-                        
+
                             <label class="ciudad">Dirección:</label>
                             <div class="inputValidate">
                                 <input type="text" class="address" name="address" id="projectAddress">
                                 <span id="projectAddress_error_message" class="error_form"></span>
                             </div>
-                            
+
                     </div>
 
                     <div class="campo campoDoble">
@@ -63,14 +63,14 @@
                             <input type="date" class="date" name="startDate" id="startDate">
                             <span class="projectDate_error_message" class="error_form"></span>
                         </div>
-                        
+
                         <label>Fecha fin del proyecto: </label>
                         <div class="inputValidate">
                             <input type="date" class="date" name="finalDate" id="finalDate">
                             <span class="projectDate_error_message" class="error_form"></span>
                         </div>
                     </div>
-                    
+
                     <h2><strong>Información del producto</strong></h2>
 
                     <div class="campo campoProducto">
@@ -91,7 +91,7 @@
                         <label>Descripción:</label>
                         <textarea cols="120" rows="10" readonly></textarea>
                     </div>
-                    
+
                     <div class="campo campoCompartido image">
                         <label>Imagen del producto:</label>
                         <img src="https://imgr.search.brave.com/6hWsit4UByxIN47ceHadtGHg6oYR2LiFCoDCxyeUcBw/fit/1200/719/ce/1/aHR0cHM6Ly93d3cu/c29tb3NtYW1hcy5j/b20uYXIvd3AtY29u/dGVudC91cGxvYWRz/LzIwMTcvMDcvQyVD/MyVCM21vLWN1cmFy/LXVuYS1jYXNhLWVu/ZmVybWEuanBn">
@@ -112,7 +112,7 @@
                             <span id="projectClient_error_message" class="error_form"></span>
                         </div>
                     </div>
-                    
+
                     <div class="campo cliente">
                         <label>Primer nombre cliente:</label>
                         <input type="text" readonly>
