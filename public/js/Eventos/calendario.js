@@ -67,7 +67,7 @@ function escribirdias() {
                  midia=diames.getDate() 
                  mimes=diames.getMonth()
                  mianno=diames.getFullYear()
-                 celda=fila.getElementsByTagName("td")[j];
+                 celda=fila.getElementsByTagName("p")[j];
                  celda.innerHTML=midia;
                  //Recuperar estado inicial al cambiar de mes:
                  celda.style.backgroundColor="#fff";
@@ -82,7 +82,7 @@ function escribirdias() {
                     }
                  //destacar la fecha actual
                  if (mimes==meshoy && midia==diahoy && mianno==annohoy ) { 
-                    celda.style.backgroundColor="#f0b19e";
+                    celda.style.backgroundColor="#EC7063";
                     celda.innerHTML="<cite title='Fecha Actual'>"+midia+"</cite>";
                     }
                  //pasar al siguiente día

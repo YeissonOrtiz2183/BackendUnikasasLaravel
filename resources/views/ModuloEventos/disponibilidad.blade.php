@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/disponibilidadE.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/Eventos/disponibilidadEvent.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Disponibilidad Eventos</title>
@@ -32,12 +32,48 @@
 
             <table id="diasc">
                 <tr id="fila0"><th class="dia calendario_dias"></th class="dia calendario_dias"><th class="dia calendario_dias"></th><th class="dia calendario_dias"></th><th class="dia calendario_dias"></th><th class="dia calendario_dias"></th><th class="dia calendario_dias"></th><th class="dia calendario_dias"></th class="dia calendario_dias borderuno"></tr>
-                <tr id="fila1"><td><a href="{{ url('ModuloEventos/create')}}"></a></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr id="fila2"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr id="fila3"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr id="fila4"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr id="fila5"><td><a class="borderdos" href="eventosDia.html" class="evento_dia evento_dia--colordos">07:00 - 08:00 am</a></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr id="fila6"><td class="borderdos"></td><td></td><td></td><td></td><td></td><td></td><td class="bordertres"></td></tr>
+                <tr id="fila1"><td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a><a href="eventosDia.html" class="evento_dia">10:00 - 11:30 am</a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td></tr>
+                <tr id="fila2"><td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td></tr>
+                <tr id="fila3"><td><a href="{{ url('ModuloEventos/create')}}"><p></p></a><a href="eventosDia.html" class="evento_dia evento_dia--colordos">03:00 - 03:30 pm</a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td></tr>
+                <tr id="fila4"><td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td></tr>
+                <tr id="fila5"><td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a><a href="eventosDia.html" class="evento_dia evento_dia--color">03:00 - 03:30 pm</a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td></tr>
+                <tr id="fila6"><td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td>
+                                <td><a href="{{ url('ModuloEventos/create')}}"><p></p></a></td></tr>
               </table>
 
             <div id="fechaactual" class="fechaactual"><i onclick="actualizar()">HOY:&nbsp;&nbsp;</i></div>
@@ -65,6 +101,6 @@
                 </form>
             </div>     
     </main>
-    <script type="text/javascript" src="{{ asset('js/calendario.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('js/Eventos/calendario.js')}}"></script>
 </body>
 </html>
