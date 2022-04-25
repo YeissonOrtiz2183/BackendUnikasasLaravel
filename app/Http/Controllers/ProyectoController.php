@@ -34,7 +34,10 @@ class ProyectoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        User::create([
+            
+        ])
     }
 
     /**
