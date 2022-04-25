@@ -17,7 +17,7 @@ class ProyectoController extends Controller
         // $proyectoBusqueda = $request->get('searchBar');
         // $proyectos = \App\Proyecto::where('nombre', 'LIKE', '%' . $proyectoBusqueda . '%')->get();
 
-        return view('proyectos.index');
+        return view('proyectos.moduloInicioProyecto');
     }
 
     /**

@@ -13,20 +13,21 @@
     <div class="main">
         <h1 class="titleModule">Crear proyecto</h1>
         <div class="formulario">
-            <form action="{{ route('proyectos') }}" method="post" id="myForm">
+            <form action="{{ url('/proyectos') }}" method="POST" id="myForm">
+                @csrf {{-- token de seguridad para el formulario  --}}
                 <div class="contenedor-campos">
                     <h2><strong>Información general del proyecto</strong></h2>
                     <div class="campo">
                         <label>Nombre del proyecto:</label>
                         <div class="inputValidate">
-                            <input type="text" placeholder="Nombre del proyecto..." name="projectName" id="projectName">
+                            <input type="text" placeholder="Nombre del proyecto..." name="nombre_proyecto" id="projectName">
                             <span id="projectName_error_message" class="error_form"></span>
                         </div>
                     </div>
                     <div class="campo">
                         <label>Encargado del proyecto:</label>
                         <div class="inputValidate">
-                            <select class="campomedio bigField" name="projectDirector" id="projectDirector">
+                            <select class="campomedio bigField" name="encargado_id" id="projectDirector">
                                 <option value="null" selected disabled hidden>Selecciona un encargado para el proyecto</option>
                                 <option value="1">Opcion1</option>
                             </select>
@@ -37,7 +38,7 @@
                     <div class="campo">
                         <label>Costo estimado:</label>
                         <div class="inputValidate">
-                            <input type="number" class="campomedio" name="cost" id="projectCost">
+                            <input type="number" class="campomedio" name="costo_estimado" id="projectCost">
                             <span id="projectCost_error_message" class="error_form"></span>
                         </div>
                     </div>
@@ -45,13 +46,13 @@
                     <div class="campo campoDoble">
                             <label>Ciudad:</label>
                             <div class="inputValidate">
-                                <input type="text" class="city" name="city" id="projectCity">
+                                <input type="text" class="city" name="ciudad_proyecto" id="projectCity">
                                 <span id="projectCity_error_message" class="error_form"></span>
                             </div>
 
                             <label class="ciudad">Dirección:</label>
                             <div class="inputValidate">
-                                <input type="text" class="address" name="address" id="projectAddress">
+                                <input type="text" class="address" name="direccion_proyecto" id="projectAddress">
                                 <span id="projectAddress_error_message" class="error_form"></span>
                             </div>
 
@@ -60,13 +61,13 @@
                     <div class="campo campoDoble">
                         <label>Fecha inicio del proyecto: </label>
                         <div class="inputValidate">
-                            <input type="date" class="date" name="startDate" id="startDate">
+                            <input type="date" class="date" name="fecha_inicio" id="startDate">
                             <span class="projectDate_error_message" class="error_form"></span>
                         </div>
 
                         <label>Fecha fin del proyecto: </label>
                         <div class="inputValidate">
-                            <input type="date" class="date" name="finalDate" id="finalDate">
+                            <input type="date" class="date" name="fecha_fin" id="finalDate">
                             <span class="projectDate_error_message" class="error_form"></span>
                         </div>
                     </div>
@@ -76,7 +77,7 @@
                     <div class="campo campoProducto">
                         <label>Producto:</label>
                         <div class="inputValidate">
-                            <select type="text" class="product" list="producto" name="product" id="projectProduct">
+                            <select type="text" class="product" list="producto" name="producto_id" id="projectProduct">
                                 <option value="null" selected disabled hidden>Selecciona el producto del proyecto...</option>
                                 <option value="1">Opcion1</option>
                             </select>
@@ -103,7 +104,7 @@
                         <label style="padding-right: 1.5%;">Cliente:</label>
                         <div class="inputValidate">
                             <div class="input">
-                                <input type="text" list="cliente" id="projectClient" name="projectClient" style="width: 98%;">
+                                <input type="text" list="cliente" id="projectClient" name="cliente_id" style="width: 98%;">
                                 <datalist id="cliente">
                                     <option value="1">Client 1</option>
                                     <option value="2">Client 2</option>
@@ -128,13 +129,13 @@
                     </div>
 
                     <div class="botones">
-                        <input class="confirm" href="{{ 'proyectos' }}" type="submit" value="CONFIRMAR" disabled id="submit"></input>
-                        <a class="cancel" href="../inicioProyecto/moduloInicioProyecto.html">CANCELAR</a>
+                        <input class="confirm" type="submit" value="CONFIRMAR" id="submit"></input>
+                        <a class="cancel" href="{{ url('proyectos') }}">CANCELAR</a>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <script type="text/javascript" src="validate.js"></script>
+    <script type="text/javascript" src="{{ asset('proyectos/js/validate.js') }}"></script>
 </body>
 </html>
