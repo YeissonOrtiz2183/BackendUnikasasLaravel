@@ -13,12 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\Http\Controllers\ProductoController;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::resource('producto', ProductoController::class);
+Route::resource('producto', ProductoController::class);
 
-Route::get('/productos', function(){
-    return view('productos/ProductosInicio');
-});
+// Route::get('/productos', function(){
+//     return view('productos/ProductosInicio');
+// });
