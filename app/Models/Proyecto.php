@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Proyecto extends Model
 {
     use HasFactory;
+
+    function users(){
+        return $this->hasMany(User::class);
+    }
 }

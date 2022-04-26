@@ -136,6 +136,6 @@
             </form>
         </div>
     </div>
-    <script type="text/javascript" src="{{ asset('proyectos/js/validate.js') }}"></script>
+    <script src="{{ asset('js/proyectos/validate.js') }}"></script>
 </body>
 </html>
