@@ -1,0 +1,290 @@
+*{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body{
+    size: 98%;
+}
+
+h1{
+    text-align: center;
+}
+
+img{
+    height: 9rem;
+    width: 14rem;
+    
+    
+}
+section{
+    border: solid 2px;
+    border-radius: 10px;
+    padding: 0px 20px;
+}
+h2{
+    text-align: center;
+}
+.plus{
+    background-color:#F78811;
+    border-radius: 50%;
+    
+}
+
+aside{
+    border: solid 2px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+form{
+    margin: 1rem;
+   display: inline-block;
+}
+.formL{
+    margin: 15px;
+    height: 40px;
+}
+input{
+    width: 40rem;
+    height: 30px;
+    border: 2px solid;
+    border-radius: 10px;
+}
+
+.input-text{
+    width: 40rem;
+    height: 30px;
+    border: 2px solid;
+    border-radius: 10px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+   
+}
+
+.saveCancel{
+    display:flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.divSave{
+    width:10rem;
+    height: 2rem;
+    border-radius: 5px;
+    background-color:#F78811;
+    
+}
+.divSave a{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+}
+.divCancel{
+    width: 10rem;
+    height: 2rem;
+    border-radius: 5px;
+    background-color: #EA411D;
+    
+}
+.divCancel a{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+}
+
+.Matriz{
+    display: flex;
+}
+.MatrizProductos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 200px;
+}
+.imagenSection{
+   
+ margin: auto;
+}
+
+.imagenSection h2{
+    align-items: center;
+}
+
+.img{
+  left: 3rem;
+  right: auto;
+}
+
+.icons{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.search_parametros{
+    font-weight: bold;
+    left: 4rem;
+}
+
+.nameProduct{
+    font-weight: bold;
+}
+
+.description{
+    left: 4rem;
+}
+
+.price{
+    font-weight: bold;
+    left: 6rem;
+}
+
+.formL{
+    display: flex;
+    justify-content: end;
+}
+
+.modal-container{
+    visibility: hidden;
+    position:fixed;
+    z-index: 1000;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgb(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal{
+    width: 50%;
+    height: 40%;
+    background: white;
+   /* overflow: hidden;*/
+   border-radius: 20px;
+   justify-content: space-evenly;
+  
+   transition:transform 1s;
+    transform:translateY(0%);
+}
+.modal-close{
+    transform: translateY(200);
+}
+.modal-textos{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    margin: 5%;
+    font-size: 20px;   
+}
+.modal-botones{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20%;
+    margin-right: 70px;
+    
+}
+#aceptar{
+    background: orange;
+    width:130px;
+    height:50px;
+    font-size: 20px;
+    border-radius: 10px;
+    
+}
+#cancelar{
+    background: rgb(221, 30, 30);
+    width: 130px;
+    height:50px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+.segunda-modal{
+    visibility: hidden;
+    position:fixed;
+    z-index: 1000;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgb(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-salir{
+    transform: translateY(200);
+}
+.texto-modal{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    margin: 10%;
+    font-size: 20px;   
+}
+.texto-Modal h1{
+    font-size: 30px;
+}
+.botones-modal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10%;
+    margin-right: 70px;
+}
+
+.irse button{
+    position: absolute;
+    top:20px;
+    right: 5px;
+    width: 40px;
+    height: 25px;
+    margin-right: 20px;
+    background: red;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+#confirmar{
+    background: orange;
+    width:130px;
+    height:50px;
+    font-size: 20px;
+    border-radius: 10px;
+    
+}
+.contenedor-modales{
+    width: 50%;
+    height: 40%;
+    background: white;
+   /* overflow: hidden;*/
+   border-radius: 20px;
+   justify-content: space-evenly;
+   transition:transform 1s;
+    transform:translateY(0%);
+}
+.texto-Modal{
+    font-size: 20px;
+    margin: 50px;
+}
+
+.labes{
+    margin-right: 20px;
+}
+
+#formulary{
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+}

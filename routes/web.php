@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\ProductoController;
 
 Route::resource('proyectos', ProyectoController::class);
+Route::resource('productos', ProductoController::class);
