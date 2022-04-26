@@ -17,7 +17,7 @@
             <h1 class="titleModule">Cancelar evento</h1>
         </div>
         <div class="formulario">
-            <form action="{{ url('/ModuloEventos/'.$evento->id) }}" method="post">
+            <form action="{{ url('ModuloEventos/'.$evento->id) }}" method="post">
                 @csrf {{-- token de seguridad para el formulario  --}}
 
                 {{ method_field('PATCH') }}
@@ -48,12 +48,12 @@
                     <div class="campo">
                         <label for="eventProyect">Proyecto:</label>
                         <input type="text" id="eventProyect" name="eventProyect" readonly 
-                        value="{{ isset($evento->proyecto_id)?$evento->proyecto_id:old('proyecto_id') }}" style="width: 94%;">
+                        value="{{ isset($proyecto->nombre_proyecto)?$proyecto->nombre_proyecto:old('nombre_proyecto') }}" style="width: 94%;">
                     </div>
 
                     <div class="campo campoCompartido">
                         <label for="eventAssistant">Invitados:</label>
-                        <textarea cols="120" rows="10" id="eventAssistant" name="eventAssistant" readonly style="width: 98%;">{{ isset($evento->invitados_evento)?$evento->invitados_evento:old('invitados_evento') }}</textarea>
+                        <textarea cols="120" rows="10" id="eventAssistant" name="eventAssistant" style="width: 98%;" readonly>{{ isset($evento->invitados_evento)?$evento->invitados_evento:old('invitados_evento') }}</textarea>
                     </div>
                     
                     <div class="campo campoCompartido">

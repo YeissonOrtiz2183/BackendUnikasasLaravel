@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Evento;
+use App\Models\Proyecto;
 use Illuminate\Support\Facades\Storage;
 
 class EventoController extends Controller
@@ -11,12 +12,15 @@ class EventoController extends Controller
     //
     public function index(Request $request)
     {
-        $eventoBusqueda = $request->get('searchBar');
-        $campoTabla = $request->get('campoBusqueda');
-        
-        $datos['eventos'] = Evento::buscarPor($eventoBusqueda, $campoTabla)->paginate(15);
-        
-        return view('ModuloEventos.indexEventos', $datos);
+        if($request){
+            $eventoBusqueda = $request->get('searchBar');
+            $campoTabla = $request->get('campoBusqueda');
+            $eventos = Evento::buscarPor($eventoBusqueda, $campoTabla)->paginate(15);
+        }
+    
+        $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.id')->select('*')->get();
+        // return dd($eventos);
+        return view('ModuloEventos.indexEventos', compact('eventos'));
     }
 
     public function create()
@@ -35,14 +39,16 @@ class EventoController extends Controller
     public function show($id)
     {
         $evento = Evento::findOrfail($id);
-        // dd($evento);
-        return view('ModuloEventos.visualizarEvento', compact('evento'));
+        $proyecto = Proyecto::findOrfail($evento->proyecto_id);
+        // return dd($proyecto);
+        return view('ModuloEventos.visualizarEvento', compact('evento', 'proyecto'));
     }
 
     public function edit($id)
     {
         $evento = Evento::findOrfail($id);
-        return view('ModuloEventos.modificarEvento', compact('evento'));
+        $proyecto = Proyecto::findOrfail($evento->proyecto_id);
+        return view('ModuloEventos.modificarEvento', compact('evento','proyecto'));
     }
 
     public function update(Request $request, $id)
@@ -56,6 +62,7 @@ class EventoController extends Controller
     public function cancel($id)
     {
         $evento = Evento::findOrfail($id);
-        return view('ModuloEventos.formCancelarEvento', compact('evento'));
+        $proyecto = Proyecto::findOrfail($evento->proyecto_id);
+        return view('ModuloEventos.formCancelarEvento', compact('evento','proyecto'));
     }
 }

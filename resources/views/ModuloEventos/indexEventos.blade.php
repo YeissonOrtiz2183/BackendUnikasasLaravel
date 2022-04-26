@@ -45,6 +45,7 @@
                     <p style="text-align: center; margin: 0.5%">{{ Session::get('mensaje') }}</p>
                 @endif
                 @foreach ($eventos as $evento)
+        
                 <section>
                     <div class="contenedor" style="max-width: 100%">
                             <div class="contenedor-secundario">
@@ -56,11 +57,12 @@
                                 <h2 class="info responsive">Nombre evento: <span>{{ $evento->nombre_evento }}</span></h2>
                                 <h4 class="info">Lugar: <span>{{ $evento->lugar_evento }}</span></h4>
                                 <h4 class="info">Asistentes: <span>{{ $evento->invitados_evento }}</span></h4>
-                                <h4 class="info">Proyecto: <span>{{ $evento->proyecto_id }}</span></h4>
+                                <h4 class="info">Proyecto: <span>{{ $evento->nombre_proyecto }}</span></h4>
                             </div>
                         <a href="{{ url('ModuloEventos/'.$evento->id) }}" class="button visualizar">Visualizar</a>
                     </div> 
                 </section>
+
                 @endforeach
 
                 {{-- @extends('layouts.app')

@@ -104,7 +104,7 @@ h2 {
 
 @media(max-width: 1920px){
     form.contenedor-campos2{
-        display: grid;
+    display: grid;
     grid-template-columns: repeat(5, 250px);
     grid-template-rows: repeat(3, 1fr);
     row-gap: 10px;
@@ -140,6 +140,14 @@ label {
     margin-left: 0px;
     margin-right: auto;
     width: 160px;
+}
+
+input[type="date"]{
+    width: 15%;
+    padding: 5px;
+    border-radius: 10px;
+    border-color: var(--black);
+    margin-inline-end: 1%;
 }
 
 @media(max-width: 1366px){

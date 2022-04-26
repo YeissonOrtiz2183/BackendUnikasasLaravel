@@ -17,7 +17,7 @@
             <h1 class="titleModule">Modificar evento</h1>
         </div>
         <div class="formulario">
-            <form action="{{ url('/ModuloEventos/'.$evento->id) }}" method="post">
+            <form action="{{ url('ModuloEventos/'.$evento->id) }}" method="post">
                 @csrf {{-- token de seguridad para el formulario  --}}
 
                 {{ method_field('PATCH') }}
@@ -60,7 +60,7 @@
                         <label for="eventProyect" style="padding-left: 14%;">Proyecto:</label>
                         <div class="inputValidate">
                             <select type="text" class="date" id="eventProyect" name="proyecto_id" style="width: 98%;">
-                                    <option>{{ isset($evento->proyecto_id)?$evento->proyecto_id:old('proyecto_id') }}</option>
+                                    <option>{{ isset($proyecto->nombre_proyecto)?$proyecto->nombre_proyecto:old('nombre_proyecto') }}</option>
                                     <option value="1">casa tipo chalet proyecto 80m2</option>
                                     <option value="2">casa tipo chalet proyecto 90m2</option>
                                     <option value="3">casa tipo chalet proyecto 120m2</option>
@@ -134,6 +134,6 @@
             </form>
         </div>
     </div>
-    <script type="text/javascript" src="{{ asset('js/validateCreateEvent.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/Eventos/validateCreateEvent.js') }}"></script>
 </body>
 </html>

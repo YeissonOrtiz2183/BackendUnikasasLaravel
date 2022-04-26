@@ -17,34 +17,24 @@
             <h1 class="titleModule">Crear reporte de eventos</h1>
         </div>
         <form class="searchForm" action="">
+            @csrf
             <label class="search_parametros" for="itemSearch">Filtrar por / </label>
             <label class="search_parametros" for="itemSearch">N° eventos:</label>
             <select class="input-text" type="text" name="nombre" id="searchBar">
-                <option value="opcion1" select>Todo</option>
+                <option value="opcion1" select>Todos</option>
                 <option value="opcion1" select>1</option>
                 <option value="opcion2" select>2</option>
                 <option value="opcion3"select>3</option>
             </select>
 
-            <label class="search_parametros" for="itemSearch">N° invitados:</label>
-            <select class="input-text" type="text" name="nombre" id="searchBar">
-                <option value="opcion1" select>Todo</option>
-                    <option value="opcion2" select>1</option>
-                <option value="opcion2" select>2</option>
-                <option value="opcion3"select>3</option>
-            </select>
-
-            <label class="search_parametros" for="itemSearch">Fecha:</label>
-            <select class="input-text" type="text" name="nombre" id="searchBar">
-                <option value="opcion1" select>Todo</option>
-                <option value="opcion2" select>11/22/2021</option>
-                <option value="opcion3"select>12/12/2021</option>
-            </select>
+            <label class="search_parametros" for="fechaInicial">Fecha:</label>
+            <input type="date" id="fechaInicial" name="fechaInicial">Hasta:
+            <input type="date" id="fechaFinal" name="fechaFinal">
               
-        <!--<input type="submit" value="Buscar"> -->  
         </form>
         <div class="container">
                 <form class="formulario">
+                    @csrf
                     <h2 class="formulario__titulo">Seleccionar campos</h2>
                     <div class="contenedor-campos contenedor-campos2">
                         <div class="campo">   
@@ -56,7 +46,11 @@
                             <input class="checkbox" type="checkbox">
                         </div>
                         <div class="campo">
-                            <label>Horario:</label>
+                            <label>Hora de inicio:</label>
+                            <input class="checkbox" type="checkbox">
+                        </div>
+                        <div class="campo">
+                            <label>Hora de finalización:</label>
                             <input class="checkbox" type="checkbox">
                         </div>
                         <div class="campo">
@@ -68,11 +62,7 @@
                             <input class="checkbox" type="checkbox">
                         </div>
                         <div class="campo">
-                            <label>Asistentes:</label>
-                            <input class="checkbox" type="checkbox">
-                        </div>
-                        <div class="campo">
-                            <label>Proyecto:</label>
+                            <label>Invitados:</label>
                             <input class="checkbox" type="checkbox">
                         </div>
                         <div class="campo">
@@ -85,6 +75,10 @@
                         </div>
                         <div class="campo">
                             <label>Mensaje:</label>
+                            <input class="checkbox" type="checkbox">
+                        </div>
+                        <div class="campo">
+                            <label>Estado:</label>
                             <input class="checkbox" type="checkbox">
                         </div>
                         <div class="campo">
@@ -118,7 +112,39 @@
         </div>
         <div class="contenedor__imagen">
             <div class="container">
-            <img src="../ModuloEventos/img/reporteDeEventos.png">   
+          
+                <table>
+                    <tr><th>Id </th>
+                        <th>Nombre </th>
+                        <th>Fecha </th>
+                        <th>Hora de inicio </th>
+                        <th>Hora de finalización </th>
+                        <th>Proyecto </th>
+                        <th>Notificación </th>
+                        <th>Invitados </th>
+                        <th>Lugar </th>
+                        <th>Asunto </th>
+                        <th>Mensaje </th>
+                        <th>Estado </th>
+                    </tr>
+
+                    {{-- @foreach ($envetos as $evento) --}}
+    
+                    <tr><td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td></tr>
+                    
+                    {{-- @endforeach --}}
+                </table>
             </div> 
         </div>       
     </main>
