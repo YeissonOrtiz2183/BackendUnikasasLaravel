@@ -18,7 +18,7 @@ class ProyectoFactory extends Factory
     {
         return [
 
-            'encargado_id' => $this->faker->numberBetween(1, 3),
+            'encargado_id' => $this->faker->numberBetween(1, 4),
             'cliente_id' => $this->faker->numberBetween(1, 10),
             'producto_id' => $this->faker->numberBetween(1, 10),
 

@@ -40,71 +40,21 @@
                 </div>
             </aside>
             <div class="proyectos">
+                @foreach ($proyectos as $proyecto)
                 <section>
                     <div class="contenedor">
                         <img src="https://img.search.brave.com/H_moi5qTltIjfS8Ifq18CneKXCGe_krpbJHe1Fm5MuY/rs:fit:1200:1200:1/g:ce/aHR0cDovL3d3dy5j/b25zb2xpZGFjaW9u/ZXN5Y29udHJhdGFz/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAxNy8wMi8yLmpw/Zw">
                         <div class="section__infoProyecto">
-                            <h2 class="info">Nombre proyecto</h2>
-                            <h4 class="info">Encargado: <span>Nelson Fierro</span></h4>
-                            <h4 class="info">Cliente: <span>Yeisson Ortiz</span></h4>
-                            <h4 class="info">Fecha inicio: <span>22/10/2021</span></h4>
-                            <h4 class="info">Etapa actual: <span>Diseño</span></h4>
+                            <h2 class="info">{{ $proyecto->nombre_proyecto }}</h2>
+                            <h4 class="info">Encargado: <span>{{ $proyecto->encargado_nombre }} {{ $proyecto->encargado_apellido }}</span></h4>
+                            <h4 class="info">Cliente: <span>{{ $proyecto->cliente_nombre }} {{ $proyecto->cliente_apellido }}</span></h4>
+                            <h4 class="info">Fecha inicio: <span> {{ $proyecto->fecha_inicio }} </span></h4>
+                            <h4 class="info">Estado: <span>{{ $proyecto->estado_proyecto }}</span></h4>
                         </div>
                         <a href="../Visualizar proyecto/index.html" class="button visualizar">Visualizar</a>
                     </div>
                 </section>
-                <section>
-                    <div class="contenedor">
-                        <img src="https://img.search.brave.com/H_moi5qTltIjfS8Ifq18CneKXCGe_krpbJHe1Fm5MuY/rs:fit:1200:1200:1/g:ce/aHR0cDovL3d3dy5j/b25zb2xpZGFjaW9u/ZXN5Y29udHJhdGFz/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAxNy8wMi8yLmpw/Zw">
-                        <div class="section__infoProyecto">
-                            <h2 class="info">Nombre proyecto</h2>
-                            <h4 class="info">Encargado: <span>Nelson Fierro</span></h4>
-                            <h4 class="info">Cliente: <span>Yeisson Ortiz</span></h4>
-                            <h4 class="info">Fecha inicio: <span>22/10/2021</span></h4>
-                            <h4 class="info">Etapa actual: <span>Diseño</span></h4>
-                        </div>
-                        <a href="#" class="button visualizar">Visualizar</a>
-                    </div>
-                </section>
-                <section>
-                    <div class="contenedor">
-                        <img src="https://img.search.brave.com/H_moi5qTltIjfS8Ifq18CneKXCGe_krpbJHe1Fm5MuY/rs:fit:1200:1200:1/g:ce/aHR0cDovL3d3dy5j/b25zb2xpZGFjaW9u/ZXN5Y29udHJhdGFz/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAxNy8wMi8yLmpw/Zw">
-                        <div class="section__infoProyecto">
-                            <h2 class="info">Nombre proyecto</h2>
-                            <h4 class="info">Encargado: <span>Nelson Fierro</span></h4>
-                            <h4 class="info">Cliente: <span>Yeisson Ortiz</span></h4>
-                            <h4 class="info">Fecha inicio: <span>22/10/2021</span></h4>
-                            <h4 class="info">Etapa actual: <span>Diseño</span></h4>
-                        </div>
-                        <a href="#" class="button visualizar">Visualizar</a>
-                    </div>
-                </section>
-                <section>
-                    <div class="contenedor">
-                        <img src="https://img.search.brave.com/H_moi5qTltIjfS8Ifq18CneKXCGe_krpbJHe1Fm5MuY/rs:fit:1200:1200:1/g:ce/aHR0cDovL3d3dy5j/b25zb2xpZGFjaW9u/ZXN5Y29udHJhdGFz/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAxNy8wMi8yLmpw/Zw">
-                        <div class="section__infoProyecto">
-                            <h2 class="info">Nombre proyecto</h2>
-                            <h4 class="info">Encargado: <span>Nelson Fierro</span></h4>
-                            <h4 class="info">Cliente: <span>Yeisson Ortiz</span></h4>
-                            <h4 class="info">Fecha inicio: <span>22/10/2021</span></h4>
-                            <h4 class="info">Etapa actual: <span>Diseño</span></h4>
-                        </div>
-                        <a href="#" class="button visualizar">Visualizar</a>
-                    </div>
-                </section>
-                <section>
-                    <div class="contenedor">
-                        <img src="https://img.search.brave.com/H_moi5qTltIjfS8Ifq18CneKXCGe_krpbJHe1Fm5MuY/rs:fit:1200:1200:1/g:ce/aHR0cDovL3d3dy5j/b25zb2xpZGFjaW9u/ZXN5Y29udHJhdGFz/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAxNy8wMi8yLmpw/Zw">
-                        <div class="section__infoProyecto">
-                            <h2 class="info">Nombre proyecto</h2>
-                            <h4 class="info">Encargado: <span>Nelson Fierro</span></h4>
-                            <h4 class="info">Cliente: <span>Yeisson Ortiz</span></h4>
-                            <h4 class="info">Fecha inicio: <span>22/10/2021</span></h4>
-                            <h4 class="info">Etapa actual: <span>Diseño</span></h4>
-                        </div>
-                        <a href="#" class="button visualizar">Visualizar</a>
-                    </div>
-                </section>
+                @endforeach
             </div>
         </div>
 </body>
