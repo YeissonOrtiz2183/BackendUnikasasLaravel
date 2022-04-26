@@ -58,7 +58,7 @@
                                 <h4 class="info">Asistentes: <span>{{ $evento->invitados_evento }}</span></h4>
                                 <h4 class="info">Proyecto: <span>{{ $evento->proyecto_id }}</span></h4>
                             </div>
-                        <a href="{{ route('ModuloEventos.show', $evento->id) }}" class="button visualizar">Visualizar</a>
+                        <a href="{{ url('ModuloEventos/'.$evento->id) }}" class="button visualizar">Visualizar</a>
                     </div> 
                 </section>
                 @endforeach
