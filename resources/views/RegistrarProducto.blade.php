@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{asset('css.productosCss.RegistrarProductos')}}">
+    <link rel="stylesheet" href="{{ asset('css/productos/RegistrarProductos.css?v=<?php echo time(); ?>') }}">
     <title>UNIKASAS</title>
 </head>
 <body>
@@ -34,31 +35,37 @@
         </section>
 
         <aside>
-            <form action="" id="formulary">
+            <form action="{{url(/producto)}}" method="post" id="formulary" enctype="multipart/form-data">
+                @csrf
+
                 <div class="formL">
-                    <label class="labes">Nombre del producto:</label>
-                    <input type="text">
+                    <label for="nombre_producto"class="labes">Nombre del producto:</label>
+                    <input type="text" name="nombre_producto" id="nombre_producto">
                 </div>
                 <div class="formL">
-                    <label class="labes">Descripcion:</label>
-                    <input class="descrip" type="text" placeholder="Ingrese aqui la descripcion del producto">
+                    <label for="descripcion_producto"cclass="labes">Descripcion:</label>
+                    <input class="descrip" type="text" placeholder="Ingrese aqui la descripcion del producto" name="descripcion_producto" id="descripcion_producto">
                 </div>
 
                 <div class="formL">
-                <label class="labes">Precio:</label>
-                <input class="inputPrice"type="text" placeholder="Ingrese aqui el precio del producto">
+                <label for="precio_producto"class="labes">Precio:</label>
+                <input class="inputPrice"type="text" placeholder="Ingrese aqui el precio del producto" name="precio_producto" id="precio_producto">
                 </div>
             
                 <div class="saveCancel">
                     <div class="divSave">
-                        <a class="save" id="save" href="#">Registrar</a>
+                        <!--<a class="save" id="save" href="#">Registrar</a>-->
+                        <input type="submit" value="Registrar">
                     </div>
 
                     <div class="divCancel">
-                        <a class="cancel"href="#">Cancelar</a>
+                        <!--<a class="cancel"href="#">Cancelar</a>-->
+                       <!-- <input type="submit" value="Cancelar">-->
                     </div>
                 </div>
                 <!--Realizar barra de seleccionar estado-->
+
+                <h1> holaaa</h1>
             </form>
         </aside>
     </div>
@@ -69,3 +76,4 @@
     
 </body>
 </html>
+

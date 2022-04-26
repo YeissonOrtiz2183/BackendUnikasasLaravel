@@ -38,8 +38,8 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $datosProducto=request();
-        Producto::insert($datosProducto);
+        $datosProducto=request()->all();
+        //Producto::insert($datosProducto);
         return response()->json($datosProducto);
 
 
