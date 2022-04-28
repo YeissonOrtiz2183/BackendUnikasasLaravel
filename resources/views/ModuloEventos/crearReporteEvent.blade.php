@@ -20,61 +20,66 @@
             @csrf
             <label class="search_parametros" for="itemSearch">Filtrar por / </label>
             <label class="search_parametros" for="itemSearch">Nombre del evento:</label>
-            <input class="input-text" type="text" name="nombre" id="searchBar">
-
+                <select class="input-text" type="text" name="searchBar" id="searchBar">
+                    <option value="null" selected disabled hidden>Seleccione el nombre del evento</option>
+            @foreach ($eventos as $evento )
+                    <option value="{{ $evento->nombre_evento  }}">{{ $evento->nombre_evento  }}</option>
+            @endforeach
+                </select>
+            
             <label class="search_parametros" for="fechaInicial">Fecha inicial:</label>
             <input type="date" id="fechaInicial" name="fechaInicial">Fecha final:
             <input type="date" id="fechaFinal" name="fechaFinal">
               
-        </form>
+    
         <div class="container">
-                <form class="formulario" action="{{ url('ModuloEventos') }}" method="post">
+                <div class="formulario">
                     @csrf
                     <h2 class="formulario__titulo">Seleccionar campos</h2>
                     <div class="contenedor-campos contenedor-campos2">
                         <div class="campo">   
                             <label>Nombre:</label>
-                            <input class="checkbox" type="checkbox">
+                            <input class="checkbox" type="checkbox" id="nombreEvento" name="nombre_evento">
                         </div>
                         <div class="campo">
                             <label>Fecha:</label>
-                            <input class="checkbox" type="checkbox">
+                            <input class="checkbox" type="checkbox" id="fechaEvento" name="fecha_evento">
                         </div>
                         <div class="campo">
                             <label>Hora de inicio:</label>
-                            <input class="checkbox" type="checkbox">
+                            <input class="checkbox" type="checkbox" id="fechaInicio" name="fecha_inicio">
                         </div>
                         <div class="campo">
                             <label>Hora de finalización:</label>
-                            <input class="checkbox" type="checkbox">
+                            <input class="checkbox" type="checkbox" id="fechaFin" name="fecha_fin">
                         </div>
                         <div class="campo">
                             <label>Proyecto:</label>
-                            <input class="checkbox" type="checkbox">
+                            <input class="checkbox" type="checkbox" id="proyecto" name="nombre_proyecto">
                         </div>
                         <div class="campo">
                             <label>Notificación:</label>
-                            <input class="checkbox" type="checkbox">
+                            <input class="checkbox" type="checkbox" id="notificacion" name="notificacion_evento">
                         </div>
                         <div class="campo">
                             <label>Invitados:</label>
-                            <input class="checkbox" type="checkbox">
+                            <input class="checkbox" type="checkbox" id="invitados" name="invitados_evento">
                         </div>
                         <div class="campo">
                             <label>Lugar:</label>
-                            <input class="checkbox" type="checkbox">
+                            <input class="checkbox" type="checkbox" id="lugar" name="lugar_evento">
                         </div>
                         <div class="campo">
                             <label>Asunto:</label>
-                            <input class="checkbox" type="checkbox">
+                            <input class="checkbox" type="checkbox" id="asunto" name="asunto_evento">
                         </div>
                         <div class="campo">
                             <label>Mensaje:</label>
-                            <input class="checkbox" type="checkbox">
+                            <input class="checkbox" type="checkbox" id="mensaje" name="asunto_evento">
                         </div>
                         <div class="campo">
                             <label>Estado:</label>
-                            <input class="checkbox" type="checkbox">
+                            <input class="checkbox" type="checkbox" id="estado" name="estado_evento">
                         </div>
                         <div class="campo">
                             <label>Seleccionar Todos:</label>
@@ -123,22 +128,22 @@
                         <th>Estado </th>
                     </tr>
 
-                    {{-- @foreach ($envetos as $evento) --}}
+                    @foreach ($eventos as $evento)
     
-                    <tr><td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td></tr>
+                        <tr><td>{{ $evento->id }}</td>
+                            <td>{{ $evento->nombre_evento }}</td>
+                            <td>{{ $evento->fecha_evento }}</td>
+                            <td>{{ $evento->hora_inicio }}</td>
+                            <td>{{ $evento->hora_fin }}</td>
+                            <td>{{ $evento->nombre_proyecto }}</td>
+                            <td>{{ $evento->notificacion_evento }}</td>
+                            <td>{{ $evento->invitados_evento }}</td>
+                            <td>{{ $evento->lugar_evento }}</td>
+                            <td>{{ $evento->asunto_evento }}</td>
+                            <td>{{ $evento->mensaje_evento }}</td>
+                            <td>{{ $evento->estado_evento }}</td></tr>
                     
-                    {{-- @endforeach --}}
+                    @endforeach
                 </table>
             </div> 
         </div>       

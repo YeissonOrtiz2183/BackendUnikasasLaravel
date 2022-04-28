@@ -21,14 +21,8 @@ Route::get('/', function () {
 
 Route::resource('ModuloEventos', EventoController::class);
 
-Route::get('/disponibilidad', function () {
-    return view('ModuloEventos.disponibilidad');
-});
-
-Route::get('/reporteEventos', function () {
-    return view('ModuloEventos.crearReporteEvent');
-});
-
-// Route::get('/ModuloEventos/{id}/show', [App\Http\Controllers\EventoController::class, 'show'])->name('ModuloEventos.show');
+Route::get('/disponibilidad', [App\Http\Controllers\EventoController::class, 'disponibilidad'])->name('ModuloEventos.disponibilidad');
 
 Route::get('/ModuloEventos/{id}/cancel', [App\Http\Controllers\EventoController::class, 'cancel'])->name('ModuloEventos.cancel');
+
+Route::get('/reporteEventos', [App\Http\Controllers\EventoController::class, 'reporteEventos'])->name('ModuloEventos.reporte');

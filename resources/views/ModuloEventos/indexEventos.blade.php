@@ -30,13 +30,13 @@
         <div class="container">
             <aside>
                 <div class="button">
-                    <a class="buttonCreateEvento" href="{{ url('ModuloEventos/create')}}">Crear evento</a>
+                    <a class="buttonCreateEvento" href="{{ url('ModuloEventos/create') }}">Crear evento</a>
                 </div>
                 <div class="button">
-                    <a class="buttonDisponibilidad" href="{{ url('/disponibilidad')}}">Disponibilidad</a>
+                    <a class="buttonDisponibilidad" href="{{ url('/disponibilidad') }}">Disponibilidad</a>
                 </div>
                 <div class="button">
-                    <a class="buttonCreateReporte" href="{{ url('/reporteEventos')}}">Crear reporte</a>
+                    <a class="buttonCreateReporte" href="{{ url('/reporteEventos') }}">Crear reporte</a>
                 </div>
             </aside>
 
