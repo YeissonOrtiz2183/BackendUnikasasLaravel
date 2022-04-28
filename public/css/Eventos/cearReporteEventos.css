@@ -65,6 +65,8 @@ body{
     padding: 5px;
     border-radius: 10px;
     border-color: var(--black);
+    padding: 7px;
+    font-size: 16px;
 }
 
 form .search_parametros {
@@ -148,6 +150,8 @@ input[type="date"]{
     border-radius: 10px;
     border-color: var(--black);
     margin-inline-end: 1%;
+    padding: 7px;
+    font-size: 16px;
 }
 
 @media(max-width: 1366px){
@@ -176,20 +180,16 @@ input[type=checkbox] {
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: .7%;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
 .contenedor__imagen {
-    display: grid;
-    justify-content: center;
     width: 89%;
     margin: auto;
     border: 2px solid var(--black);
     border-radius: 10px;
-}
-
-img {
-    width: 87%;
+    margin-bottom: 2%;
 }
 
 .icono_dowload{
@@ -261,4 +261,27 @@ input[type="submit"]{
     margin:auto;
     justify-content: center;
     align-content: center;
+}
+
+table{
+    border-collapse: collapse;
+    border: none;
+    width: 95%;
+    margin-left: 1%;
+}
+
+th {
+    border: 1px solid var(--black);
+    margin: 0%;
+    width: auto;
+    background-color: var(--orange)
+}
+
+td {
+    border: 1px solid var(--black);
+    padding-bottom: 0%;
+    margin: 0%;
+    padding-top: 0%;
+    height: 5vh;
+    background-color: var(--white)
 }

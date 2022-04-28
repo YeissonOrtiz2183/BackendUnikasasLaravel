@@ -55,9 +55,10 @@
                         <div class="inputValidate">
                             <select type="text" class="date" id="eventProyect" name="proyecto_id" style="width: 98%;">
                                     <option value="null" selected disabled hidden>Seleccione el proyecto del evento</option>
-                                    <option value="1">casa tipo chalet proyecto 80m2</option>
-                                    <option value="2">casa tipo chalet proyecto 90m2</option>
-                                    <option value="3">casa tipo chalet proyecto 120m2</option>
+                                @foreach ($proyectos as $proyecto)
+                                    <option value="{{ $proyecto->id }}">{{ $proyecto->id }} - {{ $proyecto->nombre_proyecto }}</option>
+                    
+                                @endforeach
                             </select>
                             <span id="eventProyect_error_message" class="error_form"></span>
                         </div>
@@ -66,13 +67,13 @@
                         <div class="inputValidate">
                             <select type="input" class="date" id="eventNotification" name="notificacion_evento" style="width: 100%;">
                                     <option value="null" selected disabled hidden>Seleccione una notificación para el evento</option>
-                                    <option value="1">5 minutos antes</option>
-                                    <option value="2">10 minutos antes</option>
-                                    <option value="3">20 minutos antes</option>
-                                    <option value="4">30 minutos antes</option>
-                                    <option value="5">40 minutos antes</option>
-                                    <option value="6">50 minutos antes</option>
-                                    <option value="7">1 hora antes</option>
+                                    <option value="5 minutos antes">5 minutos antes</option>
+                                    <option value="10 minutos antes">10 minutos antes</option>
+                                    <option value="20 minutos antes">20 minutos antes</option>
+                                    <option value="30 minutos antes">30 minutos antes</option>
+                                    <option value="40 minutos antes">40 minutos antes</option>
+                                    <option value="50 minutos antes">50 minutos antes</option>
+                                    <option value="1 hora antes">1 hora antes</option>
                             </select>
                             <span id="eventNotification_error_message" class="error_form"></span>
                         </div>

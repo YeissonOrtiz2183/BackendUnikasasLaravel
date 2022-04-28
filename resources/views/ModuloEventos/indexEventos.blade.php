@@ -65,13 +65,9 @@
 
                 @endforeach
 
-                {{-- @extends('layouts.app')
-
-                @section('content')
-                <div class="container">
-                { !! $eventos->links() !! }
-                @endsection
-                </div> --}}
+                {{-- {{ $eventos->links() }} --}}
+        
+                </div>
             </main>
         </div>
                 

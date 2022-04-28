@@ -19,21 +19,16 @@
         <form class="searchForm" action="">
             @csrf
             <label class="search_parametros" for="itemSearch">Filtrar por / </label>
-            <label class="search_parametros" for="itemSearch">N° eventos:</label>
-            <select class="input-text" type="text" name="nombre" id="searchBar">
-                <option value="opcion1" select>Todos</option>
-                <option value="opcion1" select>1</option>
-                <option value="opcion2" select>2</option>
-                <option value="opcion3"select>3</option>
-            </select>
+            <label class="search_parametros" for="itemSearch">Nombre del evento:</label>
+            <input class="input-text" type="text" name="nombre" id="searchBar">
 
-            <label class="search_parametros" for="fechaInicial">Fecha:</label>
-            <input type="date" id="fechaInicial" name="fechaInicial">Hasta:
+            <label class="search_parametros" for="fechaInicial">Fecha inicial:</label>
+            <input type="date" id="fechaInicial" name="fechaInicial">Fecha final:
             <input type="date" id="fechaFinal" name="fechaFinal">
               
         </form>
         <div class="container">
-                <form class="formulario">
+                <form class="formulario" action="{{ url('ModuloEventos') }}" method="post">
                     @csrf
                     <h2 class="formulario__titulo">Seleccionar campos</h2>
                     <div class="contenedor-campos contenedor-campos2">
@@ -100,7 +95,7 @@
 
                     <div class="botones">
                         <input class="generar" type="submit" value="Generar">
-                        <input class="cancelar" type="submit" value="Cancelar" src="./moduloEventosInicio.html">
+                        <input class="cancelar" type="submit" value="Cancelar" src="{{ url('ModuloEventos') }}">
                     </div>
                 </form>
         </div>

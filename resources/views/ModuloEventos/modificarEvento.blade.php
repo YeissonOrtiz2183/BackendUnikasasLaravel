@@ -60,10 +60,7 @@
                         <label for="eventProyect" style="padding-left: 14%;">Proyecto:</label>
                         <div class="inputValidate">
                             <select type="text" class="date" id="eventProyect" name="proyecto_id" style="width: 98%;">
-                                    <option>{{ isset($proyecto->nombre_proyecto)?$proyecto->nombre_proyecto:old('nombre_proyecto') }}</option>
-                                    <option value="1">casa tipo chalet proyecto 80m2</option>
-                                    <option value="2">casa tipo chalet proyecto 90m2</option>
-                                    <option value="3">casa tipo chalet proyecto 120m2</option>
+                                    <option value="{{ $proyecto->id }}">{{ $proyecto->id }} - {{ isset($proyecto->nombre_proyecto)?$proyecto->nombre_proyecto:old('nombre_proyecto') }}</option>
                             </select>
                             <span id="eventProyect_error_message" class="error_form"></span>
                         </div>
