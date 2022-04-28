@@ -12,4 +12,8 @@ class Proyecto extends Model
     function users(){
         return $this->hasMany(User::class);
     }
+
+    function etapas(){
+        return $this->hasMany(Etapas::class);
+    }
 }

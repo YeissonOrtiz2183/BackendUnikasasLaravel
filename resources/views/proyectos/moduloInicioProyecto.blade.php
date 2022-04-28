@@ -51,7 +51,7 @@
                             <h4 class="info">Fecha inicio: <span> {{ $proyecto->fecha_inicio }} </span></h4>
                             <h4 class="info">Estado: <span>{{ $proyecto->estado_proyecto }}</span></h4>
                         </div>
-                        <a href="../Visualizar proyecto/index.html" class="button visualizar">Visualizar</a>
+                        <a href="{{ url('proyectos/'.$proyecto->id) }}" class="button visualizar">Visualizar</a>
                     </div>
                 </section>
                 @endforeach

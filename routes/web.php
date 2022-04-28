@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProyectoEtapa;
 
 Route::resource('proyectos', ProyectoController::class);
 Route::resource('productos', ProductoController::class);
+Route::resource('proyectoetapa', ProyectoEtapa::class);

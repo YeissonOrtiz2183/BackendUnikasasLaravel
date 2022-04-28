@@ -43,6 +43,6 @@ class User extends Authenticatable
     ];
 
     public function proyectos() {
-        return $this->belongsTo(Proyecto::class, '');
+        return $this->belongsTo(Proyecto::class);
     }
 }
