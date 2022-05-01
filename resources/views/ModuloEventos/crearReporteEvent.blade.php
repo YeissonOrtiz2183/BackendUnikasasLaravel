@@ -39,19 +39,19 @@
                     <div class="contenedor-campos contenedor-campos2">
                         <div class="campo">   
                             <label>Nombre:</label>
-                            <input class="checkbox" type="checkbox" id="nombreEvento" name="nombre_evento">
+                            <input class="checkbox" type="checkbox" id="nombreEvento" name="nombre_evento" value="nombre_evento">
                         </div>
                         <div class="campo">
                             <label>Fecha:</label>
-                            <input class="checkbox" type="checkbox" id="fechaEvento" name="fecha_evento">
+                            <input class="checkbox" type="checkbox" id="fechaEvento" name="fecha_evento" value="fecha_evento">
                         </div>
                         <div class="campo">
                             <label>Hora de inicio:</label>
-                            <input class="checkbox" type="checkbox" id="fechaInicio" name="fecha_inicio">
+                            <input class="checkbox" type="checkbox" id="fechaInicio" name="hora_inicio" value="hora_inicio">
                         </div>
                         <div class="campo">
                             <label>Hora de finalización:</label>
-                            <input class="checkbox" type="checkbox" id="fechaFin" name="fecha_fin">
+                            <input class="checkbox" type="checkbox" id="fechaFin" name="hora_fin">
                         </div>
                         <div class="campo">
                             <label>Proyecto:</label>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="campo">
                             <label>Mensaje:</label>
-                            <input class="checkbox" type="checkbox" id="mensaje" name="asunto_evento">
+                            <input class="checkbox" type="checkbox" id="mensaje" name="mensaje_evento">
                         </div>
                         <div class="campo">
                             <label>Estado:</label>
@@ -114,34 +114,81 @@
             <div class="container">
           
                 <table>
-                    <tr><th>Id </th>
-                        <th>Nombre </th>
-                        <th>Fecha </th>
-                        <th>Hora de inicio </th>
-                        <th>Hora de finalización </th>
-                        <th>Proyecto </th>
-                        <th>Notificación </th>
-                        <th>Invitados </th>
-                        <th>Lugar </th>
-                        <th>Asunto </th>
-                        <th>Mensaje </th>
-                        <th>Estado </th>
+                    <tr> @if(isset($evento->id))
+                            <th>Id </th>
+                        @endif
+                        @if(isset($evento->nombre_evento))
+                            <th>Nombre </th>
+                        @endif
+                        @if(isset($evento->fecha_evento))
+                            <th>Fecha </th>  
+                        @endif
+                        @if(isset($evento->hora_inicio))
+                            <th>Hora inicial </th>
+                        @endif
+                        @if(isset($evento->hora_fin))
+                            <th>Hora final </th>
+                        @endif
+                        @if(isset($evento->nombre_proyecto))
+                            <th>Proyecto </th>
+                        @endif
+                        @if(isset($evento->notificacion_evento))
+                            <th>Notificación </th>
+                        @endif
+                        @if(isset($evento->invitados_evento))
+                            <th>Invitados </th>
+                        @endif
+                        @if(isset($evento->lugar_evento))
+                            <th>Lugar </th>
+                        @endif
+                        @if(isset($evento->asunto_evento))
+                            <th>Asunto </th>
+                        @endif
+                        @if(isset($evento->mensaje_evento))
+                            <th>Mensaje </th>
+                        @endif
+                        @if(isset($evento->estado_evento))
+                            <th>Estado </th>   
+                        @endif
                     </tr>
 
                     @foreach ($eventos as $evento)
-    
-                        <tr><td>{{ $evento->id }}</td>
-                            <td>{{ $evento->nombre_evento }}</td>
-                            <td>{{ $evento->fecha_evento }}</td>
-                            <td>{{ $evento->hora_inicio }}</td>
-                            <td>{{ $evento->hora_fin }}</td>
-                            <td>{{ $evento->nombre_proyecto }}</td>
-                            <td>{{ $evento->notificacion_evento }}</td>
-                            <td>{{ $evento->invitados_evento }}</td>
-                            <td>{{ $evento->lugar_evento }}</td>
-                            <td>{{ $evento->asunto_evento }}</td>
-                            <td>{{ $evento->mensaje_evento }}</td>
-                            <td>{{ $evento->estado_evento }}</td></tr>
+                        <tr>@if(isset($evento->id))
+                                <td>{{ $evento->id }}</td>
+                            @endif
+                            @if(isset($evento->nombre_evento))
+                                <td>{{ $evento->nombre_evento }}</td>
+                            @endif
+                            @if(isset($evento->fecha_evento))
+                                <td>{{ $evento->fecha_evento }}</td> 
+                            @endif
+                            @if(isset($evento->hora_inicio))
+                                <td>{{ $evento->hora_inicio }}</td>
+                            @endif
+                            @if(isset($evento->hora_fin))
+                                <td>{{ $evento->hora_fin }}</td>
+                            @endif
+                            @if(isset($evento->nombre_proyecto))
+                                <td>{{ $evento->nombre_proyecto }}</td>
+                            @endif
+                            @if(isset($evento->notificacion_evento))
+                                <td>{{ $evento->notificacion_evento }}</td>
+                            @endif
+                            @if(isset($evento->invitados_evento))
+                                <td>{{ $evento->invitados_evento }}</td>
+                            @endif
+                            @if(isset($evento->lugar_evento))
+                                <td>{{ $evento->lugar_evento }}</td>
+                            @endif
+                            @if(isset($evento->asunto_evento))
+                                <td>{{ $evento->asunto_evento }}</td>
+                            @endif
+                            @if(isset($evento->mensaje_evento))
+                                <td>{{ $evento->mensaje_evento }}</td>
+                            @endif
+                            @if(isset($evento->estado_evento))
+                                <td>{{ $evento->estado_evento }}</td></tr>
+                            @endif
                     
                     @endforeach
                 </table>

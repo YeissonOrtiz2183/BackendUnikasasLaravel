@@ -51,7 +51,7 @@
                             <div class="contenedor-secundario">
                                 <time class="dia">{{ date('d', strtotime($evento->fecha_evento)) }}</time> 
                                 <time class="fecha">{{ date('m - Y', strtotime($evento->fecha_evento)) }}</time>
-                                <time class="hora">{{ date('h:i', strtotime($evento->hora_inicio)) }} {{' - '.date('h:i', strtotime($evento->hora_fin)) }}</time>
+                                <time class="hora">{{ date('h:i', strtotime($evento->hora_inicio)) }} {{' - '.date('h:i A', strtotime($evento->hora_fin)) }}</time>
                             </div>
                             <div class="section__infoEvento">
                                 <h2 class="info responsive">Nombre evento: <span>{{ $evento->nombre_evento }}</span></h2>

@@ -22,7 +22,7 @@
                     <div class="section__infoEvento">
                         <h2 class="info block">Nombre:&nbsp;<span>{{ $evento->nombre_evento }}</span></h2>
                         <h4 class="info">Fecha: <span>{{ date('d - m - Y', strtotime($evento->fecha_evento)) }}</span></h4>
-                        <h4 class="info">Horario: <span>{{ date('h:i', strtotime($evento->hora_inicio)) }} {{' - '.date('h:i', strtotime($evento->hora_fin)) }}</span></h4>
+                        <h4 class="info">Horario: <span>{{ date('h:i A', strtotime($evento->hora_inicio)) }} {{' - '.date('h:i A', strtotime($evento->hora_fin)) }}</span></h4>
                         <h4 class="info">Proyecto: <span>{{ $proyecto->nombre_proyecto}}</span></h4>
                         <h4 class="info">Notificación: <span>{{ $evento->notificacion_evento }}</span></h4>
                         <h4 class="info">Asistentes: <span>{{ $evento->invitados_evento }}</span></h4>

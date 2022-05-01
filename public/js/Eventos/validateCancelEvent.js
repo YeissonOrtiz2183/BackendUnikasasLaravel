@@ -7,11 +7,21 @@ $(function(){
     error_eventTime = true,
     error_eventReason = true;
 
+    let eventDate = $("#eventDate").val();
+    if(eventDate != ''){
+        check_eventDate();
+        checkButton();
+    }
     $("#eventDate").focusout(function(){
         check_eventDate();
         checkButton();
     });
 
+    let eventTime = $("#eventTime").val(); 
+    if(eventTime != ''){
+        check_eventTime();
+        checkButton();
+    }
     $("#eventTime").focusout(function(){
         check_eventTime();
         checkButton();
