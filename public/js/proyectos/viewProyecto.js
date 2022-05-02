@@ -16,10 +16,11 @@ for (let l = 0; l < saveButton.length; l++) {
     })
 
 }
-for( i=0; i < viewActivity.length; i++){
+for(let i=0; i < viewActivity.length; i++){
     viewActivity[i].addEventListener('click', () => {
         modal[0].classList.remove('hidden')
         modal[0].classList.add('visible')
+        let value = "{{ $idActividadCargar = " + viewActivity[i].getAttribute("value") + " }}"
     })
 }
 for (let z = 0; z < editActivity.length; z++) {

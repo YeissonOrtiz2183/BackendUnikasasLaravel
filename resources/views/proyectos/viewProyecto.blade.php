@@ -54,7 +54,8 @@
                                         <span>Fecha:  {{ $actividad->fecha_inicio }}</span>
                                         <span>Responsable: {{ $actividad->encargado_actividad }}</span>
                                         <div class="addDiv">
-                                            <span class="material-icons view" value="{{ $actividad->id }}">visibility</span>
+                                            <a href="{{ url('/actividades/' .$actividad->id) }}"></a><span class="material-icons view" value="{{ $myId = $actividad->id}}">visibility</span>
+                                            <span id="idActividad" value="{{ $idActividadCargar = 14 }}" style="display: none"></span>
                                         </div>
                                     </div>
                                 @endif
@@ -64,45 +65,13 @@
                             </div>
                         </div>
                         @endforeach
-
                     </div>
                 </div>
             </div>
         </div>
-        <section class="modal hidden">
-            <div class="modal__content modalActivity">
-                <div class="iconClose">
-                    <span class="material-icons closeIcon">highlight_off</span>
-                </div>
-                <div class="modal__content--contenedor">
-                    @foreach($activity as $act)
-                    @if($actividad->actividad_id == $act->id)
-                    <h2>{{ $act->nombre_actividad }}</h2>
-                    <div class="infoActividad">
-                        <div class="data1">
-                            <b>Encargado:</b>
-                            <b>Sebastian Fierro Cubillos</b>
-                            <b>Objetivo:</b>
-                            <b>Crear los planos hidraulicos para el proyecto <br>'Casa rural 40m2' del cliente 'Maria Juliana Gonzales Tapias'</b>
-                            <b>Fecha inicio:</b>
-                            <b>22/10/2021</b>
-                            <b>Fecha fin:</b>
-                            <b>24/10/2021</b>
-                            <b>Observaciones:</b>
-                            <b></b>
-                            <b>Estado:</b>
-                            <b>En ejecución</b>
-                        </div>
-                    </div>
-                    <div class="botones">
-                        <button class="save" type="button">Completar actividad</button>
-                        <a><span class="material-icons edit">edit</span></a>
-                    </div>
-                    @endif
-                    @endforeach
-                </div>
-            </div>
-        </section>
+
+        <!-- this -->
+        
 
         <section class="modal hidden">
             <div class="modal__content modalSuspender">
@@ -171,7 +140,7 @@
                         @csrf {{-- token de seguridad para el formulario  --}}
                         <input id="titleActivity" name="nombre_actividad" type="text" placeholder="Nombre de la actividad">
                         <div class="infoActividad">
-                            <input type="text" value="" id="etapaId" name="etapa_id">
+                            <input type="text" value="" id="etapaId" name="etapa_id" style="display:none">
                             <div class="campo">
                                 <label>Encargado:</label>
                                 <input type="text" name="encargado_actividad">

@@ -180,7 +180,7 @@ span{
 .capaFase{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    place-items: center;
+    place-items: baseline;
     margin-top: 10px;
     row-gap: 20px;
 }
@@ -286,8 +286,8 @@ iframe{
 }
 
 .modalActivity{
-    width: auto;
-    height: auto;
+    width: 500px;
+    height: 450px;
 }
 
 .modalSuspender{
@@ -321,10 +321,10 @@ textarea{
 }
 
 .finalizarProyecto .botones{
-        margin: 10% 0px;
-        display: flex;
-        width: 100%;
-        justify-content: space-evenly;
+    margin: 10% 0px;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
 }
 
 .finalizarProyecto button{
@@ -380,7 +380,6 @@ textarea{
 .modal__content--contenedor{
     display: flex;
     align-items: center;
-    flex-direction: column;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -394,7 +393,8 @@ h2{
 .modal__content--contenedor .infoActividad{
     display: flex;
     flex-direction: column;
-    height: 320px;
+    height: auto;
+    width: 100%;
     row-gap: 10px;
 }
 
@@ -402,7 +402,7 @@ h2{
     display: grid;
     grid-template-columns: 30% 70%;
     grid-template-rows: repeat(6, 0.5fr);
-    row-gap: 5%;
+    row-gap: 30px;
 }
 
 .modal__content--contenedor .data1{
@@ -410,11 +410,18 @@ h2{
     justify-content: flex-end;
 }
 
+.modal__content--contenedor .data1 .info{
+    width: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 .botones{
     display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
 }
 
 .modalActivity button, #save{
