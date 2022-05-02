@@ -23,46 +23,91 @@ $(function(){
     error_eventBusiness = true,
     error_eventMessage = false;
 
+    let eventName = $("#eventName").val();
+    if(eventName != ''){    // Funciones que se ejecutan cuando ya existe contenido en el id del input del formulario para las modificaciones
+        check_eventName();  
+        checkButton();
+    } 
     $("#eventName").focusout(function(){ // Funciones que se ejecutan cuando haya un focusout en el id del input del formulario de creación
         check_eventName();
         checkButton();
     });
-     
+    
+    let eventDate = $("#eventDate").val();
+    if(eventDate != ''){
+        check_eventDate();
+        checkButton();
+    } 
     $("#eventDate").focusout(function(){
         check_eventDate();
         checkButton();
     });
     
+    let eventShedule1 = $("#eventShedule1").val(); 
+    if(eventShedule1 != ''){
+        check_eventShedule1();
+        checkButton();
+    } 
     $("#eventShedule1").focusout(function(){
         check_eventShedule1();
         checkButton();
     });
     
+    let eventShedule2 = $("#eventShedule2").val();
+    if(eventShedule2 != ''){
+        check_eventShedule2();
+        checkButton();
+    }
     $("#eventShedule2").focusout(function(){
         check_eventShedule2();
         checkButton();
     });
     
+    let eventProyect = $("#eventProyect").val();
+    if(eventProyect != ''){
+        check_eventProyect();
+        checkButton();
+    } 
     $("#eventProyect").focusout(function(){
         check_eventProyect();
         checkButton();
     });
     
+    let eventNotification = $("#eventNotification").val();
+    if(eventNotification != ''){
+        check_eventNotification();
+        checkButton();
+    }
     $("#eventNotification").focusout(function(){
         check_eventNotification();
         checkButton();
     });
 
+    let eventAsisstant = $("#eventAsisstant").val();
+    if(eventAsisstant != ''){
+        check_eventAsisstant();
+        checkButton();
+    }
     $("#eventAsisstant").focusout(function(){
         check_eventAsisstant();
         checkButton();
     });
 
+    let eventPlace = $("#eventPlace").val();
+    if(eventPlace != ''){
+        check_eventPlace();
+        checkButton();
+    }
     $("#eventPlace").focusout(function(){
         check_eventPlace();
         checkButton();
     });
 
+    let eventBusiness = $("#eventBusiness").val();
+    if(eventBusiness != ''){
+        check_eventBusiness();
+        checkButton();
+    }
     $("#eventBusiness").focusout(function(){
         check_eventBusiness();
         checkButton();

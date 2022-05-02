@@ -20,16 +20,16 @@
                 @csrf
                 <div class="contenedor-campos contenedor">
                     <div class="section__infoEvento">
-                        <h2 class="info block">Nombre:&nbsp;<span>{{ $evento->nombre_evento }}</span></h2>
-                        <h4 class="info">Fecha: <span>{{ date('d - m - Y', strtotime($evento->fecha_evento)) }}</span></h4>
-                        <h4 class="info">Horario: <span>{{ date('h:i A', strtotime($evento->hora_inicio)) }} {{' - '.date('h:i A', strtotime($evento->hora_fin)) }}</span></h4>
-                        <h4 class="info">Proyecto: <span>{{ $proyecto->nombre_proyecto}}</span></h4>
-                        <h4 class="info">Notificación: <span>{{ $evento->notificacion_evento }}</span></h4>
-                        <h4 class="info">Asistentes: <span>{{ $evento->invitados_evento }}</span></h4>
-                        <h4 class="info">Lugar: <span>{{ $evento->lugar_evento }}</span></h4>
-                        <h4 class="info">Asunto: <span>{{ $evento->asunto_evento }}</span></h4>
-                        <h4 class="info">Mensaje: <span>{{ $evento->mensaje_evento }}</span></h4>
-                        <h4 class="info">Estado del evento: <span>{{ $evento->estado_evento }}</span></h4>
+                        <h2 class="info block info2">Nombre:&nbsp;<span>{{ $evento->nombre_evento }}</span></h2>
+                        <h4 class="info info2">Fecha: <span>{{ date('d - m - Y', strtotime($evento->fecha_evento)) }}</span></h4>
+                        <h4 class="info info2">Horario: <span>{{ date('h:i A', strtotime($evento->hora_inicio)) }} {{' - '.date('h:i A', strtotime($evento->hora_fin)) }}</span></h4>
+                        <h4 class="info info2">Proyecto: <span>{{ $proyecto->nombre_proyecto}}</span></h4>
+                        <h4 class="info info2">Notificación: <span>{{ $evento->notificacion_evento }}</span></h4>
+                        <h4 class="info info2">Asistentes: <span>{{ $evento->invitados_evento }}</span></h4>
+                        <h4 class="info info2">Lugar: <span>{{ $evento->lugar_evento }}</span></h4>
+                        <h4 class="info info2">Asunto: <span>{{ $evento->asunto_evento }}</span></h4>
+                        <h4 class="info info2">Mensaje: <span>{{ $evento->mensaje_evento }}</span></h4>
+                        <h4 class="info info2">Estado del evento: <span>{{ $evento->estado_evento }}</span></h4>
                     </div>
         
                     <div class="botones">

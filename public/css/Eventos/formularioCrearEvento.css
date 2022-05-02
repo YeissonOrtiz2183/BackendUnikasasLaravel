@@ -101,6 +101,11 @@ h2{
     font-size: 16px;
 }
 
+.inputValidate textarea{
+    padding: 7px;
+    font-size: 16px;
+}
+
 select{
     display: inline;
     width: 50%;

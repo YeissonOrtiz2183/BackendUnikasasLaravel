@@ -47,7 +47,7 @@
                 @foreach ($eventos as $evento)
         
                 <section>
-                    <div class="contenedor" style="max-width: 100%">
+                    <div class="contenedor">
                             <div class="contenedor-secundario">
                                 <time class="dia">{{ date('d', strtotime($evento->fecha_evento)) }}</time> 
                                 <time class="fecha">{{ date('m - Y', strtotime($evento->fecha_evento)) }}</time>

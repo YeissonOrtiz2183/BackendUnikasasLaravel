@@ -90,7 +90,7 @@
 
                     <div class="campo campoCompartido">
                         <label></label>
-                        <textarea cols="120" rows="10" readonly placeholder="Aqui se agregaran los invitados del evento..."></textarea>
+                        <textarea type="hidden" cols="120" rows="10" readonly placeholder="Aqui se agregaran los invitados del evento..."></textarea>
                     </div>
 
                     <div class="campo">

@@ -131,6 +131,6 @@
             </form>
         </div>
     </div>
-    <script type="text/javascript" src="{{ asset('js/Eventos/validateCreateEvent.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/Eventos/validateModifyEvent.js') }}"></script>
 </body>
 </html>

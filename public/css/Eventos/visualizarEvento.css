@@ -96,7 +96,24 @@ form{
 .info {
     margin-left: 50px 0%;
     margin-right: 2%;
+    width: 525px;
 }
+
+@media (max-width: 1366px){
+    .info {
+        margin-left: 50px 0%;
+        margin-right: 2%;
+        width: 525px;
+    }
+}
+
+/* @media (max-width: 1920px){
+    .section__infoEvento > .info2 {
+        margin-left: 10px 0%;
+        margin-right: 2%;
+        width: 1000px;
+    }
+} */
 
 span {
     font-weight: normal;
