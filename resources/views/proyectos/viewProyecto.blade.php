@@ -37,29 +37,34 @@
                     <label>Costo final: <span>${{ $proyecto->costo_final }}</span></label>
                     <label>Fecha final: <span>{{ $proyecto->fecha_fin }}</span></label>
                     <a id="link1" href="../editarProyecto/index.html"><span class="material-icons edit-1">edit</span></a>
-                    
+
                     <a id="link2" href="../editarProyecto/index.html"><span class="material-icons edit-1">edit</span></a>
                 </div>
-                <form action="{{ url('/proyectoetapa') }}" method="post">
-                    <input type="submit" value="Crear etapas">
-                </form>
+
                 <div class="contenedorFases">
                     <div class="capaFase">
+
                         @foreach($etapas as $etapa)
-                            <div class="fase">
-                                <h2>{{ $etapa->nombre_etapa }}</h2>
-                                @foreach($actividades as $actividad)
-                                <div class="actividad">
-                                    <h4>{{ $actividad->nombre_actividad }}</h4>
-                                    <span>Fecha:  22/10/2021</span>
-                                    <span>Responsable: Nelson Fierro</span>
-                                    <div class="addDiv">
-                                        <span class="material-icons view">visibility</span>
+                        <div class="fase">
+                            <h2>{{ $etapa->nombre_etapa }}</h2>
+                            @foreach($actividades as $actividad)
+                                @if($actividad->etapa_id == $etapa->id)
+                                    <div class="actividad">
+                                        <h4>{{ $actividad->nombre_actividad }}</h4>
+                                        <span>Fecha:  {{ $actividad->fecha_inicio }}</span>
+                                        <span>Responsable: {{ $actividad->encargado_actividad }}</span>
+                                        <div class="addDiv">
+                                            <span class="material-icons view" value="{{ $actividad->id }}">visibility</span>
+                                        </div>
                                     </div>
-                                </div>
-                                @endforeach
+                                @endif
+                            @endforeach
+                            <div class="addDiv">
+                                <span class="material-icons add" value="{{ $etapa->id }}">add_circle</span>
                             </div>
+                        </div>
                         @endforeach
+
                     </div>
                 </div>
             </div>
@@ -70,7 +75,9 @@
                     <span class="material-icons closeIcon">highlight_off</span>
                 </div>
                 <div class="modal__content--contenedor">
-                    <h2>Creación del contrato</h2>
+                    @foreach($activity as $act)
+                    @if($actividad->actividad_id == $act->id)
+                    <h2>{{ $act->nombre_actividad }}</h2>
                     <div class="infoActividad">
                         <div class="data1">
                             <b>Encargado:</b>
@@ -91,6 +98,8 @@
                         <button class="save" type="button">Completar actividad</button>
                         <a><span class="material-icons edit">edit</span></a>
                     </div>
+                    @endif
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -113,42 +122,42 @@
                 <div class="iconClose">
                     <span class="material-icons closeIcon">highlight_off</span>
                 </div>
-                <div class="modal__content--contenedor">
-                    <input id="titleActivity" type="text" placeholder="Nombre de la actividad">
-        
-                    <div class="infoActividad">
-                        <form action="">
+                <form action="{{ url('/actividades') }}" method="POST">
+                    @csrf {{-- token de seguridad para el formulario  --}}
+                    <div class="modal__content--contenedor">
+                        <input id="titleActivity" name="nombre_actividad" type="text" placeholder="Nombre de la actividad">
+                        <div class="infoActividad">
                             <div class="campo">
                                 <label>Encargado:</label>
-                                <input type="text">
+                                <input type="text" name="encargado_actividad">
                             </div>
                             <div class="campo">
                                 <label>Objetivo:</label>
-                                <textarea name="" id="" cols="40" rows="3"></textarea>
+                                <textarea name="objetivo_actividad" id="" cols="40" rows="3"></textarea>
                             </div>
                             <div class="campo">
                                 <label>Fecha inicio:</label>
-                                <input type="date">
+                                <input type="date" name="fecha_inicio">
                             </div>
                             <div class="campo">
                                 <label>Fecha fin:</label>
-                                <input type="date">
+                                <input type="date" name="fecha_fin">
                             </div>
                             <div class="campo">
                                 <label>Observaciones:</label>
-                                <textarea name="" id="" cols="40" rows="4"></textarea>
+                                <textarea name="observaciones_actividad" id="" cols="40" rows="4"></textarea>
                             </div>
                             <div class="campo">
                                 <label>Estado:</label>
-                                <input type="text">
+                                <input type="text" name="estado_actividad">
                             </div>
                             <div class="botones">
-                                <button class="save" type="button">Guardar cambios</button>
+                                <input class="save" type="submit" value="Crear actividad"></input>
                                 <button class="save" type="button">Cancelar</button>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </section>
 
@@ -158,40 +167,41 @@
                     <span class="material-icons closeIcon">highlight_off</span>
                 </div>
                 <div class="modal__content--contenedor">
-                    <input id="titleActivity" type="text" placeholder="Nombre de la actividad">
-        
-                    <div class="infoActividad">
-                        <form action="">
+                    <form action="{{ url('/actividades') }}" method="POST">
+                        @csrf {{-- token de seguridad para el formulario  --}}
+                        <input id="titleActivity" name="nombre_actividad" type="text" placeholder="Nombre de la actividad">
+                        <div class="infoActividad">
+                            <input type="text" value="" id="etapaId" name="etapa_id">
                             <div class="campo">
                                 <label>Encargado:</label>
-                                <input type="text">
+                                <input type="text" name="encargado_actividad">
                             </div>
                             <div class="campo">
                                 <label>Objetivo:</label>
-                                <textarea name="" id="" cols="40" rows="3"></textarea>
+                                <textarea name="objetivo_actividad" id="" cols="40" rows="3"></textarea>
                             </div>
                             <div class="campo">
                                 <label>Fecha inicio:</label>
-                                <input type="date">
+                                <input type="date" name="fecha_inicio">
                             </div>
                             <div class="campo">
                                 <label>Fecha fin:</label>
-                                <input type="date">
+                                <input type="date" name="fecha_fin">
                             </div>
                             <div class="campo">
                                 <label>Observaciones:</label>
-                                <textarea name="" id="" cols="40" rows="4"></textarea>
+                                <textarea name="observaciones_actividad" id="" cols="40" rows="4"></textarea>
                             </div>
                             <div class="campo">
                                 <label>Estado:</label>
-                                <input type="text">
+                                <input type="text" name="estado_actividad">
                             </div>
                             <div class="botones">
-                                <button class="save" type="button">Guardar cambios</button>
+                                <input class="save" type="submit" value="Crear actividad" id="save"></input>
                                 <button class="save" type="button">Cancelar</button>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </section>

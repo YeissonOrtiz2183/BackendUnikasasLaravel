@@ -48,6 +48,7 @@ h1{
 
 .material-icons{
     cursor: pointer;
+    user-select: none;
 }
 
 a {
@@ -67,7 +68,7 @@ button{
     display: flex;
     flex-direction: row;
     width: 99%;
-    margin-left: 1%; 
+    margin-left: 1%;
 }
 
 .proyecto{
@@ -305,7 +306,7 @@ iframe{
 }
 
 .modalSuspender a button{
-    width: 150px;   
+    width: 150px;
 }
 
 textarea{
@@ -346,17 +347,9 @@ textarea{
     height: 500px;
 }
 
-.editActivity #titleActivity{
-    padding: 5px;
-    width: 80%;
-    margin-bottom: 3%;
-    border: 2px solid black;
-    border-radius: 10px;
-}
-
 .editActivity form{
-    display: grid;
-    row-gap: 5%;
+    display: flex;
+    flex-direction: column;
 }
 
 .editActivity form input, textarea{
@@ -370,7 +363,7 @@ textarea{
     grid-template-columns: 30% 70%;
 }
 
-.editActivity button{
+.editActivity button, #save{
     border: none;
     background-color: var(--naranja);
     width: 150px;
@@ -400,7 +393,9 @@ h2{
 
 .modal__content--contenedor .infoActividad{
     display: flex;
+    flex-direction: column;
     height: 320px;
+    row-gap: 10px;
 }
 
 .modal__content--contenedor .data1{
@@ -422,17 +417,16 @@ h2{
     align-items: center;
 }
 
-.modalActivity button{
+.modalActivity button, #save{
     border: none;
     background-color: var(--naranja);
     width: 30%;
-    padding: 2% 0px;
     margin: 5% auto;
     border-radius: 10px;
     font-weight: bold;
 }
 
-a span{
+input span{
     background-color: var(--naranja);
     border-radius: 10px;
     height: 100%;
@@ -440,17 +434,14 @@ a span{
     color: black;
 }
 
-#titleActivity{
-    padding: 5px;
-    width: 80%;
-    margin-bottom: 3%;
-    border: 2px solid black;
-    border-radius: 10px;
-}
 
 form{
     display: grid;
     row-gap: 5%;
+}
+
+#titleActivity{
+margin-bottom: 10px;
 }
 
 form input, textarea{

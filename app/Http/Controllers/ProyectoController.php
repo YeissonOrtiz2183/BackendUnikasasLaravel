@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Proyecto;
 use App\Models\Actividad;
 use App\Models\ProyectoEtapa;
+use App\Models\Etapa;
 
 class ProyectoController extends Controller
 {
@@ -42,9 +43,49 @@ class ProyectoController extends Controller
         $datosProyecto = request()->except('_token');
 
         Proyecto::insert($datosProyecto);
+        $idProyecto = Proyecto::max('id');
+
+        Etapa::insert([
+            'nombre_etapa' => 'Fase 1',
+            'descripcion_etapa' => 'Fase 1',
+        ]);
+
+        Etapa::insert([
+            'nombre_etapa' => 'Fase 2',
+            'descripcion_etapa' => 'Fase 2',
+        ]);
+
+        Etapa::insert([
+            'nombre_etapa' => 'Fase 3',
+            'descripcion_etapa' => 'Fase 3',
+        ]);
+
+        Etapa::insert([
+            'nombre_etapa' => 'Fase 4',
+            'descripcion_etapa' => 'Fase 4',
+        ]);
+
+        Etapa::insert([
+            'nombre_etapa' => 'Fase 5',
+            'descripcion_etapa' => 'Fase 5',
+        ]);
+
+        Etapa::insert([
+            'nombre_etapa' => 'Fase 6',
+            'descripcion_etapa' => 'Fase 6',
+        ]);
+
+        $idEtapa = Etapa::max('id');
+
+        for ($i=1; $i <= 6; $i++) {
+            ProyectoEtapa::insert([
+                'proyecto_id' => $idProyecto,
+                'etapa_id' => $idEtapa]);
+            $idEtapa--;
+        }
 
         header('Location: http://127.0.0.1:8000/proyectos');
-        
+
         exit;
     }
 
@@ -57,9 +98,10 @@ class ProyectoController extends Controller
     public function show($id)
     {
         $proyecto = Proyecto::findOrfail($id);
-        $etapas = DB::select('SELECT etapas.nombre_etapa from proyectos INNER JOIN proyecto_etapas as pro ON proyectos.id = pro.proyecto_id INNER JOIN etapas ON pro.etapa_id = etapas.id WHERE proyectos.id = ' .$id);
-        $actividades = DB::select('SELECT * from actividads INNER JOIN etapas ON actividads.etapa_id = etapas.id INNER JOIN proyecto_etapas as pro ON etapas.id = pro.etapa_id INNER JOIN proyectos ON pro.proyecto_id = proyectos.id WHERE proyectos.id =' .$id);
-        return view('proyectos.viewProyecto', compact('proyecto', 'etapas', 'actividades'));
+        $etapas = DB::select('SELECT etapas.id, etapas.nombre_etapa from proyectos INNER JOIN proyecto_etapas as pro ON proyectos.id = pro.proyecto_id INNER JOIN etapas ON pro.etapa_id = etapas.id WHERE proyectos.id = ' .$id. ' ORDER BY etapas.id ASC');
+        $actividades = DB::select('SELECT actividads.id, actividads.nombre_actividad, actividads.fecha_inicio, actividads.encargado_actividad, actEtp.etapa_id as etapa_id, actEtp.actividad_id as actividad_id from actividads INNER JOIN actividad_etapas as actEtp ON actividads.id = actEtp.actividad_id INNER JOIN etapas ON actEtp.etapa_id = etapas.id ORDER BY actividads.id ASC');
+        $activity = DB::select('SELECT * FROM actividads');
+        return view('proyectos.viewProyecto', compact('proyecto', 'etapas', 'actividades', 'activity'));
     }
 
     /**

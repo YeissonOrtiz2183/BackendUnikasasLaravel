@@ -14,7 +14,7 @@ for (let l = 0; l < saveButton.length; l++) {
             modal[t].classList.add('hidden')
         }
     })
-    
+
 }
 for( i=0; i < viewActivity.length; i++){
     viewActivity[i].addEventListener('click', () => {
@@ -36,6 +36,7 @@ for (let y = 0; y < createActivity.length; y++) {
         console.log("Abrir modal crear actividad")
         modal[3].classList.remove('hidden')
         modal[3].classList.add('visible')
+        document.querySelector('#etapaId').value = createActivity[y].getAttribute("value");
     })
 }
 
@@ -58,3 +59,9 @@ for (let x = 0; x < modal.length; x++){
         })
     }
 }
+
+
+
+
+
+

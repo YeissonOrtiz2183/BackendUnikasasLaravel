@@ -17,8 +17,7 @@ class ActividadFactory extends Factory
     public function definition()
     {
         return [
-            'etapa_id' => $this->faker->numberBetween(1, 6),
-            'encargado_id' => $this->faker->numberBetween(1, 10),
+            'encargado_actividad' => $this->faker->name,
 
             'nombre_actividad' => $this->faker->word,
             'objetivo_actividad' => $this->faker->word,
