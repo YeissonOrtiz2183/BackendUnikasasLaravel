@@ -14,32 +14,31 @@
 <section class="modal">
             <div class="modal__content modalActivity">
                 <div class="iconClose">
-                    <span class="material-icons closeIcon">highlight_off</span>
+                    <span class="material-icons closeIcon" onclick="history.back()">highlight_off</span>
                 </div>
                 <div class="modal__content--contenedor">
                     
-                            <h2>dsadasd</h2>
-                            <b>1</b>
-                            <div class="infoActividad">
-                                <div class="data1">
-                                    <b>Encargado:</b>
-                                    <b>asdasd</b>
-                                    <b>Objetivo:</b>
-                                    <b>dsadsad</b>
-                                    <b>Fecha inicio:</b>
-                                    <b>sadsad</b>
-                                    <b>Fecha fin:</b>
-                                    <b>xd</b>
-                                    <b>Observaciones:</b>
-                                    <b>xd</b>
-                                    <b>Estado:</b>
-                                    <b>xd</b>
-                                </div>
-                            </div>
-                            <div class="botones">
-                                <button class="save" type="button">Completar actividad</button>
-                                <a><span class="material-icons edit">edit</span></a>
-                            </div>
+                    <h2>{{ $actividad->nombre_actividad }}</h2>
+                    <div class="infoActividad">
+                        <div class="data1">
+                            <b>Encargado:</b>
+                            <b>{{ $actividad->encargado_actividad }}</b>
+                            <b>Objetivo:</b>
+                            <b>{{ $actividad->objetivo_actividad }}</b>
+                            <b>Fecha inicio:</b>
+                            <b>{{ $actividad->fecha_inicio }}</b>
+                            <b>Fecha fin:</b>
+                            <b>{{ $actividad->fecha_fin }}</b>
+                            <b>Observaciones:</b>
+                            <b>{{ $actividad->observaciones_actividad }}</b>
+                            <b>Estado:</b>
+                            <b>{{ $actividad->estado_actividad }}</b>
+                        </div>
+                    </div>
+                    <div class="botones">
+                        <button class="save" type="button">Completar actividad</button>
+                        <a><span class="material-icons edit">edit</span></a>
+                    </div>
                 </div>
             </div>
         </section>

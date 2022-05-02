@@ -59,7 +59,7 @@ button{
     cursor: pointer;
 }
 
-.textButton{
+.textButton, a{
     text-decoration: none;
     color: black;
 }

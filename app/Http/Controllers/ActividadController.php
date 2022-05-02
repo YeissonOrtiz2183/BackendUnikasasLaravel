@@ -57,7 +57,7 @@ class ActividadController extends Controller
     public function show($id)
     {
         $actividad = Actividad::find($id);
-        return view('proyectos.viewActivity', $actividad);
+        return view('proyectos.viewActivity', compact('actividad'));
     }
 
     /**

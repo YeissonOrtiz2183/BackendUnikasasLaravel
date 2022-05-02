@@ -54,8 +54,7 @@
                                         <span>Fecha:  {{ $actividad->fecha_inicio }}</span>
                                         <span>Responsable: {{ $actividad->encargado_actividad }}</span>
                                         <div class="addDiv">
-                                            <a href="{{ url('/actividades/' .$actividad->id) }}"></a><span class="material-icons view" value="{{ $myId = $actividad->id}}">visibility</span>
-                                            <span id="idActividad" value="{{ $idActividadCargar = 14 }}" style="display: none"></span>
+                                            <a href="{{ url('/actividades/' .$actividad->id) }}"><span class="material-icons view" value="{{ $myId = $actividad->id}}">visibility</span></a>
                                         </div>
                                     </div>
                                 @endif
