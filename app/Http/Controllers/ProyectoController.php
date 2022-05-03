@@ -97,7 +97,7 @@ class ProyectoController extends Controller
      */
     public function show($id)
     {
-        $proyecto = Proyecto::findOrfail($id);
+        $proyecto = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio, encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido, cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido FROM proyectos LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id WHERE proyectos.id = '.$id);
         $etapas = DB::select('SELECT etapas.id, etapas.nombre_etapa from proyectos INNER JOIN proyecto_etapas as pro ON proyectos.id = pro.proyecto_id INNER JOIN etapas ON pro.etapa_id = etapas.id WHERE proyectos.id = ' .$id. ' ORDER BY etapas.id ASC');
         $actividades = DB::select('SELECT actividads.id, actividads.nombre_actividad, actividads.fecha_inicio, actividads.encargado_actividad, actEtp.etapa_id as etapa_id, actEtp.actividad_id as actividad_id from actividads INNER JOIN actividad_etapas as actEtp ON actividads.id = actEtp.actividad_id INNER JOIN etapas ON actEtp.etapa_id = etapas.id ORDER BY actividads.id ASC');
         $activity = DB::select('SELECT * FROM actividads');
@@ -112,7 +112,7 @@ class ProyectoController extends Controller
      */
     public function edit($id)
     {
-        $proyecto = Proyecto::findOrfail($id);
+        return view('proyectos.editProyecto');
     }
 
     /**

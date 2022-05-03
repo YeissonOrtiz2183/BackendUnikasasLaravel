@@ -26,7 +26,7 @@
             </aside>
             <div class="proyecto">
                 <div class="infoGeneral">
-                    <label>Encargado: <span>Fabio Nelson Fierro Cubillos</span></label>
+                    <label>Encargado: <span>{{ $proyecto->encargado_nombre }} {{ $proyecto->encargado_apellido }}</span></label>
                     <label>Cliente: <span>Yeisson Estiven Ortiz Torres</span></label>
                     <label>Fecha inicio: <span>{{ $proyecto->fecha_inicio }}</span></label>
                     <label>Ubicación: <span>{{ $proyecto->ciudad_proyecto }} - {{ $proyecto->direccion_proyecto }}</span></label>
@@ -36,7 +36,7 @@
                     <label>Fecha final estimada: <span>{{ $proyecto->fecha_fin }}</span></label>
                     <label>Costo final: <span>${{ $proyecto->costo_final }}</span></label>
                     <label>Fecha final: <span>{{ $proyecto->fecha_fin }}</span></label>
-                    <a id="link1" href="../editarProyecto/index.html"><span class="material-icons edit-1">edit</span></a>
+                    <a id="link1" href="{{ url('/proyectos/2/edit') }}"><span class="material-icons edit-1">edit</span></a>
 
                     <a id="link2" href="../editarProyecto/index.html"><span class="material-icons edit-1">edit</span></a>
                 </div>
@@ -70,7 +70,7 @@
         </div>
 
         <!-- this -->
-        
+
 
         <section class="modal hidden">
             <div class="modal__content modalSuspender">
