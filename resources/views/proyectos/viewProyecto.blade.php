@@ -13,7 +13,9 @@
     <div class="main">
         <div class="top">
             <button onclick="history.back()"><span class="material-icons back">arrow_back</span></button>
+            @foreach($proyecto as $proyecto)
             <h1>{{ $proyecto->nombre_proyecto }}</h1>
+            @endforeach
         </div>
         <div class="contenedor">
             <aside>
@@ -27,18 +29,18 @@
             <div class="proyecto">
                 <div class="infoGeneral">
                     <label>Encargado: <span>{{ $proyecto->encargado_nombre }} {{ $proyecto->encargado_apellido }}</span></label>
-                    <label>Cliente: <span>Yeisson Estiven Ortiz Torres</span></label>
+                    <label>Cliente: <span>{{ $proyecto->cliente_nombre }} {{ $proyecto->cliente_apellido }}</span></label>
                     <label>Fecha inicio: <span>{{ $proyecto->fecha_inicio }}</span></label>
                     <label>Ubicación: <span>{{ $proyecto->ciudad_proyecto }} - {{ $proyecto->direccion_proyecto }}</span></label>
                     <label>Costo estimado: <span>${{ $proyecto->costo_estimado }}</span></label>
                     <label>Estado: <span>{{ $proyecto->estado_proyecto }}</span></label>
-                    <label>Producto: <span>{{ $proyecto->producto_id }}</span></label>
+                    <label>Producto: <span>{{ $proyecto->nombre_producto }}</span></label>
                     <label>Fecha final estimada: <span>{{ $proyecto->fecha_fin }}</span></label>
                     <label>Costo final: <span>${{ $proyecto->costo_final }}</span></label>
                     <label>Fecha final: <span>{{ $proyecto->fecha_fin }}</span></label>
-                    <a id="link1" href="{{ url('/proyectos/2/edit') }}"><span class="material-icons edit-1">edit</span></a>
+                    <a id="link1" href="{{ url('/proyectos/' .$proyecto->id. '/edit') }}"><span class="material-icons edit-1">edit</span></a>
 
-                    <a id="link2" href="../editarProyecto/index.html"><span class="material-icons edit-1">edit</span></a>
+                    <a id="link2" href="{{ url('/proyectos/' .$proyecto->id. '/edit') }}"><span class="material-icons edit-1">edit</span></a>
                 </div>
 
                 <div class="contenedorFases">

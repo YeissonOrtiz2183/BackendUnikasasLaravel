@@ -97,11 +97,32 @@ class ProyectoController extends Controller
      */
     public function show($id)
     {
-        $proyecto = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio, encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido, cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido FROM proyectos LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id WHERE proyectos.id = '.$id);
-        $etapas = DB::select('SELECT etapas.id, etapas.nombre_etapa from proyectos INNER JOIN proyecto_etapas as pro ON proyectos.id = pro.proyecto_id INNER JOIN etapas ON pro.etapa_id = etapas.id WHERE proyectos.id = ' .$id. ' ORDER BY etapas.id ASC');
-        $actividades = DB::select('SELECT actividads.id, actividads.nombre_actividad, actividads.fecha_inicio, actividads.encargado_actividad, actEtp.etapa_id as etapa_id, actEtp.actividad_id as actividad_id from actividads INNER JOIN actividad_etapas as actEtp ON actividads.id = actEtp.actividad_id INNER JOIN etapas ON actEtp.etapa_id = etapas.id ORDER BY actividads.id ASC');
-        $activity = DB::select('SELECT * FROM actividads');
-        return view('proyectos.viewProyecto', compact('proyecto', 'etapas', 'actividades', 'activity'));
+        $proyecto = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto,
+                                proyectos.fecha_inicio, proyectos.ciudad_proyecto, proyectos.direccion_proyecto,
+                                proyectos.costo_estimado, proyectos.estado_proyecto, proyectos.fecha_fin,
+                                proyectos.costo_final , productos.nombre_producto as nombre_producto,
+                                encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
+                                cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
+                                FROM proyectos 
+                                LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
+                                LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
+                                INNER JOIN productos on proyectos.producto_id = productos.id
+                                WHERE proyectos.id = '.$id);
+        
+        $etapas = DB::select('SELECT etapas.id, etapas.nombre_etapa
+                            from proyectos
+                            INNER JOIN proyecto_etapas as pro ON proyectos.id = pro.proyecto_id 
+                            INNER JOIN etapas ON pro.etapa_id = etapas.id
+                            WHERE proyectos.id = ' .$id. ' 
+                            ORDER BY etapas.id ASC');
+
+        $actividades = DB::select('SELECT actividads.id, actividads.nombre_actividad, actividads.fecha_inicio,
+                                actividads.encargado_actividad, actEtp.etapa_id as etapa_id, actEtp.actividad_id as actividad_id
+                                from actividads
+                                INNER JOIN actividad_etapas as actEtp ON actividads.id = actEtp.actividad_id
+                                INNER JOIN etapas ON actEtp.etapa_id = etapas.id
+                                ORDER BY actividads.id ASC');
+        return view('proyectos.viewProyecto', compact('proyecto', 'etapas', 'actividades'));
     }
 
     /**
@@ -112,7 +133,33 @@ class ProyectoController extends Controller
      */
     public function edit($id)
     {
-        return view('proyectos.editProyecto');
+        $proyecto = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto,
+                                proyectos.fecha_inicio, proyectos.ciudad_proyecto, proyectos.direccion_proyecto,
+                                proyectos.costo_estimado, proyectos.estado_proyecto, proyectos.fecha_fin,
+                                proyectos.costo_final , productos.nombre_producto as nombre_producto,
+                                encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
+                                cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
+                                FROM proyectos 
+                                LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
+                                LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
+                                INNER JOIN productos on proyectos.producto_id = productos.id
+                                WHERE proyectos.id = '.$id);
+        
+        $etapas = DB::select('SELECT etapas.id, etapas.nombre_etapa
+                            from proyectos
+                            INNER JOIN proyecto_etapas as pro ON proyectos.id = pro.proyecto_id 
+                            INNER JOIN etapas ON pro.etapa_id = etapas.id
+                            WHERE proyectos.id = ' .$id. ' 
+                            ORDER BY etapas.id ASC');
+
+        $actividades = DB::select('SELECT actividads.id, actividads.nombre_actividad, actividads.fecha_inicio,
+                                actividads.encargado_actividad, actEtp.etapa_id as etapa_id, actEtp.actividad_id as actividad_id
+                                from actividads
+                                INNER JOIN actividad_etapas as actEtp ON actividads.id = actEtp.actividad_id
+                                INNER JOIN etapas ON actEtp.etapa_id = etapas.id
+                                ORDER BY actividads.id ASC');
+
+        return view('proyectos.editProyecto', compact('proyecto', 'etapas', 'actividades'));
     }
 
     /**

@@ -11,198 +11,60 @@
 </head>
 <body>
     <div class="main">
-        <h1>Nombre del proyecto</h1>
+        @foreach($proyecto as $proyecto)
+            <h1>{{ $proyecto->nombre_proyecto }}</h1>
+        @endforeach
+        
 
         <div class="contenedor">
             <aside>
                 <div class="button save">
-                    <a class="textButton saveButton" href="../Visualizar proyecto/index.html">Guardar</a>
+                    <button class="textButton saveButton" type="submit" form="formEdit">Guardar</button>
                 </div>
                 <div class="button cancel">
-                    <a class="textButton cancelButton" href="../Visualizar proyecto/index.html">Cancelar</a>
+                    <a class="textButton cancelButton" onclick="history.back()">Cancelar</a>
                 </div>
             </aside>
             <div class="proyecto">
                 <div class="infoGeneral">
-                    <label>Encargado: <span>Fabio Nelson Fierro Cubillos</span></label>
-                    <label>Cliente: <span>Yeisson Estiven Ortiz Torres</span></label>
-                    <label>Fecha inicio: <span>20/10/2021</span></label>
-                    <label>Ubicación: <span>Via Pasca - Fusagasugá</span></label>
-                    <label>Costo estimado: <span>$80.000.000</span></label>
-                    <label>Estado: <span>En ejecución</span></label>
-                    <label>Producto: <span>Casa rural tipo Chalet 80m2</span></label>
-                    <label>Fecha final estimada: <span>13/05/2022</span></label>
-                    <label>Costo final: <input type="text" class="editable"></label>
-                    <label>Fecha final: <input type="date" class="editable"></label>
+                <label>Encargado: <span>{{ $proyecto->encargado_nombre }} {{ $proyecto->encargado_apellido }}</span></label>
+                    <label>Cliente: <span>{{ $proyecto->cliente_nombre }} {{ $proyecto->cliente_apellido }}</span></label>
+                    <label>Fecha inicio: <span>{{ $proyecto->fecha_inicio }}</span></label>
+                    <label>Ubicación: <span>{{ $proyecto->ciudad_proyecto }} - {{ $proyecto->direccion_proyecto }}</span></label>
+                    <label>Costo estimado: <span>${{ $proyecto->costo_estimado }}</span></label>
+                    <label>Estado: <span>{{ $proyecto->estado_proyecto }}</span></label>
+                    <label>Producto: <span>{{ $proyecto->nombre_producto }}</span></label>
+                    <label>Fecha final estimada: <span>{{ $proyecto->fecha_fin }}</span></label>
+                    <form action="{{ url('proyectos/' .$proyecto->id) }}" method="post" id="formEdit">
+                        @csrf {{-- token de seguridad para el formulario  --}}
+                        {{ method_field('PATCH') }}
+                        <label>Costo final: <input type="number" class="editable" name="costo_final" value="{{ $proyecto->costo_final }}"></label>
+                        <label>Fecha final: <input type="date" class="editable input2" name="fecha_fin" value="{{ $proyecto->fecha_fin }}"></label>
+                    </form>
                 </div>
                 <div class="contenedorFases">
                     <div class="capaFase">
+
+                        @foreach($etapas as $etapa)
                         <div class="fase">
-                            <h2>Formalización del contrato</h2>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
+                            <h2>{{ $etapa->nombre_etapa }}</h2>
+                            @foreach($actividades as $actividad)
+                                @if($actividad->etapa_id == $etapa->id)
+                                    <div class="actividad">
+                                        <h4>{{ $actividad->nombre_actividad }}</h4>
+                                        <span>Fecha:  {{ $actividad->fecha_inicio }}</span>
+                                        <span>Responsable: {{ $actividad->encargado_actividad }}</span>
+                                        <div class="addDiv">
+                                            <a href="{{ url('/actividades/' .$actividad->id) }}"><span class="material-icons view" value="{{ $myId = $actividad->id}}">visibility</span></a>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
                             <div class="addDiv">
-                                <span class="material-icons add">add_circle</span>
+                                <span class="material-icons add" value="{{ $etapa->id }}">add_circle</span>
                             </div>
                         </div>
-                        <div class="fase">
-                            <h2>Formalización del contrato</h2>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="addDiv">
-                                <span class="material-icons add">add_circle</span>
-                            </div>
-                        </div>
-                        <div class="fase">
-                            <h2>Formalización del contrato</h2>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="addDiv">
-                                <span class="material-icons add">add_circle</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="capaFase">
-                        <div class="fase">
-                            <h2>Formalización del contrato</h2>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="addDiv">
-                                <span class="material-icons add">add_circle</span>
-                            </div>
-                        </div>
-                        <div class="fase">
-                            <h2>Formalización del contrato</h2>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="addDiv">
-                                <span class="material-icons add">add_circle</span>
-                            </div>
-                        </div>
-                        <div class="fase">
-                            <h2>Formalización del contrato</h2>
-                            <div class="actividad">
-                                <h4>Creación del contrato</h4>
-                                <span>Fecha:  22/10/2021</span>
-                                <span>Responsable: Nelson Fierro</span>
-                                <div class="addDiv">
-                                    <span class="material-icons view">visibility</span>
-                                </div>
-                            </div>
-                            <div class="addDiv">
-                                <span class="material-icons add">add_circle</span>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
