@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('direccion_proyecto');
             $table->date('fecha_inicio');
             $table->date('fecha_fin')->nullable();
+            $table->string('suspension_proyecto')->nullable();
             $table->string('estado_proyecto')->default('En ejecución');
 
             $table->timestamps();

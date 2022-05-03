@@ -13,7 +13,7 @@
     rel="stylesheet">
     <title>Proyectos Unikasas</title>
 </head>
-<body>
+<body onload="calculateURL()">
         <h1 class="titleModule">Proyectos</h1>
         <form class="searchForm" action="">
             <label for="itemSearch">Buscar proyecto:</label>
@@ -33,7 +33,7 @@
                     <a class="buttonCreateProject" href="{{ url('/proyectos/create') }}">Crear proyecto</a>
                 </div>
                 <div class="button">
-                    <a class="buttonArchived" href="../archivadosProyecto/index.html">Archivados</a>
+                    <a class="buttonArchived" value="activos" href="{{ url('/proyectos/search/inactivo') }}">Archivados</a>
                 </div>
                 <div class="button">
                     <a class="buttonCreateReport" href="../CrearReporte/crearReporteEventos.html">Crear reporte</a>
@@ -58,5 +58,5 @@
             </div>
         </div>
 </body>
-<script src="moduloInicioProyecto.js"></script>
+<script src="{{ asset('js/proyectos/inicio.js') }}"></script>
 </html>

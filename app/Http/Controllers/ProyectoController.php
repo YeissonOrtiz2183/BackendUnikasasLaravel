@@ -16,9 +16,20 @@ class ProyectoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($estado)
     {
-        $proyectos['proyectos'] = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio, encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido, cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido FROM proyectos LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id WHERE estado_proyecto = "En ejecucion"');
+        if ($estado == 'activo') {
+            $estadoFind = '"En ejecución"';
+        }elseif ($estado == 'inactivo') {
+            $estadoFind = '"Suspendido" OR estado_proyecto = "Finalizado"';
+        }
+        $proyectos['proyectos'] = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
+                                            encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
+                                            cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
+                                            FROM proyectos
+                                            LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
+                                            LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
+                                            WHERE estado_proyecto ='.$estadoFind);
         return view('proyectos.moduloInicioProyecto', $proyectos);
     }
 
@@ -174,6 +185,9 @@ class ProyectoController extends Controller
         $datosProyecto = request()->except(['_token', '_method']);
 
         Proyecto::where('id', '=', $id)->update($datosProyecto);
+
+        $proyectos['proyectos'] = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio, encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido, cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido FROM proyectos LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id WHERE estado_proyecto = "En ejecucion"');
+        return view('proyectos.moduloInicioProyecto', $proyectos);
     }
 
     /**

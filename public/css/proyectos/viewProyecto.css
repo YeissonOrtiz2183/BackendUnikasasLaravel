@@ -126,6 +126,8 @@ label:nth-child(4){
 }
 
 label:nth-child(6){
+    display: flex;
+    place-items: center;
     grid-column-start: 3;
     grid-row-start: 3;
 }
@@ -297,8 +299,8 @@ iframe{
     border: none;
     background-color: var(--naranja);
     width: 150px;
-    padding: 2% 0px;
-    margin: 5% 0 5% 0;
+    padding: 10px;
+    margin: 20px auto;
     border-radius: 10px;
     font-weight: bold;
 }
@@ -382,6 +384,7 @@ textarea{
     margin-left: auto;
     margin-right: auto;
     flex-direction: column;
+    text-align: center;
 }
 
 h2{

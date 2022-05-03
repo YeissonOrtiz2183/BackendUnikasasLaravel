@@ -12,19 +12,28 @@
 <body>
     <div class="main">
         <div class="top">
-            <button onclick="history.back()"><span class="material-icons back">arrow_back</span></button>
+            <a href="{{ url('/proyectos/search/activo') }}"><span class="material-icons back">arrow_back</span></a>
             @foreach($proyecto as $proyecto)
-            <h1>{{ $proyecto->nombre_proyecto }}</h1>
+                <h1>{{ $proyecto->nombre_proyecto }}</h1>
             @endforeach
         </div>
         <div class="contenedor">
             <aside>
-                <div class="button FinishProject">
-                    <a class="textButton" href="#">Finalizar</a>
-                </div>
-                <div class="button SuspenderProject">
-                    <a class="textButton" href="#">Suspender</a>
-                </div>
+                @if($proyecto->estado_proyecto == "En ejecución")
+                    <div class="button FinishProject">
+                        <a class="textButton" href="#">Finalizar</a>
+                    </div>
+                    <div class="button SuspenderProject">
+                        <a class="textButton" href="#">Suspender</a>
+                    </div>
+                @elseif($proyecto->estado_proyecto == "Suspendido")
+                    <div class="button FinishProject">
+                        <a class="textButton" href="#">Finalizar</a>
+                    </div>
+                    <div class="button SuspenderProject" style="display: none;">
+                        <a class="textButton" href="#" style="display: none;">Suspender</a>
+                    </div>
+                @endif
             </aside>
             <div class="proyecto">
                 <div class="infoGeneral">
@@ -33,14 +42,21 @@
                     <label>Fecha inicio: <span>{{ $proyecto->fecha_inicio }}</span></label>
                     <label>Ubicación: <span>{{ $proyecto->ciudad_proyecto }} - {{ $proyecto->direccion_proyecto }}</span></label>
                     <label>Costo estimado: <span>${{ $proyecto->costo_estimado }}</span></label>
-                    <label>Estado: <span>{{ $proyecto->estado_proyecto }}</span></label>
+                    
+                    @if($proyecto->estado_proyecto == "Suspendido")
+                        <label>Estado: {{ $proyecto->estado_proyecto }}<span class="material-icons md-100">feed</span></label>
+                    @else
+                        <label>Estado: <span>{{ $proyecto->estado_proyecto }}</span></label>
+                    @endif
                     <label>Producto: <span>{{ $proyecto->nombre_producto }}</span></label>
                     <label>Fecha final estimada: <span>{{ $proyecto->fecha_fin }}</span></label>
                     <label>Costo final: <span>${{ $proyecto->costo_final }}</span></label>
                     <label>Fecha final: <span>{{ $proyecto->fecha_fin }}</span></label>
-                    <a id="link1" href="{{ url('/proyectos/' .$proyecto->id. '/edit') }}"><span class="material-icons edit-1">edit</span></a>
+                    @if($proyecto->estado_proyecto == "En ejecución")
+                        <a id="link1" href="{{ url('/proyectos/' .$proyecto->id. '/edit') }}"><span class="material-icons edit-1">edit</span></a>
 
-                    <a id="link2" href="{{ url('/proyectos/' .$proyecto->id. '/edit') }}"><span class="material-icons edit-1">edit</span></a>
+                        <a id="link2" href="{{ url('/proyectos/' .$proyecto->id. '/edit') }}"><span class="material-icons edit-1">edit</span></a>
+                    @endif
                 </div>
 
                 <div class="contenedorFases">
@@ -80,9 +96,14 @@
                     <span class="material-icons closeIcon">highlight_off</span>
                 </div>
                 <div class="modal__content--contenedor">
-                    <h2>Motivo de la suspensión</h2>
-                    <textarea name="" id="" cols="60" rows="10"></textarea>
-                    <a href="../inicioProyecto/moduloInicioProyecto.html"><button class="save" type="button">Guardar</button></a>
+                    <form action="{{ url('proyectos/' .$proyecto->id) }}" method="post" id="formSuspender">
+                        @csrf {{-- token de seguridad para el formulario  --}}
+                        {{ method_field('PATCH') }}
+                        <h2>Motivo de la suspensión</h2>
+                        <textarea name="suspension_proyecto" id="" cols="60" rows="10"></textarea>
+                        <input type="text" name="estado_proyecto" value="Suspendido" readonly>
+                        <button class="save" type="submit">Guardar</button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -182,12 +203,18 @@
                     <span class="material-icons closeIcon">highlight_off</span>
                 </div>
                 <div class="modal__content--contenedor">
-                    <h2>Finalizar proyecto</h2>
-                    <span>¿Desea finalizar el proyecto?</span>
-                    <div class="botones">
-                        <a href="../inicioProyecto/moduloInicioProyecto.html"><button class="save" type="button">Aceptar</button></a>
-                        <button class="save" type="button">Cancelar</button>
-                    </div>
+                    <form action="{{ url('proyectos/' .$proyecto->id) }}" method="post">
+                        @csrf {{-- token de seguridad para el formulario  --}}
+                        {{ method_field('PATCH') }}
+                        <h2>Finalizar proyecto</h2>
+                        <span>¿Desea finalizar el proyecto?</span>
+                        <input type="text" name="estado_proyecto" value="Finalizado" readonly>
+                        <div class="botones">
+                            <button class="save" type="submit">Aceptar</button>
+                            <button class="save" type="button">Cancelar</button>
+                        </div>
+                    </form>
+                    
                 </div>
             </div>
         </section>

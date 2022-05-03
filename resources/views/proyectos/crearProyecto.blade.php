@@ -130,7 +130,7 @@
 
                     <div class="botones">
                         <input class="confirm" type="submit" value="CONFIRMAR" id="submit"></input>
-                        <a class="cancel" href="{{ url('proyectos') }}">CANCELAR</a>
+                        <a class="cancel" href="{{ url('proyectos/search/activo') }}">CANCELAR</a>
                     </div>
                 </div>
             </form>

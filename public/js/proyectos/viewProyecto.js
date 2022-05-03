@@ -1,7 +1,7 @@
 const viewActivity = document.querySelectorAll(".view")
 const createActivity = document.querySelectorAll('.add')
 const suspenderProject = document.querySelector('.SuspenderProject')
-const finishProject = document.querySelector('.FinishProject')
+const finishProject = document.querySelectorAll('.FinishProject')
 const modal = document.querySelectorAll('.modal')
 const iconClose = document.querySelectorAll('.iconClose')
 const editActivity = document.querySelectorAll('.edit')
@@ -16,13 +16,7 @@ for (let l = 0; l < saveButton.length; l++) {
     })
 
 }
-// for(let i=0; i < viewActivity.length; i++){
-//     viewActivity[i].addEventListener('click', () => {
-//         modal[0].classList.remove('hidden')
-//         modal[0].classList.add('visible')
-//         let value = "{{ $idActividadCargar = " + viewActivity[i].getAttribute("value") + " }}"
-//     })
-// }
+
 for (let z = 0; z < editActivity.length; z++) {
     editActivity[z].addEventListener('click', () => {
         modal[0].classList.remove('visible')
@@ -46,10 +40,14 @@ suspenderProject.addEventListener('click', () => {
     modal[0].classList.add('visible')
 })
 
-finishProject.addEventListener('click', () => {
-    modal[3].classList.remove('hidden')
-    modal[3].classList.add('visible')
-})
+for (let i = 0; i < finishProject.length; i++) {
+    finishProject[i].addEventListener('click', () => {
+        modal[3].classList.remove('hidden')
+        modal[3].classList.add('visible')
+    })
+}
+
+
 
 
 for (let x = 0; x < modal.length; x++){

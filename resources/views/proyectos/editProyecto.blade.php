@@ -19,7 +19,7 @@
         <div class="contenedor">
             <aside>
                 <div class="button save">
-                    <button class="textButton saveButton" type="submit" form="formEdit">Guardar</button>
+                    <button class="textButton saveButton" type="submit" form="formEdit" onclick="history.back()">Guardar</button>
                 </div>
                 <div class="button cancel">
                     <a class="textButton cancelButton" onclick="history.back()">Cancelar</a>
