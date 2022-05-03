@@ -4,6 +4,9 @@ use App\Http\Controllers\EventoController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Evento;
 
+use App\Http\Controllers\CotizacionController;
+use App\Models\Cotizacion;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,3 +29,8 @@ Route::get('/disponibilidad', [App\Http\Controllers\EventoController::class, 'di
 Route::get('/ModuloEventos/{id}/cancel', [App\Http\Controllers\EventoController::class, 'cancel'])->name('ModuloEventos.cancel');
 
 Route::get('/reporteEventos', [App\Http\Controllers\EventoController::class, 'reporteEventos'])->name('ModuloEventos.reporte');
+
+
+// rutas cotizaciones
+
+Route::resource('cotizaciones', CotizacionController::class);

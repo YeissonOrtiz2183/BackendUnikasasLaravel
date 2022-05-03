@@ -84,7 +84,12 @@ class EventoController extends Controller
 
     public function reporteEventos(Request $request)
     {
+        // $request = $request->except('_token');
+        // return response()->json($request);
         $eventoNombre = $request->get('searchBar');
+        // if($eventoNombre != '')
+        //     return response()->json($request->except('_token'));
+
         $eventoFechaI = $request->get('fechaInicial'); // variables para el filtro de creacion del reporte
         $eventoFechaF = $request->get('fechaFinal');
 
