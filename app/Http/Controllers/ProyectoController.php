@@ -95,7 +95,7 @@ class ProyectoController extends Controller
             $idEtapa--;
         }
 
-        header('Location: http://127.0.0.1:8000/proyectos');
+        header('Location: http://127.0.0.1:8000/proyectos/search/activo');
 
         exit;
     }
@@ -111,20 +111,20 @@ class ProyectoController extends Controller
         $proyecto = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto,
                                 proyectos.fecha_inicio, proyectos.ciudad_proyecto, proyectos.direccion_proyecto,
                                 proyectos.costo_estimado, proyectos.estado_proyecto, proyectos.fecha_fin,
-                                proyectos.costo_final , productos.nombre_producto as nombre_producto,
+                                proyectos.costo_final, proyectos.suspension_proyecto, productos.nombre_producto as nombre_producto,
                                 encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
                                 cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
-                                FROM proyectos 
+                                FROM proyectos
                                 LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
                                 LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
                                 INNER JOIN productos on proyectos.producto_id = productos.id
                                 WHERE proyectos.id = '.$id);
-        
+
         $etapas = DB::select('SELECT etapas.id, etapas.nombre_etapa
                             from proyectos
-                            INNER JOIN proyecto_etapas as pro ON proyectos.id = pro.proyecto_id 
+                            INNER JOIN proyecto_etapas as pro ON proyectos.id = pro.proyecto_id
                             INNER JOIN etapas ON pro.etapa_id = etapas.id
-                            WHERE proyectos.id = ' .$id. ' 
+                            WHERE proyectos.id = ' .$id. '
                             ORDER BY etapas.id ASC');
 
         $actividades = DB::select('SELECT actividads.id, actividads.nombre_actividad, actividads.fecha_inicio,
@@ -150,17 +150,17 @@ class ProyectoController extends Controller
                                 proyectos.costo_final , productos.nombre_producto as nombre_producto,
                                 encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
                                 cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
-                                FROM proyectos 
+                                FROM proyectos
                                 LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
                                 LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
                                 INNER JOIN productos on proyectos.producto_id = productos.id
                                 WHERE proyectos.id = '.$id);
-        
+
         $etapas = DB::select('SELECT etapas.id, etapas.nombre_etapa
                             from proyectos
-                            INNER JOIN proyecto_etapas as pro ON proyectos.id = pro.proyecto_id 
+                            INNER JOIN proyecto_etapas as pro ON proyectos.id = pro.proyecto_id
                             INNER JOIN etapas ON pro.etapa_id = etapas.id
-                            WHERE proyectos.id = ' .$id. ' 
+                            WHERE proyectos.id = ' .$id. '
                             ORDER BY etapas.id ASC');
 
         $actividades = DB::select('SELECT actividads.id, actividads.nombre_actividad, actividads.fecha_inicio,

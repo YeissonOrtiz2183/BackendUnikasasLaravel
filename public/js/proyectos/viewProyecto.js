@@ -1,11 +1,10 @@
-const viewActivity = document.querySelectorAll(".view")
 const createActivity = document.querySelectorAll('.add')
 const suspenderProject = document.querySelector('.SuspenderProject')
 const finishProject = document.querySelectorAll('.FinishProject')
 const modal = document.querySelectorAll('.modal')
 const iconClose = document.querySelectorAll('.iconClose')
-const editActivity = document.querySelectorAll('.edit')
 const saveButton = document.querySelectorAll('.save')
+const viewSuspension = document.querySelector('.suspension')
 
 for (let l = 0; l < saveButton.length; l++) {
     saveButton[l].addEventListener('click', () => {
@@ -17,20 +16,11 @@ for (let l = 0; l < saveButton.length; l++) {
 
 }
 
-for (let z = 0; z < editActivity.length; z++) {
-    editActivity[z].addEventListener('click', () => {
-        modal[0].classList.remove('visible')
-        modal[0].classList.add('hidden')
-        modal[1].classList.remove('hidden')
-        modal[1].classList.add('visible')
-    })
-}
-
 for (let y = 0; y < createActivity.length; y++) {
     createActivity[y].addEventListener('click', () =>{
         console.log("Abrir modal crear actividad")
-        modal[2].classList.remove('hidden')
-        modal[2].classList.add('visible')
+        modal[1].classList.remove('hidden')
+        modal[1].classList.add('visible')
         document.querySelector('#etapaId').value = createActivity[y].getAttribute("value");
     })
 }
@@ -42,13 +32,15 @@ suspenderProject.addEventListener('click', () => {
 
 for (let i = 0; i < finishProject.length; i++) {
     finishProject[i].addEventListener('click', () => {
-        modal[3].classList.remove('hidden')
-        modal[3].classList.add('visible')
+        modal[2].classList.remove('hidden')
+        modal[2].classList.add('visible')
     })
 }
 
-
-
+viewSuspension.addEventListener('click', () =>{
+    modal[3].classList.remove('hidden')
+    modal[3].classList.add('visible')
+})
 
 for (let x = 0; x < modal.length; x++){
     for (let j = 0; j < iconClose.length; j++) {

@@ -42,9 +42,9 @@
                     <label>Fecha inicio: <span>{{ $proyecto->fecha_inicio }}</span></label>
                     <label>Ubicación: <span>{{ $proyecto->ciudad_proyecto }} - {{ $proyecto->direccion_proyecto }}</span></label>
                     <label>Costo estimado: <span>${{ $proyecto->costo_estimado }}</span></label>
-                    
+
                     @if($proyecto->estado_proyecto == "Suspendido")
-                        <label>Estado: {{ $proyecto->estado_proyecto }}<span class="material-icons md-100">feed</span></label>
+                        <label>Estado: {{ $proyecto->estado_proyecto }}<span class="material-icons md-100 suspension">feed</span></label>
                     @else
                         <label>Estado: <span>{{ $proyecto->estado_proyecto }}</span></label>
                     @endif
@@ -87,7 +87,7 @@
             </div>
         </div>
 
-        <!-- this -->
+        <!-- modales -->
 
 
         <section class="modal hidden">
@@ -105,50 +105,6 @@
                         <button class="save" type="submit">Guardar</button>
                     </form>
                 </div>
-            </div>
-        </section>
-
-        <section class="modal hidden">
-            <div class="modal__content editActivity">
-                <div class="iconClose">
-                    <span class="material-icons closeIcon">highlight_off</span>
-                </div>
-                <form action="{{ url('/actividades') }}" method="POST">
-                    @csrf {{-- token de seguridad para el formulario  --}}
-                    <div class="modal__content--contenedor">
-                        <input id="titleActivity" name="nombre_actividad" type="text" placeholder="Nombre de la actividad">
-                        <div class="infoActividad">
-                            <div class="campo">
-                                <label>Encargado:</label>
-                                <input type="text" name="encargado_actividad">
-                            </div>
-                            <div class="campo">
-                                <label>Objetivo:</label>
-                                <textarea name="objetivo_actividad" id="" cols="40" rows="3"></textarea>
-                            </div>
-                            <div class="campo">
-                                <label>Fecha inicio:</label>
-                                <input type="date" name="fecha_inicio">
-                            </div>
-                            <div class="campo">
-                                <label>Fecha fin:</label>
-                                <input type="date" name="fecha_fin">
-                            </div>
-                            <div class="campo">
-                                <label>Observaciones:</label>
-                                <textarea name="observaciones_actividad" id="" cols="40" rows="4"></textarea>
-                            </div>
-                            <div class="campo">
-                                <label>Estado:</label>
-                                <input type="text" name="estado_actividad">
-                            </div>
-                            <div class="botones">
-                                <input class="save" type="submit" value="Crear actividad"></input>
-                                <button class="save" type="button">Cancelar</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
             </div>
         </section>
 
@@ -214,7 +170,23 @@
                             <button class="save" type="button">Cancelar</button>
                         </div>
                     </form>
-                    
+                </div>
+            </div>
+        </section>
+
+        <section class="modal hidden">
+            <div class="modal__content suspensionContent">
+                <div class="iconClose">
+                    <span class="material-icons closeIcon">highlight_off</span>
+                </div>
+                <div class="modal__content--contenedor">
+                    <h2>Motivo de la suspensión</h2>
+                    @if($proyecto->suspension_proyecto != null)
+                        <p>{{ $proyecto->suspension_proyecto }}</p>
+                    @else
+                        <p>No hay motivo de la suspensión</p>
+                    @endif
+                    <button type="button" class="saveButton save">Aceptar</button>
                 </div>
             </div>
         </section>
