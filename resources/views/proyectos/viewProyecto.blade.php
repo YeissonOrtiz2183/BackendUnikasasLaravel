@@ -21,17 +21,20 @@
             <aside>
                 @if($proyecto->estado_proyecto == "En ejecución")
                     <div class="button FinishProject">
-                        <a class="textButton" href="#">Finalizar</a>
+                        <a class="textButton" type="button" href="#">Finalizar</a>
                     </div>
                     <div class="button SuspenderProject">
-                        <a class="textButton" href="#">Suspender</a>
+                        <a class="textButton" type="button" href="#">Suspender</a>
                     </div>
                 @elseif($proyecto->estado_proyecto == "Suspendido")
                     <div class="button FinishProject">
-                        <a class="textButton" href="#">Finalizar</a>
+                        <a class="textButton" type="button" href="#">Finalizar</a>
+                    </div>
+                    <div class="button activate">
+                        <a class="textButton" type="button" href="#">Activar</a>
                     </div>
                     <div class="button SuspenderProject" style="display: none;">
-                        <a class="textButton" href="#" style="display: none;">Suspender</a>
+                        <a class="textButton" type="button" href="#" style="display: none;">Suspender</a>
                     </div>
                 @endif
             </aside>
@@ -78,7 +81,9 @@
                                 @endif
                             @endforeach
                             <div class="addDiv">
-                                <span class="material-icons add" value="{{ $etapa->id }}">add_circle</span>
+                                @if($proyecto->estado_proyecto == "En ejecución")
+                                    <span class="material-icons add" value="{{ $etapa->id }}">add_circle</span>
+                                @endif
                             </div>
                         </div>
                         @endforeach
@@ -93,15 +98,15 @@
         <section class="modal hidden">
             <div class="modal__content modalSuspender">
                 <div class="iconClose">
-                    <span class="material-icons closeIcon">highlight_off</span>
+                    <span class="material-icons save">highlight_off</span>
                 </div>
                 <div class="modal__content--contenedor">
                     <form action="{{ url('proyectos/' .$proyecto->id) }}" method="post" id="formSuspender">
                         @csrf {{-- token de seguridad para el formulario  --}}
                         {{ method_field('PATCH') }}
                         <h2>Motivo de la suspensión</h2>
-                        <textarea name="suspension_proyecto" id="" cols="60" rows="10"></textarea>
-                        <input type="text" name="estado_proyecto" value="Suspendido" readonly>
+                            <textarea name="suspension_proyecto" id="" cols="60" rows="10" maxlength="200"></textarea>
+                        <input type="text" name="estado_proyecto" value="Suspendido" readonly style="display: none;">
                         <button class="save" type="submit">Guardar</button>
                     </form>
                 </div>
@@ -111,7 +116,7 @@
         <section class="modal hidden">
             <div class="modal__content createActivity editActivity">
                 <div class="iconClose">
-                    <span class="material-icons closeIcon">highlight_off</span>
+                    <span class="material-icons save">highlight_off</span>
                 </div>
                 <div class="modal__content--contenedor">
                     <form action="{{ url('/actividades') }}" method="POST">
@@ -125,7 +130,7 @@
                             </div>
                             <div class="campo">
                                 <label>Objetivo:</label>
-                                <textarea name="objetivo_actividad" id="" cols="40" rows="3"></textarea>
+                                <textarea name="objetivo_actividad" id="" cols="40" rows="3" maxlength="100"></textarea>
                             </div>
                             <div class="campo">
                                 <label>Fecha inicio:</label>
@@ -156,7 +161,7 @@
         <section class="modal hidden">
             <div class="modal__content finalizarProyecto">
                 <div class="iconClose">
-                    <span class="material-icons closeIcon">highlight_off</span>
+                    <span class="material-icons save">highlight_off</span>
                 </div>
                 <div class="modal__content--contenedor">
                     <form action="{{ url('proyectos/' .$proyecto->id) }}" method="post">
@@ -164,7 +169,7 @@
                         {{ method_field('PATCH') }}
                         <h2>Finalizar proyecto</h2>
                         <span>¿Desea finalizar el proyecto?</span>
-                        <input type="text" name="estado_proyecto" value="Finalizado" readonly>
+                        <input type="text" name="estado_proyecto" value="Finalizado" readonly style="display: none;">
                         <div class="botones">
                             <button class="save" type="submit">Aceptar</button>
                             <button class="save" type="button">Cancelar</button>
@@ -177,12 +182,12 @@
         <section class="modal hidden">
             <div class="modal__content suspensionContent">
                 <div class="iconClose">
-                    <span class="material-icons closeIcon">highlight_off</span>
+                    <span class="material-icons save">highlight_off</span>
                 </div>
                 <div class="modal__content--contenedor">
                     <h2>Motivo de la suspensión</h2>
                     @if($proyecto->suspension_proyecto != null)
-                        <p>{{ $proyecto->suspension_proyecto }}</p>
+                        <textarea cols="60" rows="10" readonly>{{ $proyecto->suspension_proyecto }}</textarea>
                     @else
                         <p>No hay motivo de la suspensión</p>
                     @endif
@@ -190,6 +195,28 @@
                 </div>
             </div>
         </section>
+
+        <section class="modal hidden">
+            <div class="modal__content activeProject">
+                <div class="iconClose">
+                    <span class="material-icons save">highlight_off</span>
+                </div>
+                <div class="modal__content--contenedor">
+                    <h2>Activar proyecto</h2>
+                    <span>¿Desea activar el proyecto?</span>
+                    <form action="{{ url('proyectos/' .$proyecto->id) }}" method="post" id="activateForm">
+                        @csrf {{-- token de seguridad para el formulario  --}}
+                        {{ method_field('PATCH') }}
+                        <input type="text" value="En ejecución" name="estado_proyecto" readonly style="display: none;">
+                    </form>
+                    <div class="botones">
+                        <button type="submit" class="saveButton" form="activateForm">Aceptar</button>
+                        <button type="button" class="saveButton save">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </div>
 </body>
 <script src="{{ asset('js/proyectos/viewProyecto.js') }}"></script>

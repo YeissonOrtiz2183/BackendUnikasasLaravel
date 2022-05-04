@@ -24,7 +24,7 @@ class ActividadFactory extends Factory
             'fecha_inicio' => $this->faker->dateTimeBetween('-1 years', '+1 years'),
             'fecha_fin' => $this->faker->dateTimeBetween('-1 years', '+1 years'),
             'observaciones_actividad' => $this->faker->word,
-            'estado_actividad' => $this->faker->randomElement(['Activo', 'Inactivo']),
+            'estado_actividad' => $this->faker->randomElement(['En ejecución', 'Finalizada']),
         ];
     }
 }

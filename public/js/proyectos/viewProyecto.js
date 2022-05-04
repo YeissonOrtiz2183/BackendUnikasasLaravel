@@ -1,8 +1,9 @@
 const createActivity = document.querySelectorAll('.add')
 const suspenderProject = document.querySelector('.SuspenderProject')
 const finishProject = document.querySelectorAll('.FinishProject')
+const activateProject = document.querySelector('.activate')
 const modal = document.querySelectorAll('.modal')
-const iconClose = document.querySelectorAll('.iconClose')
+const iconClose = document.querySelectorAll('.save')
 const saveButton = document.querySelectorAll('.save')
 const viewSuspension = document.querySelector('.suspension')
 
@@ -51,7 +52,11 @@ for (let x = 0; x < modal.length; x++){
     }
 }
 
-
+activateProject.addEventListener('click', () =>{
+    console.info('Mostrar modal')
+    modal[4].classList.remove('hidden')
+    modal[4].classList.add('visible')
+})
 
 
 
