@@ -45,7 +45,7 @@ class ActividadController extends Controller
             'etapa_id' => $request->etapa_id,
         ]);
 
-        return redirect('/proyectos/search/activo');
+        
     }
 
     /**
@@ -83,6 +83,8 @@ class ActividadController extends Controller
         $datosActividad = request()->except(['_token', '_method']);
 
         Actividad::where('id', '=', $id)->update($datosActividad);
+
+        return redirect('/actividades/'.$id);
     }
 
     /**
