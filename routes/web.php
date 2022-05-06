@@ -16,8 +16,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ActividadController;
+use App\Http\Controllers\UserController;
 
 Route::resource('proyectos', ProyectoController::class);
 Route::get('proyectos/search/{estado}', [ProyectoController::class, 'index']);
 Route::resource('productos', ProductoController::class);
 Route::resource('actividades', ActividadController::class);
+Route::resource('usuarios', UserController::class);

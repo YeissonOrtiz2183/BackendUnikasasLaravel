@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
-class RolController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,8 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios['usuarios'] = User::all();
+        return view('usuarios.inicioUsuarios', $usuarios);
     }
 
     /**
