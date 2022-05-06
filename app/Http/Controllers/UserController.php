@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -25,7 +26,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = DB::select('SELECT * FROM rols;');
+        return view('usuarios.crearUsuario', compact('roles'));
     }
 
     /**
@@ -36,7 +38,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datosUsuario = request()->except('_token');
+        echo $datosUsuario;
     }
 
     /**

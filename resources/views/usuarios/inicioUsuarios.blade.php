@@ -27,7 +27,7 @@
         <div class="container">
             <aside>
                 <div class="button">
-                    <a class="buttonCreateProject" href="3registrarUsuario.html">Registrar usuario</a>
+                    <a class="buttonCreateProject" href="{{ url('usuarios/create') }}">Registrar usuario</a>
                 </div>
                 <div class="button">
                     <a class="buttonArchived" href="4modificarUsuario.html">Modificar usuario</a>
