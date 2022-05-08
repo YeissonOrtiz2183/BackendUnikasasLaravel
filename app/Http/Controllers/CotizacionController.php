@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cotizacion;
-
+use App\Models\Producto;
 class CotizacionController extends Controller
 {
     public function index()
@@ -33,6 +33,13 @@ class CotizacionController extends Controller
         return redirect('cotizaciones');
     }
 
+    public function show($id)
+    {
+        $cotizacion = Cotizacion::findOrfail($id);
+        $producto = Producto::findOrfail($cotizacion->producto_id);
+        return view('Cotizaciones.visualizarCotizacion.vistaCotizacion', compact('cotizacion', 'producto'));
+    }
+
     public function update(Request $request, $id)
     {
         $datosCotizacion = request()->except(['_token','_method']);
@@ -43,7 +50,7 @@ class CotizacionController extends Controller
 
     public function destroy($id)
     {
-        $cotizacion = Cotizacion::findOrFail($id);
-        return redirect('cotizacion');
+        Cotizacion::destroy($id);
+        return redirect('cotizaciones');
     }
 }

@@ -25,7 +25,9 @@ class CotizacionFactory extends Factory
             'telefono_cotizante' => $this->faker->tollFreePhoneNumber,
             'ciudad_cotizante' => $this->faker->word,
             'ubicacion_cotizante' => $this->faker->word,
-            'comentarios_cotizacion' => $this->faker->word
+            'fecha_cotizacion' => $this->faker->dateTimeBetween('-1 years', '+1 years'),
+            'comentarios_cotizacion' => $this->faker->word,
+            'estado_cotizacion' => $this->faker->randomElement(['Activa', 'Cancelada']),
         ];
     }
 }

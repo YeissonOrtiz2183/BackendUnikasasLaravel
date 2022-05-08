@@ -9,24 +9,24 @@
     <title>Vista Cotizacion</title>
 </head>
 <body>
-    <center><h1><strong>Vista cotizacion</strong></h1></center>
+    <center><h1><strong>Visualizar cotizacion</strong></h1></center>
     <br><br>
     
     <center><div class="card" style="width: 60%;">
-        <img src="https://scontent-bog1-1.xx.fbcdn.net/v/t39.30808-6/223683928_2631095877191340_1582413082901353540_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=8bfeb9&_nc_eui2=AeFum5Iz09C6Owra83LMC9ghzn5BePKIIFnOfkF48oggWfkNrjxiZQYPL9_1nwFNB0UeVze3fcd6B-CnPH_Nwtt8&_nc_ohc=JM_obpXKrhYAX-WG5v-&tn=K0KX2yi_smMwVvNr&_nc_ht=scontent-bog1-1.xx&oh=00_AT-5w3Sk_GIsYolK9N4YOuzB_8ZZto6fUn9hOTo19D1lvw&oe=6231B4DB" class="card-img-top" alt="">
+        <img src="https://staticw.s3.amazonaws.com/inmuebles/gr45507720201218113029.jpg" class="card-img-top" width="100" height="400" style="width: 50%; margin: 0 auto;" class="img-thumbnail img-fluid">
         <div class="card-body">
-          <h5 class="card-title">Casa modelo 72M²</h5>
-          <p class="card-text">Casa 72 metros, en un nivel, teja gris, puertas y ventanas metálicas, corredor con barandas metalica.</p>
+          <h5 class="card-title"><b>Producto: </b>{{ $producto->nombre_producto }}</h5>
+          <p class="card-text"><b>Descripción: </b>{{ $producto->descripcion_producto }}</p>
         </div>
        
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"> <h5>Valor</h5>$20.500.00 <p class="card-text"></p></li>
-          <li class="list-group-item"><h5>Cotizante</h5>Edwin Montoya<p class="card-text"></p></li>
-          <li class="list-group-item"><h5>Datos</h5><strong>Email:</strong> Edmontoya2030@gmail.com, <strong>Telefono:</strong>3135667890, <strong>Ciudad:</strong> Bogota, <strong>Producto:</strong> Casa modelo 36M², <strong>Ubicacion:</strong>Fontibon.<p class="card-text"></p></li>
-         
+          <li class="list-group-item"> <h5>Valor</h5>$ {{ $producto->precio_producto }}  <p class="card-text"></p></li>
+          <li class="list-group-item"><h5>Cotizante</h5>{{ $cotizacion->nombres_cotizante }} {{ $cotizacion->apellidos_cotizante }}<p class="card-text"></p></li>
+          <li class="list-group-item"><h5>Datos</h5><strong>Email: </strong> {{ $cotizacion->email_cotizante }} <strong> Telefono: </strong>{{ $cotizacion->telefono_cotizante }}<strong> Ciudad: </strong> {{ $cotizacion->ciudad_cotizante}} <strong>Fecha: </strong> {{ $cotizacion->fecha_cotizacion}} <strong>Estado: </strong> {{ $cotizacion->estado_cotizacion}} <strong> Ubicacion: </strong>{{ $cotizacion->ubicacion_cotizante}}<p class="card-text"></p></li>
+          <li class="list-group-item"> <h5>Comentarios</h5> {{ $cotizacion->comentarios_cotizacion }}<p class="card-text"></p></li>
         </ul>
         <div class="card-body">
-          <a href="http://127.0.0.1:5500/Consultar_Cotizacion/Consultar_Cotizacion.html" class="card-link">Regresar</a>
+          <div class="row row col-2"><a href="{{ url('cotizaciones') }}"><button type="button" class="btn btn-lg btn-warning" data-bs-toggle="popover" title="Click para regresar" data-bs-content="And here's some amazing content. It's very engaging.Right?">Regresar</button></a></div>
         </div>
       </div>
    

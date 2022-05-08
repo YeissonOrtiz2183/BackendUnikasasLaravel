@@ -93,9 +93,27 @@
              Por favor digite su ubicacion
             </div>
           </div>
+
+          <div class="col-md-4">
+            <label for="validationServer05" class="form-label">Fecha</label>
+            <input type="date" class="form-control is-invalid" id="validationServer05" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" required name="ubicacion_cotizante"
+                value="{{ isset($cotizacion->fecha_cotizacion)?$cotizacion->fecha_cotizacion:old('fecha_cotizacion') }}">
+            <div id="validationServer05Feedback" class="invalid-feedback">
+             Por ingrese la fecha de la cotización
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <label for="validationServer04" class="form-label">Estado</label>
+            <select class="form-select is-invalid" id="validationServer04" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="estado_cotizacion">
+              <option value="{{ isset($cotizacion->estado_cotizacion)?$cotizacion->estado_cotizacion:old('estado_cotizacion') }}">{{ isset($cotizacion->estado_cotizacion)?$cotizacion->estado_cotizacion:old('estado_cotizacion') }}</option>
+              <option value="Cancelada">Cancelada</option>
+              <option value="Activa">Activa</option>
+            </select>
+          </div>
         
           <div class="col-md-4">
-           Comentarios<textarea id="comentarios" cols="97" rows="3" name="comentarios_cotizacion">{{ isset($cotizacion->comentarios_cotizacion)?$cotizacion->comentarios_cotizacion:old('comentarios_cotizacion') }}
+           Comentarios<textarea id="comentarios" cols="148" rows="3" name="comentarios_cotizacion">{{ isset($cotizacion->comentarios_cotizacion)?$cotizacion->comentarios_cotizacion:old('comentarios_cotizacion') }}
            </textarea>
             
         </div>

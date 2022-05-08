@@ -52,18 +52,18 @@
           <label for="validationServer04" class="form-label">Ciudad</label>
           <select class="form-select is-invalid" id="validationServer04" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="ciudad_cotizante">
             <option selected disabled value="">Selecciona</option>
-            <option value="1">Bogota</option>
-            <option>Cundinamarca</option>
-            <option>Tunja</option>
-            <option>Boyaca</option>
-            <option>Arauca</option>
-            <option>Popayan</option>
-            <option>Armenia</option>
-            <option>Cartagena</option>
-            <option>Medellin</option>
-            <option>Villavicencio</option>
-            <option>Cali</option>
-            <option>Arauca</option>
+            <option value="Bogota">Bogota</option>
+            <option value="Cundinamarca">Cundinamarca</option>
+            <option value="Tunja">Tunja</option>
+            <option value="Boyaca">Boyaca</option>
+            <option value="Arauca">Arauca</option>
+            <option value="Popayan">Popayan</option>
+            <option value="Armenia">Armenia</option>
+            <option value="Cartagena">Cartagena</option>
+            <option value="Medellin">Medellin</option>
+            <option value="Villavicencio">Villavicencio</option>
+            <option value="Cali">Cali</option>
+            <option value="Arauca">Arauca</option>
             <option>Otra</option>
           </select>
           <div id="validationServer04Feedback" class="invalid-feedback">
@@ -84,9 +84,20 @@
              Por favor digite su ubicacion
             </div>
           </div>
+          <div class="col-md-4">
+            <label for="validationServer05" class="form-label">Fecha</label>
+            <input type="date" class="form-control is-invalid" id="validationServer05" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" required name="fecha_cotizacion">
+            <div id="validationServer05Feedback" class="invalid-feedback">
+             Ingrese la fecha de la cotización
+            </div>
+          </div>
+
+          <div>
+            <input type="hidden" class="form-control is-invalid" id="validationServer05" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" value="Activo" name="estado_cotizacion">
+          </div>
         
           <div class="col-md-4">
-           Comentarios<textarea id="comentarios" cols="97" rows="3" name="comentarios_cotizacion"></textarea>
+           Comentarios<textarea id="comentarios" cols="148" rows="3" name="comentarios_cotizacion"></textarea>
             
         </div>
          <!-- Modal -->
@@ -94,7 +105,7 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="D" id="exampleModalLabel"> Crear  cotizacion</h5>
+                <h5 class="D" id="exampleModalLabel"> Crear cotizacion</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
