@@ -61,7 +61,9 @@ class RolController extends Controller
      */
     public function edit($id)
     {
-        //
+        $rol = Rol::find($id);
+        $privilegios = DB::select('SELECT * FROM privilegios');
+        return view('roles.modificarRol', compact('rol', 'privilegios'));
     }
 
     /**
@@ -73,7 +75,13 @@ class RolController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::select('DELETE FROM rol_privilegios WHERE rol_id = ' .$id);
+        $privilegiosSelected = request()->except(['_token', '_method']);
+        $data = $privilegiosSelected['privilegios'];
+        foreach ($data as $privilegio) {
+            DB::select('INSERT INTO rol_privilegios(rol_id, privilegio_id) VALUES (' .$id. ',' .$privilegio. ');');
+        }
+
     }
 
     /**

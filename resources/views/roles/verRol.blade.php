@@ -46,10 +46,9 @@
 
         </div>
             <div class="botones modificar">
-            <a href="9modificarRol.html" class="button-uno">Modificar rol</a>
+            <a href="{{ url('roles/' .$rol->id. '/edit') }}" class="button-uno">Modificar rol</a>
             </div>
         </div>
-        <a href="1inicioUsuarios.html">
 </a>
     </div>
 </main>
