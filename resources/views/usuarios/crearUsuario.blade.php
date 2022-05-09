@@ -14,7 +14,7 @@
 
 <body>
     <main class="workspace">
-        <a href="1inicioUsuarios.html">
+        <a href="{{ url('usuarios') }}">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <line x1="5" y1="12" x2="19" y2="12" />
@@ -27,43 +27,43 @@
             @csrf {{-- token de seguridad para el formulario  --}}
             <div class="contenedor-campos">
             <div class="campo">
-                <label>Primer nombre</label>
+                <label>Primer nombre:</label>
                 <input class="input-text" type="text" name="primer_nombre">
             </div>
             <div class="campo">
-                <label>Segundo nombre</label>
+                <label>Segundo nombre:</label>
                 <input class="input-text" type="text" name="segundo_nombre">
             </div>
             <div class="campo">
-                <label>Primer apellido</label>
+                <label>Primer apellido:</label>
                 <input class="input-text" type="text" name="primer_apellido">
             </div>
             <div class="campo">
-                <label>Segundo apellido</label>
+                <label>Segundo apellido:</label>
                 <input class="input-text" type="text" name="segundo_apellido">
             </div>
             <div class="campo">
-                <label>Tipo de documento</label>
+                <label>Tipo de documento:</label>
                 <select name="tipo_documento">
                     <option>Seleccione</option>
-                    <option>Cedula de ciudadanía</option>
-                    <option>Cedula de extranjería</option>
+                    <option value="CC">Cedula de ciudadanía</option>
+                    <option value="CE">Cedula de extranjería</option>
                 </select>
             </div>
             <div class="campo">
-                <label>Numero de documento</label>
+                <label>Numero de documento:</label>
                 <input class="input-text" type="number" name="numero_documento">
             </div>
             <div class="campo">
-                <label>Número de teléfono</label>
+                <label>Número de teléfono:</label>
                 <input class="input-text" type="number" name="telefono_usuario">
             </div>
             <div class="campo">
-                <label>Correo electrónico</label>
+                <label>Correo electrónico:</label>
                 <input class="input-text" type="email" name="email_usuario">
             </div>
             <div class="campo">
-                <label>Roles</label>
+                <label>Roles:</label>
                 <select name="rol_id">
                     @foreach($roles as $rol)
                         <option value="{{ $rol->id }}">{{ $rol->nombre_rol }}</option>
@@ -71,7 +71,7 @@
                 </select>
             </div>
             <div class="campo">
-                <label>Estado</label>
+                <label>Estado:</label>
                 <select name="estado_usuario">
                     <option>Activo</option>
                     <option>Inactivo</option>
@@ -79,10 +79,9 @@
             </div>
             </div>
             <div class="confirmar">
-                <a href="1inicioUsuarios.html" class="button-uno">Cancelar</a>
-                <input type="submit" class="button-dos">Confirmar</input>
-                </div>
+                <input type="submit" class="button-dos" value="CONFIRMAR">
+                <a href="{{ url('usuarios') }}" class="button-uno">CANCELAR</a>
+            </div>
         </form>
-        
     </main>
 </body>

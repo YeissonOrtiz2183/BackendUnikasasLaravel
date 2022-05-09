@@ -100,7 +100,7 @@ section{
     justify-content: center;
     align-items: center;
     text-align: center;
-    
+
 }
 
 @media (min-width: 1920px){
@@ -132,6 +132,7 @@ section svg{
     justify-content: space-evenly;
     position: initial;
     margin-top: 0px !important;
+    text-align: center;
 }
 
 .visualizar{
@@ -148,13 +149,6 @@ section svg{
 .uno {
     display: grid;
     grid-template-columns: 98% 2%;
-}
-
-.rol {
-    margin-left: 32px;
-    text-decoration: none;
-    color: black;
-    font: bold 12px;
 }
 
 .foto {

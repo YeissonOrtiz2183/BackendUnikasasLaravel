@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Rol;
+use Illuminate\Support\Facades\DB;
 
 class RolController extends Controller
 {
@@ -13,7 +15,8 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Rol::all();
+        return view('roles.inicioRoles', compact('roles'));
     }
 
     /**
@@ -45,7 +48,9 @@ class RolController extends Controller
      */
     public function show($id)
     {
-        //
+        $rol = Rol::find($id);
+        $privilegios = DB::select('SELECT * FROM privilegios INNER JOIN rol_privilegios ON privilegios.id = rol_privilegios.privilegio_id WHERE rol_privilegios.rol_id = ?', [$id]);
+        return view('roles.verRol', compact('rol', 'privilegios'));
     }
 
     /**

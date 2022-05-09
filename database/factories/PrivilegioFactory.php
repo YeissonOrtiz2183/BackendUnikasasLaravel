@@ -17,7 +17,7 @@ class PrivilegioFactory extends Factory
     public function definition()
     {
         return [
-            'nombre_privilegio' => $this->faker->word,
+            'nombre_privilegio' => $this->faker->randomElement(['administrar usuarios', 'administrar proyectos', 'administrar cotizaciones']),
             'descripcion_privilegio' => $this->faker->word,
         ];
     }

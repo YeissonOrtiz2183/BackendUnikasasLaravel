@@ -39,7 +39,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $datosUsuario = request()->except('_token');
-        echo $datosUsuario;
+        $password = $datosUsuario['numero_documento'];
+        $datosUsuario['password_usuario'] = bcrypt($password);
+        User::insert($datosUsuario);
+
+        return redirect('usuarios');
     }
 
     /**
@@ -50,7 +54,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $usuario = User::findOrFail($id);
+        $rol = DB::select('SELECT * FROM rols WHERE id = '.$usuario->rol_id.';');
+        return view('usuarios.viewUsuario', compact('usuario', 'rol'));
     }
 
     /**
@@ -61,7 +67,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuario = User::findOrFail($id);
+        $rol = DB::select('SELECT * FROM rols WHERE id = '.$usuario->rol_id.';');
+        $roles = DB::select('SELECT * FROM rols;');
+        return view('usuarios.editarUsuario', compact('usuario', 'rol', 'roles'));
     }
 
     /**
@@ -73,7 +82,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $datosUsuario = request()->except('_token', '_method');
+        $password = $datosUsuario['numero_documento'];
+        $datosUsuario['password_usuario'] = bcrypt($password);
+        User::where('id', $id)->update($datosUsuario);
+        return redirect('usuarios/' .$id);
     }
 
     /**

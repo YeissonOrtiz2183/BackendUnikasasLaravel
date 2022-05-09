@@ -30,9 +30,6 @@
                     <a class="buttonCreateProject" href="{{ url('usuarios/create') }}">Registrar usuario</a>
                 </div>
                 <div class="button">
-                    <a class="buttonArchived" href="4modificarUsuario.html">Modificar usuario</a>
-                </div>
-                <div class="button">
                     <a class="buttonCreateReport" href="5reporteUsuarios.html">Crear reporte</a>
                 </div>
             </aside>
@@ -49,27 +46,27 @@
                             <div class="nombre-usuario">
                                 <h2 class="info">{{ $usuario->primer_nombre }} {{ $usuario->segundo_nombre }} {{ $usuario->primer_apellido }} {{ $usuario->segundo_apellido }}</h2>
                             </div>
-                            <a href="2verUsuario.html" class="visualizar">Ver información</a>
+                            <a href="{{ url('usuarios/'.$usuario->id) }}" class="visualizar">Ver información</a>
                         </div>
                     </section>
                 @endforeach
             </div>
         </div>
-        <a href="6inicioRoles.html">
-        <aside class="roles">
-        <div class="roles-icono foto">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icono" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <circle cx="12" cy="18" r="2" />
-                <circle cx="7" cy="6" r="2" />
-                <circle cx="17" cy="6" r="2" />
-                <path d="M7 8v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2 -2v-2" />
-                <line x1="12" y1="12" x2="12" y2="16" />
-              </svg>
-        </div>
-        <h3 class="rol">Roles</h3>
-        </aside>
-        </a>
+            <a href="{{ url('roles') }}">
+                <aside class="roles">
+                    <div class="roles-icono foto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icono" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <circle cx="12" cy="18" r="2" />
+                            <circle cx="7" cy="6" r="2" />
+                            <circle cx="17" cy="6" r="2" />
+                            <path d="M7 8v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2 -2v-2" />
+                            <line x1="12" y1="12" x2="12" y2="16" />
+                        </svg>
+                    </div>
+                    <h3 class="rol">Roles</h3>
+                </aside>
+            </a>
         </div>
     </main>
 </body>
