@@ -86,7 +86,7 @@
           </div>
           <div class="col-md-4">
             <label for="validationServer05" class="form-label">Fecha</label>
-            <input type="date" class="form-control is-invalid" id="validationServer05" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" required name="fecha_cotizacion">
+            <input type="date" class="form-control is-invalid" id="fecha" id="validationServer05" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" required name="fecha_cotizacion">
             <div id="validationServer05Feedback" class="invalid-feedback">
              Ingrese la fecha de la cotización
             </div>
@@ -126,5 +126,6 @@
         </div>
       </form>
     </div>
+    <script src="{{ asset('js/Eventos/fecha.js') }}"></script>
 </body>
 </html>
