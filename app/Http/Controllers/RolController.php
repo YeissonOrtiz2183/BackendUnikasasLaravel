@@ -26,7 +26,8 @@ class RolController extends Controller
      */
     public function create()
     {
-        //
+        $privilegios = DB::select('SELECT * FROM privilegios');
+        return view('roles.crearRol', compact('privilegios'));
     }
 
     /**
@@ -37,7 +38,20 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $privilegiosSelected = request()->except(['_token', '_method']);
+        $nombreRol = $privilegiosSelected['nombre_rol'];
+        $nombreRol = '"'.$nombreRol.'"';
+
+        DB::select('INSERT INTO rols (nombre_rol) values(' .$nombreRol. ');' );
+
+        $id = Rol::max('id');
+
+        $data = $privilegiosSelected['privilegios'];
+        foreach ($data as $privilegio) {
+            DB::select('INSERT INTO rol_privilegios(rol_id, privilegio_id) VALUES (' .$id. ',' .$privilegio. ');');
+        }
+
+        return redirect('roles');
     }
 
     /**
@@ -63,7 +77,9 @@ class RolController extends Controller
     {
         $rol = Rol::find($id);
         $privilegios = DB::select('SELECT * FROM privilegios');
-        return view('roles.modificarRol', compact('rol', 'privilegios'));
+        $privilegiosActuales = DB::select('SELECT * FROM privilegios INNER JOIN rol_privilegios ON privilegios.id = rol_privilegios.privilegio_id INNER JOIN rols ON rol_privilegios.rol_id = rols.id WHERE rols.id =   ' .$id. ';');
+
+        return view('roles.modificarRol', compact('rol', 'privilegios', 'privilegiosActuales'));
     }
 
     /**
@@ -81,6 +97,8 @@ class RolController extends Controller
         foreach ($data as $privilegio) {
             DB::select('INSERT INTO rol_privilegios(rol_id, privilegio_id) VALUES (' .$id. ',' .$privilegio. ');');
         }
+
+        return redirect('roles/'. $id);
 
     }
 

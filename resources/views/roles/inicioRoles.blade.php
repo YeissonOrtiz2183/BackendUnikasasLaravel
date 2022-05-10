@@ -27,10 +27,7 @@
         <div class="container">
             <aside>
                 <div class="button">
-                    <a class="buttonCreateProject" href="8crearRol.html">Crear rol</a>
-                </div>
-                <div class="button">
-                    <a class="buttonArchived" href="9modificarRol.html">Modificar rol</a>
+                    <a class="buttonCreateProject" href="{{ url('roles/create') }}">Crear rol</a>
                 </div>
             </aside>
             <div class="usuarios">

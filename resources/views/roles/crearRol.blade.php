@@ -14,7 +14,7 @@
 
 <body>
     <main class="workspace">
-        <a href="{{ url('roles/' .$rol->id) }}">
+        <a href="6inicioRoles.html">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <line x1="5" y1="12" x2="19" y2="12" />
@@ -22,26 +22,19 @@
             <line x1="5" y1="12" x2="11" y2="6" />
           </svg>
         </a>
-        <h1 class="titleModule">Modificar rol</h1>
-        <form class="formulario" id="editForm" action="{{ url('roles/' .$rol->id) }}" method="POST">
+        <h1 class="titleModule">Crear rol</h1>
+        <form class="formulario" id="createForm" method="post" action="{{ url('roles') }}">
             @csrf {{-- token de seguridad para el formulario  --}}
-            {{ method_field('PATCH') }}
             <fieldset>
                 <div class="campo">
                     <label>Nombre</label>
-                    <input class="input-text" type="text" value="{{ $rol->nombre_rol }}" name="nombre_rol">
+                    <input class="input-text" type="text" name="nombre_rol">
                 </div>
                 <h3 class="privilegios">Privilegios:</h3>
             <div class="contenedor-campos">
-                @foreach($privilegiosActuales as $selected)
-                <div class= "campo">
-                    <input class="check" type="checkbox" value="{{ $selected->privilegio_id }}" name="privilegios[]" checked>
-                    <label>{{ $selected->nombre_privilegio }}</label>
-                </div>
-                @endforeach
                 @foreach($privilegios as $privilegio)
                 <div class= "campo">
-                    <input class="check" type="checkbox" value="{{ $privilegio->id }}" name="privilegios[]">
+                    <input class="check" type="checkbox" name="privilegios[]" value="{{ $privilegio->id }}">
                     <label>{{ $privilegio->nombre_privilegio }}</label>
                 </div>
                 @endforeach
@@ -49,8 +42,8 @@
             </fieldset>
         </form>
         <div class="confirmar">
-        <a href="6inicioRoles.html" class="button-uno">Cancelar</a>
-        <button type="submit" form="editForm" class="button-dos">Confirmar</button>
+        <a href="{{ url('roles') }}" class="button-uno">Cancelar</a>
+        <button type="submit" class="button-dos" form="createForm">Confirmar</button>
         </div>
     </main>
 </body>
