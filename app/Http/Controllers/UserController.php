@@ -13,10 +13,19 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $usuarios['usuarios'] = User::all();
-        return view('usuarios.inicioUsuarios', $usuarios);
+        //Verificar si se ingreso texto en el buscador de usuarios y si es así, filtrar los usuarios que coincidan en sus nombre o apellidos con el texto ingresado en el buscador
+        if($request->has('search')){
+            $usuarios = User::where('primer_nombre', 'LIKE', '%'.$request->search.'%')
+            ->orWhere('segundo_nombre', 'LIKE', '%'.$request->search.'%')
+            ->orWhere('primer_apellido', 'LIKE', '%'.$request->search.'%')
+            ->orWhere('segundo_apellido', 'LIKE', '%'.$request->search.'%')
+            ->paginate(10);
+        }else{
+            $usuarios = User::All();
+        }
+        return view('usuarios.inicioUsuarios', compact('usuarios'));
     }
 
     /**

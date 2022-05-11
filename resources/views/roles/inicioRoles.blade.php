@@ -15,9 +15,9 @@
 
     <main class="workspace">
         <h1 class="titleModule">Roles</h1>
-        <form class="searchForm" action="">
-            <label for="itemSearch">Buscar rol:</label>
-            <input type="text" name="searchBar" id="searchBar">
+        <form class="searchForm" action="{{ url('roles') }}">
+            <label>Buscar rol:</label>
+            <input type="text" name="search" id="searchBar">
             <input type="submit" value="Buscar">
         </form>
         <div class= "lista-usuarios">

@@ -13,12 +13,10 @@
 </head>
     <main class="workspace">
         <h1 class="titleModule">Usuarios</h1>
-        <form class="searchForm" action="">
-            <label for="itemSearch">Buscar usuario:</label>
-            <input type="text" name="searchBar" id="searchBar">
-            <a href="1.1buscarUsuarios.html">
+        <form class="searchForm" action="{{ url('usuarios') }}">
+            <label>Buscar usuario:</label>
+            <input type="text" name="search" id="searchBar">
             <input type="submit" value="Buscar">
-            </a>
         </form>
         <div class= "lista-usuarios">
         <h3>Todos los usuarios</h3>

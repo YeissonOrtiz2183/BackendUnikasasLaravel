@@ -13,9 +13,13 @@ class RolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Rol::all();
+        if($request->has('search')){
+            $roles = Rol::where('nombre_rol', 'LIKE', '%'.$request->search.'%')->paginate(10);
+        }else{
+            $roles = Rol::All();
+        }
         return view('roles.inicioRoles', compact('roles'));
     }
 
@@ -76,10 +80,12 @@ class RolController extends Controller
     public function edit($id)
     {
         $rol = Rol::find($id);
-        $privilegios = DB::select('SELECT * FROM privilegios');
-        $privilegiosActuales = DB::select('SELECT * FROM privilegios INNER JOIN rol_privilegios ON privilegios.id = rol_privilegios.privilegio_id INNER JOIN rols ON rol_privilegios.rol_id = rols.id WHERE rols.id =   ' .$id. ';');
 
-        return view('roles.modificarRol', compact('rol', 'privilegios', 'privilegiosActuales'));
+        //Obtener desde la base de datos los privilegios que tiene el rol seleccionado y los que no tiene el rol
+        $privilegios = DB::select('SELECT * FROM privilegios INNER JOIN rol_privilegios ON privilegios.id = rol_privilegios.privilegio_id WHERE rol_privilegios.rol_id = ?', [$id]);
+        $privilegiosNoAsignados = DB::select('SELECT * FROM privilegios WHERE privilegios.id NOT IN (SELECT privilegio_id FROM rol_privilegios WHERE rol_privilegios.rol_id = ?)', [$id]);
+        return view('roles.modificarRol', compact('rol', 'privilegios', 'privilegiosNoAsignados'));
+
     }
 
     /**

@@ -8,19 +8,19 @@
     <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto">
     <link href="https://fonts.googleapis.com/icon?family=Material+
-    
+
     Icons"
     rel="stylesheet">
     <title>Proyectos Unikasas</title>
 </head>
 <body onload="calculateURL()">
         <h1 class="titleModule">Proyectos</h1>
-        <form class="searchForm" action="">
-            <label for="itemSearch">Buscar proyecto:</label>
-            <input type="text" name="searchBar" id="searchBar">
+        <form class="searchForm" action="{{ url('proyectos/search/activo') }}">
+            <label>Buscar proyecto:</label>
+            <input type="text" name="search" id="searchBar">
             <input type="submit" value="Buscar">
             <div class="filter">
-            <input type="text" class="campomedio" list="encargado" placeholder="Filtrar por:">
+            <input type="text" class="campomedio" list="encargado" placeholder="Filtrar por:" name="filtro">
                 <datalist id="encargado">
                     <option value="Fecha de creación">
                     <option value="Estado">

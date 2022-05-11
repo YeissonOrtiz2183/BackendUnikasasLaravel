@@ -33,13 +33,13 @@
                 </div>
                 <h3 class="privilegios">Privilegios:</h3>
             <div class="contenedor-campos">
-                @foreach($privilegiosActuales as $selected)
+                @foreach($privilegios as $selected)
                 <div class= "campo">
                     <input class="check" type="checkbox" value="{{ $selected->privilegio_id }}" name="privilegios[]" checked>
                     <label>{{ $selected->nombre_privilegio }}</label>
                 </div>
                 @endforeach
-                @foreach($privilegios as $privilegio)
+                @foreach($privilegiosNoAsignados as $privilegio)
                 <div class= "campo">
                     <input class="check" type="checkbox" value="{{ $privilegio->id }}" name="privilegios[]">
                     <label>{{ $privilegio->nombre_privilegio }}</label>

@@ -16,8 +16,9 @@ class ProyectoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($estado)
+    public function index(Request $request, $estado)
     {
+        //Verificar si hay una busqueda de proyectos y  ordenar por el parametro dado en la url
         if ($estado == 'activo') {
             $estadoFind = '"En ejecución"';
         }elseif ($estado == 'inactivo') {
