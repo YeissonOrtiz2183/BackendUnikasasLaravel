@@ -7,6 +7,7 @@ use App\Models\Evento;
 use App\Models\Proyecto;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 class EventoController extends Controller
 {
     //
@@ -134,9 +135,17 @@ class EventoController extends Controller
         return view('ModuloEventos.crearReporteEvent', compact('eventos'));
     }
 
+    public function exportPdfEventos()
+    {
+        $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->get();
+        $eventos = compact('eventos');
+        $pdf = Pdf::loadView('ModuloEventos.exportPdf', $eventos);
+        return $pdf->setPaper('a4', 'landscape')->stream('reporteEventos.pdf');
+    } 
+
     public function destroy($id)
     {
-        $evento = Evento::findOrFail($id);
+        Evento::destroy($id);
         return redirect('ModuloEventos')->with('mensage','El evento ha sido borrado');
     }
 }

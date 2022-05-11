@@ -106,7 +106,7 @@
         </div>
         <div class="previsualizacion">
             <h2 class="titulo_previsualizacion">Previsualización</h2>
-            <a href="#" class="icono_dowload"><svg width="35" height="35" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <a href="{{ url('/exportPdfEventos') }}" class="icono_dowload"><svg width="35" height="35" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M38.9778 4.95556L35.8889 1.22222C35.2889 0.466667 34.3778 0 33.3333 0H6.66667C5.62222 0 4.71111 0.466667 4.08889 1.22222L1.02222 4.95556C0.377778 5.71111 0 6.71111 0 7.77778V35.5556C0 38 2 40 4.44444 40H35.5556C38 40 40 38 40 35.5556V7.77778C40 6.71111 39.6222 5.71111 38.9778 4.95556ZM20 32.2222L7.77778 20H15.5556V15.5556H24.4444V20H32.2222L20 32.2222ZM4.71111 4.44444L6.51111 2.22222H33.1778L35.2667 4.44444H4.71111Z" fill="black"/>
                 </svg></a>  
         </div>
