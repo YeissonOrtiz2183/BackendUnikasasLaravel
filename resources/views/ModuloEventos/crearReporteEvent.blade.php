@@ -16,7 +16,7 @@
             <button onclick="history.back()"><span class="material-icons back">arrow_back</span></button>
             <h1 class="titleModule">Crear reporte de eventos</h1>
         </div>
-        <form class="searchForm" action="">
+        <form class="searchForm" action="" method="get">
             @csrf
             <label class="search_parametros" for="itemSearch">Filtrar por / </label>
             <label class="search_parametros" for="itemSearch">Nombre del evento:</label>
@@ -26,18 +26,18 @@
                     <option value="{{ $evento->nombre_evento  }}">{{ $evento->nombre_evento  }}</option>
             @endforeach
                 </select>
-            
+
             <label class="search_parametros" for="fechaInicial">Fecha inicial:</label>
             <input type="date" id="fechaInicial" name="fechaInicial">Fecha final:
             <input type="date" id="fechaFinal" name="fechaFinal">
-              
-    
+
+
         <div class="container">
                 <div class="formulario">
                     @csrf
                     <h2 class="formulario__titulo">Seleccionar campos</h2>
                     <div class="contenedor-campos contenedor-campos2">
-                        <div class="campo">   
+                        <div class="campo">
                             <label>Nombre:</label>
                             <input class="checkbox" type="checkbox" id="nombreEvento" name="nombre_evento" value="nombre_evento">
                         </div>
@@ -106,13 +106,13 @@
         </div>
         <div class="previsualizacion">
             <h2 class="titulo_previsualizacion">Previsualización</h2>
-            <a href="{{ url('/exportPdfEventos') }}" class="icono_dowload"><svg width="35" height="35" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <a href="{{ url('/exportPdfEventos/'.$eventos) }}" class="icono_dowload"><svg width="35" height="35" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M38.9778 4.95556L35.8889 1.22222C35.2889 0.466667 34.3778 0 33.3333 0H6.66667C5.62222 0 4.71111 0.466667 4.08889 1.22222L1.02222 4.95556C0.377778 5.71111 0 6.71111 0 7.77778V35.5556C0 38 2 40 4.44444 40H35.5556C38 40 40 38 40 35.5556V7.77778C40 6.71111 39.6222 5.71111 38.9778 4.95556ZM20 32.2222L7.77778 20H15.5556V15.5556H24.4444V20H32.2222L20 32.2222ZM4.71111 4.44444L6.51111 2.22222H33.1778L35.2667 4.44444H4.71111Z" fill="black"/>
-                </svg></a>  
+                </svg></a>
         </div>
         <div class="contenedor__imagen">
             <div class="container">
-          
+
                 <table>
                     <tr> @if(isset($evento->id))
                             <th>Id </th>
@@ -121,7 +121,7 @@
                             <th>Nombre </th>
                         @endif
                         @if(isset($evento->fecha_evento))
-                            <th>Fecha </th>  
+                            <th>Fecha </th>
                         @endif
                         @if(isset($evento->hora_inicio))
                             <th>Hora inicial </th>
@@ -148,7 +148,7 @@
                             <th>Mensaje </th>
                         @endif
                         @if(isset($evento->estado_evento))
-                            <th>Estado </th>   
+                            <th>Estado </th>
                         @endif
                     </tr>
 
@@ -159,14 +159,14 @@
                             @if(isset($evento->nombre_evento))
                                 <td>{{ $evento->nombre_evento }}</td>
                             @endif
-                            @if(isset($evento->fecha_evento))
-                                <td>{{ $evento->fecha_evento }}</td> 
+                            @if(isset($evento->fecha_evento ))
+                                <td>{{ date('d/m/Y', strtotime($evento->fecha_evento))}}</td>
                             @endif
                             @if(isset($evento->hora_inicio))
-                                <td>{{ $evento->hora_inicio }}</td>
+                                <td>{{ date('h:i A', strtotime($evento->hora_inicio)) }}</td>
                             @endif
                             @if(isset($evento->hora_fin))
-                                <td>{{ $evento->hora_fin }}</td>
+                                <td>{{ date('h:i A', strtotime($evento->hora_fin)) }}</td>
                             @endif
                             @if(isset($evento->nombre_proyecto))
                                 <td>{{ $evento->nombre_proyecto }}</td>
@@ -189,11 +189,11 @@
                             @if(isset($evento->estado_evento))
                                 <td>{{ $evento->estado_evento }}</td></tr>
                             @endif
-                    
+
                     @endforeach
                 </table>
-            </div> 
-        </div>       
+            </div>
+        </div>
     </main>
 </body>
 </html>

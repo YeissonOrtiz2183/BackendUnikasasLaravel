@@ -12,7 +12,7 @@ class EventoController extends Controller
 {
     //
     public function index(Request $request)
-    {    
+    {
         $eventoBusqueda = $request->get('searchBar'); // variables para el filtro de busqueda
         $campoTabla = $request->get('campoBusqueda');
 
@@ -135,13 +135,17 @@ class EventoController extends Controller
         return view('ModuloEventos.crearReporteEvent', compact('eventos'));
     }
 
-    public function exportPdfEventos()
+    public function exportPdfEventos($event)
     {
         $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->get();
+        // $eventos = [];
+        // $eventos = explode('}', $event);
+
         $eventos = compact('eventos');
+        // return dd($eventos);
         $pdf = Pdf::loadView('ModuloEventos.exportPdf', $eventos);
         return $pdf->setPaper('a4', 'landscape')->stream('reporteEventos.pdf');
-    } 
+    }
 
     public function destroy($id)
     {

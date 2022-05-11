@@ -52,12 +52,13 @@
         <h2>Reporte de eventos</h2>
         <div class="contenedor__imagen">
             <div class="container">
-          
+
                 <table>
                     <thead>
-                        <?php $contador = 0; ?> 
+                        <tr>
+                        <?php $contador = 0; ?>
                         @foreach ($eventos as $evento)
-                        <tr> @if($contador == 0)
+                        @if($contador == 0)
                                 @if(isset($evento->id))
                                     <th>Id </th>
                                 @endif
@@ -65,7 +66,7 @@
                                     <th>Nombre </th>
                                 @endif
                                 @if(isset($evento->fecha_evento))
-                                    <th>Fecha </th>  
+                                    <th>Fecha </th>
                                 @endif
                                 @if(isset($evento->hora_inicio))
                                     <th>Hora inicial </th>
@@ -92,11 +93,11 @@
                                     <th>Mensaje </th>
                                 @endif
                                 @if(isset($evento->estado_evento))
-                                    <th>Estado </th>   
+                                    <th>Estado </th>
                                 @endif
-                                    <?php $contador += 1; ?> 
+                                    <?php $contador += 1; ?>
                             @endif
-                         
+
                         @endforeach
                     </tr>
                     </thead>
@@ -109,14 +110,14 @@
                             @if(isset($evento->nombre_evento))
                                 <td>{{ $evento->nombre_evento }}</td>
                             @endif
-                            @if(isset($evento->fecha_evento))
-                                <td>{{ $evento->fecha_evento }}</td> 
+                            @if(isset($evento->fecha_evento ))
+                                <td>{{ date('d/m/Y', strtotime($evento->fecha_evento))}}</td>
                             @endif
                             @if(isset($evento->hora_inicio))
-                                <td>{{ $evento->hora_inicio }}</td>
+                                <td>{{ date('h:i A', strtotime($evento->hora_inicio)) }}</td>
                             @endif
                             @if(isset($evento->hora_fin))
-                                <td>{{ $evento->hora_fin }}</td>
+                                <td>{{ date('h:i A', strtotime($evento->hora_fin)) }}</td>
                             @endif
                             @if(isset($evento->nombre_proyecto))
                                 <td>{{ $evento->nombre_proyecto }}</td>
@@ -139,13 +140,13 @@
                             @if(isset($evento->estado_evento))
                                 <td>{{ $evento->estado_evento }}</td></tr>
                             @endif
-                    
+
                     @endforeach
                     </tbody>
                 </table>
-                    
-            </div> 
-        </div>       
+
+            </div>
+        </div>
     </main>
 </body>
 </html>
