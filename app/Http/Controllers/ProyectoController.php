@@ -69,7 +69,7 @@ class ProyectoController extends Controller
         $encargados = DB::select('SELECT users.id, users.primer_nombre, users.segundo_nombre, users.primer_apellido, users.segundo_apellido
                                     FROM users
                                     LEFT JOIN rols ON rols.id = users.rol_id
-                                    WHERE rols.nombre_rol = "Director de proyectos"');
+                                    WHERE rols.nombre_rol = "Director de proyectos" AND users.estado_usuario = "Activo"');
         $clientes = DB::select('SELECT users.id, users.primer_nombre, users.segundo_nombre, users.primer_apellido, users.segundo_apellido
                                     FROM users
                                     LEFT JOIN rols ON rols.id = users.rol_id
@@ -91,7 +91,15 @@ class ProyectoController extends Controller
         $datosProyecto = request()->except('_token');
 
         $datosProyecto['producto_id'] = $datosProyecto['producto_id'][0];
-        $datosProyecto['cliente_id'] = $datosProyecto['cliente_id'][0];
+        echo strlen($datosProyecto['cliente_id']);
+        for ($i=0; $i < strlen($datosProyecto['cliente_id']); $i++) {
+
+            if (gettype($datosProyecto['cliente_id'][$i]) == 'number') {
+                $idCliente += $datosProyecto['cliente_id'][$i];
+                echo $idCliente;
+                $datosProyecto['cliente_id'] = $idCliente;
+            }
+        }
 
         Proyecto::insert($datosProyecto);
         $idProyecto = Proyecto::max('id');
