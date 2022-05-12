@@ -29,7 +29,9 @@
                         <div class="inputValidate">
                             <select class="campomedio bigField" name="encargado_id" id="projectDirector">
                                 <option value="null" selected disabled hidden>Selecciona un encargado para el proyecto</option>
-                                <option value="1">Opcion1</option>
+                                @foreach($encargados as $encargado)
+                                <option value="{{ $encargado->id }}">{{ $encargado->primer_nombre }} {{ $encargado->segundo_nombre }} {{ $encargado->primer_apellido }} {{ $encargado->segundo_apellido }}</option>
+                                @endforeach
                             </select>
                             <span id="projectDirector_error_message" class="error_form"></span>
                         </div>
@@ -77,20 +79,22 @@
                     <div class="campo campoProducto">
                         <label>Producto:</label>
                         <div class="inputValidate">
-                            <select type="text" class="product" list="producto" name="producto_id" id="projectProduct">
+                            <select type="text" class="product" list="producto" name="producto_id" id="projectProduct" onchange="imprimirPrecio()">
                                 <option value="null" selected disabled hidden>Selecciona el producto del proyecto...</option>
-                                <option value="1">Opcion1</option>
+                                @foreach($productos as $producto)
+                                <option class="idProduct" value="{{ $producto->id }} {{ $producto->precio_producto}} {{ $producto->descripcion_producto }}">{{ $producto->nombre_producto }}</option>
+                                @endforeach
                             </select>
                             <span id="projectProduct_error_message" class="error_form"></span>
                         </div>
 
                         <label>Valor producto:</label>
-                        <input type="number" class="priceProduct" readonly>
+                        <input type="number" class="priceProduct" id="precioProducto" readonly value="">
                     </div>
 
                     <div class="campo campoCompartido">
                         <label>Descripción:</label>
-                        <textarea cols="120" rows="10" readonly></textarea>
+                        <textarea cols="120" rows="10" readonly id="descripcionProducto" value=""></textarea>
                     </div>
 
                     <div class="campo campoCompartido image">
@@ -104,10 +108,11 @@
                         <label style="padding-right: 1.5%;">Cliente:</label>
                         <div class="inputValidate">
                             <div class="input">
-                                <input type="text" list="cliente" id="projectClient" name="cliente_id" style="width: 98%;">
-                                <datalist id="cliente">
-                                    <option value="1">Client 1</option>
-                                    <option value="2">Client 2</option>
+                                <input value="" type="text" list="cliente" id="projectClient" name="cliente_id" style="width: 98%;" onchange="imprimirCliente()">
+                                <datalist id="cliente" value="">
+                                    @foreach($clientes as $cliente)
+                                    <option value="{{ $cliente->id }} {{ $cliente->primer_nombre }} {{ $cliente->segundo_nombre }} {{ $cliente->primer_apellido }} {{ $cliente->segundo_apellido }}"></option>
+                                    @endforeach
                                 </datalist>
                             </div>
                             <span id="projectClient_error_message" class="error_form"></span>
@@ -116,16 +121,16 @@
 
                     <div class="campo cliente">
                         <label>Primer nombre cliente:</label>
-                        <input type="text" readonly>
+                        <input type="text" readonly value="" id="primer_nombre">
                         <label>Segundo nombre cliente:</label>
-                        <input type="text" readonly>
+                        <input type="text" readonly value="" id="segundo_nombre">
                     </div>
 
                     <div class="campo cliente">
                         <label>Primer apellido cliente:</label>
-                        <input type="text" readonly>
+                        <input type="text" readonly value="" id="primer_apellido">
                         <label>Segundo apellido cliente</label>
-                        <input type="text" readonly>
+                        <input type="text" readonly value="" id="segundo_apellido">
                     </div>
 
                     <div class="botones">
@@ -137,5 +142,7 @@
         </div>
     </div>
     <script src="{{ asset('js/proyectos/validate.js') }}"></script>
+    <script src="{{ asset('js/proyectos/completarForm.js') }}"></script>
+
 </body>
 </html>

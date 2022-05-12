@@ -22,8 +22,8 @@
             <div class="filter">
             <input type="text" class="campomedio" list="encargado" placeholder="Filtrar por:" name="filtro">
                 <datalist id="encargado">
-                    <option value="Fecha de creación">
-                    <option value="Estado">
+                    <option value="fecha_inicio">
+                    <option value="estado_proyecto">
                 </datalist>
             </div>
         </form>

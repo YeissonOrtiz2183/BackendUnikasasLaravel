@@ -21,7 +21,7 @@ class UserController extends Controller
             ->orWhere('segundo_nombre', 'LIKE', '%'.$request->search.'%')
             ->orWhere('primer_apellido', 'LIKE', '%'.$request->search.'%')
             ->orWhere('segundo_apellido', 'LIKE', '%'.$request->search.'%')
-            ->paginate(10);
+            ->paginate(30);
         }else{
             $usuarios = User::All();
         }

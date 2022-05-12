@@ -18,20 +18,45 @@ class ProyectoController extends Controller
      */
     public function index(Request $request, $estado)
     {
-        //Verificar si hay una busqueda de proyectos y  ordenar por el parametro dado en la url
-        if ($estado == 'activo') {
-            $estadoFind = '"En ejecución"';
-        }elseif ($estado == 'inactivo') {
-            $estadoFind = '"Suspendido" OR estado_proyecto = "Finalizado"';
-        }
-        $proyectos['proyectos'] = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
+        if($request->has('search') && $request->has('filtro')){
+            if (!isset($request->filtro)) {
+                $request->filtro = 'estado_proyecto';
+            } elseif (!isset($request->search)) {
+                $request->search = '';
+            }
+
+            $proyectos = Proyecto::where('nombre_proyecto', 'LIKE', '%'.$request->search.'%')
+            ->join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
+            ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
+            ->select('proyectos.*', 'encargado.primer_nombre as encargado_nombre', 'encargado.segundo_nombre as encargado_segundo_nombre', 'encargado.primer_apellido as encargado_apellido', 'encargado.segundo_apellido as encargado_segundo_apellido', 'cliente.primer_nombre as cliente_nombre', 'cliente.segundo_nombre as cliente_segundo_nombre', 'cliente.primer_apellido as cliente_apellido', 'cliente.segundo_apellido as cliente_segundo_apellido')
+            ->orWhere('encargado.primer_nombre', 'LIKE', '%'.$request->search.'%')
+            ->orWhere('cliente.primer_nombre', 'LIKE', '%'.$request->search.'%')
+            ->orWhere('encargado.primer_apellido', 'LIKE', '%'.$request->search.'%')
+            ->orWhere('cliente.primer_apellido', 'LIKE', '%'.$request->search.'%')
+            ->orderby($request->filtro, 'asc')
+            ->paginate(10);
+
+        }else{
+
+            if ($estado == 'activo') {
+                $estadoFind = '"En ejecución"';
+            }elseif ($estado == 'inactivo') {
+                $estadoFind = '"Suspendido" OR estado_proyecto = "Finalizado"';
+            }
+
+            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
                                             encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
                                             cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
                                             FROM proyectos
                                             LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
                                             LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
                                             WHERE estado_proyecto ='.$estadoFind);
-        return view('proyectos.moduloInicioProyecto', $proyectos);
+
+        }
+
+        return view('proyectos.moduloInicioProyecto', compact('proyectos'));
+
+
     }
 
     /**
@@ -41,7 +66,18 @@ class ProyectoController extends Controller
      */
     public function create()
     {
-        return view('proyectos.crearProyecto');
+        $encargados = DB::select('SELECT users.id, users.primer_nombre, users.segundo_nombre, users.primer_apellido, users.segundo_apellido
+                                    FROM users
+                                    LEFT JOIN rols ON rols.id = users.rol_id
+                                    WHERE rols.nombre_rol = "Director de proyectos"');
+        $clientes = DB::select('SELECT users.id, users.primer_nombre, users.segundo_nombre, users.primer_apellido, users.segundo_apellido
+                                    FROM users
+                                    LEFT JOIN rols ON rols.id = users.rol_id
+                                    WHERE rols.nombre_rol LIKE "%liente"');
+        $productos = DB::select('SELECT productos.id, productos.nombre_producto, productos.descripcion_producto, productos.precio_producto
+                                    FROM productos');
+
+        return view('proyectos.crearProyecto', compact('encargados', 'clientes', 'productos'));
     }
 
     /**
@@ -53,6 +89,9 @@ class ProyectoController extends Controller
     public function store(Request $request)
     {
         $datosProyecto = request()->except('_token');
+
+        $datosProyecto['producto_id'] = $datosProyecto['producto_id'][0];
+        $datosProyecto['cliente_id'] = $datosProyecto['cliente_id'][0];
 
         Proyecto::insert($datosProyecto);
         $idProyecto = Proyecto::max('id');
