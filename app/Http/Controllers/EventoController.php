@@ -144,7 +144,7 @@ class EventoController extends Controller
         $eventos = compact('eventos');
         // return dd($eventos);
         $pdf = Pdf::loadView('ModuloEventos.exportPdf', $eventos);
-        return $pdf->setPaper('a4', 'landscape')->stream('reporteEventos.pdf');
+        return $pdf->setPaper('a3', 'landscape')->stream('reporteEventos.pdf');
     }
 
     public function destroy($id)

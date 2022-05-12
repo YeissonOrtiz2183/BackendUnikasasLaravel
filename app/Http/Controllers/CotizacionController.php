@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cotizacion;
 use App\Models\Producto;
+use Barryvdh\DomPDF\Facade\Pdf;
 class CotizacionController extends Controller
 {
     public function index(Request $request)
@@ -17,7 +18,7 @@ class CotizacionController extends Controller
         if($cliente != ''){
             $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->where('nombres_cotizante', 'like', "%$cliente%")->get();
         } else{
-            $cotizaciones = Cotizacion::all();
+            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->get();
         }
 
         if($codigo != ''){
@@ -67,6 +68,15 @@ class CotizacionController extends Controller
         Cotizacion::where('id', '=', $id)->update($datosCotizacion);
         // $evento = Evento::findOrFail($id);
         return redirect('cotizaciones');
+    }
+
+    public function exportPdfCotizaciones()
+    {
+        $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->get();
+        $cotizaciones = compact('cotizaciones');
+        
+        $pdf = Pdf::loadView('cotizaciones.pdf.exportPdf', $cotizaciones );
+        return $pdf->setPaper('a3', 'landscape')->stream('reporteCotizaciones.pdf');
     }
 
     public function destroy($id)

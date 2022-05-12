@@ -16,7 +16,7 @@
   </svg></a>
   
   <h1><center>Consultar cotizacion</center></h1>
-  <div class="container ">
+  <div class="container">
     <div class="row row-cols-5">
       {{-- <div class="col- "><div class="dropdown">Codigo
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -47,11 +47,11 @@
       </ul>
     </div></div> --}}
 
-    <div class="form-group">
-      <label for="ciudad" class="col-sm-2 control-label">Codigo</label>
+    <div class="mb-2 row row row col-2">
+      <label for="ciudad" class="col-sm-4 control-label" style="margin-right: 5.5%">Codigo:</label>
   
-      <div class="col-sm-8">
-              <select class="form-control" name="codigo" id="codigo">
+      <div class="col-sm-7">
+              <select class="form-control text-white bg-secondary" class="dropdown" name="codigo" id="codigo">
                 <option value="null" selected disabled hidden>Filtrar</option>
                   @foreach ($cotizaciones as $cotizacion)
                       <option value="{{ $cotizacion->id }}">{{ $cotizacion->id}}</option>
@@ -60,11 +60,11 @@
           </div>
   </div>
 
-    <div class="form-group">
-      <label for="ciudad" class="col-sm-2 control-label">Cliente</label>
+    <div class="mb-2 row row row col-3">
+      <label for="ciudad" class="col-sm-3 control-label">Cliente:</label>
   
       <div class="col-sm-8">
-              <select class="form-control" name="cliente" id="cliente">
+              <select class="form-control text-white bg-secondary" name="cliente" id="cliente">
                 <option value="null" selected disabled hidden>Filtrar</option>
                   @foreach ($cotizaciones as $cotizacion)
                       <option value="{{ $cotizacion->nombres_cotizante }}">{{ $cotizacion->nombres_cotizante}} {{ $cotizacion->apellidos_cotizante}}</option>
@@ -73,18 +73,18 @@
           </div>
   </div>
 
-  <div class="form-group">
-    <label for="ciudad" class="col- " class="dropdown">Fecha</label>
+  <div class="mb-2 row row row col-3">
+    <label for="ciudad" class="col-sm-3 control-label" class="dropdown">Fecha:</label>
     <div class="col-sm-8">
-            <input type="date" name="fecha" id="fecha1">
+            <input type="date"class="form-control text-white bg-secondary" name="fecha" id="fecha1">
         </div>
 </div>
 
-  <div class="form-group">
-    <label for="ciudad" class="col-sm-2 control-label">Estado</label>
+  <div class="mb-2 row row row col-3">
+    <label for="ciudad" class="col-sm-3 control-label">Estado:</label>
 
     <div class="col-sm-8">
-            <select class="form-control" name="estado" id="estado">
+            <select class="form-control text-white bg-secondary" name="estado" id="estado">
               <option value="null" selected disabled hidden>Filtrar</option>
               <option value="Activa">Activa</option>
               <option value="Cancelada">Cancelada</option>
@@ -110,11 +110,11 @@
           <li><a class="dropdown-item" href="#">Estado</a></li>
         </ul>
       </div></div> --}}
-      <input type="submit" class="btn btn-warning position-relative" value="Buscar">
-        <span class="position-absolute top-0 start-100 translate-middle  border border-light rounded-circle">
+      <input type="submit" class="btn btn-warning" value="Buscar" style="width: 12%">
+        {{-- <span class="position-absolute translate-middle  border border-light rounded-circle">
           <span class="visually-hidden"></span>
-        </span>
-      </button>
+        </span> --}}
+        
     </div>
     </div>
   </div>
@@ -129,13 +129,12 @@
   </div>
     <div class="container">
         <div class="row row-cols-5">
-          <div class="col- border"><b>Codigo</b></div>
-          <div class="col- border"><b>Cliente</b></div>
-          <div class="col- border"><b>Fecha</b></div>
-          <div class="col- border"><b>Estado</b></div>
-          <div class="col- border"><b>Opciones</b>
+          <div class="col- border bg-warning" style="text-align: center"><b>Codigo</b></div>
+          <div class="col- border bg-warning" style="text-align: center"><b>Cliente</b></div>
+          <div class="col- border bg-warning" style="text-align: center"><b>Fecha</b></div>
+          <div class="col- border bg-warning" style="text-align: center"><b>Estado</b></div>
+          <div class="col- border bg-warning" style="text-align: center"><b>Opciones</b>
             
-          </button>
         </form>
           
           <!-- Modal -->
@@ -285,8 +284,8 @@
         </div>
       </div>
       <br>
-      <div class="container">
-        <div class="row row col-2"><button type="button" class="btn btn-lg btn-warning" data-bs-toggle="popover" title="Click para ver el reporte en formato pdf o excel" data-bs-content="And here's some amazing content. It's very engaging.Right?">Reportes</button></div>
+      <div class="container" style="margin-bottom: 2%">
+        <div class="row row col-2"><a href="{{ url('/exportPdfCotizaciones') }}"><button type="button" class="btn btn-lg btn-warning" data-bs-toggle="popover" title="Click para ver el reporte en formato pdf o excel" data-bs-content="And here's some amazing content. It's very engaging.Right?">Reporte Pdf</button></a></div>
         <div class="col">
       </div>
       </div>

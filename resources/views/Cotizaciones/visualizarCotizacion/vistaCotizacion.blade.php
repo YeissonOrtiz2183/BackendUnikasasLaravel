@@ -9,8 +9,9 @@
     <title>Vista Cotizacion</title>
 </head>
 <body>
-    <center><h1><strong>Visualizar cotizacion</strong></h1></center>
-    <br><br>
+  <br>
+    <center><h1 ><strong>Visualizar cotizacion</strong></h1></center>
+    <br>
     
     <center><div class="card" style="width: 60%;">
         <img src="https://staticw.s3.amazonaws.com/inmuebles/gr45507720201218113029.jpg" class="card-img-top" width="100" height="400" style="width: 50%; margin: 0 auto;" class="img-thumbnail img-fluid">
@@ -22,11 +23,11 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item"> <h5>Valor</h5>$ {{ $producto->precio_producto }}  <p class="card-text"></p></li>
           <li class="list-group-item"><h5>Cotizante</h5>{{ $cotizacion->nombres_cotizante }} {{ $cotizacion->apellidos_cotizante }}<p class="card-text"></p></li>
-          <li class="list-group-item"><h5>Datos</h5><strong>Email: </strong> {{ $cotizacion->email_cotizante }} <strong> Telefono: </strong>{{ $cotizacion->telefono_cotizante }}<strong> Ciudad: </strong> {{ $cotizacion->ciudad_cotizante}} <strong>Fecha: </strong> {{ $cotizacion->fecha_cotizacion}} <strong>Estado: </strong> {{ $cotizacion->estado_cotizacion}} <strong> Ubicacion: </strong>{{ $cotizacion->ubicacion_cotizante}}<p class="card-text"></p></li>
-          <li class="list-group-item"> <h5>Comentarios</h5> {{ $cotizacion->comentarios_cotizacion }}<p class="card-text"></p></li>
+          <li class="list-group-item"><h5>Datos</h5><strong>Email: </strong> {{ $cotizacion->email_cotizante }} <strong> Telefono: </strong>{{ $cotizacion->telefono_cotizante }}<strong> Ciudad: </strong> {{ $cotizacion->ciudad_cotizante}} <br> <strong>Fecha: </strong> {{ $cotizacion->fecha_cotizacion}} <strong>Estado: </strong> {{ $cotizacion->estado_cotizacion}} <strong> Ubicacion: </strong>{{ $cotizacion->ubicacion_cotizante}}<p class="card-text"></p></li><br>
+          <li class="list-group-item"><h5>Comentarios</h5> {{ $cotizacion->comentarios_cotizacion }}<p class="card-text"></p></li>
         </ul>
         <div class="card-body">
-          <div class="row row col-2"><a href="{{ url('cotizaciones') }}"><button type="button" class="btn btn-lg btn-warning" data-bs-toggle="popover" title="Click para regresar" data-bs-content="And here's some amazing content. It's very engaging.Right?">Regresar</button></a></div>
+          <a href="{{ url('cotizaciones') }}"><button type="button" class="btn btn-lg btn-warning" data-bs-toggle="popover" title="Click para regresar" data-bs-content="And here's some amazing content. It's very engaging.Right?">Regresar</button></a>
         </div>
       </div>
    
