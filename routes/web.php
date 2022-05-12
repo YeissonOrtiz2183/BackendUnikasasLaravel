@@ -36,6 +36,6 @@ Route::get('/exportPdfEventos/{eventos}', [App\Http\Controllers\EventoController
 
 Route::resource('cotizaciones', CotizacionController::class);
 
-// Route::get('/reporteCotizaciones', [App\Http\Controllers\CotizacionController::class, 'reporteCotizaciones'])->name('cotizaciones.reporte');
-
 Route::get('/exportPdfCotizaciones', [App\Http\Controllers\CotizacionController::class, 'exportPdfCotizaciones'])->name('cotizaciones.exportPdfCotizaciones');
+
+Route::get('/cotizaciones/{id}/contestar', [App\Http\Controllers\CotizacionController::class, 'contestarCotizacion'])->name('cotizaciones.contestarCotizacion');

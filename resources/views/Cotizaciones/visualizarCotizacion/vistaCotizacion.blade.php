@@ -10,16 +10,16 @@
 </head>
 <body>
   <br>
-    <center><h1 ><strong>Visualizar cotizacion</strong></h1></center>
+    <h1 style="text-align: center; margin-bottom: 1%"><strong>Visualizar cotizacion</strong></h1>
     <br>
-    
+
     <center><div class="card" style="width: 60%;">
         <img src="https://staticw.s3.amazonaws.com/inmuebles/gr45507720201218113029.jpg" class="card-img-top" width="100" height="400" style="width: 50%; margin: 0 auto;" class="img-thumbnail img-fluid">
         <div class="card-body">
           <h5 class="card-title"><b>Producto: </b>{{ $producto->nombre_producto }}</h5>
           <p class="card-text"><b>Descripción: </b>{{ $producto->descripcion_producto }}</p>
         </div>
-       
+
         <ul class="list-group list-group-flush">
           <li class="list-group-item"> <h5>Valor</h5>$ {{ $producto->precio_producto }}  <p class="card-text"></p></li>
           <li class="list-group-item"><h5>Cotizante</h5>{{ $cotizacion->nombres_cotizante }} {{ $cotizacion->apellidos_cotizante }}<p class="card-text"></p></li>
@@ -30,6 +30,6 @@
           <a href="{{ url('cotizaciones') }}"><button type="button" class="btn btn-lg btn-warning" data-bs-toggle="popover" title="Click para regresar" data-bs-content="And here's some amazing content. It's very engaging.Right?">Regresar</button></a>
         </div>
       </div>
-   
+
 </body>
 </html>

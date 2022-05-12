@@ -37,14 +37,17 @@ class CotizacionController extends Controller
 
     public function create()
     {
-        return view('Cotizaciones.CrearCotizacion.crearCotizacion');
+        $productos = Producto::all();
+        return view('Cotizaciones.CrearCotizacion.crearCotizacion', compact('productos'));
     }
 
     public function edit($id)
     {
         $cotizacion = Cotizacion::findOrFail($id);
+        $producto = Producto::findOrfail($cotizacion->producto_id);
+        $productos = Producto::all();
         // return dd($cotizacion);
-        return view('Cotizaciones.editarCotizacion.editarCotizacion', compact('cotizacion'));
+        return view('Cotizaciones.editarCotizacion.editarCotizacion', compact('cotizacion', 'producto', 'productos'));
     }
 
     public function store(Request $request)
@@ -70,12 +73,19 @@ class CotizacionController extends Controller
         return redirect('cotizaciones');
     }
 
+    public function contestarCotizacion($id)
+    {
+        $cotizacion = Cotizacion::findOrFail($id);
+        $producto = Producto::findOrfail($cotizacion->producto_id);
+        return view('Cotizaciones.contestarCotizacion.contestarCotizacion', compact('cotizacion', 'producto'));
+    }
+
     public function exportPdfCotizaciones()
     {
         $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->get();
         $cotizaciones = compact('cotizaciones');
-        
-        $pdf = Pdf::loadView('cotizaciones.pdf.exportPdf', $cotizaciones );
+
+        $pdf = Pdf::loadView('cotizaciones.pdf.exportPdf', $cotizaciones);
         return $pdf->setPaper('a3', 'landscape')->stream('reporteCotizaciones.pdf');
     }
 
