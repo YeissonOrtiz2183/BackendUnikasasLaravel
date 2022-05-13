@@ -50,7 +50,7 @@
                         <label>Costo estimado: <span>${{ $proyecto->costo_estimado }}</span></label>
 
                         @if($proyecto->estado_proyecto == "Suspendido")
-                            <label>Estado: {{ $proyecto->estado_proyecto }}<span class="material-icons md-100 suspension">feed</span></label>
+                            <label>Estado: {{ $proyecto->estado_proyecto }}<span class="material-icons suspension">feed</span></label>
                         @else
                             <label>Estado: <span>{{ $proyecto->estado_proyecto }}</span></label>
                         @endif

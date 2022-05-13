@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Audit;
 use Illuminate\Http\Request;
-use App\Models\Actividad;
-use App\Models\actividadEtapa;
 
-class ActividadController extends Controller
+class AuditController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -36,38 +35,27 @@ class ActividadController extends Controller
      */
     public function store(Request $request)
     {
-        $datosActividad = request()->except('_token', 'etapa_id');
-        Actividad::insert($datosActividad);
-        $idActividad = Actividad::max('id');
-
-        actividadEtapa::insert([
-            'actividad_id' => $idActividad,
-            'etapa_id' => $request->etapa_id,
-        ]);
-
-        return redirect('/actividades/' .$idActividad);
-
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Audit  $audit
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Audit $audit)
     {
-        $actividad = Actividad::find($id);
-        return view('proyectos.viewActivity', compact('actividad'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Audit  $audit
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Audit $audit)
     {
         //
     }
@@ -76,25 +64,21 @@ class ActividadController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Audit  $audit
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Audit $audit)
     {
-        $datosActividad = request()->except(['_token', '_method']);
-
-        Actividad::where('id', '=', $id)->update($datosActividad);
-
-        return redirect('/actividades/'.$id);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Audit  $audit
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Audit $audit)
     {
         //
     }

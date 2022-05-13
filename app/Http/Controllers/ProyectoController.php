@@ -8,6 +8,7 @@ use App\Models\Proyecto;
 use App\Models\Actividad;
 use App\Models\ProyectoEtapa;
 use App\Models\Etapa;
+use App\Models\Audit;
 
 class ProyectoController extends Controller
 {
@@ -69,7 +70,7 @@ class ProyectoController extends Controller
         $encargados = DB::select('SELECT users.id, users.primer_nombre, users.segundo_nombre, users.primer_apellido, users.segundo_apellido
                                     FROM users
                                     LEFT JOIN rols ON rols.id = users.rol_id
-                                    WHERE rols.nombre_rol = "Director de proyectos" AND users.estado_usuario = "Activo"');
+                                    WHERE rols.nombre_rol = "admin" AND users.estado_usuario = "Activo"');
         $clientes = DB::select('SELECT users.id, users.primer_nombre, users.segundo_nombre, users.primer_apellido, users.segundo_apellido
                                     FROM users
                                     LEFT JOIN rols ON rols.id = users.rol_id
@@ -91,15 +92,11 @@ class ProyectoController extends Controller
         $datosProyecto = request()->except('_token');
 
         $datosProyecto['producto_id'] = $datosProyecto['producto_id'][0];
-        echo strlen($datosProyecto['cliente_id']);
-        for ($i=0; $i < strlen($datosProyecto['cliente_id']); $i++) {
+        $str = $datosProyecto['cliente_id'];
+        $int = (int) filter_var($str, FILTER_SANITIZE_NUMBER_INT);
 
-            if (gettype($datosProyecto['cliente_id'][$i]) == 'number') {
-                $idCliente += $datosProyecto['cliente_id'][$i];
-                echo $idCliente;
-                $datosProyecto['cliente_id'] = $idCliente;
-            }
-        }
+        $datosProyecto['cliente_id'] = $int;
+
 
         Proyecto::insert($datosProyecto);
         $idProyecto = Proyecto::max('id');
@@ -142,6 +139,12 @@ class ProyectoController extends Controller
                 'etapa_id' => $idEtapa]);
             $idEtapa--;
         }
+
+        Audit::insert([
+            'tipo_accion' => "insert",
+            'fecha_accion' => Date("Y-m-d"),
+            'valor_nuevo' => $datosProyecto['nombre_proyecto']
+        ]);
 
         header('Location: http://127.0.0.1:8000/proyectos/search/activo');
 
