@@ -51,35 +51,35 @@
                         </div>
                         <div class="campo">
                             <label>Hora de finalización:</label>
-                            <input class="checkbox" type="checkbox" id="fechaFin" name="hora_fin">
+                            <input class="checkbox" type="checkbox" id="fechaFin" name="hora_fin" value="hora_fin">
                         </div>
                         <div class="campo">
                             <label>Proyecto:</label>
-                            <input class="checkbox" type="checkbox" id="proyecto" name="nombre_proyecto">
+                            <input class="checkbox" type="checkbox" id="proyecto" name="nombre_proyecto" value="nombre_proyecto">
                         </div>
                         <div class="campo">
                             <label>Notificación:</label>
-                            <input class="checkbox" type="checkbox" id="notificacion" name="notificacion_evento">
+                            <input class="checkbox" type="checkbox" id="notificacion" name="notificacion_evento" value="notificacion_evento">
                         </div>
                         <div class="campo">
                             <label>Invitados:</label>
-                            <input class="checkbox" type="checkbox" id="invitados" name="invitados_evento">
+                            <input class="checkbox" type="checkbox" id="invitados" name="invitados_evento" value="invitados_evento">
                         </div>
                         <div class="campo">
                             <label>Lugar:</label>
-                            <input class="checkbox" type="checkbox" id="lugar" name="lugar_evento">
+                            <input class="checkbox" type="checkbox" id="lugar" name="lugar_evento" value="lugar_evento" value="lugar_evento">
                         </div>
                         <div class="campo">
                             <label>Asunto:</label>
-                            <input class="checkbox" type="checkbox" id="asunto" name="asunto_evento">
+                            <input class="checkbox" type="checkbox" id="asunto" name="asunto_evento" value="asunto_evento">
                         </div>
                         <div class="campo">
                             <label>Mensaje:</label>
-                            <input class="checkbox" type="checkbox" id="mensaje" name="mensaje_evento">
+                            <input class="checkbox" type="checkbox" id="mensaje" name="mensaje_evento" value="mensaje_evento">
                         </div>
                         <div class="campo">
                             <label>Estado:</label>
-                            <input class="checkbox" type="checkbox" id="estado" name="estado_evento">
+                            <input class="checkbox" type="checkbox" id="estado" name="estado_evento" value="estado_evento">
                         </div>
                         <div class="campo">
                             <label>Seleccionar Todos:</label>
@@ -104,6 +104,10 @@
                     </div>
                 </form>
         </div>
+        {{-- <?php 
+        // $event = $eventos;
+        // $event = explode('}', $event);
+        ?> --}}
         <div class="previsualizacion">
             <h2 class="titulo_previsualizacion">Previsualización</h2>
             <a href="{{ url('/exportPdfEventos/'.$eventos) }}" class="icono_dowload"><svg width="35" height="35" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">

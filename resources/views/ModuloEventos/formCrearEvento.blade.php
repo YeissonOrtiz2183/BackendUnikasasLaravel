@@ -32,7 +32,7 @@
                     <div class="campo">
                         <label for="eventDate" style="padding-right: 2%">Fecha:</label>
                         <div class="inputValidate">
-                            <input type="date" class="campomedio" id="eventDate" name="fecha_evento">
+                            <input type="date" class="campomedio" id="eventDate" id="fecha" name="fecha_evento">
                             <span id="eventDate_error_message" class="error_form"></span>
                         </div>
                     </div>
@@ -128,5 +128,6 @@
         </div>
     </div>
     <script type="text/javascript" src="{{ asset('js/Eventos/validateCreateEvent.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/Eventos/fecha.js')}}"></script>
 </body>
 </html>

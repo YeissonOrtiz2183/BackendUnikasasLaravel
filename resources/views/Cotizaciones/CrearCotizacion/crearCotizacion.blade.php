@@ -21,14 +21,14 @@
           <label for="validationServer01" class="form-label">Nombre</label>
           <input type="text" class="form-control is-valid" id="validationServer01" placeholder="Nombre" required name="nombres_cotizante">
           <div class="valid-feedback">
-            Se ve bien!
+            Ingrese su(s) nombre(s)
           </div>
         </div>
         <div class="col-md-4">
           <label for="validationServer02" class="form-label">Apellido</label>
           <input type="text" class="form-control is-valid" id="validationServer02" placeholder="Apellido" required name="apellidos_cotizante">
           <div class="valid-feedback">
-            Se ve bien!
+            Ingrese su(s) apellido(s)
           </div>
         </div>
         <div class="col-md-4">
@@ -41,10 +41,11 @@
             </div>
           </div>
         </div>
+        
         <div class="col-md-4">
           <label for="validationServer03" class="form-label">Telefono</label>
-          <input type="text" class="form-control is-invalid" id="validationServer03" placeholder="Telefono" aria-describedby="validationServer03Feedback" required name="telefono_cotizante">
-          <div id="validationServer03Feedback" class="invalid-feedback">
+          <input type="text" max="10" class="form-control is-invalid" id="validationServer03" placeholder="Telefono" aria-describedby="validationServer03Feedback" required name="telefono_cotizante">
+          <div class="invalid-feedback">
             Por favor digita tu numero de telefono
           </div>
         </div>
@@ -67,7 +68,7 @@
             <option>Otra</option>
           </select>
           <div id="validationServer04Feedback" class="invalid-feedback">
-            Ciudad
+            Seleccione la ciudad
           </div>
         </div>
 
@@ -80,7 +81,7 @@
                 @endforeach
             </select>
             <div id="validationServer04Feedback" class="invalid-feedback">
-              Producto
+              Seleccione el producto
             </div>
           </div>
 
@@ -135,13 +136,13 @@
         {{-- <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
         </button> --}}
 
-        <div class="container">
+        <div class="container" style="margin-bottom: 1%">
             <div class="row row col-2" style="margin: 0 auto;">
                 <button class="btn btn-warning" type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal2">Crear cotización</button>
             </div>
         </div>
       </form>
     </div>
-    <script src="{{ asset('js/Eventos/fecha.js') }}"></script>
+    <script src="{{ asset('js/Cotizaciones/fecha.js') }}"></script>
 </body>
 </html>

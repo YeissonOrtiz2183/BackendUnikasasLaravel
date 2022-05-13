@@ -146,7 +146,7 @@
 
         </button> --}}
 
-        <div class="container">
+        <div class="container" style="margin-bottom: 1%">
             <div class="row row col-2" style="margin: 0 auto;">
                 <button class="btn btn-warning" type="button" data-bs-toggle="modal"  data-bs-target="#exampleModal2">Realizar cambios</button>
             </div>
