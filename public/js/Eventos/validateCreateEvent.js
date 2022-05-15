@@ -185,7 +185,7 @@ $(function(){
     }
 
     function check_eventAsisstant(){
-        let pattern = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/;
+        let pattern = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})|\,\ {1,}$/;
         let eventAsisstant = $("#eventAsisstant").val();
         
         if(pattern.test(eventAsisstant) && eventAsisstant !== ''){
@@ -201,7 +201,7 @@ $(function(){
     }
 
     function check_eventPlace(){
-        let pattern = /^[a-zA-Z0-9 ]*$/;
+        let pattern = /^[a-zA-Z0-9\# \- ]*$/;
         let eventPlace = $("#eventPlace").val();
 
         if(pattern.test(eventPlace) && eventPlace !== ''){

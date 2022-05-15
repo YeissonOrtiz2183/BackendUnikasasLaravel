@@ -102,17 +102,17 @@
                     </div> --}}
                     
                     <div class="campo campoCompartido">
-                        <label for="eventBusiness" style="padding-right: 8%;">Asunto:</label>
+                        <label for="eventBusiness" style="padding-left: 15%;">Asunto:</label>
                         <div class="inputValidate">
-                            <textarea cols="120" rows="10" placeholder="Escriba el asunto del evento..." id="eventBusiness" name="asunto_evento" style="width: 98%;"></textarea>
+                            <textarea cols="120" rows="10" placeholder="Escriba el asunto del evento..." id="eventBusiness" name="asunto_evento" style="width: 99%;"></textarea>
                             <span id="eventBusiness_error_message" class="error_form"></span>
                         </div>
                     </div>
 
                     <div class="campo campoCompartido">
-                        <label for="eventMessage" style="padding-right: 8%;">Mensaje:</label>
+                        <label for="eventMessage" style="padding-left: 15%;">Mensaje:</label>
                         <div class="inputValidate">
-                            <textarea cols="120" rows="10" placeholder="Escriba aqui un mensaje a los invitados..." id="eventMessage" name="mensaje_evento" style="width: 98%;"></textarea>
+                            <textarea cols="120" rows="10" placeholder="Escriba aqui un mensaje a los invitados..." id="eventMessage" name="mensaje_evento" style="width: 99%;"></textarea>
                             <span id="eventMenssage_error_message" class="error_form"></span>
                         </div>
                     </div>

@@ -194,7 +194,7 @@ input[type="submit"]{
     display: grid;
     grid-template-columns: 25% 75%;
     column-gap: 3px;
-    justify-items: end;
+    justify-items: center;
 }
 
 textarea{

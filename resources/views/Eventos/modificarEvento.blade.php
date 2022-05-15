@@ -106,24 +106,24 @@
                     </div> --}}
                     
                     <div class="campo campoCompartido">
-                        <label for="eventBusiness" style="padding-right: 8%;">Asunto:</label>
+                        <label for="eventBusiness" style="padding-left: 15%;">Asunto:</label>
                         <div class="inputValidate">
-                            <textarea cols="120" rows="10" id="eventBusiness" name="asunto_evento" style="width: 98%;">{{ isset($evento->asunto_evento)?$evento->asunto_evento:old('asunto_evento') }}</textarea>
+                            <textarea cols="120" rows="10" id="eventBusiness" name="asunto_evento" style="width: 99%;">{{ isset($evento->asunto_evento)?$evento->asunto_evento:old('asunto_evento') }}</textarea>
                             <span id="eventBusiness_error_message" class="error_form"></span>
                         </div>
                     </div>
 
                     <div class="campo campoCompartido">
-                        <label for="eventMessage" style="padding-right: 8%;">Mensaje:</label>
+                        <label for="eventMessage" style="padding-left: 15%;">Mensaje:</label>
                         <div class="inputValidate">
-                            <textarea cols="120" rows="10" id="eventMessage" name="mensaje_evento" style="width: 98%;">{{ isset($evento->mensaje_evento)?$evento->mensaje_evento:old('mensaje_evento') }}</textarea>
+                            <textarea cols="120" rows="10" id="eventMessage" name="mensaje_evento" style="width: 99%;">{{ isset($evento->mensaje_evento)?$evento->mensaje_evento:old('mensaje_evento') }}</textarea>
                             <span id="eventMenssage_error_message" class="error_form"></span>
                         </div>
                     </div>
 
                     <input type="hidden" id="estado_evento" name="estado_evento" value="Activo">
 
-                    <div class="botones">
+                    <div class="botones" style="margin: 0 auto">
                         <input type="submit" value="CONFIRMAR" id="submit" disabled>
                         <a href="{{ url('eventos') }}">CANCELAR</a>
                     </div>
