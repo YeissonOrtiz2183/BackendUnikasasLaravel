@@ -100,7 +100,7 @@
 
                     <div class="botones">
                         <input class="generar" type="submit" value="Generar">
-                        <input class="cancelar" type="submit" value="Cancelar" src="{{ url('ModuloEventos') }}">
+                        <input class="cancelar" type="submit" value="Cancelar" src="{{ url('eventos') }}">
                     </div>
                 </form>
         </div>

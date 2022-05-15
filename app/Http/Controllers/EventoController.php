@@ -29,14 +29,14 @@ class EventoController extends Controller
             $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->where($campoTabla, 'like', "%$eventoBusqueda%")->get();
         }
 
-        return view('ModuloEventos.indexEventos', compact('eventos'));
+        return view('Eventos.indexEventos', compact('eventos'));
     }
 
     public function create()
     {
         // variable proyectos para mostrar los proyectos existentes en el formulario de creacion
         $proyectos = DB::table('proyectos')->get();
-        return view('ModuloEventos.formCrearEvento', compact('proyectos'));
+        return view('Eventos.formCrearEvento', compact('proyectos'));
     }
 
     public function store(Request $request)
@@ -44,7 +44,7 @@ class EventoController extends Controller
         $datosEvento = request()->except('_token');
         // return response()->json($datosEvento);
         Evento::insert($datosEvento);
-        return redirect('ModuloEventos')->with('mensaje', 'El evento se agrego exitosamente');
+        return redirect('eventos')->with('mensaje', 'El evento se agrego exitosamente');
     }
 
     public function show($id)
@@ -53,14 +53,14 @@ class EventoController extends Controller
         // variable proyecto para acceder al proyecto al cual se encuentra asignado el evento
         $proyecto = Proyecto::findOrfail($evento->proyecto_id);
         // return dd($proyecto);
-        return view('ModuloEventos.visualizarEvento', compact('evento', 'proyecto'));
+        return view('Eventos.visualizarEvento', compact('evento', 'proyecto'));
     }
 
     public function edit($id)
     {
         $evento = Evento::findOrfail($id);
         $proyecto = Proyecto::findOrfail($evento->proyecto_id);
-        return view('ModuloEventos.modificarEvento', compact('evento','proyecto'));
+        return view('Eventos.modificarEvento', compact('evento','proyecto'));
     }
 
     public function update(Request $request, $id)
@@ -68,7 +68,7 @@ class EventoController extends Controller
         $datosEvento = request()->except(['_token','_method', "eventName", "eventDate", "eventTime", "eventProyect", "eventAssistant", "eventReason"]);
         Evento::where('id', '=', $id)->update($datosEvento);
         // $evento = Evento::findOrFail($id);
-        return redirect('ModuloEventos')->with('mensaje', 'El evento ha sido modificado');
+        return redirect('eventos')->with('mensaje', 'El evento ha sido modificado');
     }
 
     public function cancel($id)
@@ -76,14 +76,14 @@ class EventoController extends Controller
         $evento = Evento::findOrfail($id);
         $proyecto = Proyecto::findOrfail($evento->proyecto_id);
         // return dd($evento);
-        return view('ModuloEventos.formCancelarEvento', compact('evento','proyecto'));
+        return view('Eventos.formCancelarEvento', compact('evento','proyecto'));
     }
 
     public function disponibilidad()
     {
         $eventos = Evento::all();
         // dd($eventos);
-        return view('ModuloEventos.disponibilidad', compact('eventos'));
+        return view('Eventos.disponibilidad', compact('eventos'));
     }
 
     public function reporteEventos(Request $request)
@@ -162,7 +162,7 @@ class EventoController extends Controller
         // $eventosR = $eventos;
         $eventosR = $eventos;
 
-        return view('ModuloEventos.crearReporteEvent', compact('eventos'));
+        return view('Eventos.crearReporteEvent', compact('eventos'));
     }
 
     public function exportPdfEventos()
@@ -174,14 +174,14 @@ class EventoController extends Controller
         // return dd($eventos);
         // $eventos = $this->eventosR;
         $eventos = compact('eventos');
-        return dd($eventos);
-        $pdf = Pdf::loadView('ModuloEventos.exportPdf', $eventos);
+        // return dd($eventos);
+        $pdf = Pdf::loadView('Eventos.exportPdf', $eventos);
         return $pdf->setPaper('a3', 'landscape')->stream('reporteEventos.pdf');
     }
 
     public function destroy($id)
     {
         Evento::destroy($id);
-        return redirect('ModuloEventos')->with('mensage','El evento ha sido borrado');
+        return redirect('eventos')->with('mensage','El evento ha sido borrado');
     }
 }

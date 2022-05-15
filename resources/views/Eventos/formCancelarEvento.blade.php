@@ -17,7 +17,7 @@
             <h1 class="titleModule">Cancelar evento</h1>
         </div>
         <div class="formulario">
-            <form action="{{ url('ModuloEventos/'.$evento->id) }}" method="post">
+            <form action="{{ url('eventos/'.$evento->id) }}" method="post">
                 @csrf {{-- token de seguridad para el formulario  --}}
 
                 {{ method_field('PATCH') }}
@@ -26,9 +26,20 @@
                         <label for="eventName" style="padding-left: 1%;">Nombre del evento:</label>
                         <div class="inputValidate">
                             <input type="text" readonly id="eventName" name="eventName" 
-                            value="{{ isset($evento->nombre_evento)?$evento->nombre_evento:old('nombre_evento') }}" style="width: 98%;">
+                            value="{{ isset($evento->nombre_evento)?$evento->nombre_evento:old('nombre_evento') }}" style="width: 98%; background-color: #e9ecef;opacity: 1;">
                             <span id="eventName_error_message" class="error_form"></span>
                         </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="eventProyect">Proyecto:</label>
+                        <input type="text" id="eventProyect" name="eventProyect" readonly 
+                        value="{{ isset($proyecto->nombre_proyecto)?$proyecto->nombre_proyecto:old('nombre_proyecto') }}" style="width: 94%; background-color: #e9ecef; opacity: 1;">
+                    </div>
+
+                    <div class="campo campoCompartido">
+                        <label for="eventAssistant">Invitados:</label>
+                        <textarea cols="120" rows="7" id="eventAssistant" name="eventAssistant" style="width: 98%; background-color: #e9ecef; opacity: 1;" readonly>{{ isset($evento->invitados_evento)?$evento->invitados_evento:old('invitados_evento') }}</textarea>
                     </div>
 
                     <div class="campo">
@@ -44,17 +55,6 @@
                             <span id="eventTime_error_message" class="error_form"></span>
                         </div>
                     </div>
-
-                    <div class="campo">
-                        <label for="eventProyect">Proyecto:</label>
-                        <input type="text" id="eventProyect" name="eventProyect" readonly 
-                        value="{{ isset($proyecto->nombre_proyecto)?$proyecto->nombre_proyecto:old('nombre_proyecto') }}" style="width: 94%;">
-                    </div>
-
-                    <div class="campo campoCompartido">
-                        <label for="eventAssistant">Invitados:</label>
-                        <textarea cols="120" rows="10" id="eventAssistant" name="eventAssistant" style="width: 98%;" readonly>{{ isset($evento->invitados_evento)?$evento->invitados_evento:old('invitados_evento') }}</textarea>
-                    </div>
                     
                     <div class="campo campoCompartido">
                         <label for="eventReason" style="padding-right: 5%;">Motivo:</label>
@@ -68,12 +68,13 @@
 
                     <div class="botones">
                         <input type="submit" value="CONFIRMAR" id="submit" disabled>
-                        <a href="{{ url('ModuloEventos') }}">CANCELAR</a>
+                        <a href="{{ url('eventos') }}">CANCELAR</a>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <script type="text/javascript" src="{{ asset('js/Eventos/validateCancelEvent.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('js/Eventos/datosCancelEvento.js')}}"></script>
 </body>
 </html>

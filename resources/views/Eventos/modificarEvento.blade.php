@@ -17,7 +17,7 @@
             <h1 class="titleModule">Modificar evento</h1>
         </div>
         <div class="formulario">
-            <form action="{{ url('ModuloEventos/'.$evento->id) }}" method="post">
+            <form action="{{ url('eventos/'.$evento->id) }}" method="post">
                 @csrf {{-- token de seguridad para el formulario  --}}
 
                 {{ method_field('PATCH') }}
@@ -81,6 +81,15 @@
                         </div>
                     </div>
 
+                    <div class="campo">
+                        <label for="eventPlace" style="padding-right: 3%">Lugar:</label>
+                        <div class="inputValidate">
+                            <input type="text" placeholder="Ingrese aqui el lugar del evento" id="eventPlace" name="lugar_evento" 
+                            value="{{ isset($evento->lugar_evento)?$evento->lugar_evento:old('lugar_evento') }}" style="width: 98%;">
+                            <span id="eventPlace_error_message" class="error_form"></span>
+                        </div>
+                    </div>
+
                     <h2><strong>Información de los asistentes al evento</strong></h2>
                     <div class="campo">
                         <label for="eventAsisstant" style="padding-right: 3%;">Agregar invitados:</label>
@@ -91,19 +100,10 @@
                         </div>
                     </div>
 
-                    <div class="campo campoCompartido">
+                    {{-- <div class="campo campoCompartido">
                         <label for="invitados_evento"></label>
                         <textarea cols="120" rows="10" readonly>{{ isset($evento->invitados_evento)?$evento->invitados_evento:old('invitados_evento') }}</textarea>
-                    </div>
-
-                    <div class="campo">
-                        <label for="eventPlace" style="padding-right: 4%">Lugar:</label>
-                        <div class="inputValidate">
-                            <input type="text" placeholder="Ingrese aqui el lugar del evento" id="eventPlace" name="lugar_evento" 
-                            value="{{ isset($evento->lugar_evento)?$evento->lugar_evento:old('lugar_evento') }}" style="width: 98%;">
-                            <span id="eventPlace_error_message" class="error_form"></span>
-                        </div>
-                    </div>
+                    </div> --}}
                     
                     <div class="campo campoCompartido">
                         <label for="eventBusiness" style="padding-right: 8%;">Asunto:</label>
@@ -125,7 +125,7 @@
 
                     <div class="botones">
                         <input type="submit" value="CONFIRMAR" id="submit" disabled>
-                        <a href="{{ url('ModuloEventos') }}">CANCELAR</a>
+                        <a href="{{ url('eventos') }}">CANCELAR</a>
                     </div>
                 </div>
             </form>

@@ -30,7 +30,7 @@
         <div class="container">
             <aside>
                 <div class="button">
-                    <a class="buttonCreateEvento" href="{{ url('ModuloEventos/create') }}">Crear evento</a>
+                    <a class="buttonCreateEvento" href="{{ url('eventos/create') }}">Crear evento</a>
                 </div>
                 <div class="button">
                     <a class="buttonDisponibilidad" href="{{ url('/disponibilidad') }}">Disponibilidad</a>
@@ -59,7 +59,7 @@
                                 <h4 class="info">Asistentes: <span>{{ $evento->invitados_evento }}</span></h4>
                                 <h4 class="info">Proyecto: <span>{{ $evento->nombre_proyecto }}</span></h4>
                             </div>
-                        <a href="{{ url('ModuloEventos/'.$evento->id) }}" class="button visualizar">Visualizar</a>
+                        <a href="{{ url('eventos/'.$evento->id) }}" class="button visualizar">Visualizar</a>
                     </div> 
                 </section>
 

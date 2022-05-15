@@ -33,8 +33,8 @@
                     </div>
         
                     <div class="botones">
-                        <a href="{{ url('ModuloEventos/'.$evento->id.'/edit')}}"><input type="button" value="Modificar evento" class="modificar"></a>
-                        <a href="{{ url('ModuloEventos/'.$evento->id.'/cancel') }}"><input type="button" value="Cancelar evento" class="cancelar"></a>
+                        <a href="{{ url('eventos/'.$evento->id.'/edit')}}"><input type="button" value="Modificar evento" class="modificar"></a>
+                        <a href="{{ url('eventos/'.$evento->id.'/cancel') }}"><input type="button" value="Cancelar evento" class="cancelar"></a>
                     </div>
                 </div>
                 

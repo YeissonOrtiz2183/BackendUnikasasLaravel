@@ -27,12 +27,22 @@ $(function(){
         check_eventName();
         checkButton();
     });
-     
+
+    let eventDate = $("#eventDate").val();
+    if(eventDate != ''){
+        check_eventDate();
+        checkButton();
+    } 
     $("#eventDate").focusout(function(){
         check_eventDate();
         checkButton();
     });
     
+    let eventShedule1 = $("#eventShedule1").val(); 
+    if(eventShedule1 != ''){
+        check_eventShedule1();
+        checkButton();
+    } 
     $("#eventShedule1").focusout(function(){
         check_eventShedule1();
         checkButton();

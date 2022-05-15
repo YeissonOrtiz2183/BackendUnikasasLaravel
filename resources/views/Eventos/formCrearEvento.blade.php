@@ -17,7 +17,7 @@
             <h1 class="titleModule">Crear evento</h1>
         </div>
         <div class="formulario">
-            <form action="{{ url('/ModuloEventos') }}" method="post">
+            <form action="{{ url('/eventos') }}" method="post">
                 @csrf {{-- token de seguridad para el formulario  --}}
                 <div class="contenedor-campos">
                     <h2><strong>Información general del evento</strong></h2>
@@ -79,6 +79,14 @@
                         </div>
                     </div>
 
+                    <div class="campo">
+                        <label for="eventPlace" style="padding-right: 3%">Lugar:</label>
+                        <div class="inputValidate">
+                            <input type="text" placeholder="Ingrese aqui el lugar del evento" id="eventPlace" name="lugar_evento" style="width: 98%;">
+                            <span id="eventPlace_error_message" class="error_form"></span>
+                        </div>
+                    </div>
+
                     <h2><strong>Información de los asistentes al evento</strong></h2>
                     <div class="campo">
                         <label for="eventAsisstant" style="padding-right: 3%;">Agregar invitados:</label>
@@ -88,18 +96,10 @@
                         </div>
                     </div>
 
-                    <div class="campo campoCompartido">
+                    {{-- <div class="campo campoCompartido">
                         <label></label>
                         <textarea type="hidden" cols="120" rows="10" readonly placeholder="Aqui se agregaran los invitados del evento..."></textarea>
-                    </div>
-
-                    <div class="campo">
-                        <label for="eventPlace" style="padding-right: 4%">Lugar:</label>
-                        <div class="inputValidate">
-                            <input type="text" placeholder="Ingrese aqui el lugar del evento" id="eventPlace" name="lugar_evento" style="width: 98%;">
-                            <span id="eventPlace_error_message" class="error_form"></span>
-                        </div>
-                    </div>
+                    </div> --}}
                     
                     <div class="campo campoCompartido">
                         <label for="eventBusiness" style="padding-right: 8%;">Asunto:</label>
@@ -121,7 +121,7 @@
 
                     <div class="botones">
                         <input type="submit" value="CONFIRMAR" id="submit" disabled>
-                        <a href="{{ url('ModuloEventos') }}">CANCELAR</a>
+                        <a href="{{ url('eventos') }}">CANCELAR</a>
                     </div>
                 </div>
             </form>
