@@ -18,34 +18,6 @@
   <h1 style="text-align: center; margin-bottom: 1%">Registro de cotizaciones</h1>
   <div class="container">
     <div class="row row-cols-5">
-      {{-- <div class="col- "><div class="dropdown">Codigo
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-          Filtrar
-        </a>
-
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <li><a class="dropdown-item" href="#">Codigo</a></li>
-        </ul>
-      </div></div> --}}
-      {{-- <div class="col- "><div class="dropdown">Cliente
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-         Filtrar
-        </a> --}}
-
-        {{-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <li><a class="dropdown-item" href="#">Cliente</a></li>
-        </ul>
-      </div></div> --}}
-
-      {{-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <li><select name="" id="">
-          @foreach ($cotizaciones as $cotizacion)
-            <a class="dropdown-item" href="#">
-              <option value="{{ $cotizacion->nombres_cotizante }}">{{ $cotizacion->nombres_cotizante}} {{ $cotizacion->apellidos_cotizante}}</option></a></li>
-            @endforeach
-            </select>
-      </ul>
-    </div></div> --}}
 
     <div class="mb-2 row row row col-2">
       <label for="ciudad" class="col-sm-4 control-label" style="margin-right: 5.5%">Codigo:</label>
@@ -91,30 +63,7 @@
             </select>
         </div>
 </div>
-
-      {{-- <div class="col"><div class="dropdown">Fecha
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-         Filtrar
-        </a>
-
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <li><a class="dropdown-item" href="#">Fecha</a></li>
-        </ul>
-      </div></div>
-      <div class="col"><div class="dropdown">Estado
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-          Filtrar
-        </a>
-
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <li><a class="dropdown-item" href="#">Estado</a></li>
-        </ul>
-      </div></div> --}}
-      <input type="submit" class="btn btn-warning" value="Buscar" style="width: 12%">
-        {{-- <span class="position-absolute translate-middle  border border-light rounded-circle">
-          <span class="visually-hidden"></span>
-        </span> --}}
-
+      <input type="submit" class="btn btn-warning" value="Buscar" style="width: 12%; font-size: 1.20rem; font-weight: 600">
     </div>
     </div>
   </div>
@@ -157,32 +106,7 @@
               </div>
             </div>
           </div></b>
-          {{-- <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal"></button> --}}
-
-          <!-- Modal -->
-          {{-- <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="D" id="exampleModalLabel"> Eliminar la cotizacion</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="alert alert-danger" role="alert">
-                  Esta seguro de que desea eliminar la cotizacion
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                  <input type="button" class="btn btn-primary">Si</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
-
-          </button> --}}
-
+        
           <!-- Modal -->
           <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -201,7 +125,6 @@
               </div>
             </div>
           </div>
-          {{-- <button type="button" class="btn btn-light data-bs-toggle="modal" data-bs-target="#exampleModal"></button> --}}
 
           <!-- Modal -->
           <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -233,7 +156,7 @@
            <!-- Rows and Columns -->
            @foreach ($cotizaciones as $cotizacion)
 
-           <div class="col- border" style="border: none">{{ $cotizacion->id }}</div>
+           <div class="col- border" style="border: none;">{{ $cotizacion->id }}</div>
            <div class="col- border">{{ $cotizacion->nombres_cotizante }} {{ $cotizacion->apellidos_cotizante }}</div>
            <div class="col- border">{{ date('d/m/Y', strtotime($cotizacion->fecha_cotizacion)) }}</div>
            <div class="col- border">{{ $cotizacion->estado_cotizacion }}</div>
@@ -243,10 +166,7 @@
              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
            </svg></a><a class="btn btn-light" href="{{ url('cotizaciones/'.$cotizacion->id.'/edit') }}" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-           </svg><a class="btn btn-light" href="{{ url('cotizaciones/'.$cotizacion->id.'/contestar') }}" role="button">
-               {{-- <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-           </svg> --}}<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+           </svg><a class="btn btn-light" href="{{ url('cotizaciones/'.$cotizacion->id.'/contestar') }}" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
           <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
           </svg></a><button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal2"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
               <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
@@ -275,19 +195,17 @@
               </div>
             </div>
           </div>
-          {{-- <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal"></button></button> --}}
           <a class="btn btn-light" href="{{ url('cotizaciones/'.$cotizacion->id) }}" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
              <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
            </svg></a></div>
 
            @endforeach
-
         </div>
       </div>
       <br>
       <div class="container" style="margin-bottom: 1%">
-        <div class="row row col-2" style="margin: 0 auto;"><a href="{{ url('/exportPdfCotizaciones') }}"><button type="button" class="btn btn-lg btn-warning" data-bs-toggle="popover" title="Click para ver el reporte en formato pdf o excel" data-bs-content="And here's some amazing content. It's very engaging.Right?">Reporte PDF</button></a></div>
+        <div class="row row col-2" style="margin: 0 auto;"><a href="{{ url('/exportPdfCotizaciones') }}"><button type="button" class="btn btn-lg btn-warning" data-bs-toggle="popover" title="Click para ver el reporte en formato pdf o excel" data-bs-content="And here's some amazing content. It's very engaging.Right?" style="font-size: 1.20rem; font-weight: 600">Reporte PDF</button></a></div>
       </div>
       <script src="{{ asset('js/Eventos/fecha.js') }}"></script>
 </body>

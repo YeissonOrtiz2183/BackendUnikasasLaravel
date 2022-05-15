@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Cotizacion;
 use App\Models\Producto;
 use Barryvdh\DomPDF\Facade\Pdf;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\emailCrearCotizacion; // Para la creacion dela cotzación
+use App\Mail\emailContestarCotizacion; // Para la respuesta a la cotización
+
 class CotizacionController extends Controller
 {
     public function index(Request $request)
@@ -53,8 +58,13 @@ class CotizacionController extends Controller
     public function store(Request $request)
     {
         $cotizacion = request()->except('_token');
-        // return response()->json($datosEvento);
+        $email= request('email_cotizante');
         Cotizacion::insert($cotizacion);
+        // Enviar email de la cotización
+        if($email){
+            Mail::to($email)->send(new emailCrearCotizacion($cotizacion));
+        }
+        // return response()->json($datosEvento);
         return redirect('cotizaciones');
     }
 
@@ -67,8 +77,15 @@ class CotizacionController extends Controller
 
     public function update(Request $request, $id)
     {
-        $datosCotizacion = request()->except(['_token','_method']);
+        $datosCotizacion = request()->except(['_token','_method', 'respuesta_cotizacion']);
         Cotizacion::where('id', '=', $id)->update($datosCotizacion);
+
+        $respuesta = request('respuesta_cotizacion');
+        if($respuesta){
+            $datosCotizacion = request()->except(['_token','_method']);
+            $email= request('email_cotizante');
+            Mail::to($email)->send(new emailContestarCotizacion($datosCotizacion));
+        }
         // $evento = Evento::findOrFail($id);
         return redirect('cotizaciones');
     }

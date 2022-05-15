@@ -15,10 +15,10 @@
   </svg></a>
     <h1 style="text-align: center; margin-bottom: 2%"><strong>Responder cotización</strong></h1>
     <div class="container">
-    <form class="row g-4" action="" method="">
-      @csrf {{-- token de seguridad para el formulario  --}}
-
-        {{-- {{ method_field('PATCH') }} --}}
+    <form class="row g-4" action="{{ url('cotizaciones/'.$cotizacion->id) }}" method="post">
+        @csrf {{-- token de seguridad para el formulario  --}}
+  
+          {{ method_field('PATCH') }}
 
         <div class="col-md-4">
           <label class="form-label">Nombre</label>
@@ -49,14 +49,16 @@
 
         <div class="col-md-4">
             <label class="form-label">Ciudad</label>
-            <input type="text" class="form-control" placeholder="Telefono" aria-describedby="validationServer03Feedback" required name="telefono_cotizante"
+            <input type="text" class="form-control" placeholder="Telefono" aria-describedby="validationServer03Feedback" required name="ciudad_cotizante"
               value="{{ isset($cotizacion->ciudad_cotizante)?$cotizacion->ciudad_cotizante:old('ciudad_cotizante') }}" readonly>
           </div>
 
           <div class="col-md-4">
             <label class="form-label">Producto</label>
-            <input type="text" class="form-control" placeholder="Producto" aria-describedby="validationServer05Feedback" required name="nombre_producto"
-                value="{{ isset($producto->id)?$producto->id:old('id') }} - {{ isset($producto->nombre_producto)?$producto->nombre_producto:old('nombre_producto') }}" readonly>
+            <select class="form-select" placeholder="Producto" aria-describedby="validationServer04Feedback" required name="producto_id" readonly hidden>
+              <input type="text" class="form-control" value="{{ $producto->id }} - {{ $producto->nombre_producto }}" readonly>
+                <option readonly hidden value="{{ $producto->id }}">{{ $producto->id }} - {{ $producto->nombre_producto }}</option>
+            </select>
           </div>
 
           <div class="col-md-4">
@@ -67,18 +69,27 @@
 
           <div class="col-md-4">
             <label class="form-label">Fecha</label>
-            <input type="date" class="form-control" placeholder="Fecha" aria-describedby="validationServer05Feedback" required name="fecha_cotizante"
+            <input type="date" class="form-control" placeholder="Fecha" aria-describedby="validationServer05Feedback" required name="fecha_cotizacion"
                 value="{{ isset($cotizacion->fecha_cotizacion)?$cotizacion->fecha_cotizacion:old('fecha_cotizacion') }}" readonly>
           </div>
 
           <div class="col-md-4">
-            <label class="form-label">Estado</label>
-            <input type="text" class="form-control" placeholder="Fecha" aria-describedby="validationServer05Feedback" required name="fecha_cotizante"
-                value="{{ isset($cotizacion->estado_cotizacion)?$cotizacion->estado_cotizacion:old('estado_cotizacion') }}" readonly>
+            <label for="validationServer04" class="form-label">Estado</label>
+            <select class="form-select is-valid" id="validationServer04" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="estado_cotizacion">
+              <option value="{{ isset($cotizacion->estado_cotizacion)?$cotizacion->estado_cotizacion:old('estado_cotizacion') }}">{{ isset($cotizacion->estado_cotizacion)?$cotizacion->estado_cotizacion:old('estado_cotizacion') }}</option>
+              <option value="Respondida">Respondida</option>
+              <option value="Cancelada">Cancelada</option>
+              <option value="Por respondrer">Por respondrer</option>
+            </select>
           </div>
 
           <div class="row g-1" style="margin-left: 1%"><br>
-            Respuesta de la cotización<textarea id="comentarios" rows="4" name="respuesta_cotizacion" placeholder="Ingrese la respuesta de la cotización..." style="width: 98%;"> </textarea>
+            Comentarios<textarea id="comentarios" rows="4" name="comentarios_cotizacion" style="width: 98%; background-color: #e9ecef; opacity: 1; border-radius: 0.25rem" readonly>{{ isset($cotizacion->comentarios_cotizacion)?$cotizacion->comentarios_cotizacion:old('comentarios_cotizacion') }}
+            </textarea>
+         </div>
+
+          <div class="row g-1" style="margin-left: 1%"><br>
+            Respuesta de la cotización<textarea id="respuesta_cotizacion" rows="4" name="respuesta_cotizacion" placeholder="Ingrese la respuesta de la cotización..." style="width: 98%; border-radius: 0.25rem"> </textarea>
 
          </div>
 
@@ -87,11 +98,11 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="D" id="exampleModalLabel"> Eliminar la cotizacion</h5>
+                <h5 class="D" id="exampleModalLabel"> Enviar respuesta de cotización</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                ¿Esta seguro de que desea editar la cotizacion?
+                ¿Esta seguro de que desea enviar la respuesta de la cotización?
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
@@ -106,7 +117,7 @@
 
         <div class="container" style="margin-bottom: 1%">
             <div class="row row col-2" style="margin: 0 auto;">
-                <button class="btn btn-warning" type="button" data-bs-toggle="modal"  data-bs-target="#exampleModal2">Enviar respuesta</button>
+                <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="font-size: 1.20rem; font-weight: 600">Enviar respuesta</button>
             </div>
         </div>
       </form>

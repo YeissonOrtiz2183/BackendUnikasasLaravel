@@ -25,7 +25,7 @@
           <input type="text" class="form-control is-valid" id="validationServer01" placeholder="Nombre" required name="nombres_cotizante"
           value="{{ isset($cotizacion->nombres_cotizante)?$cotizacion->nombres_cotizante:old('nombre_cotizante') }}">
           <div class="valid-feedback">
-            Se ve bien!
+            Ingrese su(s) nombre(s)
           </div>
         </div>
         <div class="col-md-4">
@@ -33,7 +33,7 @@
           <input type="text" class="form-control is-valid" id="validationServer02" placeholder="Apellido" required name="apellidos_cotizante"
           value="{{ isset($cotizacion->apellidos_cotizante)?$cotizacion->apellidos_cotizante:old('nombre_cotizante') }}">
           <div class="valid-feedback">
-            Se ve bien!
+            Ingrese su(s) apellido(s)
           </div>
         </div>
         <div class="col-md-4">
@@ -60,17 +60,17 @@
           <select class="form-select is-invalid" id="validationServer04" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="ciudad_cotizante">
             <option value="{{ isset($cotizacion->ciudad_cotizante)?$cotizacion->ciudad_cotizante:old('ciudad_cotizante') }}">{{ isset($cotizacion->ciudad_cotizante)?$cotizacion->ciudad_cotizante:old('ciudad_cotizante') }}</option>
             <option value="Bogota">Bogota</option>
-            <option value="Cundinamarca">Cundinamarca</option>
-            <option value="Tunja">Tunja</option>
-            <option value="Boyaca">Boyaca</option>
             <option value="Arauca">Arauca</option>
-            <option value="Popayan">Popayan</option>
             <option value="Armenia">Armenia</option>
+            <option value="Bogota">Bogota</option>
+            <option value="Boyaca">Boyaca</option>
             <option value="Cartagena">Cartagena</option>
-            <option value="Medellin">Medellin</option>
-            <option value="Villavicencio">Villavicencio</option>
             <option value="Cali">Cali</option>
-            <option value="Arauca">Arauca</option>
+            <option value="Fusagasugá">Fusagasugá</option>
+            <option value="Medellin">Medellin</option>
+            <option value="Popayan">Popayan</option>
+            <option value="Tunja">Tunja</option>
+            <option value="Villavicencio">Villavicencio</option>
             <option>Otra</option>
           </select>
           <div id="validationServer04Feedback" class="invalid-feedback">
@@ -119,7 +119,7 @@
           </div>
 
           <div class="row g-1" style="margin-left: 1%"><br>
-            Comentarios<textarea id="comentarios" rows="4" name="comentarios_cotizacion" style="width: 98%;">{{ isset($cotizacion->comentarios_cotizacion)?$cotizacion->comentarios_cotizacion:old('comentarios_cotizacion') }}
+            Comentarios<textarea id="comentarios" rows="4" name="comentarios_cotizacion" style="width: 98%; border-radius: 0.25rem">{{ isset($cotizacion->comentarios_cotizacion)?$cotizacion->comentarios_cotizacion:old('comentarios_cotizacion') }}
             </textarea>
 
          </div>
@@ -147,8 +147,8 @@
         </button> --}}
 
         <div class="container" style="margin-bottom: 1%">
-            <div class="row row col-2" style="margin: 0 auto;">
-                <button class="btn btn-warning" type="button" data-bs-toggle="modal"  data-bs-target="#exampleModal2">Realizar cambios</button>
+            <div class="row row col-3" style="margin: 0 auto;">
+                <button class="btn btn-warning" type="button" data-bs-toggle="modal"  data-bs-target="#exampleModal2" style="font-size: 1.20rem; font-weight: 600">Confirmar cambios</button>
             </div>
         </div>
       </form>

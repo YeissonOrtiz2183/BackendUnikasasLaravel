@@ -53,18 +53,17 @@
           <label for="validationServer04" class="form-label">Ciudad</label>
           <select class="form-select is-invalid" id="validationServer04" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="ciudad_cotizante">
             <option selected disabled value="">Selecciona</option>
-            <option value="Bogota">Bogota</option>
-            <option value="Cundinamarca">Cundinamarca</option>
-            <option value="Tunja">Tunja</option>
-            <option value="Boyaca">Boyaca</option>
             <option value="Arauca">Arauca</option>
-            <option value="Popayan">Popayan</option>
             <option value="Armenia">Armenia</option>
+            <option value="Bogota">Bogota</option>
+            <option value="Boyaca">Boyaca</option>
             <option value="Cartagena">Cartagena</option>
-            <option value="Medellin">Medellin</option>
-            <option value="Villavicencio">Villavicencio</option>
             <option value="Cali">Cali</option>
-            <option value="Arauca">Arauca</option>
+            <option value="Fusagasugá">Fusagasugá</option>
+            <option value="Medellin">Medellin</option>
+            <option value="Popayan">Popayan</option>
+            <option value="Tunja">Tunja</option>
+            <option value="Villavicencio">Villavicencio</option>
             <option>Otra</option>
           </select>
           <div id="validationServer04Feedback" class="invalid-feedback">
@@ -108,11 +107,11 @@
           </div>
 
           <div>
-            <input type="hidden" class="form-control is-invalid" id="validationServer05" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" value="Activo" name="estado_cotizacion">
+            <input type="hidden" class="form-control is-invalid" id="validationServer05" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" value="Activa" name="estado_cotizacion">
           </div>
 
           <div class="row g-1" style="margin-left: 1%">
-           Comentarios<textarea id="comentarios" rows="4" name="comentarios_cotizacion" placeholder="Ingrese algun comentario sobre la cotizacón..." style="width: 98%;"> </textarea>
+           Comentarios<textarea id="comentarios" rows="4" name="comentarios_cotizacion" placeholder="Ingrese algun comentario sobre la cotizacón..." style="width: 98%; border-radius: 0.25rem"> </textarea>
 
         </div>
          <!-- Modal -->
@@ -136,9 +135,9 @@
         {{-- <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
         </button> --}}
 
-        <div class="container" style="margin-bottom: 1%">
+        <div class="container" style="margin-bottom: 1%;">
             <div class="row row col-2" style="margin: 0 auto;">
-                <button class="btn btn-warning" type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal2">Crear cotización</button>
+                <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="font-size: 1.20rem; font-weight: 600">Crear cotización</button>
             </div>
         </div>
       </form>

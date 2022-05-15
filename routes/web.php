@@ -30,7 +30,7 @@ Route::get('/ModuloEventos/{id}/cancel', [App\Http\Controllers\EventoController:
 
 Route::get('/reporteEventos', [App\Http\Controllers\EventoController::class, 'reporteEventos'])->name('ModuloEventos.reporte');
 
-Route::get('/exportPdfEventos/{eventos}', [App\Http\Controllers\EventoController::class, 'exportPdfEventos'])->name('ModuloEventos.exportPdfEventos');
+Route::get('/exportPdfEventos', [App\Http\Controllers\EventoController::class, 'exportPdfEventos'])->name('ModuloEventos.exportPdfEventos');
 
 // rutas cotizaciones
 
