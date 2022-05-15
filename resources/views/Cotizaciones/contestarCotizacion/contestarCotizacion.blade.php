@@ -75,12 +75,15 @@
 
           <div class="col-md-4">
             <label for="validationServer04" class="form-label">Estado</label>
-            <select class="form-select is-valid" id="validationServer04" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="estado_cotizacion">
+            <select class="form-select is-invalid" id="validationServer04" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="estado_cotizacion">
               <option value="{{ isset($cotizacion->estado_cotizacion)?$cotizacion->estado_cotizacion:old('estado_cotizacion') }}">{{ isset($cotizacion->estado_cotizacion)?$cotizacion->estado_cotizacion:old('estado_cotizacion') }}</option>
               <option value="Respondida">Respondida</option>
               <option value="Cancelada">Cancelada</option>
               <option value="Por respondrer">Por respondrer</option>
             </select>
+            <div id="validationServer04Feedback" class="invalid-feedback">
+              Seleccione el estado de la cotización a respondida
+             </div>
           </div>
 
           <div class="row g-1" style="margin-left: 1%"><br>
@@ -89,7 +92,7 @@
          </div>
 
           <div class="row g-1" style="margin-left: 1%"><br>
-            Respuesta de la cotización<textarea id="respuesta_cotizacion" rows="4" name="respuesta_cotizacion" placeholder="Ingrese la respuesta de la cotización..." style="width: 98%; border-radius: 0.25rem"> </textarea>
+            Respuesta de la cotización<textarea id="respuesta_cotizacion" rows="4" name="respuesta_cotizacion" placeholder="Ingrese la respuesta de la cotización..." value="Ingrese la respuesta de la cotización..." style="width: 98%; border-radius: 0.25rem"> </textarea>
 
          </div>
 

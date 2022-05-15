@@ -27,7 +27,7 @@ class CotizacionFactory extends Factory
             'ubicacion_cotizante' => $this->faker->word,
             'fecha_cotizacion' => $this->faker->dateTimeBetween('-1 years', '+1 years'),
             'comentarios_cotizacion' => $this->faker->word,
-            'estado_cotizacion' => $this->faker->randomElement(['Activa', 'Cancelada']),
+            'estado_cotizacion' => $this->faker->randomElement(['Por responder', 'Respondida', 'Cancelada']),
         ];
     }
 }

@@ -20,7 +20,7 @@
     <div class="row row-cols-5">
 
     <div class="mb-2 row row row col-2">
-      <label for="ciudad" class="col-sm-4 control-label" style="margin-right: 5.5%">Codigo:</label>
+      <label for="ciudad" class="col-sm-4 control-label" style="margin-right: 5.5%; margin-top: 3%; font-weight: 600">Codigo:</label>
 
       <div class="col-sm-7">
               <select class="form-control text-white bg-dark" class="dropdown" name="codigo" id="codigo">
@@ -33,7 +33,7 @@
   </div>
 
     <div class="mb-2 row row row col-3">
-      <label for="ciudad" class="col-sm-3 control-label">Cliente:</label>
+      <label for="ciudad" class="col-sm-3 control-label" style="margin-top: 3%; font-weight: 600">Cliente:</label>
 
       <div class="col-sm-8">
               <select class="form-control text-white bg-dark" name="cliente" id="cliente">
@@ -46,19 +46,20 @@
   </div>
 
   <div class="mb-2 row row row col-3">
-    <label for="ciudad" class="col-sm-3 control-label" class="dropdown">Fecha:</label>
+    <label for="ciudad" class="col-sm-3 control-label" class="dropdown" style="margin-top: 3%; font-weight: 600">Fecha:</label>
     <div class="col-sm-8">
             <input type="date"class="form-control text-white bg-dark" name="fecha" id="fecha1" style="color-scheme: dark;">
         </div>
 </div>
 
   <div class="mb-2 row row row col-3">
-    <label for="ciudad" class="col-sm-3 control-label">Estado:</label>
+    <label for="ciudad" class="col-sm-3 control-label" style="margin-top: 3%; font-weight: 600">Estado:</label>
 
     <div class="col-sm-8">
             <select class="form-control text-white bg-dark" name="estado" id="estado">
               <option value="null" selected disabled hidden>Filtrar</option>
-              <option value="Activa">Activa</option>
+              <option value="Por responder">Por responder</option>
+              <option value="Respondida">Respondida</option>
               <option value="Cancelada">Cancelada</option>
             </select>
         </div>

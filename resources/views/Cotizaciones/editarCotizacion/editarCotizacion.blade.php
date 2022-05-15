@@ -113,9 +113,13 @@
             <label for="validationServer04" class="form-label">Estado</label>
             <select class="form-select is-invalid" id="validationServer04" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="estado_cotizacion">
               <option value="{{ isset($cotizacion->estado_cotizacion)?$cotizacion->estado_cotizacion:old('estado_cotizacion') }}">{{ isset($cotizacion->estado_cotizacion)?$cotizacion->estado_cotizacion:old('estado_cotizacion') }}</option>
+              <option value="Respondida">Respondida</option>
               <option value="Cancelada">Cancelada</option>
-              <option value="Activa">Activa</option>
+              <option value="Por respondrer">Por respondrer</option>
             </select>
+            <div id="validationServer05Feedback" class="invalid-feedback">
+              Seleccione el estado de la cotización
+             </div>
           </div>
 
           <div class="row g-1" style="margin-left: 1%"><br>

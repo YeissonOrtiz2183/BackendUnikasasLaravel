@@ -84,13 +84,6 @@
             </div>
           </div>
 
-        {{-- <div class="col-md-4">
-          <label for="validationServer05" class="form-label">Producto</label>
-          <input type="text" class="form-control is-invalid" id="validationServer05" placeholder="Producto" aria-describedby="validationServer05Feedback" required name="producto_id">
-          <div id="validationServer05Feedback" class="invalid-feedback">
-           Por favor digite el poducto
-          </div>
-        </div> --}}
           <div class="col-md-4">
             <label for="validationServer05" class="form-label">Ubicacion</label>
             <input type="text" class="form-control is-invalid" id="validationServer05" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" required name="ubicacion_cotizante">
@@ -98,6 +91,7 @@
              Por favor digite su ubicacion
             </div>
           </div>
+
           <div class="col-md-4">
             <label for="validationServer05" class="form-label">Fecha</label>
             <input type="date" class="form-control is-invalid" id="fecha" id="validationServer05" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" required name="fecha_cotizacion">
@@ -107,7 +101,7 @@
           </div>
 
           <div>
-            <input type="hidden" class="form-control is-invalid" id="validationServer05" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" value="Activa" name="estado_cotizacion">
+            <input type="hidden" class="form-control is-invalid" id="validationServer05" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" value="Por responder" name="estado_cotizacion">
           </div>
 
           <div class="row g-1" style="margin-left: 1%">
