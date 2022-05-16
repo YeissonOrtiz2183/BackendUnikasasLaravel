@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\emailCancelarEvento;
 use Illuminate\Http\Request;
 use App\Models\Evento;
 use App\Models\Proyecto;
@@ -9,6 +10,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Config;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\emailCrearEvento;
 
 class EventoController extends Controller
 {
@@ -43,7 +47,14 @@ class EventoController extends Controller
     {
         $datosEvento = request()->except('_token');
         // return response()->json($datosEvento);
+        // dd($datosEvento);
+        $email= request('invitados_evento');
         Evento::insert($datosEvento);
+
+        if($email){
+            Mail::to($email)->send(new emailCrearEvento($datosEvento));
+        }
+
         return redirect('eventos')->with('mensaje', 'El evento se agrego exitosamente');
     }
 
@@ -67,6 +78,14 @@ class EventoController extends Controller
     {
         $datosEvento = request()->except(['_token','_method', "eventName", "eventDate", "eventTime", "eventProyect", "eventAssistant", "eventReason"]);
         Evento::where('id', '=', $id)->update($datosEvento);
+    
+        $respuesta = request('eventReason');
+        // dd($respuesta);
+        if($respuesta){
+            $datos = request()->except(['_token','_method']);
+            $email= request('eventAssistant');
+            Mail::to($email)->send(new emailCancelarEvento($datos));
+        }
         // $evento = Evento::findOrFail($id);
         return redirect('eventos')->with('mensaje', 'El evento ha sido modificado');
     }

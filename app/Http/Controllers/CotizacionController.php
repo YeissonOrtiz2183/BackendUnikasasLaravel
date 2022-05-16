@@ -80,6 +80,7 @@ class CotizacionController extends Controller
         $datosCotizacion = request()->except(['_token','_method', 'respuesta_cotizacion']);
         Cotizacion::where('id', '=', $id)->update($datosCotizacion);
 
+        // envio de correo de respuesta de cotización
         $respuesta = request('respuesta_cotizacion');
         if($respuesta){
             $datosCotizacion = request()->except(['_token','_method']);
