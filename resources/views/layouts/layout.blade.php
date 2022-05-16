@@ -40,7 +40,7 @@
                 <li><a href="#">Eventos</a></li>
                 <a href="{{ url('usuarios') }}"><span class="material-icons md-100 users">person</span></a>
                 <li><a href="{{ url('usuarios') }}">Usuarios</a></li>
-                <a href="#"><span class="material-icons md-100 auditoria">verified_user</span></a>
+                <a href="{{ url('auditoria') }}"><span class="material-icons md-100 auditoria">verified_user</span></a>
                 <li><a href="#">Auditoria</a></li>
             </ul>
         </div>

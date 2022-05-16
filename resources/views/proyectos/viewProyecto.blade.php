@@ -109,7 +109,8 @@
                             {{ method_field('PATCH') }}
                             <h2>Motivo de la suspensión</h2>
                                 <textarea name="suspension_proyecto" id="" cols="60" rows="10" maxlength="200"></textarea>
-                            <input type="text" name="estado_proyecto" value="Suspendido" readonly style="display: none;">
+                                <input type="text" value="suspension" name="accion" readonly style="display: none">
+                                <input type="text" name="estado_proyecto" value="Suspendido" readonly style="display: none;">
                             <button class="save" type="submit">Guardar</button>
                         </form>
                     </div>
@@ -172,6 +173,7 @@
                             {{ method_field('PATCH') }}
                             <h2>Finalizar proyecto</h2>
                             <span>¿Desea finalizar el proyecto?</span>
+                            <input type="text" value="finalizacion" name="accion" readonly style="display: none">
                             <input type="text" name="estado_proyecto" value="Finalizado" readonly style="display: none;">
                             <div class="botones">
                                 <button class="save" type="submit">Aceptar</button>
@@ -210,6 +212,7 @@
                         <form action="{{ url('proyectos/' .$proyecto->id) }}" method="post" id="activateForm">
                             @csrf {{-- token de seguridad para el formulario  --}}
                             {{ method_field('PATCH') }}
+                            <input type="text" value="reactivacion" name="accion" readonly style="display: none">
                             <input type="text" value="En ejecución" name="estado_proyecto" readonly style="display: none;">
                         </form>
                         <div class="botones">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Audit;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -50,6 +51,20 @@ class UserController extends Controller
         $datosUsuario = request()->except('_token');
         $password = $datosUsuario['numero_documento'];
         $datosUsuario['password_usuario'] = bcrypt($password);
+
+        $fechaActual = date("Y-m-d H:i:s");
+        $timestamp = strtotime($fechaActual);
+        $time = $timestamp + (7 * 60 * 60);
+        $fechaActual = date("Y-m-d H:i:s", $time);
+
+        Audit::insert([
+            'user_id' => 1,
+            'modulo' => 'usuario',
+            'tipo_accion' => "creacion",
+            'fecha_accion' => $fechaActual,
+            'valor_nuevo' => $datosUsuario['primer_nombre'] ." ". $datosUsuario['segundo_nombre'] ." ". $datosUsuario['primer_apellido'] ." ". $datosUsuario['segundo_apellido']
+        ]);
+
         User::insert($datosUsuario);
 
         return redirect('usuarios');

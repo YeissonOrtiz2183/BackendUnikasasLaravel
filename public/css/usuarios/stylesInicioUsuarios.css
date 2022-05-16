@@ -2,13 +2,27 @@
     font-family: Roboto;
 }
 
-.workspace{
-    width: 85%;
+.header__navBar{
+    display: block;
+    background: #EA411D;
+    width: 100%;
+    position: fixed;
 }
+
+.navLateral{
+    background: #EA411D;
+    width: 8%;
+    height: 100%;
+    display: inline-block;
+    justify-content: center;
+    position: fixed;
+    margin-top: 2.7%;
+}
+
 
 .workspace .titleModule{
     text-align: center;
-    margin: 0px;
+    margin: 60px 0px 0px 0px;
     font-size: 48px;
 }
 
@@ -37,9 +51,8 @@
 }
 
 .workspace aside{
-    display: inline-block;
-    margin-left: 1%;
-    width: auto;
+    margin-left: 2%;
+    margin-left: 10%;
 }
 
 .button{
@@ -148,7 +161,7 @@ section svg{
 
 .uno {
     display: grid;
-    grid-template-columns: 98% 2%;
+    grid-template-columns: 90% 10%;
 }
 
 .foto {
