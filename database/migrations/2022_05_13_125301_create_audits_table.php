@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('modulo');
             $table->string('tipo_accion');
             $table->datetime('fecha_accion');
-            $table->string('valor_antiguo')->nullable();
-            $table->string('valor_nuevo');
+            $table->string('item');
+            $table->string('sub_item')->nullable();
 
             $table->timestamps();
 

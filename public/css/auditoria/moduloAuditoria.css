@@ -66,6 +66,10 @@ form .search_parametros {
     width: auto;
 }
 
+.workspace .auditoria{
+    width: 100%;
+}
+
 .button{
     display: flex;
     justify-content: center;

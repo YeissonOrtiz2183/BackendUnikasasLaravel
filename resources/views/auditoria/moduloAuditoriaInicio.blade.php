@@ -48,7 +48,7 @@
                         <a class="buttonCreateReporte" href="crearReporteAuditoria.html">Crear reporte</a>
                     </div>
                 </aside>
-                <main class="auditoia">
+                <main class="auditoria">
                     @foreach($audits as $audit)
                     <section>
                         <div class="contenedor">
@@ -58,19 +58,19 @@
                             <div class="section__infoAuditoria">
                                 @if($audit->tipo_accion == 'creacion')
 
-                                <h2 class="info media_esposive"><span>Creación del {{ $audit->modulo }}: {{$audit->valor_nuevo }}</span></h2>
+                                <h2 class="info media_esposive"><span>Creación del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
 
                                 @elseif($audit->tipo_accion == 'modificacion')
-                                <h2 class="info media_esposive"><span>Modificación del {{ $audit->modulo }}: {{$audit->valor_nuevo }}</span></h2>
+                                <h2 class="info media_esposive"><span>Modificación del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
 
                                 @elseif($audit->tipo_accion == 'suspension')
-                                <h2 class="info media_esposive"><span>Suspensión del {{ $audit->modulo }}: {{$audit->valor_nuevo }}</span></h2>
+                                <h2 class="info media_esposive"><span>Suspensión del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
 
                                 @elseif($audit->tipo_accion == 'finalizacion')
-                                <h2 class="info media_esposive"><span>Finalización del {{ $audit->modulo }}: {{$audit->valor_nuevo }}</span></h2>
+                                <h2 class="info media_esposive"><span>Finalización del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
 
                                 @elseif($audit->tipo_accion == 'reactivacion')
-                                <h2 class="info media_esposive"><span>Reactivación del {{ $audit->modulo }}: {{$audit->valor_nuevo }}</span></h2>
+                                <h2 class="info media_esposive"><span>Reactivación del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
 
                                 @endif
 

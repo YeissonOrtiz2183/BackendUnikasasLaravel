@@ -15,7 +15,7 @@ class AuditController extends Controller
      */
     public function index()
     {
-        $audits = DB::select('SELECT modulo, tipo_accion, fecha_accion, valor_nuevo, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits INNER JOIN users ON audits.user_id = users.id ORDER BY fecha_accion DESC');
+        $audits = DB::select('SELECT modulo, tipo_accion, fecha_accion, item, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits INNER JOIN users ON audits.user_id = users.id ORDER BY fecha_accion DESC');
         return view('auditoria.moduloAuditoriaInicio', compact('audits'));
     }
 

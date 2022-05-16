@@ -142,7 +142,7 @@ class ProyectoController extends Controller
 
         $fechaActual = date("Y-m-d H:i:s");
         $timestamp = strtotime($fechaActual);
-        $time = $timestamp + (7 * 60 * 60);
+        $time = $timestamp - (5 * 60 * 60);
         $fechaActual = date("Y-m-d H:i:s", $time);
 
         Audit::insert([
@@ -150,7 +150,7 @@ class ProyectoController extends Controller
             'modulo' => 'proyecto',
             'tipo_accion' => "creacion",
             'fecha_accion' => $fechaActual,
-            'valor_nuevo' => $datosProyecto['nombre_proyecto']
+            'item' => $datosProyecto['nombre_proyecto']
         ]);
 
         header('Location: http://127.0.0.1:8000/proyectos/search/activo');
@@ -248,7 +248,7 @@ class ProyectoController extends Controller
 
         $fechaActual = date("Y-m-d H:i:s");
         $timestamp = strtotime($fechaActual);
-        $time = $timestamp + (7 * 60 * 60);
+        $time = $timestamp - (5 * 60 * 60);
         $fechaActual = date("Y-m-d H:i:s", $time);
 
         $accion = $datosProyecto['accion'];
@@ -260,8 +260,7 @@ class ProyectoController extends Controller
             'modulo' => 'proyecto',
             'tipo_accion' => $accion,
             'fecha_accion' => $fechaActual,
-            'valor_antiguo' => $nombreProyecto,
-            'valor_nuevo' => $nombreProyecto
+            'item' => $nombreProyecto
         ]);
 
         Proyecto::where('id', '=', $id)->update($datosProyecto);

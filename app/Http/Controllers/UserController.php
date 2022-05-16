@@ -54,7 +54,7 @@ class UserController extends Controller
 
         $fechaActual = date("Y-m-d H:i:s");
         $timestamp = strtotime($fechaActual);
-        $time = $timestamp + (7 * 60 * 60);
+        $time = $timestamp - (5 * 60 * 60);
         $fechaActual = date("Y-m-d H:i:s", $time);
 
         Audit::insert([
@@ -62,7 +62,7 @@ class UserController extends Controller
             'modulo' => 'usuario',
             'tipo_accion' => "creacion",
             'fecha_accion' => $fechaActual,
-            'valor_nuevo' => $datosUsuario['primer_nombre'] ." ". $datosUsuario['segundo_nombre'] ." ". $datosUsuario['primer_apellido'] ." ". $datosUsuario['segundo_apellido']
+            'item' => $datosUsuario['primer_nombre'] ." ". $datosUsuario['segundo_nombre'] ." ". $datosUsuario['primer_apellido'] ." ". $datosUsuario['segundo_apellido']
         ]);
 
         User::insert($datosUsuario);
