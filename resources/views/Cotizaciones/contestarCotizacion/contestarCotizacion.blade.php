@@ -19,7 +19,7 @@
     <div class="container">
     <form class="row g-4" action="{{ url('cotizaciones/'.$cotizacion->id) }}" method="post">
         @csrf {{-- token de seguridad para el formulario  --}}
-  
+
           {{ method_field('PATCH') }}
 
         <div class="col-md-4">
@@ -75,27 +75,26 @@
                 value="{{ isset($cotizacion->fecha_cotizacion)?$cotizacion->fecha_cotizacion:old('fecha_cotizacion') }}" readonly>
           </div>
 
-          <div class="col-md-4">
-            <label for="validationServer04" class="form-label">Estado</label>
-            <select class="form-select is-invalid" id="validationServer04" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="estado_cotizacion">
+          <div class="col-md-4 inputValidate">
+            <label for="estadoCotizacion" class="form-label">Estado</label>
+            <select class="form-select" id="estadoCotizacion" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="estado_cotizacion">
               <option value="{{ isset($cotizacion->estado_cotizacion)?$cotizacion->estado_cotizacion:old('estado_cotizacion') }}">{{ isset($cotizacion->estado_cotizacion)?$cotizacion->estado_cotizacion:old('estado_cotizacion') }}</option>
               <option value="Respondida">Respondida</option>
               <option value="Cancelada">Cancelada</option>
               <option value="Por respondrer">Por respondrer</option>
             </select>
-            <div id="validationServer04Feedback" class="invalid-feedback">
-              Seleccione el estado de la cotización a respondida
-             </div>
+            <span id="estadoCotizacion_error_message" class="error_form"></span>
           </div>
 
           <div class="row g-1" style="margin-left: 1%"><br>
-            Comentarios<textarea id="comentarios" rows="4" name="comentarios_cotizacion" style="width: 98%; background-color: #e9ecef; opacity: 1; border-radius: 0.25rem" readonly>{{ isset($cotizacion->comentarios_cotizacion)?$cotizacion->comentarios_cotizacion:old('comentarios_cotizacion') }}
+            <label for="comentarios" class="form-label">Comentarios</label>
+            <textarea id="comentarios" rows="4" name="comentarios_cotizacion" style="width: 98%; background-color: #e9ecef; opacity: 1; border-radius: 0.25rem" readonly>  {{ isset($cotizacion->comentarios_cotizacion)?$cotizacion->comentarios_cotizacion:old('comentarios_cotizacion') }}
             </textarea>
          </div>
 
-          <div class="row g-1" style="margin-left: 1%"><br>
-            Respuesta de la cotización<textarea id="respuesta_cotizacion" rows="4" name="respuesta_cotizacion" placeholder="Ingrese la respuesta de la cotización..." value="Ingrese la respuesta de la cotización..." style="width: 98%; border-radius: 0.25rem"> </textarea>
-
+          <div class="row g-1 inputValidate" style="margin-left: 1%"><br>
+            <label for="estadoCotizacion" class="form-label">Respuesta de la cotización</label>
+            <textarea id="respuesta_cotizacion" rows="4" name="respuesta_cotizacion" placeholder="Ingrese la respuesta de la cotización..." value="Ingrese la respuesta de la cotización..." style="width: 98%; border-radius: 0.25rem"> </textarea>
          </div>
 
         <!-- Modal -->
@@ -124,7 +123,7 @@
           <div class="row gap-10" style="margin: 0 auto;">
             <div class="col-3"></div>
             <div class="col-3">
-              <button class="btn btn-warning buttonUno" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="font-size: 1.20rem; font-weight: 600">Enviar respuesta</button>
+              <button class="btn btn-warning buttonUno" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2">Responder</button>
             </div>
             <div class="col-3">
               <a href="{{ url('cotizaciones')}}"><button class="btn btn-danger buttonDos" type="button">Cancelar</button></a>
@@ -133,5 +132,6 @@
       </div>
       </form>
     </div>
+    <script src="{{ asset('js/Cotizaciones/validateResponderCotizacion.js') }}"></script>
 </body>
 </html>

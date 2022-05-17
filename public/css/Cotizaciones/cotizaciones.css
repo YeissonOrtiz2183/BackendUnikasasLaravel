@@ -1,22 +1,38 @@
 .modal-footer .btn-primary{
-    background-color: #ffa500; 
-    width: 6rem; 
+    background-color: #ffa500;
+    width: 6rem;
     border: none;
     margin-right: 7rem;
-    font-weight: 500;
+    font-weight: 600;
+    color: black;
   }
+
+  .modal-footer .btn-primary:hover{
+    background-color: #ffa600e3;
+  }
+
   .modal-footer .btn-secondary{
-    background-color: #EA411D; 
-    width: 6rem; 
+    background-color: #EA411D;
+    width: 6rem;
     border: none;
     margin-right: 1rem;
-    font-weight: 500;
+    font-weight: 600;
+    color: black;
   }
+
+  .modal-footer .btn-secondary:hover{
+    background-color: #ea431dda;
+  }
+
   .buscar{
-    width: 12%; 
-    font-size: 1.20rem; 
+    width: 12%;
+    font-size: 1.20rem;
     font-weight: 600;
     background-color: #ffa500;
+  }
+
+  .buscar:hover{
+    background-color: #ffa600e3;
   }
 
   .container .row .color{
@@ -25,33 +41,56 @@
     padding: 0.5%;
     font-weight: 500;
   }
+
   .button{
     background-color: #ffa500;
+  }
+
+  .button:hover{
+    background-color: #ffa600e3;
   }
 
   .buttonDos{
     background-color: #EA411D;
     border: none;
-    font-size: 1.20rem; 
-    font-weight: 600; 
-    width: 100%;
+    font-size: 1.20rem;
+    font-weight: 600;
+    width: 90%;
     color: black;
   }
 
+  .buttonDos:hover{
+    color: black;
+    background-color: #ea431dda;
+  }
+
   .buttonUno{
-    font-size: 1.20rem; 
-    font-weight: 600; 
-    width: 100%;
+    font-size: 1.20rem;
+    font-weight: 600;
+    width: 90%;
   }
 
   .buttonRegresar{
-    font-size: 1.20rem; 
+    font-size: 1.20rem;
     font-weight: 600;
     background-color: #ffa500;
   }
 
-  .icono{
-    font-weight: bold; 
-    width: 25;
-    height: 30; 
+  .buttonRegresar:hover{
+    background-color: #ffa600e3;
   }
+
+  .icono{
+    font-weight: bold;
+    width: 25;
+    height: 30;
+  }
+
+  .formborder{
+    border: 1.5px solid black;
+  }
+
+  .inputValidate span{
+    font-size: 12px;
+    color: gray;
+}
