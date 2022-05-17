@@ -1,0 +1,57 @@
+.modal-footer .btn-primary{
+    background-color: #ffa500; 
+    width: 6rem; 
+    border: none;
+    margin-right: 7rem;
+    font-weight: 500;
+  }
+  .modal-footer .btn-secondary{
+    background-color: #EA411D; 
+    width: 6rem; 
+    border: none;
+    margin-right: 1rem;
+    font-weight: 500;
+  }
+  .buscar{
+    width: 12%; 
+    font-size: 1.20rem; 
+    font-weight: 600;
+    background-color: #ffa500;
+  }
+
+  .container .row .color{
+    background-color: #ffa500;
+    text-align: center;
+    padding: 0.5%;
+    font-weight: 500;
+  }
+  .button{
+    background-color: #ffa500;
+  }
+
+  .buttonDos{
+    background-color: #EA411D;
+    border: none;
+    font-size: 1.20rem; 
+    font-weight: 600; 
+    width: 100%;
+    color: black;
+  }
+
+  .buttonUno{
+    font-size: 1.20rem; 
+    font-weight: 600; 
+    width: 100%;
+  }
+
+  .buttonRegresar{
+    font-size: 1.20rem; 
+    font-weight: 600;
+    background-color: #ffa500;
+  }
+
+  .icono{
+    font-weight: bold; 
+    width: 25;
+    height: 30; 
+  }
