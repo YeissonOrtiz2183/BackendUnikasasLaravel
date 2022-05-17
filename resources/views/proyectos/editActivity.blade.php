@@ -24,6 +24,7 @@
                     <form action="{{ url('/actividades/'. $actividad->id) }}" method="POST">
                         @csrf {{-- token de seguridad para el formulario  --}}
                         {{ method_field('PATCH') }}
+                        <input type="text" value="{{ $actividad->nombre_actividad }}" name="nombre_actividad" style="display: none">
                         <div class="infoActividad">
                             <div class="campo">
                                 <label>Encargado:</label>

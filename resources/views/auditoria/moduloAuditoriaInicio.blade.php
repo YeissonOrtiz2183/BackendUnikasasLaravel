@@ -16,29 +16,27 @@
         <!--Area de trabajo-->
         <main class="workspace">
             <h1 class="titleModule">Registro de auditoria</h1>
-            <form class="searchForm" action="{{ url('auditoria') }}">
-                <label class="search_parametros" for="itemSearch">Filtrar por / </label>
+            <form class="searchForm" action="{{ url('auditoria') }}" method="GET">
+                <label class="search_parametros" for="itemSearch">Filtrar por: </label>
                 <label class="search_parametros" for="itemSearch">Usuario:</label>
-                <select class="input-text" type="text" name="nombre" id="searchBar">
+                <select class="input-text" type="text" name="usuario_filter" id="searchBar">
                     <option value="opcion1" select>Todo</opcion>
-                    <option value="opcion2" select>Andres Camilo Garzón Murillo</opcion>
-                    <option value="opcion3"select>Juan Felipe Gomez Herrera</opcion>
+                    @foreach($autors as $autor)
+                    <option value="{{ $autor->usuario }}">{{ $autor->primer_nombre }} {{ $autor->segundo_nombre }} {{ $autor->primer_apellido }} {{ $autor->segundo_apellido }}</option>
+                    @endforeach
                 </select>
 
                 <label class="search_parametros" for="itemSearch">Acción:</label>
-                <select class="input-text" type="text" name="nombre" id="searchBar">
-                    <option value="opcion1" select>Todo</opcion>
-                        <option value="opcion2" select>Inserción</opcion>
-                    <option value="opcion2" select>Modificación</opcion>
-                    <option value="opcion3"select>Eliminación</opcion>
+                <select class="input-text" type="text" name="accion_filter" id="searchBar">
+                    <option value="creacion">Creaciones</option>
+                    <option value="modificacion">Modificaciones</option>
+                    <option value="suspension">Suspensiones</option>
+                    <option value="finalizacion">Finalizaciones</option>
+                    <option value="reactivacion">Reactivaciones</option>
                 </select>
 
                 <label class="search_parametros" for="itemSearch">Fecha:</label>
-                <select class="input-text" type="text" name="nombre" id="searchBar">
-                    <option value="opcion1" select>Todo</opcion>
-                    <option value="opcion2" select>11/22/2021</opcion>
-                    <option value="opcion3"select>12/12/2021</opcion>
-                </select>
+                <input class="input-text" type="date" name="date_filter" id="searchBar">
 
                 <input type="submit" value="Buscar">
             </form>

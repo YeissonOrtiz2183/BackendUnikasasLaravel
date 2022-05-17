@@ -13,10 +13,16 @@ class AuditController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $audits = DB::select('SELECT modulo, tipo_accion, fecha_accion, item, sub_item, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits INNER JOIN users ON audits.user_id = users.id ORDER BY fecha_accion DESC');
-        return view('auditoria.moduloAuditoriaInicio', compact('audits'));
+        if ($request->has('usuario_filter') && $request->has('accion_filter') && $request->has('date_filter')) {
+            $audits = DB::select('SELECT modulo, tipo_accion, fecha_accion, item, sub_item, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits INNER JOIN users ON audits.user_id = users.id WHERE users.id = ' . $request->usuario_filter. ' AND audits.tipo_accion = ' .'"'.$request->accion_filter.'"'. ' AND audits.fecha_accion = ' .$request->date_filter. ' ORDER BY fecha_accion DESC');
+        }else{
+            $audits = DB::select('SELECT modulo, tipo_accion, fecha_accion, item, sub_item, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits INNER JOIN users ON audits.user_id = users.id ORDER BY fecha_accion DESC');
+        }
+
+        $autors = DB::select('SELECT DISTINCT primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, users.id as usuario FROM users LEFT JOIN audits ON audits.user_id = users.id WHERE users.id = audits.user_id');
+        return view('auditoria.moduloAuditoriaInicio', compact('audits', 'autors'));
     }
 
     /**

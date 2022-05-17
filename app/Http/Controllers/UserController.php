@@ -110,6 +110,20 @@ class UserController extends Controller
         $password = $datosUsuario['numero_documento'];
         $datosUsuario['password_usuario'] = bcrypt($password);
         User::where('id', $id)->update($datosUsuario);
+
+        $fechaActual = date("Y-m-d H:i:s");
+        $timestamp = strtotime($fechaActual);
+        $time = $timestamp - (5 * 60 * 60);
+        $fechaActual = date("Y-m-d H:i:s", $time);
+
+        Audit::insert([
+            'user_id' => 1,
+            'modulo' => 'usuario',
+            'tipo_accion' => "modificacion",
+            'fecha_accion' => $fechaActual,
+            'item' => $datosUsuario['primer_nombre'] ." ". $datosUsuario['segundo_nombre'] ." ". $datosUsuario['primer_apellido'] ." ". $datosUsuario['segundo_apellido']
+        ]);
+
         return redirect('usuarios/' .$id);
     }
 

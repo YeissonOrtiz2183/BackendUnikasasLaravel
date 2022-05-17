@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Rol;
 use Illuminate\Support\Facades\DB;
+use App\Models\Audit;
 
 class RolController extends Controller
 {
@@ -55,6 +56,19 @@ class RolController extends Controller
             DB::select('INSERT INTO rol_privilegios(rol_id, privilegio_id) VALUES (' .$id. ',' .$privilegio. ');');
         }
 
+        $fechaActual = date("Y-m-d H:i:s");
+        $timestamp = strtotime($fechaActual);
+        $time = $timestamp - (5 * 60 * 60);
+        $fechaActual = date("Y-m-d H:i:s", $time);
+
+        Audit::insert([
+            'user_id' => 1,
+            'modulo' => 'rol',
+            'tipo_accion' => "creacion",
+            'fecha_accion' => $fechaActual,
+            'item' => $nombreRol
+        ]);
+
         return redirect('roles');
     }
 
@@ -99,10 +113,29 @@ class RolController extends Controller
     {
         DB::select('DELETE FROM rol_privilegios WHERE rol_id = ' .$id);
         $privilegiosSelected = request()->except(['_token', '_method']);
+        $nombreRol = $privilegiosSelected['nombre_rol'];
+        $nombreRol = '"'.$nombreRol.'"';
         $data = $privilegiosSelected['privilegios'];
         foreach ($data as $privilegio) {
             DB::select('INSERT INTO rol_privilegios(rol_id, privilegio_id) VALUES (' .$id. ',' .$privilegio. ');');
         }
+
+        DB::select('UPDATE rols
+                    SET nombre_rol =' .$nombreRol.
+                    'WHERE id =' .$id);
+
+
+        $fechaActual = date("Y-m-d H:i:s");
+        $timestamp = strtotime($fechaActual);
+        $time = $timestamp - (5 * 60 * 60);
+        $fechaActual = date("Y-m-d H:i:s", $time);
+        Audit::insert([
+            'user_id' => 1,
+            'modulo' => 'rol',
+            'tipo_accion' => "modificacion",
+            'fecha_accion' => $fechaActual,
+            'item' => $nombreRol
+        ]);
 
         return redirect('roles/'. $id);
 

@@ -105,6 +105,29 @@ class ActividadController extends Controller
 
         Actividad::where('id', '=', $id)->update($datosActividad);
 
+        $nombreProyecto = DB::select('SELECT nombre_proyecto
+                                    FROM proyectos
+                                    INNER JOIN proyecto_etapas ON proyectos.id = proyecto_id
+                                    INNER JOIN etapas ON proyecto_etapas.etapa_id = etapas.id
+                                    INNER JOIN actividad_etapas ON actividad_etapas.etapa_id = etapas.id
+                                    INNER JOIN actividads ON actividad_etapas.actividad_id = actividads.id
+                                    WHERE actividads.id =' .$id);
+        $nombreProyecto = $nombreProyecto[0]->nombre_proyecto;
+
+        $fechaActual = date("Y-m-d H:i:s");
+        $timestamp = strtotime($fechaActual);
+        $time = $timestamp - (5 * 60 * 60);
+        $fechaActual = date("Y-m-d H:i:s", $time);
+
+        Audit::insert([
+            'user_id' => 1,
+            'modulo' => 'actividad',
+            'tipo_accion' => "modificacion",
+            'fecha_accion' => $fechaActual,
+            'item' => $datosActividad['nombre_actividad'],
+            'sub_item' => $nombreProyecto,
+        ]);
+
         return redirect('/actividades/'.$id);
     }
 
