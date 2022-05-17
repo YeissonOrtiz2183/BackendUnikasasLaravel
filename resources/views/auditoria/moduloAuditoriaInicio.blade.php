@@ -52,16 +52,20 @@
                     @foreach($audits as $audit)
                     <section>
                         <div class="contenedor">
-                            <div class="contenedor-secundario">
-                                <span class="material-icons md-100 user_icon">person</span>
-                            </div>
                             <div class="section__infoAuditoria">
                                 @if($audit->tipo_accion == 'creacion')
-
-                                <h2 class="info media_esposive"><span>Creación del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
+                                    @if($audit->modulo == 'actividad')
+                                    <h2 class="info media_esposive"><span>Creación de la {{ $audit->modulo }}: {{$audit->item }} dentro del proyecto {{ $audit->sub_item }}</span></h2>
+                                    @else
+                                    <h2 class="info media_esposive"><span>Creación del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
+                                    @endif
 
                                 @elseif($audit->tipo_accion == 'modificacion')
-                                <h2 class="info media_esposive"><span>Modificación del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
+                                    @if($audit->modulo == 'actividad')
+                                    <h2 class="info media_esposive"><span>Modificación de la {{ $audit->modulo }}: {{$audit->item }} dentro del proyecto {{ $audit->sub_item }}</span></h2>
+                                    @else
+                                    <h2 class="info media_esposive"><span>Modificación del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
+                                    @endif
 
                                 @elseif($audit->tipo_accion == 'suspension')
                                 <h2 class="info media_esposive"><span>Suspensión del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
@@ -77,7 +81,6 @@
                                 <h4 class="info">Fecha: <span>{{ $audit->fecha_accion }}</span></h4>
                                 <h4 class="info">Autor: <span>{{ $audit->primer_nombre }} {{ $audit->segundo_nombre }} {{ $audit->primer_apellido }} {{ $audit->segundo_apellido }}</span></h4>
                             </div>
-                            <a href="verMasDetallesAuditoria.html" class="button visualizar">Visualizar</a>
                         </div>
                     </section>
                     @endforeach

@@ -416,6 +416,7 @@ h2{
     grid-template-columns: 30% 70%;
     grid-template-rows: repeat(6, 0.5fr);
     row-gap: 30px;
+    justify-items: end;
 }
 
 .modal__content--contenedor .data1{

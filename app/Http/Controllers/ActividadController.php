@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Actividad;
+use Illuminate\Support\Facades\DB;
 use App\Models\actividadEtapa;
+use App\Models\Audit;
 
 class ActividadController extends Controller
 {
@@ -40,9 +42,26 @@ class ActividadController extends Controller
         Actividad::insert($datosActividad);
         $idActividad = Actividad::max('id');
 
+        $nombreProyecto = DB::select('SELECT nombre_proyecto FROM proyectos LEFT JOIN proyecto_etapas ON proyecto_id = proyectos.id WHERE etapa_id = ?', [$request->etapa_id]);
+        $nombreProyecto = $nombreProyecto[0]->nombre_proyecto;
+
         actividadEtapa::insert([
             'actividad_id' => $idActividad,
             'etapa_id' => $request->etapa_id,
+        ]);
+
+        $fechaActual = date("Y-m-d H:i:s");
+        $timestamp = strtotime($fechaActual);
+        $time = $timestamp - (5 * 60 * 60);
+        $fechaActual = date("Y-m-d H:i:s", $time);
+
+        Audit::insert([
+            'user_id' => 1,
+            'modulo' => 'actividad',
+            'tipo_accion' => "creacion",
+            'fecha_accion' => $fechaActual,
+            'item' => $datosActividad['nombre_actividad'],
+            'sub_item' => $nombreProyecto,
         ]);
 
         return redirect('/actividades/' .$idActividad);
@@ -69,7 +88,8 @@ class ActividadController extends Controller
      */
     public function edit($id)
     {
-        //
+        $actividad = Actividad::find($id);
+        return view('proyectos.editActivity', compact('actividad'));
     }
 
     /**

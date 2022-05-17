@@ -14,10 +14,10 @@
     <section class="modal">
         <div class="modal__content modalActivity">
             <div class="iconClose">
-                <span class="material-icons closeIcon" onclick="history.back()">highlight_off</span>
+                <a href="{{ url('proyectos/search/activo') }}"><span class="material-icons closeIcon">highlight_off</span></a>
             </div>
             <div class="modal__content--contenedor">
-                
+
                 <h2>{{ $actividad->nombre_actividad }}</h2>
                 <div class="infoActividad">
                     <div class="data1">
@@ -35,10 +35,10 @@
                         <b>{{ $actividad->estado_actividad }}</b>
                     </div>
                 </div>
-                @if($actividad->estado_actividad == "En ejecución")
+                @if($actividad->estado_actividad == "ejecucion")
                     <div class="botones">
                         <button class="finish" type="button">Completar actividad</button>
-                        <a><span class="material-icons edit">edit</span></a>
+                        <a href="{{ url('actividades/'. $actividad->id. '/edit') }}"><span class="material-icons edit">edit</span></a>
                     </div>
                 @endif
             </div>
@@ -57,7 +57,7 @@
                     @csrf {{-- token de seguridad para el formulario  --}}
                     {{ method_field('PATCH') }}
                     <h2>¿Desea dar por finalizada la actividad?</h2>
-                    <input type="text" name="estado_actividad" value="Finalizada" readonly style="display: none;">
+                    <input type="text" name="estado_actividad" value="finalizada" readonly style="display: none;">
                     <div class="botones">
                         <button type="submit">CONFIRMAR</button>
                         <button type="button" class="cancel">CANCELAR</button>

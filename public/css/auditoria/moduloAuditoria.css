@@ -140,7 +140,7 @@ section{
 }
 
 .contenedor{
-    display: flex;
+    padding: 30px 50px;
 }
 
 .contenedor a{
@@ -190,20 +190,4 @@ section{
     color: var(--white);
     justify-content: center;
     margin: auto auto;
-}
-
-div h2 {
-    margin-top: 8%;
-}
-
-@media (max-width: 1366px){
-    section .media_esposive{
-        margin-top: 8%;
-    }
-}
-
-@media (max-width: 1920px){
-    div h2 {
-        margin-top: 14%;
-    }
 }
