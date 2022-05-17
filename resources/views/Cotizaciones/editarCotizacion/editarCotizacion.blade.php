@@ -40,7 +40,7 @@
         <div class="col-md-4 inputValidate">
           <label for="emailCotizante" class="form-label">Correo electronico</label>
           <div class="input-group has-validation">
-            <span class="input-group-text" id="inputGroupPrepend3" value="Email">@</span>
+            <span class="input-group-text formborderDos" id="inputGroupPrepend3" value="Email">@</span>
             <input type="email" class="form-control" id="emailCotizante" placeholder="Email" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required name="email_cotizante"
             value="{{ isset($cotizacion->email_cotizante)?$cotizacion->email_cotizante:old('email_cotizante') }}">
             <span id="emailCotizante_error_message" class="error_form"></span>
@@ -113,7 +113,7 @@
 
           <div class="row g-1" style="margin-left: 1%"><br>
             <label for="estadoCotizacion" class="form-label" style="margin-top: 1.5%">Comentarios</label>
-            <textarea id="comentarios" rows="4" name="comentarios_cotizacion" style="width: 98%; border-radius: 0.25rem">{{ isset($cotizacion->comentarios_cotizacion)?$cotizacion->comentarios_cotizacion:old('comentarios_cotizacion') }}
+            <textarea id="comentarios" class="formborder" rows="4" name="comentarios_cotizacion" style="width: 98%; border-radius: 0.25rem">{{ isset($cotizacion->comentarios_cotizacion)?$cotizacion->comentarios_cotizacion:old('comentarios_cotizacion') }}
             </textarea>
 
          </div>

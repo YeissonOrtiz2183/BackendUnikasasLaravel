@@ -88,9 +88,14 @@
 
   .formborder{
     border: 1.5px solid black;
+    border-radius: 8px;
+  }
+
+  .formborderDos{
+    border: 1px solid black;
   }
 
   .inputValidate span{
-    font-size: 12px;
+    font-size: 15px;
     color: gray;
 }

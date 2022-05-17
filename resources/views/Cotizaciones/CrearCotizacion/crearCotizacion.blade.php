@@ -36,7 +36,7 @@
         <div class="col-md-4 inputValidate">
           <label for="emailCotizante" class="form-label">Correo electronico</label>
           <div class="input-group has-validation">
-            <span class="input-group-text" id="inputGroupPrepend3" class="formborder" value="Email">@</span>
+            <span class="input-group-text formborderDos" id="inputGroupPrepend3" class="formborder" value="Email">@</span>
             <input type="email" class="form-control formborder" id="emailCotizante" placeholder="Email" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required name="email_cotizante">
             <span id="emailCotizante_error_message" class="error_form"></span>
           </div>
@@ -97,7 +97,7 @@
 
           <div class="row g-1" style="margin-left: 1%">
             <label for="comentarios" class="form-label">Comentarios</label>
-            <textarea id="comentarios" class="formborder" rows="4" name="comentarios_cotizacion" placeholder="Ingrese algun comentario sobre la cotizacón..." style="width: 98%; border-radius: 0.25rem"> </textarea>
+            <textarea id="comentarios" class="formborder" rows="4" name="comentarios_cotizacion" placeholder="Ingrese algun comentario sobre la cotizacón..." style="width: 98%; border-radius: 0.25rem"></textarea>
           </div>
 
          <!-- Modal -->
