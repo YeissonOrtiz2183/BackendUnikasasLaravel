@@ -20,7 +20,8 @@
                 <label class="search_parametros" for="itemSearch">Filtrar por: </label>
                 <label class="search_parametros" for="itemSearch">Usuario:</label>
                 <select class="input-text" type="text" name="usuario_filter" id="searchBar">
-                    <option value="opcion1" select>Todo</opcion>
+                    <option value="none" selected disabled hidden>
+                    Seleccione una opción
                     @foreach($autors as $autor)
                     <option value="{{ $autor->usuario }}">{{ $autor->primer_nombre }} {{ $autor->segundo_nombre }} {{ $autor->primer_apellido }} {{ $autor->segundo_apellido }}</option>
                     @endforeach
@@ -28,6 +29,8 @@
 
                 <label class="search_parametros" for="itemSearch">Acción:</label>
                 <select class="input-text" type="text" name="accion_filter" id="searchBar">
+                    <option value="none" selected disabled hidden>
+                    Seleccione una opción
                     <option value="creacion">Creaciones</option>
                     <option value="modificacion">Modificaciones</option>
                     <option value="suspension">Suspensiones</option>
@@ -35,7 +38,7 @@
                     <option value="reactivacion">Reactivaciones</option>
                 </select>
 
-                <label class="search_parametros" for="itemSearch">Fecha:</label>
+                <label class="search_parametros">Fecha:</label>
                 <input class="input-text" type="date" name="date_filter" id="searchBar">
 
                 <input type="submit" value="Buscar">
