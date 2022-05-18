@@ -144,7 +144,7 @@
           <div class="row gap-10" style="margin: 0 auto;">
             <div class="col-3"></div>
             <div class="col-3">
-              <button class="btn btn-warning buttonUno" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="font-size: 1.20rem; font-weight: 600">Confirmar</button>
+              <button class="btn btn-warning buttonUno" id="submit" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="font-size: 1.20rem; font-weight: 600" disabled>Confirmar</button>
             </div>
             <div class="col-3">
               <a href="{{ url('cotizaciones')}}"><button class="btn btn-danger buttonDos" type="button">Cancelar</button></a>

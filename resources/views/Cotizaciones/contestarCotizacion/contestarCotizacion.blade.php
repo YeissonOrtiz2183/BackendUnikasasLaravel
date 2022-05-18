@@ -125,7 +125,7 @@
           <div class="row gap-10" style="margin: 0 auto;">
             <div class="col-3"></div>
             <div class="col-3">
-              <button class="btn btn-warning buttonUno" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2">Responder</button>
+              <button class="btn btn-warning buttonUno" id="submit" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" disabled>Responder</button>
             </div>
             <div class="col-3">
               <a href="{{ url('cotizaciones')}}"><button class="btn btn-danger buttonDos" type="button">Cancelar</button></a>
