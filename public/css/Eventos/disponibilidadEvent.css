@@ -102,6 +102,10 @@ h2, h3 {
     margin-inline-start: 50px;
 }
 
+.infoDos {
+    margin-inline-start: 20px;
+}
+
 /* ol {
     list-style: none;
     display: grid;
@@ -114,16 +118,34 @@ h2, h3 {
 table{
     border-collapse: collapse;
     border: none;
-    width: 95%;
+    width: 80%;
     margin: auto;
+    margin-top: 1%;
+    margin-bottom: 2%;
+}
+
+.eventoDia{
+    width: 100%;
+    margin: auto;
+    background-color: #ffa500;
+    margin-top: 1%;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 1%;
+}
+
+.grid{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 60% 30%;
 }
 
 th {
     border: 1px solid var(--black);
     padding-bottom: 1%;
     margin: 0%;
-    width: 3%;
-    background-color: var(--orange)
+    width: 5%;
+    background-color: var(--orange);
 }
 
 td {
@@ -132,16 +154,20 @@ td {
     margin: 0%;
     padding-top: 0%;
     height: 10vh;
-    background-color: var(--white)
+    background-color: var(--white);
 }
 
 td p, a{
     margin: 0;
-    /* position: relative;
-    top: -7px; */
+    text-decoration: none;
 }
 
-.border {
+div a{
+    text-decoration: none;
+    color: #000000;
+}
+
+/* .border {
     border-radius: 10px 0px 0px 0px;
 }
 
@@ -155,6 +181,11 @@ td p, a{
 
 .bordertres {
     border-radius: 0px 0px 10px 0px;
+} */
+
+.busqueda{
+    width: auto;
+    display: inline;
 }
 
 .inicio {
@@ -167,7 +198,7 @@ td p, a{
     padding-top: 1%;
 }
 
-.evento_dia {
+/* .evento_dia {
     display: flex;
     text-decoration: none;
     color: var(--black);
@@ -178,20 +209,20 @@ td p, a{
     line-height: .8;
     border-radius: 5px;
     justify-content: center;
-}
+} */
 
-.evento_dia--color {
+/* .evento_dia--color {
     background-color: var(--orange);
 }
 
 .evento_dia--colordos {
     background-color: var(--verde);
-}
+} */
 
 div .calendario_dias {
     align-content: center;
     height: 0px;
-    padding-bottom: 20%;
+    padding-bottom: 1%;
     background-color: var(--orange);
 
 }
@@ -214,7 +245,7 @@ select{
     margin-right: 2%;
 }
 
-input[type="button"]{
+input[type="button"], input[type="submit"]{
     height: 30px;
     margin-left: 5px;
     margin-right: 5px;

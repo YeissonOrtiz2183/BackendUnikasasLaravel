@@ -1,7 +1,7 @@
 //Arrays de datos:
 meses=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 lasemana=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"]
-diassemana=["lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domimgo"];
+diassemana=["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domimgo"];
 //Tras cargarse la página ...
 window.onload = function() {
 //fecha actual
@@ -10,6 +10,19 @@ diasemhoy=hoy.getDay(); //dia semana actual
 diahoy=hoy.getDate(); //dia mes actual
 meshoy=hoy.getMonth(); //mes actual
 annohoy=hoy.getFullYear(); //año actual
+
+if(meshoy < 10){
+   meshoyModif = '0'+meshoy;
+} else {
+   meshoyModif = mesHoy
+}
+fechaInicial = '01'+'/'+meshoyModif+'/'+annohoy;
+document.getElementById("fecha").value = fechaInicial;
+// console.log(fechaInicial);
+
+fechaFinal = '31'+'/'+meshoyModif+'/'+annohoy;
+document.getElementById("fechaDos").value = fechaFinal;
+
 // Elementos del DOM: en cabecera de calendario 
 tit=document.getElementById("titulos"); //cabecera del calendario
 ant=document.getElementById("anterior"); //mes anterior

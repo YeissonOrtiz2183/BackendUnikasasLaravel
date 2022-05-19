@@ -16,7 +16,7 @@ use App\Mail\emailCrearEvento;
 
 class EventoController extends Controller
 {
-    private $eventosR;
+    public $eventosR;
     //
     public function index(Request $request)
     {
@@ -98,9 +98,19 @@ class EventoController extends Controller
         return view('Eventos.formCancelarEvento', compact('evento','proyecto'));
     }
 
-    public function disponibilidad()
+    public function disponibilidad(Request $request)
     {
-        $eventos = Evento::all();
+        $fechaInicial = $request->get('fecha');
+        $fechaFinal = $request->get('fechaDos');
+        if($fechaInicial != ''){
+            $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->where('fecha_evento', 'like', "$fechaInicial")->get();
+        } else {
+            $eventos = Evento::all();
+        }
+
+        if($fechaInicial != '' && $fechaFinal != ''){
+            $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->whereDate('fecha_evento', '>=', "$fechaInicial")->whereDate('fecha_evento', '<=', "$fechaFinal")->get();
+        }
         // dd($eventos);
         return view('Eventos.disponibilidad', compact('eventos'));
     }
@@ -190,7 +200,7 @@ class EventoController extends Controller
         // $eventos = [];
         // $eventos = explode('}', $event);
         // $eventos = Config::get('eventosR');
-        // return dd($eventos);
+        return dd($eventos);
         // $eventos = $this->eventosR;
         $eventos = compact('eventos');
         // return dd($eventos);
