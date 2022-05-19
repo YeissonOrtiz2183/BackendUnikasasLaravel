@@ -198,6 +198,7 @@ span{
     justify-content: flex-start;
     align-items: center;
     border-radius: 10px;
+    text-align: center;
 }
 
 .fase h2{

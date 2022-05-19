@@ -1,11 +1,9 @@
-//Manejo modales
-const modal = document.querySelectorAll('.modal')
+const modalLayout = document.querySelectorAll('.modalLayout')
 const logout = document.querySelector('.logout')
 const notifications = document.querySelector('.notifications')
 const calendar = document.querySelector('.calendar')
 const help = document.querySelector('.help')
 
-//Logica modales
 let statusModal = false;
 function calcModal(status, n)
 {
@@ -22,20 +20,20 @@ function calcModal(status, n)
 
     function closeModals(status) {
         if (status == true) {
-            for (let x = 0; x < modal.length; x++) {
+            for (let x = 0; x < modalLayout.length; x++) {
                 hideModal(x)
             }
         }
     }
 
     function hideModal(n) {
-        modal[n].classList.remove('visible')
-        modal[n].classList.add('hidden')
+        modalLayout[n].classList.remove('visible')
+        modalLayout[n].classList.add('hidden')
     }
 
     function showModal(n) {
-        modal[n].classList.remove('hidden')
-        modal[n].classList.add('visible')
+        modalLayout[n].classList.remove('hidden')
+        modalLayout[n].classList.add('visible')
     }
 }
 

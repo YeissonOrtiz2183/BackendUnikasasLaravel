@@ -45,12 +45,15 @@
             </ul>
         </div>
 
-        <section class="modal hidden">
+        <section class="modalLayout hidden">
             <div class="modalLogout">
-                <a href="../../ModuloInicio/inicio/inicio.html">Cerrar sesión</a>
+                <form action="{{ url('logout') }}" method="POST">
+                @csrf {{-- token de seguridad para el formulario  --}}
+                    <button type="submit">Cerrar sessión</button>
+                </form>
             </div>
         </section>
-        <section class="modal hidden">
+        <section class="modalLayout hidden">
             <div class="modalNotifications">
                 <ul>
                     <li>Hay 20 cotizaciones nuevas que necesitan una respuesta</li>
@@ -59,11 +62,11 @@
                 </ul>
             </div>
         </section>
-        <section class="modal hidden">
+        <section class="modalLayout hidden">
 
         </section>
 
-        <section class="modal hidden">
+        <section class="modalLayout hidden">
             <div class="modalHelp">
                 <h2>Instrucciones de uso:</h2>
                 <figure>

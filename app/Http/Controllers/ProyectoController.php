@@ -102,38 +102,33 @@ class ProyectoController extends Controller
         $idProyecto = Proyecto::max('id');
 
         Etapa::insert([
-            'nombre_etapa' => 'Fase 1',
+            'nombre_etapa' => 'Planeación, diseño y estructuración',
             'descripcion_etapa' => 'Fase 1',
         ]);
 
         Etapa::insert([
-            'nombre_etapa' => 'Fase 2',
+            'nombre_etapa' => 'Compra y alistamiento de materiales esenciales',
             'descripcion_etapa' => 'Fase 2',
         ]);
 
         Etapa::insert([
-            'nombre_etapa' => 'Fase 3',
+            'nombre_etapa' => 'Transporte',
             'descripcion_etapa' => 'Fase 3',
         ]);
 
         Etapa::insert([
-            'nombre_etapa' => 'Fase 4',
+            'nombre_etapa' => 'Construccion',
             'descripcion_etapa' => 'Fase 4',
         ]);
 
         Etapa::insert([
-            'nombre_etapa' => 'Fase 5',
+            'nombre_etapa' => 'Entrega',
             'descripcion_etapa' => 'Fase 5',
-        ]);
-
-        Etapa::insert([
-            'nombre_etapa' => 'Fase 6',
-            'descripcion_etapa' => 'Fase 6',
         ]);
 
         $idEtapa = Etapa::max('id');
 
-        for ($i=1; $i <= 6; $i++) {
+        for ($i=1; $i <= 5; $i++) {
             ProyectoEtapa::insert([
                 'proyecto_id' => $idProyecto,
                 'etapa_id' => $idEtapa]);
