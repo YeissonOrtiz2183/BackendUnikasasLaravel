@@ -9,9 +9,11 @@ class Proyecto extends Model
 {
     use HasFactory;
 
-    public function proyectos(){
-        return $this->hasMany(Proyecto::class);
+    function users(){
+        return $this->hasMany(User::class);
     }
 
-    
+    function etapas(){
+        return $this->hasMany(Etapas::class);
+    }
 }

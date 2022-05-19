@@ -25,8 +25,8 @@ class UserFactory extends Factory
             'tipo_documento' => $this->faker->randomElement(['CC', 'TI', 'CE', 'RC']),
             'numero_documento' => $this->faker->numberBetween(1000000, 9999999),
             'telefono_usuario' => $this->faker->phoneNumber,
-            'email_usuario' => $this->faker->unique()->safeEmail,
-            'password_usuario' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'estado_usuario' => $this->faker->randomElement(['Activo', 'Inactivo']),
             'rol_id' => $this->faker->numberBetween(1, 3),
         ];

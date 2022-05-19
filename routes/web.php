@@ -39,3 +39,20 @@ Route::resource('cotizaciones', CotizacionController::class);
 Route::get('/exportPdfCotizaciones', [App\Http\Controllers\CotizacionController::class, 'exportPdfCotizaciones'])->name('cotizaciones.exportPdfCotizaciones');
 
 Route::get('/cotizaciones/{id}/contestar', [App\Http\Controllers\CotizacionController::class, 'contestarCotizacion'])->name('cotizaciones.contestarCotizacion');
+use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ActividadController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RolController;
+use App\Http\Controllers\AuditController;
+use App\Http\Controllers\LoginController;
+
+Route::resource('proyectos', ProyectoController::class);
+Route::get('proyectos/search/{estado}', [ProyectoController::class, 'index']);
+Route::resource('productos', ProductoController::class);
+Route::resource('actividades', ActividadController::class);
+Route::resource('usuarios', UserController::class);
+Route::resource('roles', RolController::class);
+Route::resource('auditoria', AuditController::class);
+Route::get('index', [LoginController::class, 'index']);
+Route::post('login', [LoginController::class, 'authenticate']);

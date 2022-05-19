@@ -17,8 +17,8 @@ class ProyectoEtapaFactory extends Factory
     public function definition()
     {
         return [
-            'proyecto_id' => $this->faker->numberBetween(1, 3),
-            'etapa_id' => $this->faker->numberBetween(1, 3),
+            'proyecto_id' => $this->faker->numberBetween(1, 10),
+            'etapa_id' => $this->faker->numberBetween(1, 6),
         ];
     }
 }
