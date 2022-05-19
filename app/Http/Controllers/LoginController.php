@@ -7,7 +7,21 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function authenticate(){
+    public function index()
+    {
+        return view('login/login');
+    }
 
+    public function authenticate(Request $request){
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'estado_usuario' => 'Activo'])) {
+            // Authentication passed...
+            return redirect()->intended('proyectos/search/activo');
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
     }
 }

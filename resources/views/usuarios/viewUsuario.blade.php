@@ -36,7 +36,7 @@
             <h2>{{ $usuario->primer_nombre }} {{ $usuario->segundo_nombre }} {{ $usuario->primer_apellido }} {{ $usuario->segundo_apellido }}</h2>
             <h3>Tipo de documento: {{ $usuario->tipo_documento }}</h3>
             <h3>Numero de documento: {{ $usuario->numero_documento }}</h3>
-            <h3>Correo electrónico: {{ $usuario->email_usuario }}</h3>
+            <h3>Correo electrónico: {{ $usuario->email }}</h3>
             <h3>Teléfono: {{ $usuario->telefono_usuario }}</h3>
             @foreach($rol as $rol)
                 <h3>Rol de usuario: {{ $rol->nombre_rol }}</h3>

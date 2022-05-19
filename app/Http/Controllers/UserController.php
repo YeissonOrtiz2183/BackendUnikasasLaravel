@@ -50,7 +50,7 @@ class UserController extends Controller
     {
         $datosUsuario = request()->except('_token');
         $password = $datosUsuario['numero_documento'];
-        $datosUsuario['password_usuario'] = bcrypt($password);
+        $datosUsuario['password'] = bcrypt($password);
 
         $fechaActual = date("Y-m-d H:i:s");
         $timestamp = strtotime($fechaActual);
@@ -108,7 +108,7 @@ class UserController extends Controller
     {
         $datosUsuario = request()->except('_token', '_method');
         $password = $datosUsuario['numero_documento'];
-        $datosUsuario['password_usuario'] = bcrypt($password);
+        $datosUsuario['password'] = bcrypt($password);
         User::where('id', $id)->update($datosUsuario);
 
         $fechaActual = date("Y-m-d H:i:s");

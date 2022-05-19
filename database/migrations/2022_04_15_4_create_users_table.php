@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('tipo_documento');
             $table->string('numero_documento');
             $table->string('telefono_usuario')->nullable();
-            $table->string('email_usuario')->unique();
-            $table->string('password_usuario');
+            $table->string('email')->unique();
+            $table->string('password');
             $table->string('estado_usuario');
             $table->bigInteger('rol_id')->unsigned();
 
