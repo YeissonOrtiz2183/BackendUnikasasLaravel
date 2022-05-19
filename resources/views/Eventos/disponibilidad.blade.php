@@ -17,11 +17,11 @@
             <h1 class="titleModule">Ver disponibilidad</h1>
         </div>
             <header classs="enunciado_calendario">
-                
+
                     <button class="boton" id="anterior" style="margin-right: 1%; width: 9%" onclick="mesantes()">&#60;</button>
                     <h2 id="titulos"></h2>
                     <button class="boton" id="posterior" style="width: 9%" onclick="mesdespues()">&#62;</button>
-                
+
                     <h3 class="info">Fecha de hoy:</h3>
                     <span class="boton boton1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     {{-- <h3 class="info">Visualizar:</h3> --}}
@@ -37,7 +37,7 @@
             <div class="grid">
             <div>
             <table id="diasc">
-                
+
                 <tr id="fila0"><th class="dia calendario_dias"></th class="dia calendario_dias"><th class="dia calendario_dias"></th><th class="dia calendario_dias"></th><th class="dia calendario_dias"></th><th class="dia calendario_dias"></th><th class="dia calendario_dias"></th><th class="dia calendario_dias"></th class="dia calendario_dias borderuno"></tr>
                 <tr id="fila1"><td><a href="{{ url('eventos/create')}}"><p></p></a></td>
                                 <td><a href="{{ url('eventos/create')}}"><p></p></a></td>
@@ -81,11 +81,11 @@
                                 <td><a href="{{ url('eventos/create')}}"><p></p></a></td>
                                 <td><a href="{{ url('eventos/create')}}"><p></p></a></td>
                                 <td><a href="{{ url('eventos/create')}}"><p></p></a></td></tr>
-            <tr style="border: none"><td colspan="7">                
+            <tr style="border: none"><td colspan="7">
             <div id="fechaactual" class="fechaactual"><i onclick="actualizar()">HOY:&nbsp;&nbsp;</i></div>
             <div id="buscafecha">
                 <form action="#" name="buscar" class="buscarMes">
-                <p>Buscar por mes: 
+                <span>Buscar por mes:
                     <select name="buscames" style="width: 20%">
                     <option value="0">Enero</option>
                     <option value="1">Febrero</option>
@@ -101,24 +101,24 @@
                     <option value="11">Diciembre</option>
                     </select>
                     Buscar año:
-                    <input type="text" name="buscaanno" maxlength="4" size="4" /> 
+                    <input type="text" name="buscaanno" maxlength="4" size="4" />
                     <input type="button" value="BUSCAR" onclick="mifecha()" />
-                </p>
+                </span>
                 </form>
-            </tr></td>    
+            </tr></td>
 
-            </div>     
+            </div>
               </table>
             </div>
             <div>
                 <h3 class="info">Resultados de busqueda</h3>
               @foreach ($eventos as $evento)
-                    <a href="{{ url('eventos/'.$evento->id)}}"><p class="eventoDia"><b> Fecha: </b> {{ date('d/m/Y', strtotime($evento->fecha_evento)) }} <b> Desde: </b>{{ date('h:i A', strtotime($evento->hora_inicio)) }} <b> Hasta: </b> {{ date('h:i A', strtotime($evento->hora_fin))}}</p></a> 
+                    <a href="{{ url('eventos/'.$evento->id)}}"><p class="eventoDia"><b> Fecha: </b> {{ date('d/m/Y', strtotime($evento->fecha_evento)) }} <b> Desde: </b>{{ date('h:i A', strtotime($evento->hora_inicio)) }} <b> Hasta: </b> {{ date('h:i A', strtotime($evento->hora_fin))}}</p></a>
                 @endforeach
             </div>
 
             </div>
-            
+
     </main>
     <script type="text/javascript" src="{{ asset('js/Eventos/calendario.js')}}"></script>
 </body>

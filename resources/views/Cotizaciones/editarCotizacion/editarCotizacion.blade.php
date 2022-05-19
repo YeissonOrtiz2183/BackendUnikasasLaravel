@@ -25,14 +25,14 @@
 
         <div class="col-md-4 inputValidate">
           <label for="nombreCotizante" class="form-label">Nombre</label>
-          <input type="text" class="form-control" id="nombreCotizante" placeholder="Nombre" required name="nombres_cotizante"
+          <input type="text" class="form-control formborder" id="nombreCotizante" placeholder="Nombre" required name="nombres_cotizante"
           value="{{ isset($cotizacion->nombres_cotizante)?$cotizacion->nombres_cotizante:old('nombre_cotizante') }}">
           <span id="nombreCotizante_error_message" class="error_form"></span>
         </div>
 
         <div class="col-md-4 inputValidate">
           <label for="apellidosCotizante" class="form-label">Apellido</label>
-          <input type="text" class="form-control" id="apellidosCotizante" placeholder="Apellido" required name="apellidos_cotizante"
+          <input type="text" class="form-control formborder" id="apellidosCotizante" placeholder="Apellido" required name="apellidos_cotizante"
           value="{{ isset($cotizacion->apellidos_cotizante)?$cotizacion->apellidos_cotizante:old('nombre_cotizante') }}">
           <span id="apellidosCotizante_error_message" class="error_form"></span>
         </div>
@@ -41,7 +41,7 @@
           <label for="emailCotizante" class="form-label">Correo electronico</label>
           <div class="input-group has-validation">
             <span class="input-group-text formborderDos" id="inputGroupPrepend3" value="Email">@</span>
-            <input type="email" class="form-control" id="emailCotizante" placeholder="Email" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required name="email_cotizante"
+            <input type="email" class="form-control formborder" id="emailCotizante" placeholder="Email" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required name="email_cotizante"
             value="{{ isset($cotizacion->email_cotizante)?$cotizacion->email_cotizante:old('email_cotizante') }}">
             <span id="emailCotizante_error_message" class="error_form"></span>
           </div>
@@ -49,14 +49,14 @@
 
         <div class="col-md-4 inputValidate">
           <label for="telefonoCotizante" class="form-label">Telefono</label>
-          <input type="text" class="form-control" id="telefonoCotizante" placeholder="Telefono" aria-describedby="validationServer03Feedback" required name="telefono_cotizante"
+          <input type="text" class="form-control formborder" id="telefonoCotizante" placeholder="Telefono" aria-describedby="validationServer03Feedback" required name="telefono_cotizante"
             value="{{ isset($cotizacion->telefono_cotizante)?$cotizacion->telefono_cotizante:old('telefono_cotizante') }}">
             <span id="telefonoCotizante_error_message" class="error_form"></span>
         </div>
 
         <div class="col-md-4 inputValidate">
           <label for="ciudadCotizante" class="form-label">Ciudad</label>
-          <select class="form-select" id="ciudadCotizante" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="ciudad_cotizante">
+          <select class="form-select formborder" id="ciudadCotizante" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="ciudad_cotizante">
             <option value="{{ isset($cotizacion->ciudad_cotizante)?$cotizacion->ciudad_cotizante:old('ciudad_cotizante') }}">{{ isset($cotizacion->ciudad_cotizante)?$cotizacion->ciudad_cotizante:old('ciudad_cotizante') }}</option>
             <option value="Bogota">Bogota</option>
             <option value="Arauca">Arauca</option>
@@ -77,7 +77,7 @@
 
         <div class="col-md-4 inputValidate">
             <label for="productoCotizante" class="form-label">Producto</label>
-            <select class="form-select" id="productoCotizante" placeholder="Producto" aria-describedby="validationServer04Feedback" required name="producto_id">
+            <select class="form-select formborder" id="productoCotizante" placeholder="Producto" aria-describedby="validationServer04Feedback" required name="producto_id">
                 <option value="{{ $producto->id }}">{{ $producto->id }} - {{ $producto->nombre_producto }}</option>
                 @foreach ($productos as $producto)
                     <option value="{{ $producto->id }}">{{ $producto->id }} - {{ $producto->nombre_producto}}</option>
@@ -88,21 +88,21 @@
 
           <div class="col-md-4 inputValidate">
             <label for="ubicacionCotizante" class="form-label">Ubicacion</label>
-            <input type="text" class="form-control" id="ubicacionCotizante" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" required name="ubicacion_cotizante"
+            <input type="text" class="form-control formborder" id="ubicacionCotizante" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" required name="ubicacion_cotizante"
                 value="{{ isset($cotizacion->ubicacion_cotizante)?$cotizacion->ubicacion_cotizante:old('ubicacion_cotizante') }}">
             <span id="ubicacionCotizante_error_message" class="error_form"></span>
           </div>
 
           <div class="col-md-4">
             <label for="fecha" class="form-label">Fecha</label>
-            <input type="date" class="form-control" id="fecha" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" required name="ubicacion_cotizante"
+            <input type="date" class="form-control formborder" id="fecha" placeholder="Ubicacion" aria-describedby="validationServer05Feedback" required name="ubicacion_cotizante"
                 value="{{ isset($cotizacion->fecha_cotizacion)?$cotizacion->fecha_cotizacion:old('fecha_cotizacion') }}">
                 <span id="fechaCotizacion_error_message" class="error_form"></span>
           </div>
 
           <div class="col-md-4">
             <label for="estadoCotizacion" class="form-label">Estado</label>
-            <select class="form-select" id="estadoCotizacion" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="estado_cotizacion">
+            <select class="form-select formborder" id="estadoCotizacion" placeholder="Ciudad" aria-describedby="validationServer04Feedback" required name="estado_cotizacion">
               <option value="{{ isset($cotizacion->estado_cotizacion)?$cotizacion->estado_cotizacion:old('estado_cotizacion') }}">{{ isset($cotizacion->estado_cotizacion)?$cotizacion->estado_cotizacion:old('estado_cotizacion') }}</option>
               <option value="Respondida">Respondida</option>
               <option value="Cancelada">Cancelada</option>

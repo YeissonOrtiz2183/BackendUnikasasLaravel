@@ -60,9 +60,11 @@ class CotizacionController extends Controller
         $cotizacion = request()->except('_token');
         $email= request('email_cotizante');
         Cotizacion::insert($cotizacion);
+        // obtener id para enviar al correo del cliente
+        $cotizacionEmail = Cotizacion::latest('id')->first();
         // Enviar email de la cotización
         if($email){
-            Mail::to($email)->send(new emailCrearCotizacion($cotizacion));
+            Mail::to($email)->send(new emailCrearCotizacion($cotizacionEmail));
         }
         // return response()->json($datosEvento);
         return redirect('cotizaciones');
