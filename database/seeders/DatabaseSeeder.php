@@ -25,7 +25,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\Proyecto::factory(10)->create();
         \App\Models\ProyectoEtapa::factory(10)->create();
         \App\Models\Cotizacion::factory(10)->create();
-
         \App\Models\Evento::factory(10)->create();
     }
 }

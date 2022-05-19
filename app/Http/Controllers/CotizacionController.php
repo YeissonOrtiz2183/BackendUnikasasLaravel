@@ -3,8 +3,115 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Cotizacion;
+use App\Models\Producto;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\emailCrearCotizacion; // Para la creacion dela cotzación
+use App\Mail\emailContestarCotizacion; // Para la respuesta a la cotización
 
 class CotizacionController extends Controller
 {
-    //
+    public function index(Request $request)
+    {
+        $cliente = $request->get('cliente');
+        $codigo = $request->get('codigo');
+        $fecha = $request->get('fecha');
+        $estado = $request->get('estado');
+
+        if($cliente != ''){
+            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->where('nombres_cotizante', 'like', "%$cliente%")->get();
+        } else{
+            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->get();
+        }
+
+        if($codigo != ''){
+            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->where('cotizacions.id', 'like', "$codigo")->get();
+        }
+
+        if($fecha != ''){
+            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->where('fecha_cotizacion', 'like', "%$fecha%")->get();
+        }
+
+        if($estado != ''){
+            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->where('estado_cotizacion', 'like', "%$estado%")->get();
+        }
+        return view('Cotizaciones.cotizaciones', compact('cotizaciones'));
+    }
+
+    public function create()
+    {
+        $productos = Producto::all();
+        return view('Cotizaciones.CrearCotizacion.crearCotizacion', compact('productos'));
+    }
+
+    public function edit($id)
+    {
+        $cotizacion = Cotizacion::findOrFail($id);
+        $producto = Producto::findOrfail($cotizacion->producto_id);
+        $productos = Producto::all();
+        // return dd($cotizacion);
+        return view('Cotizaciones.editarCotizacion.editarCotizacion', compact('cotizacion', 'producto', 'productos'));
+    }
+
+    public function store(Request $request)
+    {
+        $cotizacion = request()->except('_token');
+        $email= request('email_cotizante');
+        Cotizacion::insert($cotizacion);
+        // obtener id para enviar al correo del cliente
+        $cotizacionEmail = Cotizacion::latest('id')->first();
+        // Enviar email de la cotización
+        if($email){
+            Mail::to($email)->send(new emailCrearCotizacion($cotizacionEmail));
+        }
+        // return response()->json($datosEvento);
+        return redirect('cotizaciones');
+    }
+
+    public function show($id)
+    {
+        $cotizacion = Cotizacion::findOrfail($id);
+        $producto = Producto::findOrfail($cotizacion->producto_id);
+        return view('Cotizaciones.visualizarCotizacion.vistaCotizacion', compact('cotizacion', 'producto'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $datosCotizacion = request()->except(['_token','_method', 'respuesta_cotizacion']);
+        Cotizacion::where('id', '=', $id)->update($datosCotizacion);
+
+        // envio de correo de respuesta de cotización
+        $respuesta = request('respuesta_cotizacion');
+        if($respuesta){
+            $datosCotizacion = request()->except(['_token','_method']);
+            $email= request('email_cotizante');
+            Mail::to($email)->send(new emailContestarCotizacion($datosCotizacion));
+        }
+        // $evento = Evento::findOrFail($id);
+        return redirect('cotizaciones');
+    }
+
+    public function contestarCotizacion($id)
+    {
+        $cotizacion = Cotizacion::findOrFail($id);
+        $producto = Producto::findOrfail($cotizacion->producto_id);
+        return view('Cotizaciones.contestarCotizacion.contestarCotizacion', compact('cotizacion', 'producto'));
+    }
+
+    public function exportPdfCotizaciones()
+    {
+        $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->get();
+        $cotizaciones = compact('cotizaciones');
+
+        $pdf = Pdf::loadView('cotizaciones.pdf.exportPdf', $cotizaciones);
+        return $pdf->setPaper('a3', 'landscape')->stream('reporteCotizaciones.pdf');
+    }
+
+    public function destroy($id)
+    {
+        Cotizacion::destroy($id);
+        return redirect('cotizaciones');
+    }
 }
