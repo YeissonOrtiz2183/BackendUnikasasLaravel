@@ -51,7 +51,7 @@ Route::resource('proyectos', ProyectoController::class)->middleware('auth');
 Route::get('proyectos/search/{estado}', [ProyectoController::class, 'index'])->middleware('auth');
 Route::resource('productos', ProductoController::class)->middleware('auth');
 Route::resource('actividades', ActividadController::class)->middleware('auth');
-Route::resource('usuarios', UserController::class)->middleware('auth')->middleware('auth');
+Route::resource('usuarios', UserController::class)->middleware('auth');
 Route::resource('roles', RolController::class)->middleware('auth');
 Route::resource('auditoria', AuditController::class)->middleware('auth');
 Route::get('index', [LoginController::class, 'index']);
