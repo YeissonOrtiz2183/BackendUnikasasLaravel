@@ -16,8 +16,21 @@ body{
     border: 0px;
 }
 
+.global{
+    width: 92%;
+    margin-top: 60px;
+    margin-right: 0;
+    margin-left: auto;
+}
+
 a:link{
     text-decoration: none;
+    color: #fff;
+    font-weight: lighter;
+}
+
+a:hover{
+    color: #fff;
 }
 
 .workspace{
@@ -50,7 +63,7 @@ h1{
     text-align: center;
 }
 
-.enunciado_calendario, header {
+.enunciado_calendario, .headerCalendario {
     display: inline-block;
     margin: auto;
     width: 100%;
@@ -105,15 +118,6 @@ h2, h3 {
 .infoDos {
     margin-inline-start: 20px;
 }
-
-/* ol {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    padding: 0%;
-    margin: 0%;
-    text-align: center;
-} */
 
 table{
     border-collapse: collapse;
@@ -177,9 +181,13 @@ table #fila4 th a, p{
     margin: 0 auto;
 }
 
-div a{
+div .eventoInfo{
     text-decoration: none;
     color: #000000;
+}
+
+div .eventoInfo p{
+    font-weight: lighter;
 }
 
 /* .border {

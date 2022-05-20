@@ -1,6 +1,6 @@
-@extends('layouts/layout')
-@section('content')
+@extends('layouts.layout')
 
+@section('content')
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -15,6 +15,7 @@
     <body>
         <!--Area de trabajo-->
         <main class="workspace">
+            <div class="global">
             <h1 class="titleModule">Eventos</h1>
             <form class="searchForm" action="">
                 <label for="itemSearch">Buscar evento:</label>
@@ -75,6 +76,7 @@
             </div>
 
         </main>
+    </div>
     </body>
     </html>
 @endsection

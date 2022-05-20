@@ -23,6 +23,13 @@ body{
     border: 0px;
 }
 
+.global{
+    width: 92%;
+    margin-top: 60px;
+    margin-right: 0;
+    margin-left: auto;
+}
+
 .top {
     display: grid;
     grid-template-columns: 10% 80% 10%;
@@ -96,6 +103,7 @@ h2 {
     justify-content: center;
     align-items: center;
     width: 100%;
+    z-index: -1;
 }
 
 @media(max-width: 1366px){
@@ -129,7 +137,7 @@ h2 {
 
 p {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     vertical-align: center;
     margin-left: 8%;
     font-weight: 700;
@@ -201,15 +209,6 @@ input[type=checkbox] {
     margin-bottom: 2%;
 }
 
-.icono_dowload{
-    display: flex;
-    justify-content: right;
-    align-content: flex-end;
-    margin-right: 70px;
-    margin-left: 120%;
-    padding-bottom: .5%;
-}
-
 @media (max-width: 1366px){
     .previsualizacion a{
         margin-right: 70px;
@@ -217,24 +216,24 @@ input[type=checkbox] {
 }
 
 @media (max-width: 1920px){
-    .icono_dowload{
-        margin-right: 100px;
+    .buttonPdf{
+        margin-right: 230px;
     }
 }
 
-a {
+.buttonPdf {
     display: flex;
     justify-content: right;
     align-content: flex-end;
     margin-right: 70px;
     padding-bottom: .5%;
-}
+} 
 
 form .botones{
     display: flex;
     vertical-align: center;
     justify-content: center;
-    
+
 }
 
 input[type="submit"]{
@@ -261,10 +260,30 @@ input[type="submit"]{
 }
 
 .previsualizacion{
-    display: flex;
-    margin-left: 7%;
-    margin-top: 2%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    margin-top: 1%;
     margin-bottom: 1%;
+}
+
+.buttonPdf{
+    background-color: var(--orange);
+    text-decoration: none;
+    color: var(--black);
+    text-align: center;
+    border-radius: 10px;
+    margin-left: 50%;
+}
+
+.buttonPdf span{
+    width: 30%;
+    padding: 4px;
+    color: var(--negro);
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    margin-inline-end: 60px;
 }
 
 .titulo_previsualizacion{

@@ -78,7 +78,7 @@ class EventoController extends Controller
     {
         $datosEvento = request()->except(['_token','_method', "eventName", "eventDate", "eventTime", "eventProyect", "eventAssistant", "eventReason"]);
         Evento::where('id', '=', $id)->update($datosEvento);
-    
+
         $respuesta = request('eventReason');
         // dd($respuesta);
         if($respuesta){
@@ -200,7 +200,7 @@ class EventoController extends Controller
         // $eventos = [];
         // $eventos = explode('}', $event);
         // $eventos = Config::get('eventosR');
-        return dd($eventos);
+        // return dd($eventos);
         // $eventos = $this->eventosR;
         $eventos = compact('eventos');
         // return dd($eventos);
