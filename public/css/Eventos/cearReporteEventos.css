@@ -23,6 +23,13 @@ body{
     border: 0px;
 }
 
+.global{
+    width: 92%;
+    margin-top: 60px;
+    margin-right: 0;
+    margin-left: auto;
+}
+
 .top {
     display: grid;
     grid-template-columns: 10% 80% 10%;
@@ -96,6 +103,7 @@ h2 {
     justify-content: center;
     align-items: center;
     width: 100%;
+    z-index: -1;
 }
 
 @media(max-width: 1366px){
@@ -213,13 +221,13 @@ input[type=checkbox] {
     }
 }
 
-a {
+.buttonPdf {
     display: flex;
     justify-content: right;
     align-content: flex-end;
     margin-right: 70px;
     padding-bottom: .5%;
-}
+} 
 
 form .botones{
     display: flex;
@@ -268,7 +276,7 @@ input[type="submit"]{
     margin-left: 50%;
 }
 
-.buttonPdf span, a{
+.buttonPdf span{
     width: 30%;
     padding: 4px;
     color: var(--negro);

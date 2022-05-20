@@ -12,6 +12,13 @@ body{
     width: 89%;
 }
 
+.global{
+    width: 92%;
+    margin-top: 60px;
+    margin-right: 0;
+    margin-left: auto;
+}
+
 .main{
     width: 100%;
     display: flex;
@@ -50,6 +57,7 @@ form{
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin-bottom: 1%;
 }
 
 .contenedor-campos{

@@ -15,6 +15,13 @@ body{
     border: 0px;
 }
 
+.global{
+    width: 92%;
+    margin-top: 60px;
+    margin-right: 0;
+    margin-left: auto;
+}
+
 a:link{
     text-decoration: none;
 }
@@ -155,8 +162,9 @@ section{
 }
 
 .section__infoEvento{
-    width: 850px;
+    width: 750px;
 }
+
 .contenedor a{
     margin-top: 15%;
     display: flex;
@@ -175,7 +183,7 @@ section{
         margin-left: 140%;
     }
     .section__infoEvento{
-        width: 1380px;
+        width: 1280px;
     }
     .contenedor-secundario{
         width: 190px;
