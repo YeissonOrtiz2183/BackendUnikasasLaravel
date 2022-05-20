@@ -32,7 +32,7 @@
             <ul class="navLateral__sidebar">
                 <a href="{{ url('cotizaciones') }}"><span class="material-icons md-100 cotizaciones">assignment</span></a>
                 <li><a href="#">Cotizaciones</a></li>
-                <a href="#"><span class="material-icons md-100 products">shopping_cart</span></a>
+                <a href="{{ url('productos') }}"><span class="material-icons md-100 products">shopping_cart</span></a>
                 <li><a href="#">Productos</a></li>
                 <a href="{{ url('proyectos/search/activo') }}"><span class="material-icons md-100 projects">folder_open</span></a>
                 <li><a href="{{ url('proyectos/search/activo') }}">Proyectos</a></li>

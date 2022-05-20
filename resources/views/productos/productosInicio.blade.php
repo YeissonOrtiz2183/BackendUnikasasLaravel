@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edggit checkout git 6c8364aa7e6dd2b174cae3c3162500a69c6a4280e">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNIKASAS</title>
-    <link rel="stylesheet" href="{{ asset('css/productosCss/productosInicio.css') }}">
     <link rel="stylesheet" href="{{asset('css/productosCss/modalP.css')}}">
     <link rel="stylesheet" href="{{asset('css/productoCss/publicar.css')}}">
     <link rel="stylesheet" href="{{asset('css/productosCss/mPublicarProducto.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/productosCss/productosInicio.css') }}">
 </head>
 <body>
  <main>

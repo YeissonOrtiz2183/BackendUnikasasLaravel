@@ -15,12 +15,10 @@ class ProductoController extends Controller
     public function index(Request $request)
     {
 
-        $nombre=$request->get('buscarpor');
-
-        $datos['productos']=Producto::where('nombre_producto','LIKE','%'.$nombre.'%');
+        $productos = Producto::all();
 
 
-        return view('productos.productosInicio', compact('datos'));
+        return view('productos.productosInicio', compact('productos'));
     }
 
     /**
