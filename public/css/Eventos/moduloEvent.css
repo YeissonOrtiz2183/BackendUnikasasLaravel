@@ -20,6 +20,7 @@ body{
     margin-top: 60px;
     margin-right: 0;
     margin-left: auto;
+    overflow-x: hidden;
 }
 
 a:link{
@@ -136,7 +137,7 @@ a:link{
     }
 
 }
-    
+
 .buttonCreateEvento, .buttonDisponibilidad, .buttonCreateReporte{
     color: var(--black);
     text-transform: uppercase;
@@ -171,7 +172,7 @@ section{
     justify-content: center;
     align-items: center;
     text-align: center;
-    
+
 }
 
 @media (min-width: 1920px){

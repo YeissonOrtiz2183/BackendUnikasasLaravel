@@ -91,9 +91,9 @@
         <a href="{{ url('/exportPdfCotizaciones') }}"><button style="justify-content: center; width: 165px; padding: 1.5%" type="button" class="btn btn-lg button" data-bs-toggle="popover" title="Click para ver el reporte en formato pdf o excel" data-bs-content="And here's some amazing content. It's very engaging.Right?" style="font-size: 1.20rem; font-weight: 500">REPORTE PDF</button></a>
       <div>
     </aside>
-  </div>   
+  </div>
 
-      <div class="container" style="display: inline;">
+      <div class="container" id="tabla" style="display: inline;">
           <div class="row row-cols-5">
             <div class="col- border border-dark color"><b>Codigo</b></div>
             <div class="col- border border-dark color" style="text-align: center"><b>Cliente</b></div>
