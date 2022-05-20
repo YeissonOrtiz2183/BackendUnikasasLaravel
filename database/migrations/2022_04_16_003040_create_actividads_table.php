@@ -16,10 +16,8 @@ return new class extends Migration
         Schema::create('actividads', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('etapa_id')->unsigned();
-            $table->bigInteger('encargado_id')->unsigned();
-
             $table->string('nombre_actividad');
+            $table->string('encargado_actividad');
             $table->string('objetivo_actividad');
             $table->date('fecha_inicio');
             $table->date('fecha_fin')->nullable();
@@ -27,9 +25,6 @@ return new class extends Migration
             $table->string('estado_actividad');
 
             $table->timestamps();
-
-            $table->foreign('etapa_id')->references('id')->on('etapas');
-            $table->foreign('encargado_id')->references('id')->on('users');
         });
     }
 

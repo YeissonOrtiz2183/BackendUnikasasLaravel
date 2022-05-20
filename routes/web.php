@@ -15,10 +15,10 @@ use App\Models\Evento;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
 });
-
+*/
 Route::resource('ModuloEventos', EventoController::class);
 
 Route::get('/disponibilidad', function () {
@@ -34,3 +34,20 @@ Route::get('/visualizarEventos', function () {
 });
 
 // Route::get('/disponibilidad', EventoController::class);
+
+use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ActividadController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RolController;
+use App\Http\Controllers\AuditController;
+
+Route::resource('proyectos', ProyectoController::class);
+Route::get('proyectos/search/{estado}', [ProyectoController::class, 'index']);
+Route::resource('productos', ProductoController::class);
+/*Route::get('productos/search/{product}', [ProductoController::class, 'index']);*/
+Route::resource('actividades', ActividadController::class);
+Route::resource('usuarios', UserController::class);
+Route::resource('roles', RolController::class);
+Route::resource('auditoria', AuditController::class);
+

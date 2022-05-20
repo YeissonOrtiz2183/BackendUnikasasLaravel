@@ -17,15 +17,14 @@ class ActividadFactory extends Factory
     public function definition()
     {
         return [
-            'etapa_id' => $this->faker->numberBetween(1, 6),
-            'encargado_id' => $this->faker->numberBetween(1, 10),
+            'encargado_actividad' => $this->faker->name,
 
             'nombre_actividad' => $this->faker->word,
             'objetivo_actividad' => $this->faker->word,
             'fecha_inicio' => $this->faker->dateTimeBetween('-1 years', '+1 years'),
             'fecha_fin' => $this->faker->dateTimeBetween('-1 years', '+1 years'),
             'observaciones_actividad' => $this->faker->word,
-            'estado_actividad' => $this->faker->randomElement(['Activo', 'Inactivo']),
+            'estado_actividad' => $this->faker->randomElement(['En ejecución', 'Finalizada']),
         ];
     }
 }

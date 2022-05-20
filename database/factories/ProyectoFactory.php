@@ -18,7 +18,7 @@ class ProyectoFactory extends Factory
     {
         return [
 
-            'encargado_id' => $this->faker->numberBetween(1, 3),
+            'encargado_id' => $this->faker->numberBetween(1, 4),
             'cliente_id' => $this->faker->numberBetween(1, 10),
             'producto_id' => $this->faker->numberBetween(1, 10),
 
@@ -29,6 +29,7 @@ class ProyectoFactory extends Factory
             'direccion_proyecto' => $this->faker->word,
             'fecha_inicio' => $this->faker->dateTimeBetween('-1 years', '+1 years'),
             'fecha_fin' => $this->faker->dateTimeBetween('-1 years', '+1 years'),
+            'estado_proyecto' => $this->faker->randomElement(['En ejecución', 'Suspendido', 'Finalizado'])
 
         ];
     }
