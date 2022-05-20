@@ -60,7 +60,7 @@
             </div>
             <div class="campo">
                 <label>Correo electrónico:</label>
-                <input class="input-text" type="email" name="email_usuario">
+                <input class="input-text" type="email" name="email">
             </div>
             <div class="campo">
                 <label>Roles:</label>

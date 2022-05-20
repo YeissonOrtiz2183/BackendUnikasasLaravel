@@ -59,7 +59,7 @@
                 </div>
                 <div class="campo">
                     <label>Correo electrónico</label>
-                    <input class="input-text" type="text" name="email_usuario" value="{{ $usuario->email_usuario }}">
+                    <input class="input-text" type="text" name="email" value="{{ $usuario->email }}">
                 </div>
                 <div class="campo">
                     <label>Número de teléfono</label>

@@ -54,8 +54,8 @@ h1{
 .contenedor{
     display: flex;
     flex-direction: row;
-    width: 99%;
-    margin-left: 1%; 
+    width: 92%;
+    margin: 60px 0px 0px auto;
 }
 
 .proyecto{
@@ -99,7 +99,7 @@ label:nth-child(7){
 label:nth-child(9){
     grid-column-start: 1;
     grid-row-start: 5;
-    
+
 }
 
 .editable{
@@ -150,7 +150,7 @@ span:nth-child(12){
 
 form{
     display: flex;
-    width: 100%;
+    width: 75.5%;
     grid-column-start: 1;
     grid-row-start: 5;
     grid-column-end: 4;

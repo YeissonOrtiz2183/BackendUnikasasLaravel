@@ -30,17 +30,17 @@
     <div class="divPrueba">
         <div class="navLateral">
             <ul class="navLateral__sidebar">
-                <a href="#"><span class="material-icons md-100 cotizaciones">assignment</span></a>
+                <a href="{{ url('cotizaciones') }}"><span class="material-icons md-100 cotizaciones">assignment</span></a>
                 <li><a href="#">Cotizaciones</a></li>
                 <a href="#"><span class="material-icons md-100 products">shopping_cart</span></a>
                 <li><a href="#">Productos</a></li>
                 <a href="{{ url('proyectos/search/activo') }}"><span class="material-icons md-100 projects">folder_open</span></a>
                 <li><a href="{{ url('proyectos/search/activo') }}">Proyectos</a></li>
-                <a href="#"><span class="material-icons md-100 events">event</span></a>
+                <a href="{{ url('eventos') }}"><span class="material-icons md-100 events">event</span></a>
                 <li><a href="#">Eventos</a></li>
                 <a href="{{ url('usuarios') }}"><span class="material-icons md-100 users">person</span></a>
                 <li><a href="{{ url('usuarios') }}">Usuarios</a></li>
-                <a href="#"><span class="material-icons md-100 auditoria">verified_user</span></a>
+                <a href="{{ url('auditoria') }}"><span class="material-icons md-100 auditoria">verified_user</span></a>
                 <li><a href="#">Auditoria</a></li>
             </ul>
         </div>

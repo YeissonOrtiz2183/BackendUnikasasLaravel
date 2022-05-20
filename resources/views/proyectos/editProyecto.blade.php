@@ -40,6 +40,7 @@
                         <form action="{{ url('proyectos/' .$proyecto->id) }}" method="post" id="formEdit">
                             @csrf {{-- token de seguridad para el formulario  --}}
                             {{ method_field('PATCH') }}
+                            <input type="text" value="modificacion" name="accion" readonly style="display: none">
                             <label>Costo final: <input type="number" class="editable" name="costo_final" value="{{ $proyecto->costo_final }}"></label>
                             <label>Fecha final: <input type="date" class="editable input2" name="fecha_fin" value="{{ $proyecto->fecha_fin }}"></label>
                         </form>

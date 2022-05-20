@@ -24,6 +24,7 @@ body{
     display: inline-block;
     background: #EA411D;
     width: 100%;
+    position: fixed;
 }
 
 .material-icons.md-200 {
@@ -61,10 +62,12 @@ body{
 
 .navLateral{
     background: #EA411D;
-    width: 8%;
-    height: 577px;
+    width: 7%;
+    height: 650px;
     display: inline-block;
     justify-content: center;
+    position: fixed;
+    margin-top: 2.7%;
 }
 
 @media (min-width: 1600px){

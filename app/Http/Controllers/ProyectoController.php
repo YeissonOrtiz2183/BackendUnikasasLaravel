@@ -140,10 +140,17 @@ class ProyectoController extends Controller
             $idEtapa--;
         }
 
+        $fechaActual = date("Y-m-d H:i:s");
+        $timestamp = strtotime($fechaActual);
+        $time = $timestamp - (5 * 60 * 60);
+        $fechaActual = date("Y-m-d H:i:s", $time);
+
         Audit::insert([
-            'tipo_accion' => "insert",
-            'fecha_accion' => Date("Y-m-d"),
-            'valor_nuevo' => $datosProyecto['nombre_proyecto']
+            'user_id' => 1,
+            'modulo' => 'proyecto',
+            'tipo_accion' => "creacion",
+            'fecha_accion' => $fechaActual,
+            'item' => $datosProyecto['nombre_proyecto']
         ]);
 
         header('Location: http://127.0.0.1:8000/proyectos/search/activo');
@@ -233,12 +240,30 @@ class ProyectoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $datosProyecto = request()->except(['_token', '_method']);
 
-        Proyecto::where('id', '=', $id)->update($datosProyecto);
+        $nombreProyecto = Proyecto::findOrFail($id);
+        $nombreProyecto = $nombreProyecto->nombre_proyecto;
 
-        // $proyectos['proyectos'] = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio, encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido, cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido FROM proyectos LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id WHERE estado_proyecto = "En ejecucion"');
-        // return view('proyectos.moduloInicioProyecto', $proyectos);
+        $fechaActual = date("Y-m-d H:i:s");
+        $timestamp = strtotime($fechaActual);
+        $time = $timestamp - (5 * 60 * 60);
+        $fechaActual = date("Y-m-d H:i:s", $time);
+
+        $accion = $datosProyecto['accion'];
+
+        unset($datosProyecto['accion']);
+
+        Audit::insert([
+            'user_id' => 1,
+            'modulo' => 'proyecto',
+            'tipo_accion' => $accion,
+            'fecha_accion' => $fechaActual,
+            'item' => $nombreProyecto
+        ]);
+
+        Proyecto::where('id', '=', $id)->update($datosProyecto);
 
         return redirect('/proyectos/' .$id);
     }
