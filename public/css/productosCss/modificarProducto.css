@@ -20,6 +20,12 @@ section{
     border: solid 2px;
     border-radius: 10px;
     padding: 0px 20px;
+    width: 15rem;
+
+}
+
+.Matriz{
+   /* margin-top: 1rem;*/
 }
 h2{
     text-align: center;
@@ -35,13 +41,14 @@ aside{
     border-radius: 10px;
     margin-left: auto;
     margin-right: auto;
+    height: 30rem;
 }
 form{
-    margin: 1rem;
+   /* margin: 1rem;*/
    display: inline-block;
 }
 .formL{
-    margin: 15px;
+    /*margin: 15px;*/
     height: 40px;
 }
 input{
@@ -75,6 +82,7 @@ a{
     height: 2rem;
     border-radius: 5px;
     background-color:#F78811;
+    border: none;
 
 }
 .divSave a{
@@ -289,3 +297,92 @@ a{
     grid-template-rows: repeat(4, 1fr);
 }
 
+
+.inputfile {
+
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.plus{
+    cursor: pointer;
+}
+
+.spans{
+
+    font-size: 12px;
+    color: gray;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 1rem;
+
+
+}
+
+#guardar{
+    width:10rem;
+    height: 2rem;
+    border-radius: 5px;
+    background-color:#F78811;
+    border: none;
+
+}
+
+#cancelar{
+    width:10rem;
+    height: 2rem;
+    border-radius: 5px;
+    background-color:#EA411D;
+    border: none;
+
+}
+
+#selectTipoCasas{
+    height: 2rem;
+    border-radius: 10px;
+    width: 40rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    border: 2px solid;
+
+}
+
+
+
+#textSelectTipoCasas{
+    margin-left: 7rem;
+}
+
+#selectTipoMaterial{
+    height: 2rem;
+    border-radius: 10px;
+    width: 40rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    border: 2px solid;
+}
+
+#textMaterial{
+    margin-left:7rem;
+}
+
+#selectPisos{
+    height: 2rem;
+    border-radius: 10px;
+    width: 40rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    border: 2px solid;
+}
+
+
+#textPisos{
+    margin-left:7rem;
+}
+::-webkit-input-placeholder {
+    text-align: center;
+ }

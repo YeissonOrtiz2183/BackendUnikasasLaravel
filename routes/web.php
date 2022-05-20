@@ -18,6 +18,11 @@ use App\Models\Cotizacion;
 |
 */
 
+/*Route::get('/', function () {
+    return view('welcome');
+});
+*/
+Route::resource('ModuloEventos', EventoController::class);
 Route::get('/', function () {
     return view('welcome');
 });
@@ -29,6 +34,8 @@ Route::get('/disponibilidad', [App\Http\Controllers\EventoController::class, 'di
 Route::get('/eventos/{id}/cancel', [App\Http\Controllers\EventoController::class, 'cancel'])->name('ModuloEventos.cancel');
 
 Route::get('/reporteEventos', [App\Http\Controllers\EventoController::class, 'reporteEventos'])->name('ModuloEventos.reporte');
+
+// Route::get('/disponibilidad', EventoController::class);
 
 Route::get('/exportPdfEventos', [App\Http\Controllers\EventoController::class, 'exportPdfEventos'])->name('ModuloEventos.exportPdfEventos');
 
@@ -57,3 +64,5 @@ Route::resource('auditoria', AuditController::class)->middleware('auth');
 Route::get('index', [LoginController::class, 'index']);
 Route::post('login', [LoginController::class, 'authenticate']);
 Route::post('logout', [LoginController::class, 'logout']);
+
+?>

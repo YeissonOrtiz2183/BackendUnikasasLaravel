@@ -11,13 +11,18 @@
 </head>
 <body>
 
+<form action="{{url('/productos/'.$producto->id)}}" id="formulary" method="post" enctype="multipart/form-data">
+
+        @csrf
+        {{method_field('PATCH')}}
     <div class="modal-container">
         <div class="modal modal-close">
         <div class="modal-textos">
             <h1>¿Desea modificar el producto?</h1>
         </div>
             <div class="modal-botones">
-                <button id="aceptar" >Aceptar</button>
+              <!--  <button id="aceptar" >Aceptar</button> -->
+              <input type="submit" value="Aceptar" id="guardar">
                 <div class="modal-botones">
                 <button id="cancelar">Cancelar</button>
                 </div>
@@ -32,7 +37,7 @@
                 <button id="irse">X</button>
             </div>
         <div class="texto-Modal">
-            <h1>SE HA REGISTRADO EL PRODUCTO</h1>
+            <h1>SE HA MODIFICADO EL PRODUCTO</h1>
         </div>
         <div class="botones-modal">
             <button id="confirmar">Aceptar</button>
@@ -43,17 +48,15 @@
 
 
 
-    <h1>REGISTRAR PRODUCTO</h1>
-    <form action="{{url('/productos')}}" id="formulary" method="post" enctype="multipart/form-data">
-        @csrf
-
+    <h1>MODIFICAR PRODUCTO</h1>
     <div class="Matriz">
+
 
         <section>
 
             <div class="imagenSection">
                 <h2>IMAGEN</h2>
-                <p><img  class="img"src=""></p>
+                <p><img  class="img" src="{{ asset('storage/' .$producto->foto_producto) }}"></p>
                 <div class="icons">
                     <a href=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -63,12 +66,16 @@
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                         <polyline points="9 6 15 12 9 18" />
                     </svg></a>
-                    <input type="file" name="foto_producto" id="file" class="inputfile">
+
+
+                    <input type="file" name="foto_producto" id="file" class="inputfile" value="">
                     <label for="file"><svg class="plus"xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                         <line x1="12" y1="5" x2="12" y2="19" />
                         <line x1="5" y1="12" x2="19" y2="12" />
                     </svg></label>
+
+
                 </div>
             </div>
         </section>
@@ -79,18 +86,18 @@
 
             <div class="formL">
                     <label class="labes">Nombre del producto:</label>
-                    <input id="inputNombreProducto" type="text" name="nombre_producto" >
+                    <input id="inputNombreProducto" type="text" name="nombre_producto" value="{{$producto->nombre_producto}}">
                 </div>
                 <span id="errorNombreProducto" class="spans"></span>
                 <div class="formL">
-                    <label class="labes">Descripción:</label>
-                    <input id="inputDescripcionProducto" class="descrip" name="descripcion_producto"type="text" placeholder="Ingrese aqui la descripción del producto">
+                    <label class="labes">Descripcion:</label>
+                    <input id="inputDescripcionProducto" class="descrip" name="descripcion_producto"type="text"  value="{{$producto->descripcion_producto}}">
                 </div>
                 <span id="errorDescripcionProducto" class="spans"></span>
 
                 <div class="formL">
                 <label class="labes">Precio:</label>
-                <input id="inputPrecioProducto" class="inputPrice"type="text" placeholder="Ingrese aqui el precio del producto" name="precio_producto">
+                <input id="inputPrecioProducto" class="inputPrice"type="text"  name="precio_producto" value="{{$producto->precio_producto}}">
                 </div>
                 <span id="errorPrecioProducto" class="spans"></span>
 
@@ -124,9 +131,10 @@
                     </select>
                 </div>
 
+
                 <div class="formL">
                     <label class="labes" for="itemSearch">Estado actual:</label>
-                    <select class="input-text" type="text" name="estado_producto" id="searchBar">
+                    <select class="input-text" type="text" name="estado_producto" id="searchBar" >
                     <option value="publicado" select>Publicado</opcion>
                     <option value="Activo" select>Activo</opcion>
                     <option value="Despublicado" select>Despublicado</opcion>
@@ -139,21 +147,21 @@
 
                 <div class="saveCancel">
                     <div class="divSave">
-                        <input type="submit" value="Registrar" class="divSave" id="enviar">
-                    <!--<a class="save" id="save" href="#">Registrar</a>-->
+                     <!--   <input type="submit" value="Modificar" class="divSave" id="enviar">  -->
+                    <a class="save" id="save" href="#">Modificar</a>
                     </div>
 
                     <div class="divCancel">
-                        <a class="cancel"href="#">Cancelar</a>
+                        <a class="cancel"href="{{url('productos')}}">Cancelar</a>
                     </div>
                 </div>
                 <!--Realizar barra de seleccionar estado-->
 
         </aside>
-        </form>
+
     </div>
     </form>
-    <script src="ValidacionModificarProducto.js"></script>
+    <script src="{{asset('js/productos/modificarProducto.js')}}"></script>
     <script src="../modificarProducto2/js/modificarProducto.js"></script>
 </body>
 </html>

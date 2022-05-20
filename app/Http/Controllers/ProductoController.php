@@ -12,9 +12,15 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('productos.productosInicio');
+
+        $nombre=$request->get('buscarpor');
+
+        $datos['productos']=Producto::where('nombre_producto','LIKE','%'.$nombre.'%');
+
+
+        return view('productos.productosInicio', compact('datos'));
     }
 
     /**
@@ -36,6 +42,11 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $datosProducto=request()->except('_token');
+
+        if($request->hasFile('foto_producto')){
+            $datosProducto['foto_producto']=$request->file('foto_producto')->store('uploads', 'public');
+
+        }
         Producto::insert($datosProducto);
         return response()->json($datosProducto);
 
@@ -48,9 +59,10 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function show(Producto $producto)
+    public function show( $id)
     {
-        //
+        $productos = Producto::find($id);
+        return view('productos.visualizarProducto', ['producto'=>$productos]);
     }
 
     /**
@@ -59,9 +71,11 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function edit(Producto $producto)
+    public function edit($id)
     {
-        //
+        $producto=Producto::findOrFail($id);
+        return view('productos.modificarProducto', compact('producto'));
+
     }
 
     /**
@@ -71,9 +85,14 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request, $id)
     {
         //
+        $datosProducto=request()->except(['_token', '_method']);
+        Producto::where('id', '=', $id)->update($datosProducto);
+
+        $producto=Producto::findOrFail($id);
+        return view('productos.modificarProducto', compact('producto'));
     }
 
     /**
