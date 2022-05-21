@@ -50,41 +50,30 @@
                     </div>
                 </aside>
                 <main class="auditoria">
-                    @foreach($audits as $audit)
-                    <section>
-                        <div class="contenedor">
-                            <div class="section__infoAuditoria">
-                                @if($audit->tipo_accion == 'creacion')
-                                    @if($audit->modulo == 'actividad')
-                                    <h2 class="info media_esposive"><span>Creación de la {{ $audit->modulo }}: {{$audit->item }} dentro del proyecto {{ $audit->sub_item }}</span></h2>
-                                    @else
-                                    <h2 class="info media_esposive"><span>Creación del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
-                                    @endif
-
-                                @elseif($audit->tipo_accion == 'modificacion')
-                                    @if($audit->modulo == 'actividad')
-                                    <h2 class="info media_esposive"><span>Modificación de la {{ $audit->modulo }}: {{$audit->item }} dentro del proyecto {{ $audit->sub_item }}</span></h2>
-                                    @else
-                                    <h2 class="info media_esposive"><span>Modificación del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
-                                    @endif
-
-                                @elseif($audit->tipo_accion == 'suspension')
-                                <h2 class="info media_esposive"><span>Suspensión del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
-
-                                @elseif($audit->tipo_accion == 'finalizacion')
-                                <h2 class="info media_esposive"><span>Finalización del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
-
-                                @elseif($audit->tipo_accion == 'reactivacion')
-                                <h2 class="info media_esposive"><span>Reactivación del {{ $audit->modulo }}: {{$audit->item }}</span></h2>
-
-                                @endif
-
-                                <h4 class="info">Fecha: <span>{{ $audit->fecha_accion }}</span></h4>
-                                <h4 class="info">Autor: <span>{{ $audit->primer_nombre }} {{ $audit->segundo_nombre }} {{ $audit->primer_apellido }} {{ $audit->segundo_apellido }}</span></h4>
-                            </div>
-                        </div>
-                    </section>
-                    @endforeach
+                    <table class="tableAudit">
+                        <thead>
+                            <tr>
+                                <th>Autor</th>
+                                <th>Modulo</th>
+                                <th>Acción</th>
+                                <th>Item Afectado</th>
+                                <th>Sub Item</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($audits as $audit)
+                            <tr>
+                                <td>{{ $audit->primer_nombre }} {{ $audit->segundo_nombre }} {{ $audit->primer_apellido }} {{ $audit->segundo_apellido }}</td>
+                                <td>{{ $audit->modulo }}</td>
+                                <td>{{ $audit->tipo_accion }}</td>
+                                <td>{{ $audit->item }}</td>
+                                <td>{{ $audit->sub_item }}</td>
+                                <td>{{ $audit->fecha_accion }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </main>
             </div>
 

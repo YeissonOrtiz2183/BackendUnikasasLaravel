@@ -27,13 +27,13 @@ function calcModal(status, n)
     }
 
     function hideModal(n) {
-        modalLayout[n].classList.remove('visible')
+        modalLayout[n].classList.remove('visibleLayout')
         modalLayout[n].classList.add('hidden')
     }
 
     function showModal(n) {
         modalLayout[n].classList.remove('hidden')
-        modalLayout[n].classList.add('visible')
+        modalLayout[n].classList.add('visibleLayout')
     }
 }
 

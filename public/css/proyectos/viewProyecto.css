@@ -250,6 +250,7 @@ span{
 
 .visible{
     display: grid;
+    place-content: center;
 }
 
 .modal{
@@ -258,8 +259,6 @@ span{
     background: rgba(0, 0, 0, 0.5);
     position: fixed;
     z-index: 2000;
-
-    place-items: center;
 }
 
 iframe{

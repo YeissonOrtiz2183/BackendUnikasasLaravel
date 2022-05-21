@@ -130,25 +130,22 @@ form .search_parametros {
     vertical-align: top;
 }
 
-section{
-    display: inline-block;
-    border: 2px solid;
-    border-radius: 10px;
-    width: 89%;
-    margin-left: 2%;
-    margin-bottom: 2%;
+.tableAudit{
+    border-collapse: collapse;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.contenedor{
-    padding: 30px 50px;
+.tableAudit th{
+    background: var(--orange);
+    border: 1px solid var(--black);
+    padding: 10px;
 }
 
-.contenedor a{
-    margin-top: 15%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+.tableAudit td{
+    padding: 10px;
+    border: 1px solid #dee2e6;
 }
 
 @media (min-width: 1920px){

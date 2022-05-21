@@ -1,6 +1,4 @@
 @extends('layouts.layout')
-
-@section('content')
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -13,6 +11,7 @@
         <title>Proyecto</title>
     </head>
     <body>
+        @section('content')
         <div class="main">
             <div class="top">
                 <a href="{{ url('/proyectos/search/activo') }}"><span class="material-icons back">arrow_back</span></a>
@@ -31,13 +30,13 @@
                         </div>
                     @elseif($proyecto->estado_proyecto == "Suspendido")
                         <div class="button FinishProject">
-                            <a class="textButton" type="button" href="#">Finalizar</a>
+                            <a class="textButton" type="button" href="">Finalizar</a>
                         </div>
                         <div class="button activate">
-                            <a class="textButton" type="button" href="#">Activar</a>
+                            <a class="textButton" type="button" href="">Activar</a>
                         </div>
                         <div class="button SuspenderProject" style="display: none;">
-                            <a class="textButton" type="button" href="#" style="display: none;">Suspender</a>
+                            <a class="textButton" type="button" href="" style="display: none;">Suspender</a>
                         </div>
                     @endif
                 </aside>
@@ -96,7 +95,6 @@
             </div>
 
             <!-- modales -->
-
 
             <section class="modal hidden">
                 <div class="modal__content modalSuspender">
@@ -224,7 +222,8 @@
             </section>
 
         </div>
+        <script src="{{ asset('js/proyectos/viewProyecto.js') }}"></script>
+        @endsection
+
     </body>
-    <script src="{{ asset('js/proyectos/viewProyecto.js') }}"></script>
     </html>
-@endsection

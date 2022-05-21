@@ -11,13 +11,12 @@
     <title>Proyecto</title>
 </head>
 <body>
-    <section class="modal">
+    <section class="modal" style="display: grid;">
         <div class="modal__content modalActivity">
             <div class="iconClose">
                 <a href="{{ url('proyectos/search/activo') }}"><span class="material-icons closeIcon">highlight_off</span></a>
             </div>
             <div class="modal__content--contenedor">
-
                 <h2>{{ $actividad->nombre_actividad }}</h2>
                 <div class="infoActividad">
                     <div class="data1">

@@ -126,8 +126,8 @@ iframe{
     display: none;
 }
 
-.visible{
-    display: grid;
+.visibleLayout{
+    display: flex;
 }
 
 .modalLayout{
