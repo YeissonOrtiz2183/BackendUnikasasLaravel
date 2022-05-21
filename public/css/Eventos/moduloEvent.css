@@ -16,10 +16,6 @@ body{
 }
 
 .global{
-    width: 92%;
-    margin-top: 60px;
-    margin-right: 0;
-    margin-left: auto;
     overflow-x: hidden;
 }
 
