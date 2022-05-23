@@ -1,3 +1,9 @@
+<?php
+    use Illuminate\Support\Facades\Auth;
+
+    $user = Auth::user();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +23,7 @@
             <div class="header__navBar__iconsleft">
                 <span class="material-icons md-200" id="menu">menu</span>
                 <span class="material-icons md-200" id="userIcon">person</span>
-                <h1 class="header__navBar__iconsleft__userName">Yeisson Estiven Ortiz Torres</h1>
+                <h1 class="header__navBar__iconsleft__userName">{{ $user->primer_nombre }} {{ $user->segundo_nombre }} {{ $user->primer_apellido }} {{ $user->segundo_apellido }} {{ $user->rol_id }}</h1>
             </div>
             <div class="header__navBar__iconsRight">
                 <span class="material-icons md-200 logout">logout</span>
