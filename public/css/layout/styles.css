@@ -136,6 +136,8 @@ iframe{
     background: rgba(0, 0, 0, 0.5);
     margin-top: 50px;
     position: fixed;
+    margin-left: 0px;
+    border-radius: 0px;
     z-index: 2000;
 }
 
@@ -144,13 +146,21 @@ iframe{
     margin-left: auto;
     background-color: white;
     width: 150px;
-    height: 50px;
+    height: 38px;
     border-radius: 10px;
-    padding-top: 20px;
 }
 
-.modalLayout .modalLogout a{
-    font-size: 25px;
+.modalLayout .modalLogout form{
+    text-align: center;
+}
+
+.modalLayout .modalLogout button{
+    font-size: 15px;
+    border-radius: 10px;
+    width: 100%;
+    background-color: #ffa500;
+    border: none;
+    padding: 10px;
 }
 
 .modalLayout .modalNotifications{

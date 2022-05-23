@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class Authorization
+class bearer
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,10 @@ class Authorization
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = $request->user();
-        if ($user->rol_id == 1) {
-            return $next($request);
-        }else{
-            return redirect('/');
+        if ($request->rol_id == 1) {
+            $next($request);
         }
     }
 }
+
+?>

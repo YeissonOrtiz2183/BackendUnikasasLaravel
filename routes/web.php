@@ -54,8 +54,8 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\LoginController;
 
-Route::resource('proyectos', ProyectoController::class)->middleware('auth')->middleware('Authorization');
-Route::get('proyectos/search/{estado}', [ProyectoController::class, 'index'])->middleware('auth')->middleware('Authorization');
+Route::resource('proyectos', ProyectoController::class)->middleware('auth');
+Route::get('proyectos/search/{estado}', [ProyectoController::class, 'index'])->middleware('auth');
 Route::resource('productos', ProductoController::class)->middleware('auth');
 Route::resource('actividades', ActividadController::class)->middleware('auth');
 Route::resource('usuarios', UserController::class)->middleware('auth');
