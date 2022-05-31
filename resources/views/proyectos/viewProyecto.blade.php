@@ -21,23 +21,25 @@
             </div>
             <div class="contenedor">
                 <aside>
-                    @if($proyecto->estado_proyecto == "En ejecución")
-                        <div class="button FinishProject">
-                            <a class="textButton" type="button" href="#">Finalizar</a>
-                        </div>
-                        <div class="button SuspenderProject">
-                            <a class="textButton" type="button" href="#">Suspender</a>
-                        </div>
-                    @elseif($proyecto->estado_proyecto == "Suspendido")
-                        <div class="button FinishProject">
-                            <a class="textButton" type="button" href="">Finalizar</a>
-                        </div>
-                        <div class="button activate">
-                            <a class="textButton" type="button" href="">Activar</a>
-                        </div>
-                        <div class="button SuspenderProject" style="display: none;">
-                            <a class="textButton" type="button" href="" style="display: none;">Suspender</a>
-                        </div>
+                    @if($isAdmin)
+                        @if($proyecto->estado_proyecto == "En ejecución")
+                            <div class="button FinishProject">
+                                <a class="textButton" type="button" href="#">Finalizar</a>
+                            </div>
+                            <div class="button SuspenderProject">
+                                <a class="textButton" type="button" href="#">Suspender</a>
+                            </div>
+                        @elseif($proyecto->estado_proyecto == "Suspendido")
+                            <div class="button FinishProject">
+                                <a class="textButton" type="button" href="#">Finalizar</a>
+                            </div>
+                            <div class="button activate">
+                                <a class="textButton" type="button" href="#">Activar</a>
+                            </div>
+                            <div class="button SuspenderProject" style="display: none;">
+                                <a class="textButton" type="button" href="" style="display: none;">Suspender</a>
+                            </div>
+                        @endif
                     @endif
                 </aside>
                 <div class="proyecto">
@@ -57,10 +59,12 @@
                         <label>Fecha final estimada: <span>{{ $proyecto->fecha_fin }}</span></label>
                         <label>Costo final: <span>${{ $proyecto->costo_final }}</span></label>
                         <label>Fecha final: <span>{{ $proyecto->fecha_fin }}</span></label>
+                        @if($isAdmin)
                         @if($proyecto->estado_proyecto == "En ejecución")
                             <a id="link1" href="{{ url('/proyectos/' .$proyecto->id. '/edit') }}"><span class="material-icons edit-1">edit</span></a>
 
                             <a id="link2" href="{{ url('/proyectos/' .$proyecto->id. '/edit') }}"><span class="material-icons edit-1">edit</span></a>
+                        @endif
                         @endif
                     </div>
 
@@ -83,8 +87,10 @@
                                     @endif
                                 @endforeach
                                 <div class="addDiv">
+                                    @if($isAdmin)
                                     @if($proyecto->estado_proyecto == "En ejecución")
                                         <span class="material-icons add" value="{{ $etapa->id }}">add_circle</span>
+                                    @endif
                                     @endif
                                 </div>
                             </div>

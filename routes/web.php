@@ -27,25 +27,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('eventos', EventoController::class);
+Route::resource('eventos', EventoController::class)->middleware('auth')->middleware('eventos');
+Route::get('/disponibilidad', [App\Http\Controllers\EventoController::class, 'disponibilidad'])->middleware('auth')->middleware('eventos')->name('ModuloEventos.disponibilidad');
+Route::get('/eventos/{id}/cancel', [App\Http\Controllers\EventoController::class, 'cancel'])->middleware('auth')->middleware('eventos')->name('ModuloEventos.cancel');
+Route::get('/reporteEventos', [App\Http\Controllers\EventoController::class, 'reporteEventos'])->middleware('auth')->middleware('eventos')->name('ModuloEventos.reporte');
+Route::get('/exportPdfEventos', [App\Http\Controllers\EventoController::class, 'exportPdfEventos'])->middleware('auth')->middleware('eventos')->name('ModuloEventos.exportPdfEventos');
 
-Route::get('/disponibilidad', [App\Http\Controllers\EventoController::class, 'disponibilidad'])->name('ModuloEventos.disponibilidad');
 
-Route::get('/eventos/{id}/cancel', [App\Http\Controllers\EventoController::class, 'cancel'])->name('ModuloEventos.cancel');
+Route::resource('cotizaciones', CotizacionController::class)->middleware('auth')->middleware('cotizaciones');
+Route::get('/exportPdfCotizaciones', [App\Http\Controllers\CotizacionController::class, 'exportPdfCotizaciones'])->middleware('auth')->middleware('cotizaciones')->name('cotizaciones.exportPdfCotizaciones');
+Route::get('/cotizaciones/{id}/contestar', [App\Http\Controllers\CotizacionController::class, 'contestarCotizacion'])->middleware('auth')->middleware('cotizaciones')->name('cotizaciones.contestarCotizacion');
 
-Route::get('/reporteEventos', [App\Http\Controllers\EventoController::class, 'reporteEventos'])->name('ModuloEventos.reporte');
-
-// Route::get('/disponibilidad', EventoController::class);
-
-Route::get('/exportPdfEventos', [App\Http\Controllers\EventoController::class, 'exportPdfEventos'])->name('ModuloEventos.exportPdfEventos');
-
-// rutas cotizaciones
-
-Route::resource('cotizaciones', CotizacionController::class);
-
-Route::get('/exportPdfCotizaciones', [App\Http\Controllers\CotizacionController::class, 'exportPdfCotizaciones'])->name('cotizaciones.exportPdfCotizaciones');
-
-Route::get('/cotizaciones/{id}/contestar', [App\Http\Controllers\CotizacionController::class, 'contestarCotizacion'])->name('cotizaciones.contestarCotizacion');
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ActividadController;
@@ -54,8 +46,8 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\LoginController;
 
-Route::resource('proyectos', ProyectoController::class)->middleware('auth');
-Route::get('proyectos/search/{estado}', [ProyectoController::class, 'index'])->middleware('auth');
+Route::resource('proyectos', ProyectoController::class)->middleware('auth')->middleware('proyectos');
+Route::get('proyectos/search/{estado}', [ProyectoController::class, 'index'])->middleware('auth')->middleware('proyectos');
 Route::resource('productos', ProductoController::class)->middleware('auth');
 Route::resource('actividades', ActividadController::class)->middleware('auth');
 Route::resource('usuarios', UserController::class)->middleware('auth');

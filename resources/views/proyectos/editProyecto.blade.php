@@ -13,9 +13,12 @@
     </head>
     <body>
         <div class="main">
-            @foreach($proyecto as $proyecto)
-                <h1>{{ $proyecto->nombre_proyecto }}</h1>
-            @endforeach
+            <div class="top">
+                <a href="{{ url('/proyectos/search/activo') }}"><span class="material-icons back">arrow_back</span></a>
+                @foreach($proyecto as $proyecto)
+                    <h1>{{ $proyecto->nombre_proyecto }}</h1>
+                @endforeach
+            </div>
 
 
             <div class="contenedor">

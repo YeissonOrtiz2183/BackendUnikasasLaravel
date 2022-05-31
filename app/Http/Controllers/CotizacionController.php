@@ -15,6 +15,18 @@ class CotizacionController extends Controller
 {
     public function index(Request $request)
     {
+        $rol = $request->user()->rol_id;
+        $isAdmin = false;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if ($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones')) {
+            $isAdmin = true;
+        }
+
         $cliente = $request->get('cliente');
         $codigo = $request->get('codigo');
         $fecha = $request->get('fecha');
@@ -37,22 +49,57 @@ class CotizacionController extends Controller
         if($estado != ''){
             $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->where('estado_cotizacion', 'like', "%$estado%")->get();
         }
-        return view('Cotizaciones.cotizaciones', compact('cotizaciones'));
+        return view('Cotizaciones.cotizaciones', compact('cotizaciones', 'isAdmin'));
     }
 
     public function create()
     {
-        $productos = Producto::all();
-        return view('Cotizaciones.CrearCotizacion.crearCotizacion', compact('productos'));
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if ($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones')) {
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $productos = Producto::all();
+            return view('Cotizaciones.CrearCotizacion.crearCotizacion', compact('productos'));
+        }else{
+            return redirect()->back();
+        }
+
+
     }
 
     public function edit($id)
     {
-        $cotizacion = Cotizacion::findOrFail($id);
-        $producto = Producto::findOrfail($cotizacion->producto_id);
-        $productos = Producto::all();
-        // return dd($cotizacion);
-        return view('Cotizaciones.editarCotizacion.editarCotizacion', compact('cotizacion', 'producto', 'productos'));
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if ($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones')) {
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $cotizacion = Cotizacion::findOrFail($id);
+            $producto = Producto::findOrfail($cotizacion->producto_id);
+            $productos = Producto::all();
+
+            return view('Cotizaciones.editarCotizacion.editarCotizacion', compact('cotizacion', 'producto', 'productos'));
+        }else{
+            return redirect()->back();
+        }
+
     }
 
     public function store(Request $request)
@@ -72,9 +119,28 @@ class CotizacionController extends Controller
 
     public function show($id)
     {
-        $cotizacion = Cotizacion::findOrfail($id);
-        $producto = Producto::findOrfail($cotizacion->producto_id);
-        return view('Cotizaciones.visualizarCotizacion.vistaCotizacion', compact('cotizacion', 'producto'));
+        $rol = auth()->user()->rol_id;
+        $canView = false;
+
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if ($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')) {
+            $canView = true;
+        }
+
+        if($canView){
+            $cotizacion = Cotizacion::findOrfail($id);
+            $producto = Producto::findOrfail($cotizacion->producto_id);
+            return view('Cotizaciones.visualizarCotizacion.vistaCotizacion', compact('cotizacion', 'producto'));
+        }else{
+            return redirect()->back();
+        }
+
+
     }
 
     public function update(Request $request, $id)
@@ -95,23 +161,75 @@ class CotizacionController extends Controller
 
     public function contestarCotizacion($id)
     {
-        $cotizacion = Cotizacion::findOrFail($id);
-        $producto = Producto::findOrfail($cotizacion->producto_id);
-        return view('Cotizaciones.contestarCotizacion.contestarCotizacion', compact('cotizacion', 'producto'));
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if ($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones')) {
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $cotizacion = Cotizacion::findOrFail($id);
+            $producto = Producto::findOrfail($cotizacion->producto_id);
+            return view('Cotizaciones.contestarCotizacion.contestarCotizacion', compact('cotizacion', 'producto'));
+        }else{
+            return redirect()->back();
+        }
+
     }
 
     public function exportPdfCotizaciones()
     {
-        $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->get();
-        $cotizaciones = compact('cotizaciones');
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
 
-        $pdf = Pdf::loadView('cotizaciones.pdf.exportPdf', $cotizaciones);
-        return $pdf->setPaper('a3', 'landscape')->stream('reporteCotizaciones.pdf');
+        if ($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones')) {
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->get();
+            $cotizaciones = compact('cotizaciones');
+
+            $pdf = Pdf::loadView('cotizaciones.pdf.exportPdf', $cotizaciones);
+            return $pdf->setPaper('a3', 'landscape')->stream('reporteCotizaciones.pdf');
+        }else{
+            return redirect()->back();
+        }
+
+
     }
 
     public function destroy($id)
     {
-        Cotizacion::destroy($id);
-        return redirect('cotizaciones');
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if ($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones')) {
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            Cotizacion::destroy($id);
+            return redirect('cotizaciones');
+        }else{
+            return redirect()->back();
+        }
+
     }
 }

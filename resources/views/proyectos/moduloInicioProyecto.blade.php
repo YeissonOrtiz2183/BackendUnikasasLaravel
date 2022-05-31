@@ -33,15 +33,20 @@
             </form>
             <div class="container">
                 <aside>
+                    @if($isAdmin)
                     <div class="button">
                         <a class="buttonCreateProject" href="{{ url('/proyectos/create') }}">Crear proyecto</a>
                     </div>
+                    @endif
+
                     <div class="button">
                         <a class="buttonArchived" value="activos" href="{{ url('/proyectos/search/inactivo') }}">Archivados</a>
                     </div>
+                    @if($isAdmin)
                     <div class="button">
                         <a class="buttonCreateReport" href="../CrearReporte/crearReporteEventos.html">Crear reporte</a>
                     </div>
+                    @endif
                 </aside>
                 <div class="proyectos">
                     @foreach ($proyectos as $proyecto)

@@ -33,15 +33,19 @@
             </form>
             <div class="container">
                 <aside>
+                    @if($isAdmin)
                     <div class="button">
                         <a class="buttonCreateEvento" href="{{ url('eventos/create') }}">Crear evento</a>
                     </div>
+                    @endif
                     <div class="button">
                         <a class="buttonDisponibilidad" href="{{ url('/disponibilidad') }}">Disponibilidad</a>
                     </div>
+                    @if($isAdmin)
                     <div class="button">
                         <a class="buttonCreateReporte" href="{{ url('/reporteEventos') }}">Crear reporte</a>
                     </div>
+                    @endif
                 </aside>
 
                 <main class="eventos">

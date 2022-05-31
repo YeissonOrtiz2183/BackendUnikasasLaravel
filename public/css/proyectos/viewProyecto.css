@@ -16,9 +16,17 @@ body{
     width: 93%;
     display: flex;
     flex-direction: column;
-    margin-right: 0;
+    margin-right: 14px;
     margin-left: auto;
-    margin-top: 60px;
+    margin-top: 52px;
+}
+
+@media (min-width: 1400px){
+    .main{
+        margin-top: 52px;
+        margin-right: 0;
+        width: 93%;
+    }
 }
 
 .top {

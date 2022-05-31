@@ -62,7 +62,7 @@ class RolController extends Controller
         $fechaActual = date("Y-m-d H:i:s", $time);
 
         Audit::insert([
-            'user_id' => 1,
+            'user_id' => auth()->user()->id,
             'modulo' => 'rol',
             'tipo_accion' => "creacion",
             'fecha_accion' => $fechaActual,
@@ -130,7 +130,7 @@ class RolController extends Controller
         $time = $timestamp - (5 * 60 * 60);
         $fechaActual = date("Y-m-d H:i:s", $time);
         Audit::insert([
-            'user_id' => 1,
+            'user_id' => auth()->user()->id,
             'modulo' => 'rol',
             'tipo_accion' => "modificacion",
             'fecha_accion' => $fechaActual,

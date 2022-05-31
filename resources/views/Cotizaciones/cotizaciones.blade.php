@@ -84,12 +84,14 @@
     <div class="grid">
       <div>
     <aside class="botones">
+        @if($isAdmin)
       <div>
         <a href="{{ url('/cotizaciones/create') }}"><button style="justify-content: center; width: 165px; padding: 1.5%; margin-bottom: 2vh"  type="button" class="btn btn-lg button" data-bs-toggle="popover" title="Click para ver el reporte en formato pdf o excel" data-bs-content="And here's some amazing content. It's very engaging.Right?" style="font-size: 1.20rem; font-weight: 500">CREAR NUEVA</button></a>
       </div>
       <div style="margin-top: 3%">
         <a href="{{ url('/exportPdfCotizaciones') }}"><button style="justify-content: center; width: 165px; padding: 1.5%" type="button" class="btn btn-lg button" data-bs-toggle="popover" title="Click para ver el reporte en formato pdf o excel" data-bs-content="And here's some amazing content. It's very engaging.Right?" style="font-size: 1.20rem; font-weight: 500">REPORTE PDF</button></a>
       <div>
+          @endif
     </aside>
   </div>
 
@@ -119,16 +121,16 @@
             <div class="col- border info">{{ date('d/m/Y', strtotime($cotizacion->fecha_cotizacion)) }}</div>
             <div class="col- border info">{{ $cotizacion->estado_cotizacion }}</div>
 
-            <div class="col- border"><a style="margin-left: 5%" class="btn btn-light" href="{{ url('cotizaciones/'.$cotizacion->id.'/edit') }}" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+            <div class="col- border">@if($isAdmin)<a style="margin-left: 5%" class="btn btn-light" href="{{ url('cotizaciones/'.$cotizacion->id.'/edit') }}" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
               <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
             </svg></a> <a class="btn btn-light" href="{{ url('cotizaciones/'.$cotizacion->id.'/contestar') }}" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
             <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
-            </svg></a> <a class="btn btn-light" href="{{ url('cotizaciones/'.$cotizacion->id) }}" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+            </svg></a>@endif <a class="btn btn-light" href="{{ url('cotizaciones/'.$cotizacion->id) }}" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
               <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
               <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-            </svg></a><?php $id = $cotizacion->id ?> <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal2"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+            </svg></a><?php $id = $cotizacion->id ?> @if($isAdmin)<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal2"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                 <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-              </svg></b></button></div>
+              </svg></b></button>@endif</div>
 
             @endforeach
             <div style="margin-bottom: 2%"></div>

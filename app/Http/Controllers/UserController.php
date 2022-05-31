@@ -58,7 +58,7 @@ class UserController extends Controller
         $fechaActual = date("Y-m-d H:i:s", $time);
 
         Audit::insert([
-            'user_id' => 1,
+            'user_id' => auth()->user()->id,
             'modulo' => 'usuario',
             'tipo_accion' => "creacion",
             'fecha_accion' => $fechaActual,
@@ -117,7 +117,7 @@ class UserController extends Controller
         $fechaActual = date("Y-m-d H:i:s", $time);
 
         Audit::insert([
-            'user_id' => 1,
+            'user_id' => auth()->user()->id,
             'modulo' => 'usuario',
             'tipo_accion' => "modificacion",
             'fecha_accion' => $fechaActual,

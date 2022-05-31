@@ -1,6 +1,6 @@
 const createActivity = document.querySelectorAll('.add')
 const suspenderProject = document.querySelector('.SuspenderProject')
-const finishProject = document.querySelectorAll('.FinishProject')
+const finishProject = document.querySelector('.FinishProject')
 const activateProject = document.querySelector('.activate')
 const modal = document.querySelectorAll('.modal')
 const iconClose = document.querySelectorAll('.save')
@@ -31,12 +31,10 @@ suspenderProject.addEventListener('click', () => {
     modal[0].classList.add('visible')
 })
 
-for (let i = 0; i < finishProject.length; i++) {
-    finishProject[i].addEventListener('click', () => {
-        modal[2].classList.remove('hidden')
-        modal[2].classList.add('visible')
-    })
-}
+finishProject.addEventListener('click', () => {
+    modal[2].classList.remove('hidden')
+    modal[2].classList.add('visible')
+})
 
 viewSuspension.addEventListener('click', () =>{
     modal[3].classList.remove('hidden')
@@ -53,7 +51,6 @@ for (let x = 0; x < modal.length; x++){
 }
 
 activateProject.addEventListener('click', () =>{
-    console.info('Mostrar modal')
     modal[4].classList.remove('hidden')
     modal[4].classList.add('visible')
 })
