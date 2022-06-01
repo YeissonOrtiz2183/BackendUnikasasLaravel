@@ -50,9 +50,13 @@ Route::resource('actividades', ActividadController::class)->middleware('auth');
 Route::resource('productos', ProductoController::class)->middleware('auth');
 Route::resource('usuarios', UserController::class)->middleware('auth');
 Route::get('/reporteUsuarios', [UserController::class, 'reporteUsuarios'])->middleware('auth');
+Route::get('/exportPdfUsuarios', [UserController::class, 'exportPdfUsuarios'])->middleware('auth');
 
 Route::resource('roles', RolController::class)->middleware('auth');
 Route::resource('auditoria', AuditController::class)->middleware('auth');
+Route::get('/reporteAuditoria', [AuditController::class, 'reporteAuditoria'])->middleware('auth');
+Route::get('/exportPdfAuditoria', [AuditController::class, 'exportPdfAuditoria'])->middleware('auth');
+
 Route::get('index', [LoginController::class, 'index']);
 Route::post('login', [LoginController::class, 'authenticate']);
 Route::post('logout', [LoginController::class, 'logout']);

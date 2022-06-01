@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Audit;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserController extends Controller
 {
@@ -127,9 +128,54 @@ class UserController extends Controller
         return redirect('usuarios/' .$id);
     }
 
-    public function reporteUsurios()
+    public function reporteUsuarios()
     {
-        return view('usuarios.crearReporteUsuarios');
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+
+        $privilegios = DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar usuarios')){
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $usuarios = User::all();
+            // return dd($usuarios);
+            return view('usuarios.crearReporteUsuarios', compact('usuarios'));
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function exportPdfUsuarios(Request $request)
+    {
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+
+        $privilegios = DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar usuarios')){
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $usuarios = User::all();
+            // return dd($proyectos);                                    
+            $usuarios = compact('usuarios');
+            $pdf = Pdf::loadView('usuarios.exportPdf', $usuarios);
+            return $pdf->setPaper('a3', 'landscape')->stream('reporteUsuarios.pdf');
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**

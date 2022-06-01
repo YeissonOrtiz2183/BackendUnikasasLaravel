@@ -46,7 +46,7 @@
             <div class="container">
                 <aside>
                     <div class="button">
-                        <a class="buttonCreateReporte" href="crearReporteAuditoria.html">Crear reporte</a>
+                        <a class="buttonCreateReporte" href="{{ url('/reporteAuditoria') }}">Crear reporte</a>
                     </div>
                 </aside>
                 <main class="auditoria">

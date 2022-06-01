@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="{{ asset('css/proyectos/cearReporteProyectos.css') }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <title>Crear reporte de Usuarios</title>
+        <title>Crear reporte de Auditoria</title>
     </head>
     <body>
         <!--Area de trabajo-->
@@ -18,7 +18,7 @@
         <main class="workspace">
             <div class="top">
                 <button onclick="history.back()"><span class="material-icons back">arrow_back</span></button>
-                <h1 class="titleModule">Crear reporte de Usuarios</h1>
+                <h1 class="titleModule">Crear reporte de Auditoria</h1>
             </div>
             <form class="searchForm" action="" method="get">
                 @csrf
@@ -26,8 +26,8 @@
                 <label class="search_parametros" for="itemSearch">Nombre del usuario:</label>
                     <select class="input-text" type="text" name="searchBar" id="searchBar">
                         <option value="null" selected disabled hidden>Seleccione el nombre del usuario</option>
-                @foreach ($usuarios as $usuario )
-                        <option value="{{ $usuario->primer_nombre  }}">{{ $usuario->primer_nombre }} {{ $usuario->primer_apellido }}</option>
+                @foreach ($auditoria as $audit )
+                        <option value="{{ $audit->primer_nombre  }}">{{ $audit->primer_nombre }} {{ $audit->primer_apellido }}</option>
                 @endforeach
                     </select>
 
@@ -56,26 +56,26 @@
                             <div class="campo">
                                 <label>Segundo apellido:</label>
                                 <input class="checkbox" type="checkbox" id="segundoApellido" name="segundo_apellido" value="segundo_apellido">
+                            </div>  
+                            <div class="campo">
+                                <label>Modulo:</label>
+                                <input class="checkbox" type="checkbox" id="modulo" name="modulo" value="modulo">
                             </div>
                             <div class="campo">
-                                <label>Tipo documento:</label>
-                                <input class="checkbox" type="checkbox" id="tipoDocumento" name="tipo_documento" value="tipo_documento">
+                                <label>Tipo acción:</label>
+                                <input class="checkbox" type="checkbox" id="tipoAccion" name="tipo_accion" value="tipo_accion">
                             </div>
                             <div class="campo">
-                                <label>Número documento:</label>
-                                <input class="checkbox" type="checkbox" id="numeroDocumento" name="numero_documento" value="numero_documento">
+                                <label>Item:</label>
+                                <input class="checkbox" type="checkbox" id="item" name="item" value="item">
                             </div>
                             <div class="campo">
-                                <label>Telefono:</label>
-                                <input class="checkbox" type="checkbox" id="telefonoUsuario" name="telefono_usuario" value="telefono_usuario">
+                                <label>Sub Item:</label>
+                                <input class="checkbox" type="checkbox" id="subItem" name="sub_item" value="sub_item">
                             </div>
                             <div class="campo">
-                                <label>Email:</label>
-                                <input class="checkbox" type="checkbox" id="email" name="email" value="email">
-                            </div>
-                            <div class="campo">
-                                <label>Estado:</label>
-                                <input class="checkbox" type="checkbox" id="estado_usuario" name="estado_usuario" value="estado_usuario">
+                                <label>Fecha:</label>
+                                <input class="checkbox" type="checkbox" id="fechaAccion" name="fecha_accion" value="fecha_accion">
                             </div>
                         </div>
 
@@ -92,7 +92,7 @@
                     <h2 class="titulo_previsualizacion">Previsualización</h2>
                 </div>
                 <div>
-                    <a href="{{ url('/exportPdfUsuarios') }}" class="buttonPdf"><span>PDF</span></a>
+                    <a href="{{ url('/exportPdfAuditoria') }}" class="buttonPdf"><span>PDF</span></a>
                 </div>
                 <div>
                 </div>
@@ -102,68 +102,74 @@
                 <div class="container">
 
                     <table>
-                        <tr>@if(isset($usuario->id))
+                        <?php $contador = 0; ?>
+                        @foreach ($auditoria as $audit)
+                        @if($contador == 0)
+                        <tr>@if(isset($audit->user_id))
                                 <th>Id </th>
                             @endif
-                            @if(isset($usuario->primer_nombre))
+                            @if(isset($audit->primer_nombre))
                                 <th>Primer nombre </th>
                             @endif
-                            @if(isset($usuario->segundo_nombre))
+                            @if(isset($audit->segundo_nombre))
                                 <th>Segundo nombre </th>
                             @endif
-                            @if(isset($usuario->primer_apellido))
+                            @if(isset($audit->primer_apellido))
                                 <th>Primer apellido </th>
                             @endif
-                            @if(isset($usuario->segundo_apellido))
+                            @if(isset($audit->segundo_apellido))
                                 <th>Segundo apellido </th>
                             @endif
-                            @if(isset($usuario->tipo_documento))
-                                <th>Tipo documento </th>
+                            @if(isset($audit->modulo))
+                                <th>Modulo </th>
                             @endif
-                            @if(isset($usuario->numero_documento))
-                                <th>Número documento </th>
+                            @if(isset($audit->tipo_accion))
+                                <th>Tipo acción </th>
                             @endif
-                            @if(isset($usuario->telefono_usuario))
-                                <th>Telefono </th>
+                            @if(isset($audit->item))
+                                <th>Item </th>
                             @endif
-                            @if(isset($usuario->email))
-                                <th>Email </th>
+                            @if(isset($audit->sub_item))
+                                <th>Sub Item </th>
                             @endif
-                            @if(isset($usuario->estado_usuario))
-                                <th>Estado </th>
+                            @if(isset($audit->fecha_accion))
+                                <th>Fecha acción </th>
                             @endif
+                            <?php $contador += 1; ?>
+                        @endif
+                        @endforeach
                         </tr>
 
-                        @foreach ($usuarios as $usuario)
-                            <tr>@if(isset($usuario->id))
-                                    <td>{{ $usuario->id }}</td>
+                        @foreach ($auditoria as $audit)
+                            <tr>@if(isset($audit->user_id))
+                                    <td>{{ $audit->user_id }}</td>
                                 @endif
-                                @if(isset($usuario->primer_nombre))
-                                    <td>{{ $usuario->primer_nombre }}</td>
+                                @if(isset($audit->primer_nombre))
+                                    <td>{{ $audit->primer_nombre }}</td>
                                 @endif
-                                @if(isset($usuario->segundo_nombre))
-                                    <td>{{ $usuario->segundo_nombre }}</td>
+                                @if(isset($audit->segundo_nombre))
+                                    <td>{{ $audit->segundo_nombre }}</td>
                                 @endif
-                                @if(isset($usuario->primer_apellido))
-                                    <td>{{ $usuario->primer_apellido }}</td>
+                                @if(isset($audit->primer_apellido))
+                                    <td>{{ $audit->primer_apellido }}</td>
                                 @endif
-                                @if(isset($usuario->segundo_apellido))
-                                    <td>{{ $usuario->segundo_apellido }}</td>
+                                @if(isset($audit->segundo_apellido))
+                                    <td>{{ $audit->segundo_apellido }}</td>
                                 @endif
-                                @if(isset($usuario->tipo_documento))
-                                    <td>{{ $usuario->tipo_documento }}</td>
+                                @if(isset($audit->modulo))
+                                    <td>{{ $audit->modulo }}</td>
                                 @endif
-                                @if(isset($usuario->numero_documento))
-                                    <td>{{ $usuario->numero_documento }}</td>
+                                @if(isset($audit->tipo_accion))
+                                    <td>{{ $audit->tipo_accion }}</td>
                                 @endif
-                                @if(isset($usuario->telefono_usuario))
-                                    <td>{{ $usuario->telefono_usuario }}</td>
+                                @if(isset($audit->item))
+                                    <td>{{ $audit->item }}</td>
                                 @endif
-                                @if(isset($usuario->email))
-                                    <td>{{ $usuario->email }}</td>
+                                @if(isset($audit->sub_item))
+                                    <td>{{ $audit->sub_item }}</td>
                                 @endif
-                                @if(isset($usuario->estado_usuario))
-                                    <td>{{ $usuario->estado_usuario }}</td>
+                                @if(isset($audit->fecha_accion))
+                                    <td>{{ $audit->fecha_accion }}</td>
                                 @endif
                             </tr>
                         @endforeach
