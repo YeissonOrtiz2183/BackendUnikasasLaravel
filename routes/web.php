@@ -49,6 +49,8 @@ Route::resource('actividades', ActividadController::class)->middleware('auth');
 
 Route::resource('productos', ProductoController::class)->middleware('auth');
 Route::resource('usuarios', UserController::class)->middleware('auth');
+Route::get('/reporteUsuarios', [UserController::class, 'reporteUsuarios'])->middleware('auth');
+
 Route::resource('roles', RolController::class)->middleware('auth');
 Route::resource('auditoria', AuditController::class)->middleware('auth');
 Route::get('index', [LoginController::class, 'index']);

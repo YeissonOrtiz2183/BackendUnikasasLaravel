@@ -127,6 +127,11 @@ class UserController extends Controller
         return redirect('usuarios/' .$id);
     }
 
+    public function reporteUsurios()
+    {
+        return view('usuarios.crearReporteUsuarios');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
