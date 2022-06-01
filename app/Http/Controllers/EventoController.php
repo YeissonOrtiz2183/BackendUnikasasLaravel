@@ -346,8 +346,6 @@ class EventoController extends Controller
         }else{
             return redirect()->back();
         }
-
-
     }
 
     public function destroy($id)
