@@ -69,7 +69,7 @@
                         </div>
                     </form>
             </div>
-           
+
             <div class="previsualizacion">
                 <div></div>
                 <div>
@@ -99,7 +99,7 @@
                                 <th>Fecha inicial </th>
                             @endif
                             @if(isset($proyecto->encargado_nombre))
-                                <th>Encargado </th>
+                                <th>Nombre encargado </th>
                             @endif
                             @if(isset($proyecto->cliente_nombre))
                                 <th>Cliente </th>

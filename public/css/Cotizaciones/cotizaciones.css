@@ -62,8 +62,10 @@ h1{
     width: 6rem;
     border: none;
     margin-right: 7rem;
-    font-weight: 600;
+    font-weight: 500;
     color: black;
+    border-radius: 8px;
+    text-transform: uppercase;
 }
 
 .modal-footer .btn-primary:hover{
@@ -75,8 +77,10 @@ h1{
     width: 6rem;
     border: none;
     margin-right: 1rem;
-    font-weight: 600;
+    font-weight: 500;
     color: black;
+    border-radius: 8px;
+    text-transform: uppercase;
 }
 
 .modal-footer .btn-secondary:hover{
@@ -91,7 +95,7 @@ h1{
     margin-bottom: 1%;
     font-style: normal;
     font-weight: lighter;
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 0.3%;
 }
 
@@ -113,7 +117,7 @@ a:hover{
 
 .button{
     background-color: #ffa500;
-    border-radius: 10px;
+    border-radius: 8px;
     font-weight: normal;
     font-style: normal;
     font-weight: lighter;
@@ -129,10 +133,11 @@ a:hover{
     background-color: #EA411D;
     border: none;
     font-size: 1.20rem;
-    font-weight: 600;
+    font-weight: 500;
     width: 90%;
     color: black;
     border-radius: 10px;
+    text-transform: uppercase;
 }
 
 .buttonDos:hover{
@@ -143,9 +148,10 @@ a:hover{
 
 .buttonUno{
     font-size: 1.20rem;
-    font-weight: 600;
+    font-weight: 500;
     width: 90%;
     border-radius: 10px;
+    text-transform: uppercase;
 }
 
 .buttonUno:disabled{
@@ -155,9 +161,9 @@ a:hover{
 
 .buttonRegresar{
     font-size: 1.20rem;
-    font-weight: 600;
+    font-weight: 500;
     background-color: #ffa500;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .buttonRegresar:hover{
@@ -182,4 +188,8 @@ a:hover{
 .inputValidate span{
     font-size: 15px;
     color: gray;
+}
+
+.borderBusqueda{
+    border-radius: 8px;
 }

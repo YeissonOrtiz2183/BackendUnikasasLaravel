@@ -28,7 +28,7 @@
         <label for="ciudad" class="col-sm-4 control-label" style="margin-right: 5.5%; margin-top: 3%; font-weight: 600">Codigo:</label>
 
         <div class="col-sm-7">
-                <select class="form-control text-white bg-dark" class="dropdown" name="codigo" id="codigo">
+                <select class="form-control text-white bg-dark borderBusqueda" class="dropdown" name="codigo" id="codigo">
                   <option value="null" selected disabled hidden>Filtrar</option>
                     @foreach ($cotizaciones as $cotizacion)
                         <option value="{{ $cotizacion->id }}">{{ $cotizacion->id}}</option>
@@ -41,7 +41,7 @@
         <label for="ciudad" class="col-sm-3 control-label" style="margin-top: 2%; font-weight: 600">Cliente:</label>
 
         <div class="col-sm-8">
-                <select class="form-control text-white bg-dark" name="cliente" id="cliente">
+                <select class="form-control text-white bg-dark borderBusqueda" name="cliente" id="cliente">
                   <option value="null" selected disabled hidden>Filtrar</option>
                     @foreach ($cotizaciones as $cotizacion)
                         <option value="{{ $cotizacion->nombres_cotizante }}">{{ $cotizacion->nombres_cotizante}} {{ $cotizacion->apellidos_cotizante}}</option>
@@ -53,7 +53,7 @@
     <div class="mb-2 row row row col-3">
       <label for="ciudad" class="col-sm-3 control-label" class="dropdown" style="margin-top: 2%; font-weight: 600">Fecha:</label>
       <div class="col-sm-8">
-              <input type="date"class="form-control text-white bg-dark" name="fecha" id="fecha1" style="color-scheme: dark;">
+              <input type="date"class="form-control text-white bg-dark borderBusqueda" name="fecha" id="fecha1" style="color-scheme: dark;">
           </div>
   </div>
 
@@ -61,7 +61,7 @@
       <label for="ciudad" class="col-sm-3 control-label" style="margin-top: 2%; font-weight: 600">Estado:</label>
 
       <div class="col-sm-8">
-              <select class="form-control text-white bg-dark" name="estado" id="estado">
+              <select class="form-control text-white bg-dark borderBusqueda" name="estado" id="estado">
                 <option value="null" selected disabled hidden>Filtrar</option>
                 <option value="Por responder">Por responder</option>
                 <option value="Respondida">Respondida</option>
