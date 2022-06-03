@@ -193,3 +193,49 @@ a:hover{
 .borderBusqueda{
     border-radius: 8px;
 }
+
+.small{
+    display: none;
+}
+
+.justify-content-sm-between{
+    justify-content: flex-start!important;
+}
+
+.pagination li{
+    border-radius: 10px;
+    margin-right: 4px!important;
+    font-weight: 600!important;
+}
+
+.pagination li span{
+    background-color: #ffa500!important;
+    color: #000000!important;
+    font-weight: 600;
+    border-radius: 10px!important;
+    border: none;
+}
+
+.pagination a{
+    background-color: #ffa500!important;
+    color: #fff!important;
+    font-weight: 600;
+    border-radius: 10px!important;
+    border: none;
+}
+
+@media(max-width: 1366px){
+    .divPrueba .navLateral {
+        margin-top: 2.0%;
+    }
+}
+
+@media(max-width: 1920px){
+    .navLateral {
+        margin-top: 1.9%;
+    }
+}
+
+.global{
+    overflow-x: hidden;
+}

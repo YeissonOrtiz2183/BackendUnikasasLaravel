@@ -133,26 +133,8 @@
               </svg></b></button>@endif</div>
 
             @endforeach
-            <div style="margin-bottom: 2%"></div>
           </div>
         </div>
-
-          {{-- <div class="container row g-10" style="margin-bottom: 1.5%; margin-top: 1.5%; width: 100%">
-              <div class="row gap-10" style="margin: 0 100px; justify-content: center; justify-items: center">
-                  <div class="col-3"></div>
-                <div class="col-3">
-                  <a href="{{ url('/exportPdfCotizaciones') }}"><button style="justify-content: center;" type="button" class="btn btn-lg button" data-bs-toggle="popover" title="Click para ver el reporte en formato pdf o excel" data-bs-content="And here's some amazing content. It's very engaging.Right?" style="font-size: 1.20rem; font-weight: 600">Reporte PDF</button></a>
-                </div>
-                <div class="col-3">
-                  <a href="{{ url('/cotizaciones/create') }}"><button style="justify-content: center;"  type="button" class="btn btn-lg button" data-bs-toggle="popover" title="Click para ver el reporte en formato pdf o excel" data-bs-content="And here's some amazing content. It's very engaging.Right?" style="font-size: 1.20rem; font-weight: 600">Crear Cotización</button></a>
-                </div>
-                <div class="col-3">
-                  <div class="col-3"></div>
-                </div>
-              </div>
-          </div>
-        </div>
-        <br> --}}
         <!-- Modal eliminar cotizacion -->
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 28vh">
           <div class="modal-dialog">
@@ -178,6 +160,9 @@
           </div>
         </div>
         </div>
+      </div>
+      <div style="display: inline flex; width: 70%; margin: 0 auto; justify-content: flex-start!important; margin-left: 20%">
+          <p style="display: inline flex; justify-content: flex-start!important;">{{ $cotizaciones->links() }}</p>
       </div>
   </body>
   </html>

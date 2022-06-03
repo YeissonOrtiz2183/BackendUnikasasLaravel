@@ -73,7 +73,7 @@
 
                     @endforeach
 
-                    {{-- {{ $eventos->links() }} --}}
+                    <p>{{ $eventos->links() }}</p>
 
                     </div>
                 </main>

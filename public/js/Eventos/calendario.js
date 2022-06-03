@@ -19,7 +19,7 @@ if(meshoy < 10){
 fechaInicial = annohoy+'-'+meshoyModif+'-'+'01';
 document.getElementById("fecha").value = fechaInicial;
 
-fechaFinal = annohoy+'-'+meshoyModif+'-'+'31';
+fechaFinal = annohoy+'-'+meshoyModif+'-'+'30';
 document.getElementById("fechaDos").value = fechaFinal;
 
 // Elementos del DOM: en cabecera de calendario
