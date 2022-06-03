@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('ciudad_cotizante');
             $table->string('ubicacion_cotizante');
             $table->date('fecha_cotizacion');
-            $table->string('comentarios_cotizacion');
+            $table->string('comentarios_cotizacion')->nullable();
             $table->string('estado_cotizacion');
 
             $table->timestamps();

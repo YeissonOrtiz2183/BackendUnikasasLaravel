@@ -239,3 +239,17 @@ a:hover{
 .global{
     overflow-x: hidden;
 }
+
+.contenedorPaginacion{
+    display: inline flex; 
+    width: 70%; 
+    margin: 0 auto; 
+    justify-content: 
+    flex-start!important; 
+    margin-left: 20%
+}
+
+.parrafoPaginacion{
+    display: inline flex; 
+    justify-content: flex-start!important;
+}

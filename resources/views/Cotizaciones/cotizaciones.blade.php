@@ -161,8 +161,8 @@
         </div>
         </div>
       </div>
-      <div style="display: inline flex; width: 70%; margin: 0 auto; justify-content: flex-start!important; margin-left: 20%">
-          <p style="display: inline flex; justify-content: flex-start!important;">{{ $cotizaciones->links() }}</p>
+      <div class="contenedorPaginacion">
+          <p class="parrafoPaginacion">{{ $cotizaciones->links() }}</p>
       </div>
   </body>
   </html>
