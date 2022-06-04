@@ -154,7 +154,7 @@
                                 </div>
                                 <div class="campo">
                                     <label>Estado:</label>
-                                    <input type="text" name="estado_actividad">
+                                    <input type="text" name="estado_actividad" value="ejecucion" readonly>
                                 </div>
                                 <div class="botones">
                                     <input class="save" type="submit" value="Crear actividad" id="save"></input>

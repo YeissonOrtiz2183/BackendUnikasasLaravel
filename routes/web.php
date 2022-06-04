@@ -45,16 +45,18 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\notificaciones;
 
 Route::resource('proyectos', ProyectoController::class)->middleware('auth')->middleware('proyectos');
 Route::get('proyectos/search/{estado}', [ProyectoController::class, 'index'])->middleware('auth')->middleware('proyectos');
 Route::resource('productos', ProductoController::class)->middleware('auth');
 Route::resource('actividades', ActividadController::class)->middleware('auth');
-Route::resource('usuarios', UserController::class)->middleware('auth');
-Route::resource('roles', RolController::class)->middleware('auth');
-Route::resource('auditoria', AuditController::class)->middleware('auth');
+Route::resource('usuarios', UserController::class)->middleware('auth')->middleware('usuarios');
+Route::resource('roles', RolController::class)->middleware('auth')->middleware('roles');
+Route::resource('auditoria', AuditController::class)->middleware('auth')->middleware('auditoria');
 Route::get('index', [LoginController::class, 'index']);
 Route::post('login', [LoginController::class, 'authenticate']);
 Route::post('logout', [LoginController::class, 'logout']);
+Route::get('notificaciones', [notificaciones::class, 'makeNotifications']);
 
 ?>

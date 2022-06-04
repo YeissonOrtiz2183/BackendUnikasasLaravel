@@ -39,11 +39,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Privilegio::create([
-            'nombre_privilegio' => 'Consultar Rols'
+            'nombre_privilegio' => 'Consultar roles'
         ]);
 
         Privilegio::create([
-            'nombre_privilegio' => 'Administrar Rols'
+            'nombre_privilegio' => 'Administrar roles'
         ]);
 
         Privilegio::create([

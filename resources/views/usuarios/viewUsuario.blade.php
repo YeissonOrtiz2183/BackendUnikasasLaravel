@@ -23,7 +23,7 @@
             <line x1="5" y1="12" x2="11" y2="6" />
           </svg>
         </a>
-    <h1 class="titleModule">Mi perfil</h1>
+    <h1 class="titleModule">Perfil</h1>
     <div class="uno">
         <div class="info-usuario">
         <svg xmlns="http://www.w3.org/2000/svg" class="foto-usuario" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -47,8 +47,12 @@
 
         </div>
         <div class="botones">
+            @if($isUserAdmin || $isMe)
             <a href="{{ url('usuarios/' .$usuario->id. '/edit') }}" class="button-uno">Modificar información</a>
+            @endif
+            @if($isMe)
             <a href="#" class="button-dos">Cerrar sesión</a>
+            @endif
         </div>
         </div>
     </div>

@@ -28,9 +28,11 @@
             <div class= "uno">
             <div class="container">
                 <aside>
+                    @if($isAdmin)
                     <div class="button">
                         <a class="buttonCreateProject" href="{{ url('roles/create') }}">Crear rol</a>
                     </div>
+                    @endif
                 </aside>
                 <div class="usuarios">
                     @foreach ($roles as $rol)
@@ -52,8 +54,7 @@
                     </section>
                     @endforeach
                 </div>
-            </div>
-            <a href="{{ url('usuarios') }}">
+                <a href="{{ url('usuarios') }}">
                 <aside class="roles flex alinear-derecha">
                     <div class="roles-icono">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icono" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -66,6 +67,7 @@
                     <h3 class="rol">Usuarios</h3>
                 </aside>
             </a>
+            </div>
             </div>
         </main>
     </body>

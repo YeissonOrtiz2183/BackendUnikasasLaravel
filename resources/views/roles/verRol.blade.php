@@ -45,9 +45,11 @@
             </ul>
 
         </div>
+            @if($isAdmin)
             <div class="botones modificar">
             <a href="{{ url('roles/' .$rol->id. '/edit') }}" class="button-uno">Modificar rol</a>
             </div>
+            @endif
         </div>
 </a>
     </div>

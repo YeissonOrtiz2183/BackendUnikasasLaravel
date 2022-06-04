@@ -59,14 +59,15 @@
                 @csrf {{-- token de seguridad para el formulario  --}}
                     <button type="submit">Cerrar sessión</button>
                 </form>
+
             </div>
         </section>
         <section class="modalLayout hidden">
             <div class="modalNotifications">
                 <ul>
-                    <li>Hay 20 cotizaciones nuevas que necesitan una respuesta</li>
-                    <li>2 proyectos han avanzado en la etapa de etapa</li>
-                    <li>Hoy tienes 3 reuniones planeadas</li>
+                    @foreach ($notificaciones as $notificacion)
+                        <li>Hay {{ $notificacion['cantidad'] }} {{ $notificacion['tipo'] }} pendientes</li>
+                    @endforeach
                 </ul>
             </div>
         </section>

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class eventosMiddleware
+class auditMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,29 +16,29 @@ class eventosMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-
         $user = \Auth::user();
         if($user){
-            $email = $request->user()->email;
-
-            $eventos = \App\Models\Evento::where('invitados_evento', 'like', '%'.$email.'%')->get();
 
             $rol = $request->user()->rol_id;
-
             $privilegios = \DB::table('rol_privilegios')
                 ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
                 ->select('privilegios.nombre_privilegio')
                 ->where('rol_privilegios.rol_id', '=', $rol)
                 ->get();
 
-            if (count ($eventos) > 0 || $privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')) {
+            $isAdmin = false;
+
+            if ($privilegios->contains('nombre_privilegio', 'Consultar auditoria')) {
+                $isAdmin = true;
+            }
+
+            if ($isAdmin) {
                 return $next($request);
-            }else{
+            } else {
                 return redirect()->back();
             }
         }else{
             return redirect('index');
         }
-
     }
 }

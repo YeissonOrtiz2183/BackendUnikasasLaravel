@@ -14,7 +14,7 @@
     <section class="modal" style="display: grid;">
         <div class="modal__content modalActivity">
             <div class="iconClose">
-                <a href="{{ url('proyectos/search/activo') }}"><span class="material-icons closeIcon">highlight_off</span></a>
+                <a onclick="history.back()"><span class="material-icons closeIcon">highlight_off</span></a>
             </div>
             <div class="modal__content--contenedor">
                 <h2>{{ $actividad->nombre_actividad }}</h2>
@@ -47,7 +47,7 @@
 
     <!-- modales -->
     <section class="modal hidden" style="background: #000;">
-        <div class="modal__content modalActivity" style="height: 250px; margin-top: 250px">
+        <div class="modal__content modalActivity" style="height: 250px;">
             <div class="iconClose">
                 <span class="material-icons closeIcon" onclick="history.back()">highlight_off</span>
             </div>
@@ -56,6 +56,7 @@
                     @csrf {{-- token de seguridad para el formulario  --}}
                     {{ method_field('PATCH') }}
                     <h2>¿Desea dar por finalizada la actividad?</h2>
+                    <input type="text" name="nombre_actividad" value="{{ $actividad->nombre_actividad }}" readonly style="display: none;">
                     <input type="text" name="estado_actividad" value="finalizada" readonly style="display: none;">
                     <div class="botones">
                         <button type="submit">CONFIRMAR</button>

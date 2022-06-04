@@ -25,15 +25,16 @@
             <div class= "lista-usuarios">
             <h3>Todos los usuarios</h3>
             </div>
-            <div class= "uno">
             <div class="container">
                 <aside>
+                    @if($isUserAdmin)
                     <div class="button">
                         <a class="buttonCreateProject" href="{{ url('usuarios/create') }}">Registrar usuario</a>
                     </div>
                     <div class="button">
                         <a class="buttonCreateReport" href="5reporteUsuarios.html">Crear reporte</a>
                     </div>
+                    @endif
                 </aside>
                 <div class="usuarios">
                     @foreach($usuarios as $usuario)
@@ -53,7 +54,7 @@
                         </section>
                     @endforeach
                 </div>
-            </div>
+                @if($isRolAdmin || $canViewRoles)
                 <a href="{{ url('roles') }}">
                     <aside class="roles">
                         <div class="roles-icono foto">
@@ -69,6 +70,7 @@
                         <h3 class="rol">Roles</h3>
                     </aside>
                 </a>
+                @endif
             </div>
         </main>
     </body>

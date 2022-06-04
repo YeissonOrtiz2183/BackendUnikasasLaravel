@@ -49,8 +49,8 @@
             </fieldset>
         </form>
         <div class="confirmar">
-        <a href="6inicioRoles.html" class="button-uno">Cancelar</a>
-        <button type="submit" form="editForm" class="button-dos">Confirmar</button>
+        <button type="submit" form="editForm" class="button-uno">Confirmar</button>
+        <a href="{{ url('roles/' .$rol->id) }}" class="button-dos">Cancelar</a>
         </div>
     </main>
 </body>
