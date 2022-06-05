@@ -4,8 +4,11 @@
 
 body{
     margin: 0px;
-    width: 89%;
+}
 
+.main{
+    margin-top: 60px;
+    margin-left: 250px;
 }
 
 h1{
@@ -31,14 +34,18 @@ h1{
   display: flex;
   justify-content: space-evenly;
   margin-top: 40px;
+  width: 60%;
+  margin-bottom: 20px;
 }
 
 a{
-
     text-decoration: none;
     color: black;
     position: relative;
-    top:1rem;}
+    top:1rem;
+    cursor: pointer;
+    font-weight: bold;
+}
 
 .image{
     height: 9rem;
@@ -63,6 +70,7 @@ a{
     height: 21rem;
     align-items: center;
 }*/
+
 svg{
     margin: 0%;
     position: relative;
@@ -188,19 +196,14 @@ img {vertical-align: middle;}
     width: 100%;
 }
 
-#dataProduct{
-    float: right;
-}
-
-
 .division{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, 1fr);
     place-items: center;
     border: 2px solid;
     border-radius: 10px;
-    row-gap: 10px;
+    margin-bottom: 20px;
+    margin-right: 20px;
 }
 
 .showImages{
@@ -210,11 +213,19 @@ img {vertical-align: middle;}
     margin-top: 30px;
 }
 
-.dataProducto tbody tr{
-    border: 2px solid black;
+.dataProduct{
+    margin-top: 30px;
+    width: 60%;
 }
 
-.dataProduct p{
-    border: 2px solid;
+.dataProduct th{
+    background: orange;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.dataProduct td{
+    padding: 10px;
+    border: 1px solid #b3b4b6;
 }
 

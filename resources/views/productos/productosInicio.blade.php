@@ -16,7 +16,6 @@
  <main>
         <h1>PRODUCTOS</h1>
         <div class="label">
-
             <form class="searchForm" action="{{ url('productos') }}">
                 <label>Buscar Producto:</label>
                 <input type="text" name="search" class="searchBar">

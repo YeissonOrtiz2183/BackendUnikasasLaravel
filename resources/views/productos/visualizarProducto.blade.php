@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <section>
+    <section class="main">
         <h1>{{ $producto->nombre_producto }}</h1>
 
         <div class="division">
@@ -59,6 +59,11 @@
                         </div>
                 </div> -->
                 <table class="dataProduct">
+                    <thead>
+                        <th>INFORMACION</th>
+                        <th>PRODUCTO</th>
+                    </thead>
+
                         <tr>
                             <td>{{ $producto->id }}</td>
                             <td>{{ $producto->nombre_producto }}</td>
@@ -83,7 +88,7 @@
                         </div>
 
                         <div class="Eliminar">
-                            <a  href="#">ELIMINAR</a>
+                            <a href="{{url('productos')}}">REGRESAR</a>
                         </div>
                     </div>
                 <!--</div>-->

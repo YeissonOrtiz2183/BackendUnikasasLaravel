@@ -47,11 +47,11 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $datosProducto=request()->except('_token');
-
+        dd($datosProducto['images']);
         if($request->hasFile('foto_producto')){
             $datosProducto['foto_producto']=$request->file('foto_producto')->store('uploads', 'public');
-
         }
+
         Producto::insert($datosProducto);
         return response()->json($datosProducto);
 
@@ -97,7 +97,7 @@ class ProductoController extends Controller
         Producto::where('id', '=', $id)->update($datosProducto);
 
         $producto=Producto::findOrFail($id);
-        return view('productos.modificarProducto', compact('producto'));
+        return redirect('productos/'.$producto->id);
     }
 
     /**
