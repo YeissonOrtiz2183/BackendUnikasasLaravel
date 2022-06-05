@@ -7,13 +7,22 @@ body{
 }
 
 main{
-    margin-top: 60px;
-    margin-left: 100px;
+    width: 93%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 13px;
+    margin-left: auto;
+    margin-top: 52px;
 }
 
-@media screen and (min-width: 1400px){
+@media (min-width: 1400px){
     main{
-        margin-left: 150px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 52px;
+        margin-right: 0px;
+        margin-left: auto;
+        width: 93%;
     }
 }
 
@@ -160,6 +169,9 @@ svg{
 .prueba{
     display: flex;
     margin-top: 2rem;
+    width: 99%;
+    margin-right: 0;
+    margin-left: auto;
 }
 
 h2{
@@ -169,10 +181,10 @@ h2{
 
 .espacio{
     display: grid;
-   grid-template-columns: 1fr;
-   grid-template-rows: repeat(2,1fr);
-   place-items: center;
-  margin-bottom:auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2,1fr);
+    place-items: center;
+    margin-bottom:auto;
 }
 .iconos{
     display: flex;

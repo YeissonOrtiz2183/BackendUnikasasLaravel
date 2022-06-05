@@ -151,8 +151,8 @@ a{
     align-items: center;
 }
 .modal{
-    width: 50%;
-    height: 30%;
+    width: 750px;
+    height: 150px;
     background: white;
    /* overflow: hidden;*/
    border-radius: 20px;
@@ -168,7 +168,6 @@ a{
     display: flex;
     justify-content: center;
     justify-items: center;
-    margin: 5%;
     font-size: 20px;
 }
 .modal-botones{

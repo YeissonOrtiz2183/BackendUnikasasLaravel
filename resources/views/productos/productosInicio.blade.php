@@ -16,6 +16,28 @@
 <body>
     @section('content')
     <main>
+        <!--modal publicar-->
+        <section class="modal hidden">
+            <div class="modal__content">
+                <h2>¿Desea publicar el producto?</h2>
+                <div class="modal__content__buttons">
+                    <button class="modal__content__buttons__button">Publicar</button>
+                    <button class="modal__content__buttons__button">Cancelar</button>
+            </div>
+        </section>
+
+        <!--modal despublicar-->
+        <section class="modal hidden">
+            <div class="modal__content publicar">
+                <h2>¿Desea despublicar el producto?</h2>
+                <div class="modal__content__buttons">
+                    <button class="modal__content__buttons__button">Despublicar</button>
+                    <button class="modal__content__buttons__button">Cancelar</button>
+                </div>
+            </div>
+        </section>
+
+
         <h1>PRODUCTOS</h1>
         <div class="label">
             <form class="searchForm" action="{{ url('productos') }}">
@@ -24,53 +46,6 @@
                 <input type="submit" value="Buscar" class="send">
             </form>
         </div>
-        <!--modal despublicar-->
-        <div class="modalDespublicar ">
-            <div class="modal-containerDespublicar">
-                <h1>¿Desea despublicar el producto?</h1>
-                <input type="submit" class="despublicarAceptar" id="despublicarAceptar" value="Aceptar">
-
-                <div class="divCancelDespublicar">
-                <a href="">Cancelar</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="modalDosDespublicar">
-            <div class="modal-ContainerDosDespublicar">
-                <h1>El producto se ha despublicado</h1>
-                <input type="submit" name="" class="despublicarDosAceptar" id="despublicarDosAceptar" value="Aceptar">
-            </div>
-
-        </div>
-
-        <div class="modalPublicar">
-            <div class="modal-ContainerPublicar">
-                <h1>¿Desea publicar el producto?</h1>
-                <input type="submit" class="publicarAceptar" id="publicarAceptar" value="Aceptar">
-
-                <div class="divCancelPublicar">
-                    <a href="">Cancelar</a>
-                </div>
-            </div>
-        </div>
-
-
-    <div class="modalDosPublicar">
-        <div class="modal-ContainerDosPublicar">
-            <h1>El producto se ha publicado exitosamente</h1>
-            <div class="divAcepPublicar">
-                <a href="">Aceptar</a>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
 <!--Fin modal producto-->
         <div class="prueba">
             <div class="Botones">
@@ -83,7 +58,7 @@
             </div>
             </form>
 
-            <div class="MatrizProductos">
+            <div class="MatrizProductos main">
                 @foreach($productos as $producto)
                 <div class="caja">
                     <h2>{{$producto->nombre_producto}}</h2> <!--Casa 1-->
@@ -95,20 +70,24 @@
                             <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
                         </svg></a>
 
-                        <a href="">
+                        @if($producto->estado_Producto == 'Publicado')
+                        <a href="#" class="">
                         <svg class="bot1 x"xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                             <line x1="18" y1="6" x2="6" y2="18" />
                             <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg></a>
+                        @else
 
-                    </svg> </a>
-                        <svg  id="carrito"class="mCarOne carShop"xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <span id="publicar-button">
+                        <svg  id="carrito" class="mCarOne carShop"xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                             <circle cx="6" cy="19" r="2" />
                             <circle cx="17" cy="19" r="2" />
                             <path d="M17 17h-11v-14h-2" />
                             <path d="M6 5l14 1l-1 7h-13" />
-                        </svg>
+                        </svg></span>
+                        @endif
                     </div>
                 </div>
                 @endforeach
@@ -116,11 +95,7 @@
             </div>
         </div>
     </main>
+    <script src="{{ asset('js/productos/modales.js') }}"></script>
     @endsection
-   <!--<script src="{{asset('js/productos/modalP.js')}}"></script>-->
-   <!-- <script src="{{asset('js/productos/mProducto.js')}}"></script>-->
-   <!-- <script src="{{asset('js/productos/publicar.js')}}"></script>-->
-   <script src="{{asset('js/productos/modales.js')}}"></script>
-
 </body>
 </html>

@@ -1,200 +1,24 @@
-#despublicarAceptar{
-    height: 2rem;
-    width: 6rem;
-    background-color: #F78811;
-    border: none;
-    border-radius: 10px;
+.hidden{
+    display: none;
 }
 
-.divCancelDespublicar{
-
-    height: 2rem;
-    width: 6rem;
-
-    background-color:#EA411D;
-    border: none;
-    border-radius: 10px;
-
-}
-
-a{
-    text-decoration: none;
-    color: black;
-    text-align: center;
-}
-
-.modalDespublicar{
-
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    right: 0%;
-    bottom: 0%;
-    background-color:#111111bd;
-    display: flex;
-    opacity: 0;
-    pointer-events: none;
-}
-.modal--show{
-    opacity: 1;
-    pointer-events:unset ;
-}
-
-.modal-containerDespublicar{
-    width: 90%;
-    max-width: 600px;
-    max-height: 90%;
-    background-color: white;
-    margin: auto;
-    border-radius: 10px;
-    padding-inline-start: 3em 2.5em ;
+.visible{
     display: grid;
-    gap: 1em;
-    place-items: center;
-    grid-template-columns: 100%;
-}
-/*Modal despublicar dos*/
-
-#despublicarDosAceptar{
-    height: 2rem;
-    width: 6rem;
-    background-color: #F78811;
-    border: none;
-    border-radius: 10px;
+    place-content: center;
 }
 
-.modalDosDespublicar{
-
+.modal{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
     position: fixed;
-    top: 0%;
-    left: 0%;
-    right: 0%;
-    bottom: 0%;
-    background-color:#111111bd;
+    z-index: 2000;
+}
+
+.modal__content{
     display: flex;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.modalDespublicarDos--show{
-    opacity: 1;
-    pointer-events:unset ;
-}
-
-.modal-ContainerDosDespublicar{
-    width: 90%;
-    max-width: 600px;
-    max-height: 90%;
+    flex-direction: column;
+    align-items: flex-end;
     background-color: white;
-    margin: auto;
     border-radius: 10px;
-    padding-inline-start: 3em 2.5em ;
-    display: grid;
-    gap: 1em;
-    place-items: center;
-    grid-template-columns: 100%;
-}
-
-/*Modal Publicar*/
-
-#publicarAceptar{
-    height: 2rem;
-    width: 6rem;
-    background-color: #F78811;
-    border: none;
-    border-radius: 10px;
-}
-
-.divCancelPublicar{
-
-    height: 2rem;
-    width: 6rem;
-
-    background-color:#EA411D;
-    border: none;
-    border-radius: 10px;
-
-}
-
-a{
-    text-decoration: none;
-    color: black;
-    text-align: center;
-}
-
-.modalPublicar{
-
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    right: 0%;
-    bottom: 0%;
-    background-color:#111111bd;
-    display: flex;
-    opacity: 0;
-    pointer-events: none;
-}
-.modalPublicar--show{
-    opacity: 1;
-    pointer-events:unset ;
-}
-
-.modal-ContainerPublicar{
-    width: 90%;
-    max-width: 600px;
-    max-height: 90%;
-    background-color: white;
-    margin: auto;
-    border-radius: 10px;
-    padding-inline-start: 3em 2.5em ;
-    display: grid;
-    gap: 1em;
-    place-items: center;
-    grid-template-columns: 100%;
-}
-
-/*Modal Publicar dos*/
-.divAcepPublicar{
-
-    height: 2rem;
-    width: 6rem;
-    cursor: pointer;
-    background-color:#F78811;
-    border: none;
-    border-radius: 10px;
-
-}
-
-
-
-.modalDosPublicar{
-
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    right: 0%;
-    bottom: 0%;
-    background-color:#111111bd;
-    display: flex;
-    opacity: 0;
-    pointer-events:none;
-}
-
-.modalPublicarDos--show{
-    opacity: 1;
-    pointer-events:unset ;
-}
-
-.modal-ContainerDosPublicar{
-    width: 90%;
-    max-width: 600px;
-    max-height: 90%;
-    background-color: white;
-    margin: auto;
-    border-radius: 10px;
-    padding-inline-start: 3em 2.5em ;
-    display: grid;
-    gap: 1em;
-    place-items: center;
-    grid-template-columns: 100%;
 }

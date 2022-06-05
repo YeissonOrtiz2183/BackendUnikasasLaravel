@@ -113,8 +113,8 @@
             <div id="filtroBusqueda" class="inputdata">
                 <label for="" id="textPisos">Número de pisos:</label>
                 <select name="pisos_producto" id="selectPisos">
-                    <option value="1 piso"> 1 piso</option>
-                    <option value="2 pisos">2 pisos</option>
+                    <option value="1 Piso"> 1 piso</option>
+                    <option value="2 Pisos">2 pisos</option>
                 </select>
             </div>
             <div class="formL inputdata">
@@ -122,7 +122,6 @@
                 <select class="input-text" type="text" name="estado_producto" id="searchBar">
                     <option value="Activo">Activo</option>
                     <option value="Publicado">Publicado</option>
-                    <option value="Despublicado">Despublicado</option>
                 </select>
             </div>
             <div class="saveCancel">

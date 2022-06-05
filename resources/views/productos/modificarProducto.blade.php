@@ -1,3 +1,5 @@
+@extends('layouts.layout')
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,6 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <body>
+@section('content')
 <main>
 <h1>MODIFICAR PRODUCTO</h1>
 <form action="{{url('/productos/'.$producto->id)}}" id="formulary" method="post" enctype="multipart/form-data">
@@ -80,8 +83,8 @@
                 <div id="filtroBusqueda" class="inputdata">
                     <label for="" id="textMaterial">Tipo de material:</label>
                     <select name="material_producto" id="selectTipoMaterial">
-                        <option value="plaqueta">Plaqueta</option>
-                        <option value="bloquelon">Bloquelón</option>
+                        <option value="Plaqueta">Plaqueta</option>
+                        <option value="Bloquelon">Bloquelón</option>
                     </select>
                 </div>
 
@@ -96,11 +99,9 @@
 
                 <div class="formL inputdata">
                     <label class="labes" for="itemSearch">Estado actual:</label>
-                    <select class="input-text" type="text" name="estado_producto" id="searchBar" >
-                    <option value="publicado" select>Publicado</opcion>
-                    <option value="Activo" select>Activo</opcion>
-                    <option value="Despublicado" select>Despublicado</opcion>
-
+                    <select class="input-text" type="text" name="estado_producto" id="searchBar">
+                    <option value="Activo">Activo</opcion>
+                    <option value="Publicado">Publicado</opcion>
                     </select>
                 </div>
 
@@ -148,9 +149,9 @@
         </div>
     </div>
     </form>
-</main>
-
     <script src="{{asset('js/productos/modificarProducto.js')}}"></script>
     <script src="../modificarProducto2/js/modificarProducto.js"></script>
+</main>
+@endsection
 </body>
 </html>
