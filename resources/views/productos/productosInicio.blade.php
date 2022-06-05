@@ -5,29 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edggit checkout git 6c8364aa7e6dd2b174cae3c3162500a69c6a4280e">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNIKASAS</title>
-    <link rel="stylesheet" href="{{asset('css/productosCss/modalP.css')}}">
+
+   <!-- <link rel="stylesheet" href="{{asset('css/productosCss/modalP.css')}}">
     <link rel="stylesheet" href="{{asset('css/productoCss/publicar.css')}}">
-    <link rel="stylesheet" href="{{asset('css/productosCss/mPublicarProducto.css')}}">
+    <link rel="stylesheet" href="{{asset('css/productosCss/mPublicarProducto.css')}}">-->
     <link rel="stylesheet" href="{{ asset('css/productosCss/productosInicio.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/productosCss/modales.css') }}">
 </head>
 <body>
  <main>
         <h1>PRODUCTOS</h1>
         <div class="label">
-            <form action="" >
-            @csrf
-            <label for=""></label>
-            <input type="text" placeholder="Buscar producto" name="buscarpor" >
-            <svg class="search"xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+
+        <form class="searchForm" action="{{ url('productos') }}">
+                <label>Buscar Producto:</label>
+                <input type="text" name="search" id="searchBar">
+                <input type="submit" value="Buscar" id="send">
+            </form>
+          <!--  <form action="{{ url('productos') }}">-->
+
+            <!--<label for=""></label>-->
+           <!-- <input type="text" placeholder="Buscar producto" name="search"  -->
+            <!--<svg class="search"xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <circle cx="10" cy="10" r="7" />
                 <line x1="21" y1="21" x2="15" y2="15" />
-              </svg>
+              </svg>-->
 
 
-              <input type="submit" value="Enviar" class="bottonsearch">
+             <!-- <input type="submit" value="Buscar" class="bottonsearch">-->
 
-              <div id="filtroBusqueda">
+              <!--<div id="filtroBusqueda">
                 <label for="" id="textSelectTipoCasas">Tipo de casa: </label>
                     <select name="tipo_producto" id="selectTipoCasas">
 
@@ -39,24 +47,24 @@
                         <option value="bodega">Bodega</option>
                         <option value="aula">Aula</option>
                     </select>
-                </div>
+                </div>-->
 
-                <div id="filtroBusqueda">
+               <!-- <div id="filtroBusqueda">-->
                        <!-- <label for="" id="textMaterial">Tipo de material:</label>-->
-                        <select name="material_producto" id="selectTipoMaterial">
+                        <!--<select name="material_producto" id="selectTipoMaterial">
                             <option value="plaqueta">Plaqueta</option>
                             <option value="bloquelon">Bloquelón</option>
                         </select>
-                </div>
+                </div>-->
 
-                <div id="filtroBusqueda">
+               <!-- <div id="filtroBusqueda">-->
                    <!-- <label for="" id="textPisos">Número de pisos:</label> -->
-                    <select name="pisos_producto" id="selectPisos">
+                   <!-- <select name="pisos_producto" id="selectPisos">
                         <option value="1_piso"> 1 piso</option>
                         <option value="2_pisos">2 pisos</option>
                     </select>
-                </div>
-            </form>
+                </div>-->
+            <!--</form>-->
         </div>
 
 
@@ -64,66 +72,46 @@
 
 
         </div>
-        <!--modal-->
-        <div class="modal-container">
-            <div class="modal modal-close">
-            <div class="modal-textos">
+        <!--modal despublicar-->
+        <div class="modalDespublicar ">
+            <div class="modal-containerDespublicar">
                 <h1>¿Desea despublicar el producto?</h1>
-            </div>
-                <div class="modal-botones">
-                    <button id="aceptar">ACEPTAR</button>
-                    <div class="modal-botones">
-                    <button id="cancelar">CANCELAR</button>
-                    </div>
+                <input type="submit" class="despublicarAceptar" id="despublicarAceptar" value="Aceptar">
+
+                <div class="divCancelDespublicar">
+                <a href="">Cancelar</a>
                 </div>
             </div>
         </div>
 
-        <div class="segunda-modal">
-            <div class="contenedor-modales">
-            <div class="modal-salir">
-                <div class="irse">
-                    <button id="irse">X</button>
+        <div class="modalDosDespublicar">
+            <div class="modal-ContainerDosDespublicar">
+                <h1>El producto se ha despublicado</h1>
+                <input type="submit" name="" class="despublicarDosAceptar" id="despublicarDosAceptar" value="Aceptar">
+            </div>
+
+        </div>
+
+        <div class="modalPublicar">
+            <div class="modal-ContainerPublicar">
+                <h1>¿Desea publicar el producto?</h1>
+                <input type="submit" class="publicarAceptar" id="publicarAceptar" value="Aceptar">
+
+                <div class="divCancelPublicar">
+                    <a href="">Cancelar</a>
                 </div>
-            <div class="texto-Modal">
-                <h1>¡El producto se despublico exitosamente!</h1>
             </div>
-            <div class="botones-modal">
-                <div class="centrar">
-                <button id="confirmar">ACEPTAR</button>
-            </div>
-            </div>
+        </div>
+
+
+    <div class="modalDosPublicar">
+        <div class="modal-ContainerDosPublicar">
+            <h1>El producto se ha publicado exitosamente</h1>
+            <div class="divAcepPublicar">
+                <a href="">Aceptar</a>
             </div>
         </div>
     </div>
-
-    <!--Modal despublicar-->
-
-<!--Modal publicar producto-->
-
-<div class="cont containerOne">
-
-    <div class="modal">
-        <h1>¿Desea publicar el producto?</h1>
-
-        <div class="buttons">
-            <button  class="button aceptar">ACEPTAR</button>
-            <button  class="button cancelar">CANCELAR</button>
-        </div>
-    </div>
-</div>
-
-
-<div class="cont containertwo">
-
-    <div class="modaltwo">
-        <h1>!El producto se publico exitosamente!</h1>
-
-        <div class="botonestwo">
-            <button  class="buttontwo aceptartwo">ACEPTAR</button>
-        </div>
-    </div>
-</div>
 
 
 
@@ -176,7 +164,10 @@
             </div>
         </div>
     </main>
-    <script src="{{asset('js/productos/modalP.js')}}"></script>
-    <script src="modalpublicar/publicar.js"></script>
+   <!--<script src="{{asset('js/productos/modalP.js')}}"></script>-->
+   <!-- <script src="{{asset('js/productos/mProducto.js')}}"></script>-->
+   <!-- <script src="{{asset('js/productos/publicar.js')}}"></script>-->
+   <script src="{{asset('js/productos/modales.js')}}"></script>
+
 </body>
 </html>

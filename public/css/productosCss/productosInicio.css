@@ -246,3 +246,20 @@ h2{
     display: flex;
     justify-content: center;
 }
+
+#searchBar{
+    width: 50%;
+    padding: 5px;
+    border-radius: 10px;
+    border-color: black;
+
+}
+
+#send{
+    height: 30px;
+    background: orange;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    width: 60px;
+}

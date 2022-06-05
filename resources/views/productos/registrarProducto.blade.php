@@ -153,7 +153,7 @@
         </form>
     </div>
     </form>
-    <script src="ValidacionModificarProducto.js"></script>
+    <script src="{{asset('js/productos/validateProductos.js')}}"></script>
     <script src="../modificarProducto2/js/modificarProducto.js"></script>
 </body>
 </html>
