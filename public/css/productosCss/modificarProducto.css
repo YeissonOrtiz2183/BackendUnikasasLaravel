@@ -2,8 +2,9 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-body{
-    size: 98%;
+main{
+    margin-top: 60px;
+    margin-left: 200px;
 }
 
 h1{
@@ -11,38 +12,43 @@ h1{
 }
 
 img{
-    height: 9rem;
-    width: 14rem;
-
-
+    width: 100%;
+    max-width: 360px;
 }
+
 section{
     border: solid 2px;
     border-radius: 10px;
     padding: 0px 20px;
-    width: 15rem;
-
+    margin-bottom: 20px;
 }
 
-.Matriz{
-   /* margin-top: 1rem;*/
-}
 h2{
     text-align: center;
 }
 .plus{
     background-color:#F78811;
     border-radius: 50%;
-
 }
 
 aside{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     border: solid 2px;
     border-radius: 10px;
     margin-left: auto;
     margin-right: auto;
     height: 30rem;
+    width: 95%;
+    row-gap: 10px;
 }
+
+.inputdata{
+    margin-right: 150px;
+    align-items: center;
+}
+
 form{
    /* margin: 1rem;*/
    display: inline-block;
@@ -71,56 +77,15 @@ a{
 
 }
 
-.saveCancel{
-    display:flex;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-.divSave{
-    width:10rem;
-    height: 2rem;
-    border-radius: 5px;
-    background-color:#F78811;
-    border: none;
-
-}
-.divSave a{
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-    text-decoration: none;
-    color: black;
-    padding: 5px;
-}
-.divCancel{
-    width: 10rem;
-    height: 2rem;
-    border-radius: 5px;
-    background-color: #EA411D;
-
-}
-.divCancel a{
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-    text-decoration: none;
-    color: black;
-    padding: 5px;
-}
-
 .Matriz{
     display: flex;
+    flex-direction: column;
+    width: 100%;
 }
-.MatrizProductos{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 200px;
-}
-.imagenSection{
 
- margin: auto;
+.imagenSection{
+    margin: auto;
+    width: 40%;
 }
 
 .imagenSection h2{
@@ -161,6 +126,11 @@ a{
     justify-content: end;
 }
 
+#filtroBusqueda{
+    display: flex;
+    justify-content: end;
+}
+
 .modal-container{
     visibility: hidden;
     position:fixed;
@@ -176,7 +146,7 @@ a{
 }
 .modal{
     width: 50%;
-    height: 40%;
+    height: 30%;
     background: white;
    /* overflow: hidden;*/
    border-radius: 20px;
@@ -293,8 +263,7 @@ a{
 }
 
 #formulary{
-    display: grid;
-    grid-template-rows: repeat(4, 1fr);
+    display: grid
 }
 
 
@@ -312,7 +281,7 @@ a{
 }
 
 .spans{
-
+    display: none;
     font-size: 12px;
     color: gray;
     margin-right: auto;
@@ -343,15 +312,17 @@ a{
 #selectTipoCasas{
     height: 2rem;
     border-radius: 10px;
-    width: 40rem;
-    margin-right: 1rem;
+    width: 40.5rem;
     margin-left: 1rem;
-    margin-bottom: 1rem;
     border: 2px solid;
-
 }
 
-
+#searchBar{
+    height: 2rem;
+    border-radius: 10px;
+    width: 40.5rem;
+    border: 2px solid;
+}
 
 #textSelectTipoCasas{
     margin-left: 7rem;
@@ -360,9 +331,8 @@ a{
 #selectTipoMaterial{
     height: 2rem;
     border-radius: 10px;
-    width: 40rem;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
+    width: 40.5rem;
+    margin-left: 1rem;
     border: 2px solid;
 }
 
@@ -373,9 +343,8 @@ a{
 #selectPisos{
     height: 2rem;
     border-radius: 10px;
-    width: 40rem;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
+    width: 40.5rem;
+    margin-left: 1rem;
     border: 2px solid;
 }
 
@@ -386,3 +355,84 @@ a{
 ::-webkit-input-placeholder {
     text-align: center;
  }
+
+
+@media screen and (min-width: 1400px) {
+    .Matriz{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        column-gap: 20px;
+    }
+
+    .inputdata{
+        margin-right: 150px;
+    }
+
+    .inputdata input{
+        width: 45rem;
+    }
+
+    #selectTipoCasas, #selectTipoMaterial, #selectPisos, #searchBar{
+        width: 45.5rem;
+    }
+
+    aside{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border: solid 2px;
+        border-radius: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 30rem;
+        width: 70%;
+        row-gap: 10px;
+    }
+
+    section{
+        height: 30rem;
+        width: 30%;
+    }
+
+    .imagenSection{
+        margin: 0;
+        width: 100%;
+    }
+}
+
+.saveCancel{
+    display:flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.divSave{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F78811;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    border-radius: 10px;
+    border: none;
+}
+
+.divCancel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EA411D;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.saveCancel a, input[type=submit]{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Producto;
 
 class ProductoController extends Controller
@@ -15,9 +16,15 @@ class ProductoController extends Controller
     public function index(Request $request)
     {
 
-        $productos = Producto::all();
+       if($request->has('search')){
+            $productos = Producto::where('nombre_producto', 'LIKE', '%'.$request->search.'%')
+            ->orWhere('id', '=', $request->search)
+            ->orWhere('precio_producto', '=', $request->search)
+            ->paginate(30);
 
-
+        }else{
+            $productos = Producto::All();
+        }
         return view('productos.productosInicio', compact('productos'));
     }
 
@@ -40,11 +47,11 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $datosProducto=request()->except('_token');
-
+        dd($datosProducto['images']);
         if($request->hasFile('foto_producto')){
             $datosProducto['foto_producto']=$request->file('foto_producto')->store('uploads', 'public');
-
         }
+
         Producto::insert($datosProducto);
         return response()->json($datosProducto);
 
@@ -90,7 +97,7 @@ class ProductoController extends Controller
         Producto::where('id', '=', $id)->update($datosProducto);
 
         $producto=Producto::findOrFail($id);
-        return view('productos.modificarProducto', compact('producto'));
+        return redirect('productos/'.$producto->id);
     }
 
     /**

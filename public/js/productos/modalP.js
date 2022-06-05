@@ -19,13 +19,13 @@ for (let l = 0; l < abrir.length; l++) {
     abrir[l].addEventListener('click', () => {
         modalC.style.visibility="visible"
     })
-    
+
 }
 for (let l = 0; l < carrito.length; l++) {
     carrito[l].addEventListener('click',function(){
         carritoM.style.visibility="visible"
     })
-    
+
 }
 Daceptar.addEventListener('click',function(){
     Mtwo.style.visibility="visible";
@@ -53,12 +53,12 @@ cancelar.addEventListener('click',function(){
 
 
 confirmar.addEventListener("click",function(){
-   
+
     segunda.style.visibility="hidden";
 })
 
 irse.addEventListener("click",function(){
-    
+
     segunda.style.visibility="hidden";
 })
 
@@ -68,10 +68,15 @@ irse.addEventListener("click",function(){
 // });
 
 aceptar.addEventListener("click",function(){
-  
+
     segunda.style.visibility="visible";
     modalC.style.visibility="hidden";
 })
+
+
+
+
+
 
 
 

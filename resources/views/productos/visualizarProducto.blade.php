@@ -9,13 +9,10 @@
 </head>
 <body>
 
-    <section>
-        <h1>VISUALIZAR PRODUCTO</h1>
+    <section class="main">
+        <h1>{{ $producto->nombre_producto }}</h1>
 
         <div class="division">
-
-
-
             <div class="showImages">
                 <img src="{{ asset('storage/' .$producto->foto_producto) }}" alt="" id="imageProduct">
             </div>
@@ -61,26 +58,38 @@
                           <span class="dot" onclick="currentSlide(3)"></span>
                         </div>
                 </div> -->
-                <div class="dataProduct">
-                    <p>id : {{$producto->id}}</p>
-                    <p>Nombre del producto: {{$producto->nombre_producto}}<p>
-                    <p>Descripcion:{{$producto->descripcion_producto}}</p>
-                    <p>Precio:{{$producto->precio_producto}}</p>
-                    <p>Estado del producto:{{$producto->estado_producto}}</p>
-                </div>
+                <table class="dataProduct">
+                    <thead>
+                        <th>INFORMACION</th>
+                        <th>PRODUCTO</th>
+                    </thead>
 
-
-
-
-
-
+                        <tr>
+                            <td>{{ $producto->id }}</td>
+                            <td>{{ $producto->nombre_producto }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ $producto->descripcion_producto }}</td>
+                            <td>{{ $producto->precio_producto }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ $producto->tipo_producto }}</td>
+                            <td>{{ $producto->material_producto }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ $producto->pisos_producto }}</td>
+                            <td>{{ $producto->estado_Producto }}</td>
+                        </tr>
+                </table>
                 <!--<div class="botones">-->
-                    <div class="Modificar">
-                        <a href="{{url('productos/'.$producto->id.'/edit')}}">MODIFICAR</a>
-                    </div>
+                    <div class="botones">
+                        <div class="Modificar">
+                            <a href="{{url('productos/'.$producto->id.'/edit')}}">MODIFICAR</a>
+                        </div>
 
-                    <div class="Eliminar">
-                        <a  href="#">ELIMINAR</a>
+                        <div class="Eliminar">
+                            <a href="{{url('productos')}}">REGRESAR</a>
+                        </div>
                     </div>
                 <!--</div>-->
 

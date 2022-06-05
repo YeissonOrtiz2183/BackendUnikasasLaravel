@@ -31,6 +31,9 @@ h2{
 }
 
 aside{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     border: solid 2px;
     border-radius: 10px;
     margin-left: auto;
