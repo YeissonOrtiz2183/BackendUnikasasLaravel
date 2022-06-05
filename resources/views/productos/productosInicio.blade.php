@@ -17,60 +17,11 @@
         <h1>PRODUCTOS</h1>
         <div class="label">
 
-        <form class="searchForm" action="{{ url('productos') }}">
+            <form class="searchForm" action="{{ url('productos') }}">
                 <label>Buscar Producto:</label>
-                <input type="text" name="search" id="searchBar">
-                <input type="submit" value="Buscar" id="send">
+                <input type="text" name="search" class="searchBar">
+                <input type="submit" value="Buscar" class="send">
             </form>
-          <!--  <form action="{{ url('productos') }}">-->
-
-            <!--<label for=""></label>-->
-           <!-- <input type="text" placeholder="Buscar producto" name="search"  -->
-            <!--<svg class="search"xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <circle cx="10" cy="10" r="7" />
-                <line x1="21" y1="21" x2="15" y2="15" />
-              </svg>-->
-
-
-             <!-- <input type="submit" value="Buscar" class="bottonsearch">-->
-
-              <!--<div id="filtroBusqueda">
-                <label for="" id="textSelectTipoCasas">Tipo de casa: </label>
-                    <select name="tipo_producto" id="selectTipoCasas">
-
-                        <option value="casa_de_uno_solo_agua">Casas de uno solo agua</option>
-                        <option value="casa_en_dos_aguas">Casa en dos aguas</option>
-                        <option value="casa_cuatro_aguas">Casa cuatro aguas</option>
-                        <option value="chalet">Casa tipo chalet</option>
-                        <option value="padoga">Casas tipo padoga</option>
-                        <option value="bodega">Bodega</option>
-                        <option value="aula">Aula</option>
-                    </select>
-                </div>-->
-
-               <!-- <div id="filtroBusqueda">-->
-                       <!-- <label for="" id="textMaterial">Tipo de material:</label>-->
-                        <!--<select name="material_producto" id="selectTipoMaterial">
-                            <option value="plaqueta">Plaqueta</option>
-                            <option value="bloquelon">Bloquelón</option>
-                        </select>
-                </div>-->
-
-               <!-- <div id="filtroBusqueda">-->
-                   <!-- <label for="" id="textPisos">Número de pisos:</label> -->
-                   <!-- <select name="pisos_producto" id="selectPisos">
-                        <option value="1_piso"> 1 piso</option>
-                        <option value="2_pisos">2 pisos</option>
-                    </select>
-                </div>-->
-            <!--</form>-->
-        </div>
-
-
-        <div class="barra-Busqueda">
-
-
         </div>
         <!--modal despublicar-->
         <div class="modalDespublicar ">

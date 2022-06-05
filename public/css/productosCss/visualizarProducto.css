@@ -4,6 +4,7 @@
 
 body{
     margin: 0px;
+    width: 89%;
 
 }
 
@@ -184,8 +185,7 @@ img {vertical-align: middle;}
 }
 
 #imageProduct{
-    height: 150px;
-    width: 300px;
+    width: 100%;
 }
 
 #dataProduct{
@@ -193,27 +193,28 @@ img {vertical-align: middle;}
 }
 
 
-.division {
+.division{
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-column-gap: 0px;
-    grid-column-gap: 20rem;
-
-    border: solid;
-    padding: 20px;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    place-items: center;
+    border: 2px solid;
     border-radius: 10px;
-    height: 28rem;
+    row-gap: 10px;
+}
 
-    }
+.showImages{
+    display: flex;
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 30px;
+}
 
-    .showImages { grid-area: 1 / 1 / 2 / 2;
-    margin-left: 5rem;
-    margin-top: 2rem;}
-    .dataProduct { grid-area: 1 / 2 / 2 / 3;
-    margin-bottom: 5rem;
-    margin-top: 2rem;}
-    .Modificar { grid-area: 2 / 1 / 3 / 2;
-    margin-left: 8rem;}
-    .Eliminar { grid-area: 2 / 2 / 3 / 3;
-    margin-left: 8rem;}
+.dataProducto tbody tr{
+    border: 2px solid black;
+}
+
+.dataProduct p{
+    border: 2px solid;
+}
+

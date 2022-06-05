@@ -16,13 +16,6 @@ class ProductoController extends Controller
     public function index(Request $request)
     {
 
-       /*if($request->has('search')){
-            $productos=DB::table('productos')
-                            ->where('nombre_producto', 'LIKE', '%'.$request->search.'%');
-        }else{
-            $productos=Producto::All();
-        }*/
-
        if($request->has('search')){
             $productos = Producto::where('nombre_producto', 'LIKE', '%'.$request->search.'%')
             ->orWhere('id', '=', $request->search)
