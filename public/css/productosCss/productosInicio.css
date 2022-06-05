@@ -8,7 +8,13 @@ body{
 
 main{
     margin-top: 60px;
-    margin-left: 200px;
+    margin-left: 100px;
+}
+
+@media screen and (min-width: 1400px){
+    main{
+        margin-left: 150px;
+    }
 }
 
 h1{
@@ -106,6 +112,11 @@ img{
     border-radius: 10px;
     border: 2px solid black;
     row-gap: 20px;
+}
+
+.caja img{
+    width: 100%;
+    max-width: 350px;
 }
 
 .caja h2{

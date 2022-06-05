@@ -1,3 +1,4 @@
+@extends('layouts.layout')
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,6 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <body>
+@section('content')
 <main>
     <div class="modal-container">
         <div class="modal modal-close">
@@ -53,7 +55,7 @@
 
             <div class="imagenSection">
                 <h2>IMAGEN</h2>
-                <p style="text-align:center;"><img class="img" id="blah" src=""></p>
+                <p><img class="img" id="blah" src=""></p>
                 <div class="icons">
                     <a href=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -136,6 +138,7 @@
     </div>
     </form>
 <main>
+@endsection
     <script src="{{asset('js/productos/validateProductos.js')}}"></script>
     <script src="../modificarProducto2/js/modificarProducto.js"></script>
     <script src="{{ asset('js/productos/addImages.js') }}"></script>

@@ -5,6 +5,8 @@
 main{
     margin-top: 60px;
     margin-left: 200px;
+    margin-right: 20px;
+    width: 90%;
 }
 
 h1{
@@ -90,6 +92,10 @@ a{
 
 .imagenSection h2{
     align-items: center;
+}
+
+.imagenSection p{
+    text-align: center;
 }
 
 .img{

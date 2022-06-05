@@ -1,3 +1,4 @@
+@extends('layouts.layout')
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,7 +14,8 @@
     <link rel="stylesheet" href="{{ asset('css/productosCss/modales.css') }}">
 </head>
 <body>
- <main>
+    @section('content')
+    <main>
         <h1>PRODUCTOS</h1>
         <div class="label">
             <form class="searchForm" action="{{ url('productos') }}">
@@ -114,6 +116,7 @@
             </div>
         </div>
     </main>
+    @endsection
    <!--<script src="{{asset('js/productos/modalP.js')}}"></script>-->
    <!-- <script src="{{asset('js/productos/mProducto.js')}}"></script>-->
    <!-- <script src="{{asset('js/productos/publicar.js')}}"></script>-->

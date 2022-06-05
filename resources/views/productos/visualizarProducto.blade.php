@@ -1,3 +1,4 @@
+@extends('layouts.layout')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,7 @@
     <title>UNIKASAS</title>
 </head>
 <body>
-
+@section('content')
     <section class="main">
         <h1>{{ $producto->nombre_producto }}</h1>
 
@@ -59,6 +60,10 @@
                         </div>
                 </div> -->
                 <table class="dataProduct">
+                    <colgroup>
+                        <col style="width: 50%">
+                        <col style="width: 50%">
+                    </colgroup>
                     <thead>
                         <th>INFORMACION</th>
                         <th>PRODUCTO</th>
@@ -96,7 +101,7 @@
 
         </div>
     </section>
-
+@endsection
     <script src="carrusel.js"></script>
 
 </body>
