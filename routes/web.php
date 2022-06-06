@@ -24,6 +24,7 @@ Route::get('/', function () {
 
 Route::resource('eventos', EventoController::class)->middleware('auth')->middleware('eventos');
 Route::get('/disponibilidad', [EventoController::class, 'disponibilidad'])->middleware('auth')->middleware('eventos');
+Route::get('/verDisponibilidad', [EventoController::class, 'verDisponibilidad'])->middleware('auth')->middleware('eventos');
 Route::get('/eventos/{id}/cancel', [EventoController::class, 'cancel'])->middleware('auth')->middleware('eventos');
 Route::get('/reporteEventos', [EventoController::class, 'reporteEventos'])->middleware('auth')->middleware('eventos');
 Route::get('/exportPdfEventos', [EventoController::class, 'exportPdfEventos'])->middleware('auth')->middleware('eventos');

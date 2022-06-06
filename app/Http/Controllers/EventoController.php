@@ -11,6 +11,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\emailCrearEvento;
+use Hamcrest\Core\HasToString;
 
 class EventoController extends Controller
 {
@@ -199,7 +200,9 @@ class EventoController extends Controller
     {
         $fechaInicial = $request->get('fecha');
         $fechaFinal = $request->get('fechaDos');
+        
         if($fechaInicial != ''){
+            // dd($fechaInicial);
             $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->where('fecha_evento', 'like', "$fechaInicial")->paginate(10);
         } else {
             $eventos = Evento::paginate(10);
@@ -208,8 +211,28 @@ class EventoController extends Controller
         if($fechaInicial != '' && $fechaFinal != ''){
             $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->whereDate('fecha_evento', '>=', "$fechaInicial")->whereDate('fecha_evento', '<=', "$fechaFinal")->paginate(10);
         }
-        // dd($eventos);
+        
         return view('Eventos.disponibilidad', compact('eventos'));
+    }
+
+    public function verDisponibilidad(Request $request)
+    {
+        $fecha = $request->get('fecha');
+        if($fecha != ''){
+            $nuevafecha = explode('/', $fecha);
+            $dia = $nuevafecha[1];
+            $mes = $nuevafecha[0];
+            $annio = $nuevafecha[2];
+            $fecha = $annio."-".$mes."-".$dia;
+            $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->where('fecha_evento', 'like', "$fecha")->get();
+            $fechaInicial = $annio."-".$mes."-01";
+            $fechaFinal = $annio."-".$mes."-31";
+            $eventosMes = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->whereDate('fecha_evento', '>=', "$fechaInicial")->whereDate('fecha_evento', '<=', "$fechaFinal")->get();
+            return view('Eventos.verDisponibilidad', compact('eventos', 'eventosMes'));
+        } else {
+            // $eventos = Evento::all();
+            return view('Eventos.verDisponibilidad');
+        }  
     }
 
     public function reporteEventos(Request $request)
@@ -294,8 +317,8 @@ class EventoController extends Controller
                 if($eventoEstadTable != ''){
                     $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable", "$eventoNotifTable", "$eventoInvitTable", "$eventoLugTable", "$eventoAsuntTable", "$eventoMensajTable", "$eventoEstadTable")->get();
                 }
-            }
             
+            }
             return view('Eventos.crearReporteEvent', compact('eventos'));
 
         }else{
