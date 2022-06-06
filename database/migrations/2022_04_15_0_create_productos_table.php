@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('tipo_producto')->default('casa');
             $table->string('material_producto')->default('Plaqueta');
             $table->string('pisos_producto')->default('1 piso');
-            $table->string('foto_producto')->default('No existe archivo');
+
             $table->timestamps();
         });
     }

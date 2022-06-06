@@ -20,9 +20,16 @@
         <section class="modal hidden">
             <div class="modal__content">
                 <h2>¿Desea publicar el producto?</h2>
-                <div class="modal__content__buttons">
-                    <button class="modal__content__buttons__button">Publicar</button>
-                    <button class="modal__content__buttons__button">Cancelar</button>
+                <form method="post" id="publicarForm">
+                    @csrf {{-- token de seguridad para el formulario  --}}
+                    {{ method_field('PATCH') }}
+                    <input type="text" value="Publicado" name="estado_Producto" readonly style="display: none;">
+                    <input type="text" value="publicación" name="accion" readonly style="display: none;">
+                    <div class="modal__content__buttons">
+                        <button class="modal__content__buttons__button confirmar close" type="submit">Publicar</button>
+                        <a href="#" class="modal__content__buttons__button cancelar close">Cancelar</a>
+                    </div>
+                </form>
             </div>
         </section>
 
@@ -30,10 +37,16 @@
         <section class="modal hidden">
             <div class="modal__content publicar">
                 <h2>¿Desea despublicar el producto?</h2>
-                <div class="modal__content__buttons">
-                    <button class="modal__content__buttons__button">Despublicar</button>
-                    <button class="modal__content__buttons__button">Cancelar</button>
-                </div>
+                <form method="post" id="despublicarForm">
+                    @csrf {{-- token de seguridad para el formulario  --}}
+                    {{ method_field('PATCH') }}
+                    <input type="text" value="Activo" name="estado_Producto" readonly style="display: none;">
+                    <input type="text" value="despublicación" name="accion" readonly style="display: none;">
+                    <div class="modal__content__buttons">
+                        <button class="modal__content__buttons__button confirmar close" type="submit">Despublicar</button>
+                        <a href="#" class="modal__content__buttons__button cancelar close">Cancelar</a>
+                    </div>
+                </form>
             </div>
         </section>
 
@@ -48,6 +61,7 @@
         </div>
 <!--Fin modal producto-->
         <div class="prueba">
+            @if($isProductoAdmin)
             <div class="Botones">
                 <div class="botonP">
                 <a class="bot" id=""href="{{url('/productos/create')}}">Registrar Producto</a>
@@ -56,7 +70,7 @@
                 <a class="bot"href="#">CREAR REPORTE</a>
                 </div>
             </div>
-            </form>
+            @endif
 
             <div class="MatrizProductos main">
                 @foreach($productos as $producto)
@@ -71,15 +85,15 @@
                         </svg></a>
 
                         @if($producto->estado_Producto == 'Publicado')
-                        <a href="#" class="">
+                        <span id="despublicar-button" value="{{ $producto->id }}">
                         <svg class="bot1 x"xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                             <line x1="18" y1="6" x2="6" y2="18" />
                             <line x1="6" y1="6" x2="18" y2="18" />
-                        </svg></a>
+                        </svg></span>
                         @else
 
-                        <span id="publicar-button">
+                        <span id="publicar-button" value="{{ $producto->id }}">
                         <svg  id="carrito" class="mCarOne carShop"xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                             <circle cx="6" cy="19" r="2" />

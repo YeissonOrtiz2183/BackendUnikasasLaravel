@@ -271,15 +271,14 @@ a{
     display: grid
 }
 
+.inputFiles{
+    text-align: center;
+}
 
 .inputfile {
-
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+    border: none;
+    width: auto;
+    border-radius: 0%;
 }
 .plus{
     cursor: pointer;

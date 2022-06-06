@@ -60,38 +60,42 @@
                         </div>
                 </div> -->
                 <table class="dataProduct">
-                    <colgroup>
-                        <col style="width: 50%">
-                        <col style="width: 50%">
-                    </colgroup>
                     <thead>
-                        <th>INFORMACION</th>
-                        <th>PRODUCTO</th>
+                        <caption>INFORMACIÓN DEL PRODUCTO</caption>
                     </thead>
+                    <tbody>
+                        <!-- Assigning width of first
+                            column of each row as 40% -->
+                        <col style="width: 40%;" />
 
+                        <!-- Assigning width of second
+                            column of each row as 60% -->
+                        <col style="width: 60%;" />
                         <tr>
-                            <td>{{ $producto->id }}</td>
-                            <td>{{ $producto->nombre_producto }}</td>
+                            <td><b>ID:</b> {{ $producto->id }}</td>
+                            <td><b>Nombre:</b> {{ $producto->nombre_producto }}</td>
                         </tr>
                         <tr>
-                            <td>{{ $producto->descripcion_producto }}</td>
-                            <td>{{ $producto->precio_producto }}</td>
+                            <td><b>Descripción:</b> {{ $producto->descripcion_producto }}</td>
+                            <td><b>Precio:</b> {{ $producto->precio_producto }}</td>
                         </tr>
                         <tr>
-                            <td>{{ $producto->tipo_producto }}</td>
-                            <td>{{ $producto->material_producto }}</td>
+                            <td><b>Tipo:</b> {{ $producto->tipo_producto }}</td>
+                            <td><b>Material:</b> {{ $producto->material_producto }}</td>
                         </tr>
                         <tr>
-                            <td>{{ $producto->pisos_producto }}</td>
-                            <td>{{ $producto->estado_Producto }}</td>
+                            <td><b>Pisos:</b> {{ $producto->pisos_producto }}</td>
+                            <td><b>Estado:</b> {{ $producto->estado_Producto }}</td>
                         </tr>
+                    </tbody>
                 </table>
                 <!--<div class="botones">-->
                     <div class="botones">
+                        @if($isProductoAdmin)
                         <div class="Modificar">
                             <a href="{{url('productos/'.$producto->id.'/edit')}}">MODIFICAR</a>
                         </div>
-
+                        @endif
                         <div class="Eliminar">
                             <a href="{{url('productos')}}">REGRESAR</a>
                         </div>

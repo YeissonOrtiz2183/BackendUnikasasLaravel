@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Producto;
 use App\Models\Cotizacion;
 use App\Models\Evento;
+use App\Models\Audit;
 
 class ProductoController extends Controller
 {
@@ -58,20 +59,51 @@ class ProductoController extends Controller
         return $notificaciones;
     }
 
+    public function getPermissions(){
+        $userId = auth()->user()->id;
+        $rol = auth()->user()->rol_id;
+
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isProductoAdmin = false;
+        $canViewProductos = false;
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar productos')){
+            $isProductoAdmin = true;
+        }
+
+        if($privilegios->contains('nombre_privilegio', 'Consultar productos')){
+            $canViewProductos = true;
+        }
+
+        return array('isProductoAdmin' => $isProductoAdmin, 'canViewProductos' => $canViewProductos);
+    }
+
     public function index(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $isProductoAdmin = $this->getPermissions()['isProductoAdmin'];
+        $canViewProductos = $this->getPermissions()['canViewProductos'];
 
-       if($request->has('search')){
-            $productos = Producto::where('nombre_producto', 'LIKE', '%'.$request->search.'%')
-            ->orWhere('id', '=', $request->search)
-            ->orWhere('precio_producto', '=', $request->search)
-            ->paginate(30);
+        if($isProductoAdmin || $canViewProductos){
+            if($request->has('search')){
+                $productos = Producto::where('nombre_producto', 'LIKE', '%'.$request->search.'%')
+                ->orWhere('id', '=', $request->search)
+                ->orWhere('precio_producto', '=', $request->search)
+                ->paginate(30);
 
+            }else{
+                $productos = Producto::All();
+            }
+            return view('productos.productosInicio', compact('productos', 'notificaciones', 'isProductoAdmin'));
         }else{
-            $productos = Producto::All();
+            return redirect()->back();
         }
-        return view('productos.productosInicio', compact('productos', 'notificaciones'));
+
     }
 
     /**
@@ -82,7 +114,13 @@ class ProductoController extends Controller
     public function create()
     {
         $notificaciones = $this->makeNotifications(auth()->user());
-        return view('productos.registrarProducto', compact('notificaciones'));
+        $isProductoAdmin = $this->getPermissions()['isProductoAdmin'];
+
+        if($isProductoAdmin){
+            return view('productos.registrarProducto', compact('notificaciones'));
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -93,16 +131,35 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $datosProducto=request()->except('_token');
-        dd($datosProducto['images']);
-        if($request->hasFile('foto_producto')){
-            $datosProducto['foto_producto']=$request->file('foto_producto')->store('uploads', 'public');
+        $datosProducto=request()->except('_token', 'images');
+        $images = $request->file('images');
+
+        //Iterar sobre $datosProducto['images'] para guardar cada imagen en la carpeta storage/app/public/uploads/productos/
+        foreach($images as $image){
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('/uploads/productos'), $imageName);
+            $datosProducto['imagen'] = $imageName;
+            //Guardar el path de la imagen en la base de datos
+            \DB::table('image')->insert(['path' => $imageName]);
         }
 
         Producto::insert($datosProducto);
-        return response()->json($datosProducto);
 
+        $fechaActual = date("Y-m-d H:i:s");
+        $timestamp = strtotime($fechaActual);
+        $time = $timestamp - (5 * 60 * 60);
+        $fechaActual = date("Y-m-d H:i:s", $time);
 
+        Audit::insert([
+            'user_id' => auth()->user()->id,
+            'modulo' => 'productos',
+            'tipo_accion' => "creacion",
+            'fecha_accion' => $fechaActual,
+            'item' => $datosProducto['nombre_producto']
+        ]);
+
+        $producto = Producto::orderBy('id', 'desc')->first();
+        return redirect('/productos/'.$producto->id);
     }
 
     /**
@@ -114,8 +171,15 @@ class ProductoController extends Controller
     public function show( $id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
-        $productos = Producto::find($id);
-        return view('productos.visualizarProducto', ['producto'=>$productos], compact('notificaciones'));
+        $isProductoAdmin = $this->getPermissions()['isProductoAdmin'];
+        $canViewProductos = $this->getPermissions()['canViewProductos'];
+
+        if($isProductoAdmin || $canViewProductos){
+            $productos = Producto::find($id);
+            return view('productos.visualizarProducto', ['producto'=>$productos], compact('notificaciones', 'isProductoAdmin'));
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -127,9 +191,14 @@ class ProductoController extends Controller
     public function edit($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
-        $producto=Producto::findOrFail($id);
-        return view('productos.modificarProducto', compact('producto', 'notificaciones'));
+        $isProductoAdmin = $this->getPermissions()['isProductoAdmin'];
 
+        if($isProductoAdmin){
+            $producto=Producto::findOrFail($id);
+            return view('productos.modificarProducto', compact('producto', 'notificaciones'));
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -141,11 +210,32 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
         $datosProducto=request()->except(['_token', '_method']);
-        Producto::where('id', '=', $id)->update($datosProducto);
+        $datosProductoUp = request()->except(['_token', '_method', 'accion']);
+
+        Producto::where('id', '=', $id)->update($datosProductoUp);
 
         $producto=Producto::findOrFail($id);
+
+        $fechaActual = date("Y-m-d H:i:s");
+        $timestamp = strtotime($fechaActual);
+        $time = $timestamp - (5 * 60 * 60);
+        $fechaActual = date("Y-m-d H:i:s", $time);
+
+        if(isset($datosProducto['accion'])){
+            $accion = $datosProducto['accion'];
+        }else{
+            $accion = "modificacion";
+        }
+
+        Audit::insert([
+            'user_id' => auth()->user()->id,
+            'modulo' => 'productos',
+            'tipo_accion' => $accion,
+            'fecha_accion' => $fechaActual,
+            'item' => $producto->nombre_producto
+        ]);
+
         return redirect('productos/'.$producto->id);
     }
 
