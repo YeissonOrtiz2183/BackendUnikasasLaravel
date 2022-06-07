@@ -94,7 +94,7 @@ body{
     justify-content: center;
 }
 
-li{
+.navLateral li{
     list-style-type: none;
     padding-bottom: 11%;
     color: white;

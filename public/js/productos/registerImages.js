@@ -4,7 +4,7 @@ let count = 0;
 const formulario = document.querySelector('.inputFiles');
 const divImage = document.querySelector('.slideshow-container');
 const divDots = document.querySelector('.dots');
-let dotcount = 1;
+let dotcount = 2;
 
 function readURL(input) {
     count++;
@@ -43,8 +43,4 @@ function insertImage (data) {
         divImage.insertAdjacentHTML('afterbegin', img);
         divDots.insertAdjacentHTML('beforeend', dot);
     }
-}
-
-function deleteImage (){
-
 }

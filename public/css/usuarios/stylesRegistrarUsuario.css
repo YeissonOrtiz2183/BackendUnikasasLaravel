@@ -2,6 +2,12 @@
     font-family: Roboto;
 }
 
+.workspace{
+    margin-top: 60px;
+    margin-left: 150px;
+    width: 85%;
+}
+
 .titleModule {
     padding-left: 3rem;
     display:inline-block;
@@ -85,10 +91,11 @@ select{
     }
 
     select{
-        width: 250px;
+        width: 260px;
     }
 }
 .contenedor-campos {
+    width: 100%;
     margin-left: 1rem;
     display: grid;
     grid-template-columns: 50% 50%;

@@ -241,10 +241,26 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $datosProducto=request()->except(['_token', '_method']);
-        $datosProductoUp = request()->except(['_token', '_method', 'accion']);
+        $datosProducto=request()->except(['_token', '_method', 'images']);
+        $datosProductoUp = request()->except(['_token', '_method', 'accion', 'images']);
+        $images = $request->file('images');
 
         Producto::where('id', '=', $id)->update($datosProductoUp);
+
+        foreach($images as $image){
+            $path = $image->store('uploads', 'public');
+            \DB::table('image')->insert([
+                'path' => $path,
+            ]);
+
+            $image_id = \DB::table('image')->where('path', '=', $path)->first()->id;
+
+            \DB::table('product_image')->insert([
+                'producto_id' => $id,
+                'image_id' => $image_id,
+            ]);
+
+        }
 
         $producto=Producto::findOrFail($id);
 

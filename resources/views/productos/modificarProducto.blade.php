@@ -13,7 +13,7 @@
 </head>
 <body>
 @section('content')
-<main>
+<main onclick="getPath()">
 <h1>MODIFICAR PRODUCTO</h1>
 <form action="{{url('/productos/'.$producto->id)}}" id="formulary" method="post" enctype="multipart/form-data">
 
@@ -30,7 +30,7 @@
                   <!-- Full-width images with number and caption text -->
                   @foreach($images as $image)
                   <div class="mySlides fade">
-                    <img src="{{ asset('storage/' .$image->path) }}" id="blah" class="image img">
+                    <img src="{{ asset('storage/' .$image->path) }}" class="image img">
                   </div>
                   @endforeach
 
@@ -41,15 +41,16 @@
                 <br>
 
                 <!-- The dots/circles -->
-                <div style="text-align:center">
+                <div style="text-align:center" class ="dots">
+                <?php $count = 1; ?>
                     @foreach($images as $image)
-                    <span class="dot" onclick="currentSlide({{ $image->id }})"></span>
+                    <span class="dot" onclick="currentSlide({{ $count++ }})"></span>
                     @endforeach
+                    <span id="{{ $count--; }}" class="countDot"></span>
                 </div>
 
                 <div class="inputFiles">
-                    <input required type="file" class="inputfile" id="file" name="images[]" onchange="readURL(this);" />
-                    <button>Eliminar imagen</button>
+                    <input type="file" class="inputfile fileDefault" id="file" name="images[]" onchange="readURL(this);" />
                 </div>
             </div>
         </section>
@@ -157,6 +158,7 @@
     <script src="{{asset('js/productos/modificarProducto.js')}}"></script>
     <script src="../modificarProducto2/js/modificarProducto.js"></script>
     <script src="{{ asset('js/productos/showImage.js') }}"></script>
+    <script src="{{ asset('js/productos/editImages.js') }}"></script>
 </main>
 @endsection
 </body>

@@ -1,3 +1,4 @@
+@extends('layouts.layout')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +14,7 @@
 </head>
 
 <body>
+    @section('content')
     <main class="workspace">
         <a href="{{ url('roles/' .$rol->id) }}">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -53,4 +55,5 @@
         <a href="{{ url('roles/' .$rol->id) }}" class="button-dos">Cancelar</a>
         </div>
     </main>
+    @endsection
 </body>

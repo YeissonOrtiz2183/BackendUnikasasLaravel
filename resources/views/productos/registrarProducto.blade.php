@@ -145,7 +145,7 @@
     <script src="{{asset('js/productos/validateProductos.js')}}"></script>
     <script src="../modificarProducto2/js/modificarProducto.js"></script>
     <script src="{{ asset('js/productos/showImage.js') }}"></script>
-    <script src="{{ asset('js/productos/addImages.js') }}"></script>
+    <script src="{{ asset('js/productos/registerImages.js') }}"></script>
 @endsection
 </body>
 </html>

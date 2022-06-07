@@ -32,10 +32,12 @@
 
                     <!-- The dots/circles -->
                 <div style="text-align:center">
+                    <?php $count = 1; ?>
                     @foreach($images as $image)
-                        <span class="dot" onclick="currentSlide({{ $image->id }})"></span>
+                    <span class="dot" onclick="currentSlide({{ $count++ }})"></span>
                     @endforeach
                 </div>
+
                 <table class="dataProduct">
                     <thead>
                         <caption>INFORMACIÓN DEL PRODUCTO</caption>
