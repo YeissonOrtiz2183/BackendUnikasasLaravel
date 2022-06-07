@@ -52,7 +52,7 @@
                     @foreach ($proyectos as $proyecto)
                     <section>
                         <div class="contenedor">
-                            <img src="https://img.search.brave.com/H_moi5qTltIjfS8Ifq18CneKXCGe_krpbJHe1Fm5MuY/rs:fit:1200:1200:1/g:ce/aHR0cDovL3d3dy5j/b25zb2xpZGFjaW9u/ZXN5Y29udHJhdGFz/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAxNy8wMi8yLmpw/Zw">
+                            <img src="{{ asset('storage/' .$proyecto->image) }}">
                             <div class="section__infoProyecto">
                                 <h2 class="info">{{ $proyecto->nombre_proyecto }}</h2>
                                 <h4 class="info">Encargado: <span>{{ $proyecto->encargado_nombre }} {{ $proyecto->encargado_apellido }}</span></h4>

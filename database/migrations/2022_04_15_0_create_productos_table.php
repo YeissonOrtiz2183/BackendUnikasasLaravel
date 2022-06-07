@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->string('nombre_producto');
             $table->string('descripcion_producto');
-            $table->bigInteger('precio_producto');
+            $table->string('precio_producto');
             $table->string('estado_Producto')->default('Activo');
             $table->string('tipo_producto')->default('casa');
             $table->string('material_producto')->default('Plaqueta');

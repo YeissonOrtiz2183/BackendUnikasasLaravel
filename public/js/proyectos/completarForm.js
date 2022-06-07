@@ -1,18 +1,3 @@
-function imprimirPrecio() {
-    let producto = document.getElementById("projectProduct");
-    let precioProducto = document.getElementById("precioProducto");
-    let descripcionProducto = document.getElementById("descripcionProducto");
-
-
-    let precio = producto.value;
-    precio = precio.split(" ");
-
-    producto.setAttribute("value", precio[0]);
-    precioProducto.setAttribute("value", precio[1]);
-    descripcionProducto.innerHTML = precio[2];
-
-}
-
 function imprimirCliente() {
     let cliente = document.getElementById("projectClient");
     let primer_nombre = document.getElementById("primer_nombre");

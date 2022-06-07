@@ -115,9 +115,25 @@ class ProyectoController extends Controller
                 ->orWhere('cliente.primer_apellido', 'LIKE', '%'.$request->search.'%')
                 ->orderby($request->filtro)
                 ->paginate(10);
+
+                foreach ($proyectos as $proyecto) {
+                    $producto = $proyecto->producto_id;
+                    $imagen = DB::select('SELECT image.path
+                                        FROM image
+                                        INNER JOIN product_image ON product_image.image_id = image.id
+                                        INNER JOIN productos ON productos.id = product_image.producto_id
+                                        WHERE productos.id = ' .$producto);
+
+                    if(empty($imagen)){
+                        $imagen = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200';
+                    }else{
+                        $imagen = $imagen[0]->path;
+                    }
+                    $proyecto->image = $imagen;
+                }
             }else{
 
-                $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
+                $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio, proyectos.producto_id,
                                     encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
                                     cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
                                     FROM proyectos
@@ -125,18 +141,46 @@ class ProyectoController extends Controller
                                     LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
                                     WHERE estado_proyecto ' .$estadoFind. 'ORDER BY proyectos.fecha_inicio DESC');
 
+                foreach ($proyectos as $proyecto) {
+                    //Traer la imagen del producto del proyecto. Join de la tabla proyectos con la tabla productos. Join de la tabla productos con la tabla product_image. Join de la tabla product_image con la tabla image.
+                    $producto = $proyecto->producto_id;
+                    $imagen = DB::select('SELECT image.path
+                                        FROM image
+                                        INNER JOIN product_image ON product_image.image_id = image.id
+                                        INNER JOIN productos ON productos.id = product_image.producto_id
+                                        WHERE productos.id = ' .$producto);
+
+                    if(empty($imagen)){
+                        $imagen = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200';
+                    }else{
+                        $imagen = $imagen[0]->path;
+                    }
+                    $proyecto->image = $imagen;
+                }
             }
         }
         else{
 
-            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
+            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio, proyectos.producto_id,
                                     encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
                                     cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
                                     FROM proyectos
                                     LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
                                     LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
                                     WHERE estado_proyecto '.$estadoFind. ' AND ' .$request->user()->id. ' = cliente_id OR estado_proyecto ' .$estadoFind. ' AND ' .$request->user()->id. ' = encargado_id ORDER BY proyectos.fecha_inicio DESC');
-        }
+
+            foreach ($proyectos as $proyecto) {
+                //Traer la imagen del producto del proyecto. Join de la tabla proyectos con la tabla productos. Join de la tabla productos con la tabla product_image. Join de la tabla product_image con la tabla image.
+                $producto = $proyecto->producto_id;
+                $imagen = DB::select('SELECT image.path
+                                    FROM image
+                                    INNER JOIN product_image ON product_image.image_id = image.id
+                                    INNER JOIN productos ON productos.id = product_image.producto_id
+                                    WHERE productos.id = ' .$producto);
+
+                $proyecto->image = $imagen[0]->path;
+            }
+    }
 
         $notificaciones = $this->makeNotifications(auth()->user());
         return view('proyectos.moduloInicioProyecto', compact('proyectos', 'isAdmin', 'notificaciones'));
@@ -186,13 +230,12 @@ class ProyectoController extends Controller
     public function store(Request $request)
     {
         $datosProyecto = request()->except('_token');
+        $product = $datosProyecto['producto_id'];
 
-        $datosProyecto['producto_id'] = $datosProyecto['producto_id'][0];
         $str = $datosProyecto['cliente_id'];
         $int = (int) filter_var($str, FILTER_SANITIZE_NUMBER_INT);
 
         $datosProyecto['cliente_id'] = $int;
-
 
         Proyecto::insert($datosProyecto);
         $idProyecto = Proyecto::max('id');

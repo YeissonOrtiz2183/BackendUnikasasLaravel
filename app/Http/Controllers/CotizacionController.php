@@ -189,6 +189,13 @@ class CotizacionController extends Controller
         if($canView){
             $cotizacion = Cotizacion::findOrfail($id);
             $producto = Producto::findOrfail($cotizacion->producto_id);
+            $imagen = \DB::select('SELECT image.path
+                                        FROM image
+                                        INNER JOIN product_image ON product_image.image_id = image.id
+                                        INNER JOIN productos ON productos.id = product_image.producto_id
+                                        WHERE productos.id = ' .$cotizacion->producto_id. ' LIMIT 1');
+
+            $producto->image = $imagen[0]->path;
             return view('Cotizaciones.visualizarCotizacion.vistaCotizacion', compact('cotizacion', 'producto', 'notificaciones'));
         }else{
             return redirect()->back();

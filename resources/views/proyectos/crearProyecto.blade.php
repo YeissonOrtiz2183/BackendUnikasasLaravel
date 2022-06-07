@@ -79,30 +79,19 @@
 
                         <h2><strong>Información del producto</strong></h2>
 
-                        <div class="campo campoProducto">
+                        <div class="campo">
                             <label>Producto:</label>
                             <div class="inputValidate">
-                                <select type="text" class="product" list="producto" name="producto_id" id="projectProduct" onchange="imprimirPrecio()">
+                                <select type="number" class="product" list="producto" name="producto_id" id="projectProduct">
                                     <option value="null" selected disabled hidden>Selecciona el producto del proyecto...</option>
                                     @foreach($productos as $producto)
-                                    <option class="idProduct" value="{{ $producto->id }} {{ $producto->precio_producto}} {{ $producto->descripcion_producto }}">{{ $producto->nombre_producto }}</option>
+                                    <option class="idProduct" value="{{ $producto->id }}">{{ $producto->nombre_producto }}</option>
                                     @endforeach
                                 </select>
                                 <span id="projectProduct_error_message" class="error_form"></span>
                             </div>
 
-                            <label>Valor producto:</label>
-                            <input type="number" class="priceProduct" id="precioProducto" readonly value="">
-                        </div>
 
-                        <div class="campo campoCompartido">
-                            <label>Descripción:</label>
-                            <textarea cols="120" rows="10" readonly id="descripcionProducto" value=""></textarea>
-                        </div>
-
-                        <div class="campo campoCompartido image">
-                            <label>Imagen del producto:</label>
-                            <img src="https://imgr.search.brave.com/6hWsit4UByxIN47ceHadtGHg6oYR2LiFCoDCxyeUcBw/fit/1200/719/ce/1/aHR0cHM6Ly93d3cu/c29tb3NtYW1hcy5j/b20uYXIvd3AtY29u/dGVudC91cGxvYWRz/LzIwMTcvMDcvQyVD/MyVCM21vLWN1cmFy/LXVuYS1jYXNhLWVu/ZmVybWEuanBn">
                         </div>
 
                         <h2><strong>Información del cliente</strong></h2>
