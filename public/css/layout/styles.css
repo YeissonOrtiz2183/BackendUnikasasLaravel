@@ -13,19 +13,20 @@ body{
     user-select: none;
 }
 
-.header__navBar__iconsleft{
-    display: inline-flex;
-    justify-content: left;
-    align-items: center;
-    width: 50%;
-}
-
 .header__navBar{
-    display: inline-block;
+    display: flex;
     background: #EA411D;
     width: 100%;
     position: fixed;
-    z-index: 1;
+    z-index: 100;
+}
+
+.header__navBar__iconsleft{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 52px;
+    width: 100%;
 }
 
 .material-icons.md-200 {
@@ -54,11 +55,11 @@ body{
 }
 
 .header__navBar__iconsRight{
-    display: inline-flex;
-    justify-content: space-between;
+    display: flex;
+    justify-content: right;
+    column-gap: 15px;
     flex-direction: row-reverse;
-    width: 15%;
-    margin-left: 33%;
+    width: 100%;
 }
 
 .navLateral{

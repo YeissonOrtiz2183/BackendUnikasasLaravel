@@ -23,7 +23,6 @@
     <header class="header">
         <nav class="header__navBar">
             <div class="header__navBar__iconsleft">
-                <span class="material-icons md-200" id="menu">menu</span>
                 <span class="material-icons md-200" id="userIcon">person</span>
                 <h1 class="header__navBar__iconsleft__userName">{{ $user->primer_nombre }} {{ $user->segundo_nombre }} {{ $user->primer_apellido }} {{ $user->segundo_apellido }} ({{ $nombre_rol[0]->nombre_rol }})</h1>
             </div>
