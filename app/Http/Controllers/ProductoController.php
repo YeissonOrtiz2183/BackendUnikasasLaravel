@@ -221,7 +221,12 @@ class ProductoController extends Controller
 
         if($isProductoAdmin){
             $producto=Producto::findOrFail($id);
-            return view('productos.modificarProducto', compact('producto', 'notificaciones'));
+            $images = \DB::table('product_image')
+                ->join('image', 'product_image.image_id', '=', 'image.id')
+                ->select('image.path', 'image.id')
+                ->where('product_image.producto_id', '=', $id)
+                ->get();
+            return view('productos.modificarProducto', compact('producto', 'notificaciones', 'images'));
         }else{
             return redirect()->back();
         }

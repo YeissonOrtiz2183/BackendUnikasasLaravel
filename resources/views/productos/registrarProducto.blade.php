@@ -69,14 +69,13 @@
                 <br>
 
                 <!-- The dots/circles -->
-                <div style="text-align:center">
+                <div style="text-align:center" class="dots">
                   <span class="dot" onclick="currentSlide(1)"></span>
-                  <span class="dot" onclick="currentSlide(2)"></span>
-                  <span class="dot" onclick="currentSlide(3)"></span>
                 </div>
 
                 <div class="inputFiles">
                     <input required type="file" class="inputfile" id="file" name="images[]" onchange="readURL(this);" />
+                    <button>Eliminar imagen</button>
                 </div>
             </div>
         </section>
@@ -145,8 +144,8 @@
 <main>
     <script src="{{asset('js/productos/validateProductos.js')}}"></script>
     <script src="../modificarProducto2/js/modificarProducto.js"></script>
-    <script src="{{ asset('js/productos/addImages.js') }}"></script>
     <script src="{{ asset('js/productos/showImage.js') }}"></script>
+    <script src="{{ asset('js/productos/addImages.js') }}"></script>
 @endsection
 </body>
 </html>

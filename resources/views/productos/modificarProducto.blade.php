@@ -25,26 +25,31 @@
         <section>
             <div class="imagenSection">
                 <h2>IMAGEN</h2>
-                <p><img  class="img" src="{{ asset('storage/' .$producto->foto_producto) }}"></p>
-                <div class="icons">
-                    <a href=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <polyline points="15 6 9 12 15 18" />
-                    </svg></a>
-                    <a href=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <polyline points="9 6 15 12 9 18" />
-                    </svg></a>
+                <div class="slideshow-container">
 
+                  <!-- Full-width images with number and caption text -->
+                  @foreach($images as $image)
+                  <div class="mySlides fade">
+                    <img src="{{ asset('storage/' .$image->path) }}" id="blah" class="image img">
+                  </div>
+                  @endforeach
 
-                    <input type="file" name="foto_producto" id="file" class="inputfile" value="">
-                    <label for="file"><svg class="plus"xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <line x1="12" y1="5" x2="12" y2="19" />
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                    </svg></label>
+                  <!-- Next and previous buttons -->
+                  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+                <br>
 
+                <!-- The dots/circles -->
+                <div style="text-align:center">
+                    @foreach($images as $image)
+                    <span class="dot" onclick="currentSlide({{ $image->id }})"></span>
+                    @endforeach
+                </div>
 
+                <div class="inputFiles">
+                    <input required type="file" class="inputfile" id="file" name="images[]" onchange="readURL(this);" />
+                    <button>Eliminar imagen</button>
                 </div>
             </div>
         </section>
@@ -151,6 +156,7 @@
     </form>
     <script src="{{asset('js/productos/modificarProducto.js')}}"></script>
     <script src="../modificarProducto2/js/modificarProducto.js"></script>
+    <script src="{{ asset('js/productos/showImage.js') }}"></script>
 </main>
 @endsection
 </body>
