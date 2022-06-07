@@ -55,24 +55,28 @@
 
             <div class="imagenSection">
                 <h2>IMAGEN</h2>
-                <p><img class="img" id="blah" src=""></p>
-                <div class="icons">
-                    <a href=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <polyline points="15 6 9 12 15 18" />
-                    </svg></a>
-                    <a href=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <polyline points="9 6 15 12 9 18" />
-                    </svg></a>
-                    <!-- <label for="file"><svg class="plus"xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <line x1="12" y1="5" x2="12" y2="19" />
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                    </svg></label> -->
+                <div class="slideshow-container">
+
+                  <!-- Full-width images with number and caption text -->
+                  <div class="mySlides fade">
+                    <img src="" id="blah" class="image img">
+                  </div>
+
+                  <!-- Next and previous buttons -->
+                  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                  <a class="next" onclick="plusSlides(1)">&#10095;</a>
                 </div>
+                <br>
+
+                <!-- The dots/circles -->
+                <div style="text-align:center">
+                  <span class="dot" onclick="currentSlide(1)"></span>
+                  <span class="dot" onclick="currentSlide(2)"></span>
+                  <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+
                 <div class="inputFiles">
-                    <input type="file" class="inputfile" id="file" name="images[]" onchange="readURL(this);" />
+                    <input required type="file" class="inputfile" id="file" name="images[]" onchange="readURL(this);" />
                 </div>
             </div>
         </section>
@@ -142,6 +146,7 @@
     <script src="{{asset('js/productos/validateProductos.js')}}"></script>
     <script src="../modificarProducto2/js/modificarProducto.js"></script>
     <script src="{{ asset('js/productos/addImages.js') }}"></script>
+    <script src="{{ asset('js/productos/showImage.js') }}"></script>
 @endsection
 </body>
 </html>

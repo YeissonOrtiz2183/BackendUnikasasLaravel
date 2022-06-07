@@ -14,51 +14,28 @@
         <h1>{{ $producto->nombre_producto }}</h1>
 
         <div class="division">
-            <div class="showImages">
-                <img src="{{ asset('storage/' .$producto->foto_producto) }}" alt="" id="imageProduct">
-            </div>
-               <!-- <div class="images">
-                    <div class="slideshow-container">
-                        <div class="mySlides fade">
-                            <div class="img">
-                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                                <img src="imgProductos/houseOne.jpg" style="width:300px; height: 150px;">
-                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                            </div>
-                          <div class="text">Caption Text</div>
-                        </div>
+                <!-- Slideshow container -->
+                <div class="slideshow-container">
 
-                        <div class="mySlides fade">
-                            <div class="img">
-                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                                <img src="imgProductos/houseTwo.jpg" style="width:300px; height: 150px;">
-                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                            </div>
-                          <div class="text">Caption Two</div>
-                        </div>
+                <!-- Full-width images with number and caption text -->
+                @foreach($images as $image)
+                    <div class="mySlides fade">
+                        <img src="{{ asset('storage/' .$image->path) }}" class="image">
+                    </div>
+                @endforeach
 
-                        <div class="mySlides fade">
-                            <div class="img">
-                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                                <img src="imgProductos/houseThree.jpg" style="width:300px; height: 150px;">
-                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                            </div>
-                          <div class="text">Caption Three</div>
-                        </div>
+                    <!-- Next and previous buttons -->
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+                <br>
 
-                        <div class="buttons">
-
-                        </div>
-
-                        </div>
-                        <br>
-
-                        <div style="text-align:center">
-                          <span class="dot" onclick="currentSlide(1)"></span>
-                          <span class="dot" onclick="currentSlide(2)"></span>
-                          <span class="dot" onclick="currentSlide(3)"></span>
-                        </div>
-                </div> -->
+                    <!-- The dots/circles -->
+                <div style="text-align:center">
+                    @foreach($images as $image)
+                        <span class="dot" onclick="currentSlide({{ $image->id }})"></span>
+                    @endforeach
+                </div>
                 <table class="dataProduct">
                     <thead>
                         <caption>INFORMACIÓN DEL PRODUCTO</caption>
@@ -105,8 +82,8 @@
 
         </div>
     </section>
+    <script src="{{ asset('js/productos/showImage.js') }}"></script>
 @endsection
-    <script src="carrusel.js"></script>
 
 </body>
 </html>

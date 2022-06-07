@@ -97,7 +97,22 @@ class ProductoController extends Controller
                 ->paginate(30);
 
             }else{
-                $productos = Producto::All();
+                //Traer todos los productos seleccionar una imagen por producto. Tablas: productos, product_image, image
+                $productos = Producto::all();
+
+                foreach($productos as $producto){
+                    $producto->imagen = \DB::table('product_image')
+                        ->join('image', 'product_image.image_id', '=', 'image.id')
+                        ->select('image.path')
+                        ->where('product_image.producto_id', '=', $producto->id)
+                        ->first();
+
+                    if(!$producto->imagen){
+                        $producto->imagen = 'xd';
+                    }else{
+                        $producto->imagen = $producto->imagen->path;
+                    }
+                }
             }
             return view('productos.productosInicio', compact('productos', 'notificaciones', 'isProductoAdmin'));
         }else{
@@ -133,17 +148,23 @@ class ProductoController extends Controller
     {
         $datosProducto=request()->except('_token', 'images');
         $images = $request->file('images');
+        Producto::insert($datosProducto);
 
         //Iterar sobre $datosProducto['images'] para guardar cada imagen en la carpeta storage/app/public/uploads/productos/
         foreach($images as $image){
-            $imageName = time().'.'.$image->getClientOriginalExtension();
-            $image->move(public_path('/uploads/productos'), $imageName);
-            $datosProducto['imagen'] = $imageName;
-            //Guardar el path de la imagen en la base de datos
-            \DB::table('image')->insert(['path' => $imageName]);
-        }
+            $path = $image->store('uploads', 'public');
+            \DB::table('image')->insert([
+                'path' => $path,
+            ]);
 
-        Producto::insert($datosProducto);
+            $image_id = \DB::table('image')->where('path', '=', $path)->first()->id;
+            $producto_id = \DB::table('productos')->orderBy('id', 'desc')->first()->id;
+            \DB::table('product_image')->insert([
+                'producto_id' => $producto_id,
+                'image_id' => $image_id,
+            ]);
+
+        }
 
         $fechaActual = date("Y-m-d H:i:s");
         $timestamp = strtotime($fechaActual);
@@ -173,10 +194,15 @@ class ProductoController extends Controller
         $notificaciones = $this->makeNotifications(auth()->user());
         $isProductoAdmin = $this->getPermissions()['isProductoAdmin'];
         $canViewProductos = $this->getPermissions()['canViewProductos'];
+        $images = \DB::table('product_image')
+            ->join('image', 'product_image.image_id', '=', 'image.id')
+            ->select('image.path', 'image.id')
+            ->where('product_image.producto_id', '=', $id)
+            ->get();
 
         if($isProductoAdmin || $canViewProductos){
             $productos = Producto::find($id);
-            return view('productos.visualizarProducto', ['producto'=>$productos], compact('notificaciones', 'isProductoAdmin'));
+            return view('productos.visualizarProducto', ['producto'=>$productos], compact('notificaciones', 'isProductoAdmin', 'images'));
         }else{
             return redirect()->back();
         }
