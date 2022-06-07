@@ -90,7 +90,7 @@ class DatabaseSeeder extends Seeder
             'primer_nombre' => 'Yeisson',
             'segundo_nombre' => 'Estiven',
             'primer_apellido' => 'Ortiz',
-            'segundo_apellido' => 'Ortiz',
+            'segundo_apellido' => 'Torres',
             'tipo_documento' => 'CC',
             'numero_documento' => '1003614209',
             'telefono_usuario' => '3005311110',

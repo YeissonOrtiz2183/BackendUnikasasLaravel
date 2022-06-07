@@ -96,6 +96,20 @@ class ProductoController extends Controller
                 ->orWhere('precio_producto', '=', $request->search)
                 ->paginate(30);
 
+                foreach($productos as $producto){
+                    $producto->imagen = \DB::table('product_image')
+                        ->join('image', 'product_image.image_id', '=', 'image.id')
+                        ->select('image.path')
+                        ->where('product_image.producto_id', '=', $producto->id)
+                        ->first();
+
+                    if(!$producto->imagen){
+                        $producto->imagen = 'xd';
+                    }else{
+                        $producto->imagen = $producto->imagen->path;
+                    }
+                }
+
             }else{
                 //Traer todos los productos seleccionar una imagen por producto. Tablas: productos, product_image, image
                 $productos = Producto::all();
