@@ -66,7 +66,7 @@ class UserController extends Controller
     {
         $notificaciones = $this->makeNotifications(auth()->user());
 
-        $rol = $request->user()->rol_id;
+        $rol = auth()->user()->rol_id;
 
         $privilegios = \DB::table('rol_privilegios')
             ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
@@ -107,7 +107,7 @@ class UserController extends Controller
             }
             return view('usuarios.inicioUsuarios', compact('usuarios', 'isUserAdmin', 'canViewUsers', 'isRolAdmin', 'canViewRoles', 'notificaciones'));
         }else{
-            $usuarios = User::where('id', $request->user()->id)->get();
+            $usuarios = User::where('id', auth()->user()->id)->get();
             return view('usuarios.inicioUsuarios', compact('usuarios', 'isUserAdmin', 'canViewUsers', 'isRolAdmin', 'canViewRoles', 'notificaciones'));
         }
     }

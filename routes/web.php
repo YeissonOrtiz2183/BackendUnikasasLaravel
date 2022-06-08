@@ -18,14 +18,9 @@ use App\Models\Cotizacion;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});
-*/
+
+
 Route::resource('ModuloEventos', EventoController::class);
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::resource('eventos', EventoController::class)->middleware('auth')->middleware('eventos');
 Route::get('/disponibilidad', [App\Http\Controllers\EventoController::class, 'disponibilidad'])->middleware('auth')->middleware('eventos')->name('ModuloEventos.disponibilidad');
@@ -46,6 +41,15 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\notificaciones;
+
+Route::get('/', [ProductoController::class, 'showCatalogue']);
+Route::get('/producto/{id}', [ProductoController::class, 'showProduct'])->name('producto.showProduct');
+Route::get('/producto/{id}/cotizar', [ProductoController::class, 'makeQuotation'])->name('producto.makeQuotation');
+Route::post('/producto/{id}/send', [ProductoController::class, 'storeQuotation'])->name('producto.storeQuotation');
+
+Route::get('/nosotros', function () {
+    return view('home.weAre');
+});
 
 Route::resource('proyectos', ProyectoController::class)->middleware('auth')->middleware('proyectos');
 Route::get('proyectos/search/{estado}', [ProyectoController::class, 'index'])->middleware('auth')->middleware('proyectos');

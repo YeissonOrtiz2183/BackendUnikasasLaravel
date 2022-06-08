@@ -8,6 +8,8 @@ use App\Models\Producto;
 use App\Models\Cotizacion;
 use App\Models\Evento;
 use App\Models\Audit;
+use App\Mail\emailCrearCotizacion;
+use Illuminate\Support\Facades\Mail;
 
 class ProductoController extends Controller
 {
@@ -257,23 +259,25 @@ class ProductoController extends Controller
     {
         $datosProducto=request()->except(['_token', '_method', 'images']);
         $datosProductoUp = request()->except(['_token', '_method', 'accion', 'images']);
-        $images = $request->file('images');
 
         Producto::where('id', '=', $id)->update($datosProductoUp);
 
-        foreach($images as $image){
-            $path = $image->store('uploads', 'public');
-            \DB::table('image')->insert([
-                'path' => $path,
-            ]);
+        if($request->hasFile('images')){
+            $images = $request->file('images');
+            foreach($images as $image){
+                $path = $image->store('uploads', 'public');
+                \DB::table('image')->insert([
+                    'path' => $path,
+                ]);
 
-            $image_id = \DB::table('image')->where('path', '=', $path)->first()->id;
+                $image_id = \DB::table('image')->where('path', '=', $path)->first()->id;
 
-            \DB::table('product_image')->insert([
-                'producto_id' => $id,
-                'image_id' => $image_id,
-            ]);
+                \DB::table('product_image')->insert([
+                    'producto_id' => $id,
+                    'image_id' => $image_id,
+                ]);
 
+            }
         }
 
         $producto=Producto::findOrFail($id);
@@ -298,6 +302,62 @@ class ProductoController extends Controller
         ]);
 
         return redirect('productos/'.$producto->id);
+    }
+
+    public function showCatalogue(){
+        $products = Producto::where('estado_Producto', '=', 'Publicado')->get();
+
+        foreach($products as $product){
+            $product->image = \DB::table('product_image')
+                ->join('image', 'product_image.image_id', '=', 'image.id')
+                ->select('image.path')
+                ->where('product_image.producto_id', '=', $product->id)
+                ->first();
+
+            if(!$product->image){
+                $product->image = 'xd';
+            }else{
+                $product->image = $product->image->path;
+            }
+        }
+
+        return view('welcome', compact('products'));
+    }
+
+    public function showProduct($id){
+        $product = Producto::findOrFail($id);
+        $images = \DB::table('product_image')
+            ->join('image', 'product_image.image_id', '=', 'image.id')
+            ->select('image.path', 'image.id')
+            ->where('product_image.producto_id', '=', $id)
+            ->get();
+
+        return view('home.productCatalogue', compact('product', 'images'));
+    }
+
+    public function makeQuotation($id){
+        $product = Producto::findOrFail($id);
+        $images = \DB::table('product_image')
+            ->join('image', 'product_image.image_id', '=', 'image.id')
+            ->select('image.path', 'image.id')
+            ->where('product_image.producto_id', '=', $id)
+            ->get();
+
+        return view('home.makeQuotation', compact('product', 'images'));
+    }
+
+    public function storeQuotation(Request $request){
+        $cotizacion = request()->except('_token');
+        $email= request('email_cotizante');
+        Cotizacion::insert($cotizacion);
+        // obtener id para enviar al correo del cliente
+        $cotizacionEmail = Cotizacion::latest('id')->first();
+        // Enviar email de la cotización
+        if($email){
+            Mail::to($email)->send(new emailCrearCotizacion($cotizacionEmail));
+        }
+
+        return redirect('/');
     }
 
     /**
