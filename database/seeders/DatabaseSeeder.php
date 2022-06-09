@@ -109,6 +109,19 @@ class DatabaseSeeder extends Seeder
                 'privilegio_id' => $privilegio->id,
             ]);
         }
+        User::create([
+            'primer_nombre' => 'Miguel',
+            'segundo_nombre' => 'Angel',
+            'primer_apellido' => 'Guevara',
+            'segundo_apellido' => 'Rodriguez',
+            'tipo_documento' => 'CC',
+            'numero_documento' => '1071304206',
+            'telefono_usuario' => '3213440932',
+            'email' => 'miguelguevara1071@gmail.com',
+            'password' => bcrypt('1071304206'),
+            'estado_usuario' => 'Activo',
+            'rol_id' => 1,
+        ]);
 
         \App\Models\Producto::factory(10)->create();
         \App\Models\User::factory(10)->create();

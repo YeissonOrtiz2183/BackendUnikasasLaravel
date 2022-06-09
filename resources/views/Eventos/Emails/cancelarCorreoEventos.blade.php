@@ -9,16 +9,18 @@
         h2, p, span{
             color: black;
         }
-        a{
+        a span{
             padding: 5px 30px;
-            color: #ffffff;
+            color: black;
             font-size: 20px;
             border: none;
             border-radius: 10px;
             text-decoration: none;
-            text-emphasis-color: #fff;
             background-color: #ffa500;
             text-align: center;
+        }
+        a{
+            text-decoration: none;
         }
     </style>
 </head>
@@ -35,7 +37,7 @@
         <p>Agradecemos su atención, quedamos atentos a cualquier inquietud...<p><br>
         
         <p>Para mas información sobre nuestros productos visite nuestro sitio web en el siguiente enlace:</p>
-        <a href="www.youtube.com.co">Ir al sitio</a>
+        <a href="www.youtube.com.co"><span>Ir al sitio</span></a>
     </div>
 </body>
 </html>

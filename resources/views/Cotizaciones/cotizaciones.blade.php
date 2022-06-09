@@ -28,7 +28,7 @@
         <label for="ciudad" class="col-sm-4 control-label" style="margin-right: 5.5%; margin-top: 3%; font-weight: 600">Codigo:</label>
 
         <div class="col-sm-7">
-                <select class="form-control text-white bg-dark" class="dropdown" name="codigo" id="codigo">
+                <select class="form-control text-white bg-dark borderBusqueda" class="dropdown" name="codigo" id="codigo">
                   <option value="null" selected disabled hidden>Filtrar</option>
                     @foreach ($cotizaciones as $cotizacion)
                         <option value="{{ $cotizacion->id }}">{{ $cotizacion->id}}</option>
@@ -41,7 +41,7 @@
         <label for="ciudad" class="col-sm-3 control-label" style="margin-top: 2%; font-weight: 600">Cliente:</label>
 
         <div class="col-sm-8">
-                <select class="form-control text-white bg-dark" name="cliente" id="cliente">
+                <select class="form-control text-white bg-dark borderBusqueda" name="cliente" id="cliente">
                   <option value="null" selected disabled hidden>Filtrar</option>
                     @foreach ($cotizaciones as $cotizacion)
                         <option value="{{ $cotizacion->nombres_cotizante }}">{{ $cotizacion->nombres_cotizante}} {{ $cotizacion->apellidos_cotizante}}</option>
@@ -53,7 +53,7 @@
     <div class="mb-2 row row row col-3">
       <label for="ciudad" class="col-sm-3 control-label" class="dropdown" style="margin-top: 2%; font-weight: 600">Fecha:</label>
       <div class="col-sm-8">
-              <input type="date"class="form-control text-white bg-dark" name="fecha" id="fecha1" style="color-scheme: dark;">
+              <input type="date"class="form-control text-white bg-dark borderBusqueda" name="fecha" id="fecha1" style="color-scheme: dark;">
           </div>
   </div>
 
@@ -61,7 +61,7 @@
       <label for="ciudad" class="col-sm-3 control-label" style="margin-top: 2%; font-weight: 600">Estado:</label>
 
       <div class="col-sm-8">
-              <select class="form-control text-white bg-dark" name="estado" id="estado">
+              <select class="form-control text-white bg-dark borderBusqueda" name="estado" id="estado">
                 <option value="null" selected disabled hidden>Filtrar</option>
                 <option value="Por responder">Por responder</option>
                 <option value="Respondida">Respondida</option>
@@ -133,26 +133,8 @@
               </svg></b></button>@endif</div>
 
             @endforeach
-            <div style="margin-bottom: 2%"></div>
           </div>
         </div>
-
-          {{-- <div class="container row g-10" style="margin-bottom: 1.5%; margin-top: 1.5%; width: 100%">
-              <div class="row gap-10" style="margin: 0 100px; justify-content: center; justify-items: center">
-                  <div class="col-3"></div>
-                <div class="col-3">
-                  <a href="{{ url('/exportPdfCotizaciones') }}"><button style="justify-content: center;" type="button" class="btn btn-lg button" data-bs-toggle="popover" title="Click para ver el reporte en formato pdf o excel" data-bs-content="And here's some amazing content. It's very engaging.Right?" style="font-size: 1.20rem; font-weight: 600">Reporte PDF</button></a>
-                </div>
-                <div class="col-3">
-                  <a href="{{ url('/cotizaciones/create') }}"><button style="justify-content: center;"  type="button" class="btn btn-lg button" data-bs-toggle="popover" title="Click para ver el reporte en formato pdf o excel" data-bs-content="And here's some amazing content. It's very engaging.Right?" style="font-size: 1.20rem; font-weight: 600">Crear Cotización</button></a>
-                </div>
-                <div class="col-3">
-                  <div class="col-3"></div>
-                </div>
-              </div>
-          </div>
-        </div>
-        <br> --}}
         <!-- Modal eliminar cotizacion -->
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 28vh">
           <div class="modal-dialog">
@@ -178,6 +160,9 @@
           </div>
         </div>
         </div>
+      </div>
+      <div class="contenedorPaginacion">
+          <p class="parrafoPaginacion">{{ $cotizaciones->links() }}</p>
       </div>
   </body>
   </html>

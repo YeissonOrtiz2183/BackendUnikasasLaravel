@@ -23,15 +23,16 @@ use App\Models\Cotizacion;
 Route::resource('ModuloEventos', EventoController::class);
 
 Route::resource('eventos', EventoController::class)->middleware('auth')->middleware('eventos');
-Route::get('/disponibilidad', [App\Http\Controllers\EventoController::class, 'disponibilidad'])->middleware('auth')->middleware('eventos')->name('ModuloEventos.disponibilidad');
-Route::get('/eventos/{id}/cancel', [App\Http\Controllers\EventoController::class, 'cancel'])->middleware('auth')->middleware('eventos')->name('ModuloEventos.cancel');
-Route::get('/reporteEventos', [App\Http\Controllers\EventoController::class, 'reporteEventos'])->middleware('auth')->middleware('eventos')->name('ModuloEventos.reporte');
-Route::get('/exportPdfEventos', [App\Http\Controllers\EventoController::class, 'exportPdfEventos'])->middleware('auth')->middleware('eventos')->name('ModuloEventos.exportPdfEventos');
+Route::get('/disponibilidad', [EventoController::class, 'disponibilidad'])->middleware('auth')->middleware('eventos');
+Route::get('/verDisponibilidad', [EventoController::class, 'verDisponibilidad'])->middleware('auth')->middleware('eventos');
+Route::get('/eventos/{id}/cancel', [EventoController::class, 'cancel'])->middleware('auth')->middleware('eventos');
+Route::get('/reporteEventos', [EventoController::class, 'reporteEventos'])->middleware('auth')->middleware('eventos');
+Route::get('/exportPdfEventos', [EventoController::class, 'exportPdfEventos'])->middleware('auth')->middleware('eventos');
 
 
 Route::resource('cotizaciones', CotizacionController::class)->middleware('auth')->middleware('cotizaciones');
-Route::get('/exportPdfCotizaciones', [App\Http\Controllers\CotizacionController::class, 'exportPdfCotizaciones'])->middleware('auth')->middleware('cotizaciones')->name('cotizaciones.exportPdfCotizaciones');
-Route::get('/cotizaciones/{id}/contestar', [App\Http\Controllers\CotizacionController::class, 'contestarCotizacion'])->middleware('auth')->middleware('cotizaciones')->name('cotizaciones.contestarCotizacion');
+Route::get('/exportPdfCotizaciones', [CotizacionController::class, 'exportPdfCotizaciones'])->middleware('auth')->middleware('cotizaciones');
+Route::get('/cotizaciones/{id}/contestar', [CotizacionController::class, 'contestarCotizacion'])->middleware('auth')->middleware('cotizaciones');
 
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProductoController;
@@ -53,11 +54,23 @@ Route::get('/nosotros', function () {
 
 Route::resource('proyectos', ProyectoController::class)->middleware('auth')->middleware('proyectos');
 Route::get('proyectos/search/{estado}', [ProyectoController::class, 'index'])->middleware('auth')->middleware('proyectos');
-Route::resource('productos', ProductoController::class)->middleware('auth');
+Route::get('/reporteProyectos', [ProyectoController::class, 'reporteProyectos'])->middleware('auth')->middleware('proyectos');
+Route::get('/exportPdfProyectos', [ProyectoController::class, 'exportPdfProyectos'])->middleware('auth')->middleware('proyectos');
 Route::resource('actividades', ActividadController::class)->middleware('auth');
 Route::resource('usuarios', UserController::class)->middleware('auth')->middleware('usuarios');
 Route::resource('roles', RolController::class)->middleware('auth')->middleware('roles');
 Route::resource('auditoria', AuditController::class)->middleware('auth')->middleware('auditoria');
+
+Route::resource('productos', ProductoController::class)->middleware('auth');
+Route::resource('usuarios', UserController::class)->middleware('auth');
+Route::get('/reporteUsuarios', [UserController::class, 'reporteUsuarios'])->middleware('auth');
+Route::get('/exportPdfUsuarios', [UserController::class, 'exportPdfUsuarios'])->middleware('auth');
+
+Route::resource('roles', RolController::class)->middleware('auth');
+Route::resource('auditoria', AuditController::class)->middleware('auth');
+Route::get('/reporteAuditoria', [AuditController::class, 'reporteAuditoria'])->middleware('auth');
+Route::get('/exportPdfAuditoria', [AuditController::class, 'exportPdfAuditoria'])->middleware('auth');
+
 Route::get('index', [LoginController::class, 'index']);
 Route::post('login', [LoginController::class, 'authenticate']);
 Route::post('logout', [LoginController::class, 'logout']);

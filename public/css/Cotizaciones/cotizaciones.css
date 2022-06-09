@@ -62,8 +62,10 @@ h1{
     width: 6rem;
     border: none;
     margin-right: 7rem;
-    font-weight: 600;
+    font-weight: 500;
     color: black;
+    border-radius: 8px;
+    text-transform: uppercase;
 }
 
 .modal-footer .btn-primary:hover{
@@ -75,8 +77,10 @@ h1{
     width: 6rem;
     border: none;
     margin-right: 1rem;
-    font-weight: 600;
+    font-weight: 500;
     color: black;
+    border-radius: 8px;
+    text-transform: uppercase;
 }
 
 .modal-footer .btn-secondary:hover{
@@ -89,6 +93,10 @@ h1{
     font-weight: 600;
     background-color: #ffa500;
     margin-bottom: 1%;
+    font-style: normal;
+    font-weight: lighter;
+    border-radius: 8px;
+    padding: 0.3%;
 }
 
 a:hover{
@@ -109,30 +117,41 @@ a:hover{
 
 .button{
     background-color: #ffa500;
+    border-radius: 8px;
+    font-weight: normal;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 18px;
 }
 
 .button:hover{
     background-color: #ffa600e3;
+    border-radius: 10px;
 }
 
 .buttonDos{
     background-color: #EA411D;
     border: none;
     font-size: 1.20rem;
-    font-weight: 600;
+    font-weight: 500;
     width: 90%;
     color: black;
+    border-radius: 10px;
+    text-transform: uppercase;
 }
 
 .buttonDos:hover{
     color: black;
     background-color: #ea431dda;
+    border-radius: 10px;
 }
 
 .buttonUno{
     font-size: 1.20rem;
-    font-weight: 600;
+    font-weight: 500;
     width: 90%;
+    border-radius: 10px;
+    text-transform: uppercase;
 }
 
 .buttonUno:disabled{
@@ -142,8 +161,9 @@ a:hover{
 
 .buttonRegresar{
     font-size: 1.20rem;
-    font-weight: 600;
+    font-weight: 500;
     background-color: #ffa500;
+    border-radius: 8px;
 }
 
 .buttonRegresar:hover{
@@ -168,4 +188,68 @@ a:hover{
 .inputValidate span{
     font-size: 15px;
     color: gray;
+}
+
+.borderBusqueda{
+    border-radius: 8px;
+}
+
+.small{
+    display: none;
+}
+
+.justify-content-sm-between{
+    justify-content: flex-start!important;
+}
+
+.pagination li{
+    border-radius: 10px;
+    margin-right: 4px!important;
+    font-weight: 600!important;
+}
+
+.pagination li span{
+    background-color: #ffa500!important;
+    color: #000000!important;
+    font-weight: 600;
+    border-radius: 10px!important;
+    border: none;
+}
+
+.pagination a{
+    background-color: #ffa500!important;
+    color: #fff!important;
+    font-weight: 600;
+    border-radius: 10px!important;
+    border: none;
+}
+
+@media(max-width: 1366px){
+    .divPrueba .navLateral {
+        margin-top: 2.0%;
+    }
+}
+
+@media(max-width: 1920px){
+    .navLateral {
+        margin-top: 1.9%;
+    }
+}
+
+.global{
+    overflow-x: hidden;
+}
+
+.contenedorPaginacion{
+    display: inline flex; 
+    width: 70%; 
+    margin: 0 auto; 
+    justify-content: 
+    flex-start!important; 
+    margin-left: 20%
+}
+
+.parrafoPaginacion{
+    display: inline flex; 
+    justify-content: flex-start!important;
 }

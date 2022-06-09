@@ -12,6 +12,7 @@ use App\Models\Audit;
 use App\Models\Cotizacion;
 use App\Models\Evento;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProyectoController extends Controller
 {
@@ -458,6 +459,68 @@ class ProyectoController extends Controller
         Proyecto::where('id', '=', $id)->update($datosProyecto);
 
         return redirect('/proyectos/' .$id);
+    }
+
+    public function reporteProyectos(Request $request)
+    {
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+
+        $privilegios = DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar proyectos')){
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
+                                    encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
+                                    cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
+                                    FROM proyectos
+                                    LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
+                                    LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id');
+
+            // return dd($proyectos);
+            return view('proyectos.crearReporteProyectos', compact('proyectos'));
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function exportPdfProyectos(Request $request)
+    {
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+
+        $privilegios = DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar proyectos')){
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
+                                    encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
+                                    cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
+                                    FROM proyectos
+                                    LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
+                                    LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id');
+
+            // return dd($proyectos);
+            $proyectos = compact('proyectos');
+            $pdf = Pdf::loadView('proyectos.exportPdf', $proyectos);
+            return $pdf->setPaper('a3', 'landscape')->stream('reporteProyectos.pdf');
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**

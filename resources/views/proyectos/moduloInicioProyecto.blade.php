@@ -44,7 +44,7 @@
                     </div>
                     @if($isAdmin)
                     <div class="button">
-                        <a class="buttonCreateReport" href="../CrearReporte/crearReporteEventos.html">Crear reporte</a>
+                        <a class="buttonCreateReport" href="{{ url('/reporteProyectos')}}">Crear reporte</a>
                     </div>
                     @endif
                 </aside>

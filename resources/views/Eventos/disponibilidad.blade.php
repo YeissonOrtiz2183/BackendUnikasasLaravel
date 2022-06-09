@@ -114,14 +114,15 @@
                 </div>
                 </table>
                 </div>
-                <div>
+                <div class="resultados">
                     <h3 class="info">Resultados de busqueda</h3>
-                @foreach ($eventos as $evento)
+                    @foreach ($eventos as $evento)
                         <a class="eventoInfo" href="{{ url('eventos/'.$evento->id)}}"><p class="eventoDia"><b> Fecha: </b> {{ date('d/m/Y', strtotime($evento->fecha_evento)) }} <b> Desde: </b>{{ date('h:i A', strtotime($evento->hora_inicio)) }} <b> Hasta: </b> {{ date('h:i A', strtotime($evento->hora_fin))}}</p></a>
                     @endforeach
+                    {{-- <p>{{ $eventos->links() }}</p> --}}
+                </div> 
                 </div>
-
-                </div>
+                
         </main>
     </div>
         <script type="text/javascript" src="{{ asset('js/Eventos/calendario.js')}}"></script>

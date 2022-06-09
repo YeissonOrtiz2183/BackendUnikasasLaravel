@@ -38,8 +38,11 @@
                         <a class="buttonCreateEvento" href="{{ url('eventos/create') }}">Crear evento</a>
                     </div>
                     @endif
-                    <div class="button">
+                    {{-- <div class="button">
                         <a class="buttonDisponibilidad" href="{{ url('/disponibilidad') }}">Disponibilidad</a>
+                    </div> --}}
+                    <div class="button">
+                        <a class="buttonDisponibilidad" href="{{ url('/verDisponibilidad') }}">Disponibilidad</a>
                     </div>
                     @if($isAdmin)
                     <div class="button">
@@ -73,7 +76,7 @@
 
                     @endforeach
 
-                    {{-- {{ $eventos->links() }} --}}
+                    <p>{{ $eventos->links() }}</p>
 
                     </div>
                 </main>

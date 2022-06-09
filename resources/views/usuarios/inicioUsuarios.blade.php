@@ -32,7 +32,7 @@
                         <a class="buttonCreateProject" href="{{ url('usuarios/create') }}">Registrar usuario</a>
                     </div>
                     <div class="button">
-                        <a class="buttonCreateReport" href="5reporteUsuarios.html">Crear reporte</a>
+                        <a class="buttonCreateReport" href="{{ url('/reporteUsuarios')}}">Crear reporte</a>
                     </div>
                     @endif
                 </aside>

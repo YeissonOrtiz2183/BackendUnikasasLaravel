@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Cotizacion;
 use App\Models\Evento;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AuditController extends Controller
 {
@@ -111,6 +112,56 @@ class AuditController extends Controller
 
         $autors = DB::select('SELECT DISTINCT primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, users.id as usuario FROM users LEFT JOIN audits ON audits.user_id = users.id WHERE users.id = audits.user_id');
         return view('auditoria.moduloAuditoriaInicio', compact('audits', 'autors', 'notificaciones'));
+    }
+
+    public function reporteAuditoria()
+    {
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+
+        $privilegios = DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if($privilegios->contains('nombre_privilegio', 'Consultar auditoria')){
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $auditoria = DB::select('SELECT user_id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits LEFT JOIN users ON user_id = users.id ORDER BY fecha_accion ASC');
+            // return dd($auditoria);
+            return view('auditoria.crearReporteAuditoria', compact('auditoria'));
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function exportPdfAuditoria(Request $request)
+    {
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+
+        $privilegios = DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if($privilegios->contains('nombre_privilegio', 'Consultar auditoria')){
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $auditoria = DB::select('SELECT user_id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits LEFT JOIN users ON user_id = users.id ORDER BY fecha_accion ASC');
+            // return dd($proyectos);
+            $auditoria = compact('auditoria');
+            $pdf = Pdf::loadView('auditoria.exportPdf', $auditoria);
+            return $pdf->setPaper('a3', 'landscape')->stream('reporteAuditoria.pdf');
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
