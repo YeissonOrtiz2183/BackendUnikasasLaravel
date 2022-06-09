@@ -22,7 +22,7 @@ function readURL(input) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-            divImage.insertAdjacentHTML('afterbegin', `<div class="mySlides fade">
+            divImage.insertAdjacentHTML('beforeend', `<div class="mySlides fade">
                                                         <img src="${e.target.result}" id="blah${count}" class="image img">
                                                         </div>`);
             divDots.insertAdjacentHTML('beforeend', `<span class="dot" onclick="currentSlide(${countDot++})"></span>`);

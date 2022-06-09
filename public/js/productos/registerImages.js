@@ -40,7 +40,7 @@ function insertImage (data) {
         `
         const dot = `<span class="dot" onclick="currentSlide(${dotcount++})"></span>`;
 
-        divImage.insertAdjacentHTML('afterbegin', img);
+        divImage.insertAdjacentHTML('beforeend', img);
         divDots.insertAdjacentHTML('beforeend', dot);
     }
 }

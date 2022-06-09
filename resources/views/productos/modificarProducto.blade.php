@@ -90,7 +90,7 @@
                 <div id="filtroBusqueda" class="inputdata">
                     <label for="" id="textMaterial">Tipo de material:</label>
                     <select name="material_producto" id="selectTipoMaterial">
-                        <option value="{{ $producto->material_producto }}m²">{{ $producto->material_producto }}</option>
+                        <option value="{{ $producto->material_producto }}">{{ $producto->material_producto }}</option>
                         <option value="Plaqueta">Plaqueta</option>
                         <option value="Bloquelon">Bloquelón</option>
                     </select>
@@ -106,7 +106,7 @@
                 <div id="filtroBusqueda" class="inputdata">
                     <label for="" id="textHabitaciones">Número de habitaciones:</label>
                     <select name="habitaciones_producto" id="selectPisos">
-                        <option value="{{ $producto->habitaciones_producto }}m²">{{ $producto->habitaciones_producto }}</option>
+                        <option value="{{ $producto->habitaciones_producto }}">{{ $producto->habitaciones_producto }}</option>
                         <option value="1 Habitación">1 habitación</option>
                         <option value="2 Habitaciones">2 habitaciones</option>
                         <option value="3 Habitaciones">3 habitaciones</option>
@@ -119,7 +119,7 @@
                 </div>
                 <div class="formL inputdata">
                     <label class="labes">Tamaño(m²):</label>
-                    <input id="inputPrecioProducto" class="inputPrice" type="number" placeholder="Ingrese aqui el tamaño del producto" name="tamaño_producto" value="{{ $producto->tamaño_producto }}m²">
+                    <input id="inputPrecioProducto" class="inputPrice" type="number" placeholder="Ingrese aqui el tamaño del producto" name="tamaño_producto" value="{{ $producto->tamaño_producto }}">
                 </div>
                 <div class="formL inputdata">
                     <label class="labes" for="itemSearch">Estado actual:</label>
