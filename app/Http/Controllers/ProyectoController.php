@@ -532,80 +532,49 @@ class ProyectoController extends Controller
             $proyectoEncargadoTable = $request->get('primer_nombre');
             $proyectoClienteTable = $request->get('primer_nombre');
 
-            if($proyectoNombTable != ''){
-                $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-                                ->select('proyectos.id', $proyectoNombTable)
-                                ->get();
-                if($proyectoEstsdTable != ''){
-                    $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-                                ->select('proyectos.id', $proyectoNombTable, $proyectoEstsdTable)
-                                ->get();
+            $arreglo = [];
+            if($proyectoNombTable){
+                $arreglo[] = $proyectoNombTable;
+            }
+            if($proyectoEstsdTable){
+                $arreglo[] = $proyectoEstsdTable;
+            }
+            if($proyectoEstsdTable){
+                $arreglo[] = $proyectoEstsdTable;
+            }
+            if($proyectoFechaFTable){
+                $arreglo[] = $proyectoFechaFTable;
+            }
+            if($proyectoFechaFTable){
+                $arreglo[] = $proyectoFechaFTable;
+            }
+            if($proyectoCiudFTable){
+                $arreglo[] = $proyectoCiudFTable;
+            }
+            if($proyectoDirrecciFTable){
+                $arreglo[] = $proyectoDirrecciFTable;
+            }
+            if($proyectoCostoETable){
+                $arreglo[] = $proyectoCostoETable;
+            }
+            if($proyectoCostoFTable){
+                $arreglo[] = $proyectoCostoFTable;
+            }
+            if($proyectoProductTable){
+                $arreglo[] = $proyectoProductTable;
+            }
+            if($proyectoEncargadoTable){
+                $arreglo[] = $proyectoEncargadoTable;
+            }
+            if($proyectoClienteTable){
+                $arreglo[] = $proyectoClienteTable;
+            }
+            if($arreglo){
+                $campos = '';
+                foreach($arreglo as $valor){
+                    $campos .= ", `" .$valor. "`";
                 }
-                if($proyectoEstsdTable != ''){
-                    $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-                                ->select('proyectos.id', $proyectoNombTable, $proyectoEstsdTable, $proyectoFechaITable)
-                                ->get();
-                }
-                if($proyectoFechaFTable != ''){
-                    $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-                                ->select('proyectos.id', $proyectoNombTable, $proyectoEstsdTable, $proyectoFechaITable, $proyectoFechaFTable)
-                                ->get();
-                }
-                if($proyectoFechaFTable != ''){
-                    $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-                                ->select('proyectos.id', $proyectoNombTable, $proyectoEstsdTable, $proyectoFechaITable, $proyectoFechaFTable)
-                                ->get();
-                }
-                if($proyectoCiudFTable != ''){
-                    $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-                                ->select('proyectos.id', $proyectoNombTable, $proyectoEstsdTable, $proyectoFechaITable, $proyectoFechaFTable, $proyectoCiudFTable)
-                                ->get();
-                }
-                if($proyectoDirrecciFTable != ''){
-                    $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-                                ->select('proyectos.id', $proyectoNombTable, $proyectoEstsdTable, $proyectoFechaITable, $proyectoFechaFTable, $proyectoCiudFTable, $proyectoDirrecciFTable)
-                                ->get();
-                }
-                if($proyectoCostoETable != ''){
-                    $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-                                ->select('proyectos.id', $proyectoNombTable, $proyectoEstsdTable, $proyectoFechaITable, $proyectoFechaFTable, $proyectoCiudFTable, $proyectoDirrecciFTable, $proyectoCostoETable)
-                                ->get();
-                }
-                if($proyectoCostoFTable != ''){
-                    $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-                                ->select('proyectos.id', $proyectoNombTable, $proyectoEstsdTable, $proyectoFechaITable, $proyectoFechaFTable, $proyectoCiudFTable, $proyectoDirrecciFTable, $proyectoCostoETable, $proyectoCostoFTable)
-                                ->get();
-                }
-                if($proyectoProductTable != ''){
-                    $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-                                ->join('productos as producto', 'producto.id', '=', 'proyectos.producto_id')
-                                ->select('proyectos.id', $proyectoNombTable, $proyectoEstsdTable, $proyectoFechaITable, $proyectoFechaFTable, $proyectoCiudFTable, $proyectoDirrecciFTable, $proyectoCostoETable, $proyectoCostoFTable, $proyectoProductTable)
-                                ->get();
-                }
-                if($proyectoEncargadoTable != ''){
-                    $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-                                ->join('productos as producto', 'producto.id', '=', 'proyectos.producto_id')
-                                ->select('proyectos.id', $proyectoNombTable, $proyectoEstsdTable, $proyectoFechaITable, $proyectoFechaFTable, $proyectoCiudFTable, $proyectoDirrecciFTable, $proyectoCostoETable, $proyectoCostoFTable, $proyectoProductTable, "encargado.$proyectoEncargadoTable")
-                                ->get();
-                }
-                if($proyectoClienteTable != ''){
-                    $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-                                ->join('productos as producto', 'producto.id', '=', 'proyectos.producto_id')
-                                ->select('proyectos.id', $proyectoNombTable, $proyectoEstsdTable, $proyectoFechaITable, $proyectoFechaFTable, $proyectoCiudFTable, $proyectoDirrecciFTable, $proyectoCostoETable, $proyectoCostoFTable, $proyectoProductTable, "encargado.$proyectoEncargadoTable", "cliente.$proyectoClienteTable")
-                                ->get();
-                }
+                $proyectos= DB::select('SELECT proyectos.id' .$campos. ' FROM eventos;');
             }
 
             return view('proyectos.crearReporteProyectos', compact('proyectos', 'notificaciones'));
@@ -630,12 +599,16 @@ class ProyectoController extends Controller
         }
 
         if($isAdmin){
-            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
-                                    encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
-                                    cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
-                                    FROM proyectos
-                                    LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
-                                    LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id');
+            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto,
+                                proyectos.fecha_inicio, proyectos.ciudad_proyecto, proyectos.direccion_proyecto,
+                                proyectos.costo_estimado, proyectos.estado_proyecto, proyectos.fecha_fin,
+                                proyectos.costo_final, proyectos.suspension_proyecto, productos.nombre_producto as nombre_producto,
+                                encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
+                                cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
+                                FROM proyectos
+                                LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
+                                LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
+                                INNER JOIN productos on proyectos.producto_id = productos.id');
             $proyectos = compact('proyectos');
             $pdf = Pdf::loadView('proyectos.exportPdf', $proyectos);
             return $pdf->setPaper('a3', 'landscape')->stream('reporteProyectos.pdf');

@@ -326,7 +326,7 @@ class UserController extends Controller
             if($estadoUsuario != ''){
                 $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
                                 ->select('users.*', 'rol.nombre_rol')
-                                ->where('estado_usuario', 'LIKE', '%'.$estadoUsuario.'%')
+                                ->where('estado_usuario', '=', $estadoUsuario)
                                 ->get();
             }
 
@@ -337,9 +337,60 @@ class UserController extends Controller
                                 ->get();
             }
 
+            $pNombreUsuario = $request->get('primer_nombre');
+            $sNombreUsuario = $request->get('segundo_nombre');
+            $pApellidoUsuario = $request->get('primer_apellido');
+            $sApellidoUsuario = $request->get('segundo_apellido');
+            $tipoDocUsuario = $request->get('tipo_documento');
+            $numDocUsuario = $request->get('numero_documento');
+            $numTelUsuario = $request->get('telefono_usuario');
+            $emailUsuario = $request->get('email');
+            $estadoUsuario = $request->get('estado_usuario');
+            $rolUsuario = $request->get('nombre_rol');
+
+            $arreglo = [];
+            $pNombreUsuario = 'primer_nombre';
+            $pApellidoUsuario = 'primer_apellido';
+            if($pNombreUsuario){
+                $arreglo[] = $pNombreUsuario;
+            }
+            if($sNombreUsuario){
+                $arreglo[] = $sNombreUsuario;
+            }
+            if($pApellidoUsuario){
+                $arreglo[] = $pApellidoUsuario;
+            }
+            if($sApellidoUsuario){
+                $arreglo[] = $sApellidoUsuario;
+            }
+            if($tipoDocUsuario){
+                $arreglo[] = $tipoDocUsuario;
+            }
+            if($numDocUsuario){
+                $arreglo[] = $numDocUsuario;
+            }
+            if($numTelUsuario){
+                $arreglo[] = $numTelUsuario;
+            }
+            if($emailUsuario){
+                $arreglo[] = $emailUsuario;
+            }
+            if($estadoUsuario){
+                $arreglo[] = $estadoUsuario;
+            }
+            if($rolUsuario){
+                $arreglo[] = $rolUsuario;
+            }
+            if($arreglo){
+                $campos = '';
+                foreach($arreglo as $valor){
+                    $campos .= ", `" .$valor. "`";
+                }
+                $usuarios = DB::select('SELECT users.id' .$campos. ' FROM users INNER JOIN rols on users.rol_id = rols.id;');
+            }
+
             $roles = Rol::all();
-            // return dd($usuarios);
-            return view('usuarios.crearReporteUsuarios', compact('usuarios', 'notificaciones'));
+            return view('usuarios.crearReporteUsuarios', compact('usuarios', 'notificaciones', 'roles'));
         } else {
             return redirect()->back();
         }
@@ -365,7 +416,6 @@ class UserController extends Controller
                             ->select('users.*', 'rol.nombre_rol')
                             ->get();
 
-            // return dd($proyectos);
             $usuarios = compact('usuarios');
             $pdf = Pdf::loadView('usuarios.exportPdf', $usuarios);
             return $pdf->setPaper('a3', 'landscape')->stream('reporteUsuarios.pdf');

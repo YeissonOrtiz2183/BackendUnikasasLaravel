@@ -108,6 +108,7 @@ class EventoController extends Controller
             $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
                                 ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
                                 ->where('invitados_evento', 'like', "%$email%")
+                                ->orderBy('eventos.id', 'DESC')
                                 ->paginate(10);
         }
 
@@ -305,7 +306,7 @@ class EventoController extends Controller
                                 ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
                                 ->where('fecha_evento', 'like', "$fecha")
                                 ->get();
-            
+
             $fechaInicial = $annio."-".$mes."-01";
             $fechaFinal = $annio."-".$mes."-31";
 
@@ -314,10 +315,10 @@ class EventoController extends Controller
                                 ->whereDate('fecha_evento', '>=', "$fechaInicial")
                                 ->whereDate('fecha_evento', '<=', "$fechaFinal")
                                 ->get();
-            
+
             return view('Eventos.verDisponibilidad', compact('eventos', 'eventosMes'));
         } else {
-            // $eventos = Evento::all();
+            $eventos = Evento::all();
             return view('Eventos.verDisponibilidad', compact('eventos', 'notificaciones'));
         }
     }
@@ -385,61 +386,48 @@ class EventoController extends Controller
             $eventoMensajTable = $request->get('mensaje_evento');
             $eventoEstadTable = $request->get('estado_evento');
 
-            if($eventoNombTable != ''){
-                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
-                                    ->select('eventos.id', "$eventoNombTable")
-                                    ->get();
-                if($eventoFechTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
-                                    ->select('eventos.id', "$eventoNombTable", "$eventoFechTable")
-                                    ->get();
-                }
-                if($eventoHorITable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
-                                    ->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable")
-                                    ->get();
-                }
-                if($eventoHorFTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
-                                    ->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable")
-                                    ->get();
-                }
-                if($eventoProyectTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
-                                    ->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable")
-                                    ->get();
-                }
-                if($eventoNotifTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
-                                    ->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable", "$eventoNotifTable")
-                                    ->get();
-                }
-                if($eventoInvitTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
-                                    ->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable", "$eventoNotifTable", "$eventoInvitTable")
-                                    ->get();
-                }
-                if($eventoLugTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
-                                    ->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable", "$eventoNotifTable", "$eventoInvitTable", "$eventoLugTable")
-                                    ->get();
-                }
-                if($eventoAsuntTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
-                                    ->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable", "$eventoNotifTable", "$eventoInvitTable", "$eventoLugTable", "$eventoAsuntTable")
-                                    ->get();
-                }
-                if($eventoMensajTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
-                                    ->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable", "$eventoNotifTable", "$eventoInvitTable", "$eventoLugTable", "$eventoAsuntTable", "$eventoMensajTable")
-                                    ->get();
-                }
-                if($eventoEstadTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
-                                    ->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable", "$eventoNotifTable", "$eventoInvitTable", "$eventoLugTable", "$eventoAsuntTable", "$eventoMensajTable", "$eventoEstadTable")
-                                    ->get();
-                }
+            $arreglo = [];
+            $arreglo[] = 'nombre_evento';
+            if($eventoNombTable){
+                $arreglo[] = $eventoNombTable;
+            }
+            if($eventoFechTable){
+                $arreglo[] = $eventoFechTable;
+            }
+            if($eventoHorITable){
+                $arreglo[] = $eventoHorITable;
+            }
+            if($eventoHorFTable){
+                $arreglo[] = $eventoHorFTable;
+            }
+            if($eventoProyectTable){
+                $arreglo[] = $eventoProyectTable;
+            }
+            if($eventoNotifTable){
+                $arreglo[] = $eventoNotifTable;
+            }
+            if($eventoInvitTable){
+                $arreglo[] = $eventoInvitTable;
+            }
+            if($eventoLugTable){
+                $arreglo[] = $eventoLugTable;
+            }
+            if($eventoAsuntTable){
+                $arreglo[] = $eventoAsuntTable;
+            }
+            if($eventoMensajTable){
+                $arreglo[] = $eventoMensajTable;
+            }
+            if($eventoEstadTable){
+                $arreglo[] = $eventoEstadTable;
+            }
 
+            if($arreglo){
+                $campos = '';
+                foreach($arreglo as $valor){
+                    $campos .= ", `" .$valor. "`";
+                }
+                $eventos = DB::select('SELECT eventos.id' .$campos. ' FROM eventos INNER JOIN proyectos on eventos.proyecto_id = proyectos.id;');
             }
 
             return view('Eventos.crearReporteEvent', compact('eventos', 'notificaciones'));

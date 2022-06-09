@@ -63,11 +63,13 @@
         </section>
         <section class="modalLayout hidden">
             <div class="modalNotifications">
+                @if(isset($notificaciones))
                 <ul>
                     @foreach ($notificaciones as $notificacion)
                         <li>Hay {{ $notificacion['cantidad'] }} {{ $notificacion['tipo'] }} pendientes</li>
                     @endforeach
                 </ul>
+                @endif
             </div>
         </section>
         <section class="modalLayout hidden">
