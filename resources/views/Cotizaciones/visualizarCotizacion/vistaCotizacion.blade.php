@@ -23,7 +23,7 @@
       <br>
 
       <center><div class="card" style="width: 60%; z-index:1">
-          <img src="https://staticw.s3.amazonaws.com/inmuebles/gr45507720201218113029.jpg" class="card-img-top" width="100" height="400" style="width: 50%; margin: 0 auto;" class="img-thumbnail img-fluid">
+          <img src="{{ asset('storage/' .$producto->image) }}" class="card-img-top" style="max-width: 400px; max-height:300px; margin: 20px auto;" class="img-thumbnail img-fluid">
           <div class="card-body">
             <h5 class="card-title"><b>Producto: </b>{{ $producto->nombre_producto }}</h5>
             <p class="card-text"><b>Descripción: </b>{{ $producto->descripcion_producto }}</p>

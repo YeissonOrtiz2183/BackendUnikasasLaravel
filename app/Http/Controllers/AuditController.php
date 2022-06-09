@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Audit;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Models\Cotizacion;
+use App\Models\Evento;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class AuditController extends Controller
@@ -14,8 +16,56 @@ class AuditController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function makeNotifications($userId){
+        $rol = $userId->rol_id;
+        $email = $userId->email;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isCotizacionAdmin = false;
+        $isEventoAdmin = false;
+        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
+            $isCotizacionAdmin = true;
+        }
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
+            $isEventoAdmin = true;
+        }
+
+        if($isCotizacionAdmin && $isEventoAdmin){
+            $cotizaciones = Cotizacion::where('estado_cotizacion', '=', 'Por responder')->get();
+            $numCotizaciones = $cotizaciones->count();
+            $eventos = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+            $numEventos = $eventos->count();
+            $notificaciones = array();
+            if ($numEventos > 0) {
+                $notificaciones[] = array('tipo' => 'Eventos', 'cantidad' => $numEventos);
+            }
+            if ($numCotizaciones > 0) {
+                $notificaciones[] = array('tipo' => 'Cotizaciones', 'cantidad' => $numCotizaciones);
+            }
+
+        }else{
+            $eventos = Evento::where('invitados_evento', 'like', "%$email%")->get();
+            $numEventos = $eventos->count();
+            $notificaciones = array();
+            if ($numEventos > 0) {
+                $notificaciones[] = array('tipo' => 'Eventos', 'cantidad' => $numEventos);
+            }
+        }
+
+
+        return $notificaciones;
+    }
+
     public function index(Request $request)
     {
+        $notificaciones = $this->makeNotifications(auth()->user());
+
         if ($request->has('usuario_filter') && $request->has('accion_filter') && $request->has('date_filter')) {
             if ($request->date_filter == null) {
                 $fechaActual = date("Y-m-d");
@@ -61,11 +111,13 @@ class AuditController extends Controller
         }
 
         $autors = DB::select('SELECT DISTINCT primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, users.id as usuario FROM users LEFT JOIN audits ON audits.user_id = users.id WHERE users.id = audits.user_id');
-        return view('auditoria.moduloAuditoriaInicio', compact('audits', 'autors'));
+        return view('auditoria.moduloAuditoriaInicio', compact('audits', 'autors', 'notificaciones'));
     }
 
     public function reporteAuditoria()
     {
+        $notificaciones = $this->makeNotifications(auth()->user());
+
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
 
@@ -82,11 +134,11 @@ class AuditController extends Controller
         if($isAdmin){
             $auditoria = DB::select('SELECT user_id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits LEFT JOIN users ON user_id = users.id ORDER BY fecha_accion ASC');
             // return dd($auditoria);
-            return view('auditoria.crearReporteAuditoria', compact('auditoria'));
+            return view('auditoria.crearReporteAuditoria', compact('auditoria', 'notificaciones'));
         } else {
             return redirect()->back();
         }
-    } 
+    }
 
     public function exportPdfAuditoria(Request $request)
     {
@@ -105,7 +157,7 @@ class AuditController extends Controller
 
         if($isAdmin){
             $auditoria = DB::select('SELECT user_id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits LEFT JOIN users ON user_id = users.id ORDER BY fecha_accion ASC');
-            // return dd($proyectos);                                    
+            // return dd($proyectos);
             $auditoria = compact('auditoria');
             $pdf = Pdf::loadView('auditoria.exportPdf', $auditoria);
             return $pdf->setPaper('a3', 'landscape')->stream('reporteAuditoria.pdf');

@@ -18,9 +18,9 @@ use App\Models\Cotizacion;
 |
 */
 
-Route::get('/', function () {
-    return view('login.login');
-});
+
+
+Route::resource('ModuloEventos', EventoController::class);
 
 Route::resource('eventos', EventoController::class)->middleware('auth')->middleware('eventos');
 Route::get('/disponibilidad', [EventoController::class, 'disponibilidad'])->middleware('auth')->middleware('eventos');
@@ -41,12 +41,25 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\notificaciones;
+
+Route::get('/', [ProductoController::class, 'showCatalogue']);
+Route::get('/producto/{id}', [ProductoController::class, 'showProduct'])->name('producto.showProduct');
+Route::get('/producto/{id}/cotizar', [ProductoController::class, 'makeQuotation'])->name('producto.makeQuotation');
+Route::post('/producto/{id}/send', [ProductoController::class, 'storeQuotation'])->name('producto.storeQuotation');
+
+Route::get('/nosotros', function () {
+    return view('home.weAre');
+});
 
 Route::resource('proyectos', ProyectoController::class)->middleware('auth')->middleware('proyectos');
 Route::get('proyectos/search/{estado}', [ProyectoController::class, 'index'])->middleware('auth')->middleware('proyectos');
 Route::get('/reporteProyectos', [ProyectoController::class, 'reporteProyectos'])->middleware('auth')->middleware('proyectos');
 Route::get('/exportPdfProyectos', [ProyectoController::class, 'exportPdfProyectos'])->middleware('auth')->middleware('proyectos');
 Route::resource('actividades', ActividadController::class)->middleware('auth');
+Route::resource('usuarios', UserController::class)->middleware('auth')->middleware('usuarios');
+Route::resource('roles', RolController::class)->middleware('auth')->middleware('roles');
+Route::resource('auditoria', AuditController::class)->middleware('auth')->middleware('auditoria');
 
 Route::resource('productos', ProductoController::class)->middleware('auth');
 Route::resource('usuarios', UserController::class)->middleware('auth');
@@ -61,5 +74,6 @@ Route::get('/exportPdfAuditoria', [AuditController::class, 'exportPdfAuditoria']
 Route::get('index', [LoginController::class, 'index']);
 Route::post('login', [LoginController::class, 'authenticate']);
 Route::post('logout', [LoginController::class, 'logout']);
+Route::get('notificaciones', [notificaciones::class, 'makeNotifications']);
 
 ?>

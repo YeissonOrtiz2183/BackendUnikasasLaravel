@@ -18,12 +18,14 @@ return new class extends Migration
 
             $table->string('nombre_producto');
             $table->string('descripcion_producto');
-            $table->bigInteger('precio_producto');
-            $table->string('estado_Producto')->default('Activo');
+            $table->string('precio_producto');
             $table->string('tipo_producto')->default('casa');
             $table->string('material_producto')->default('Plaqueta');
             $table->string('pisos_producto')->default('1 piso');
-            $table->string('foto_producto')->default('No existe archivo');
+            $table->string('tamaño_producto')->default('50m2');
+            $table->string('habitaciones_producto')->default('1');
+            $table->string('estado_Producto')->default('Activo');
+
             $table->timestamps();
         });
     }

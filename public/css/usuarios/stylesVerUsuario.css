@@ -2,6 +2,17 @@
     font-family: Roboto;
 }
 
+.workspace{
+    margin-top: 60px;
+    margin-left: 100px;
+}
+
+@media screen and (min-width: 1400px) {
+    .workspace{
+        margin-left: 150px;
+    }
+}
+
 .titleModule {
     padding-left: 3rem;
     display:inline-block;
@@ -39,7 +50,6 @@ h2 {
 
 .workspace{
     width: 100%;
-    margin-left: auto;
     margin-right: auto;
 }
 

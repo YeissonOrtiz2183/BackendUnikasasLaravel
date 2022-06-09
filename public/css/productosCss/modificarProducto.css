@@ -2,8 +2,11 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-body{
-    size: 98%;
+main{
+    margin-top: 60px;
+    margin-left: 200px;
+    margin-right: 20px;
+    width: 90%;
 }
 
 h1{
@@ -11,38 +14,44 @@ h1{
 }
 
 img{
-    height: 9rem;
-    width: 14rem;
-
-
+    width: 100%;
+    max-width: 360px;
 }
+
 section{
     border: solid 2px;
     border-radius: 10px;
     padding: 0px 20px;
-    width: 15rem;
-
+    margin-bottom: 20px;
 }
 
-.Matriz{
-   /* margin-top: 1rem;*/
-}
 h2{
     text-align: center;
 }
 .plus{
     background-color:#F78811;
     border-radius: 50%;
-
 }
 
 aside{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     border: solid 2px;
     border-radius: 10px;
     margin-left: auto;
     margin-right: auto;
     height: 30rem;
+    width: 95%;
+    row-gap: 10px;
+    padding: 5px 0px;
 }
+
+.inputdata{
+    margin-right: 150px;
+    align-items: center;
+}
+
 form{
    /* margin: 1rem;*/
    display: inline-block;
@@ -71,60 +80,23 @@ a{
 
 }
 
-.saveCancel{
-    display:flex;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-.divSave{
-    width:10rem;
-    height: 2rem;
-    border-radius: 5px;
-    background-color:#F78811;
-    border: none;
-
-}
-.divSave a{
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-    text-decoration: none;
-    color: black;
-    padding: 5px;
-}
-.divCancel{
-    width: 10rem;
-    height: 2rem;
-    border-radius: 5px;
-    background-color: #EA411D;
-
-}
-.divCancel a{
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-    text-decoration: none;
-    color: black;
-    padding: 5px;
-}
-
 .Matriz{
     display: flex;
+    flex-direction: column;
+    width: 100%;
 }
-.MatrizProductos{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 200px;
-}
-.imagenSection{
 
- margin: auto;
+.imagenSection{
+    margin: auto;
+    width: 40%;
 }
 
 .imagenSection h2{
     align-items: center;
+}
+
+.imagenSection p{
+    text-align: center;
 }
 
 .img{
@@ -161,6 +133,11 @@ a{
     justify-content: end;
 }
 
+#filtroBusqueda{
+    display: flex;
+    justify-content: end;
+}
+
 .modal-container{
     visibility: hidden;
     position:fixed;
@@ -175,8 +152,8 @@ a{
     align-items: center;
 }
 .modal{
-    width: 50%;
-    height: 40%;
+    width: 750px;
+    height: 150px;
     background: white;
    /* overflow: hidden;*/
    border-radius: 20px;
@@ -192,7 +169,6 @@ a{
     display: flex;
     justify-content: center;
     justify-items: center;
-    margin: 5%;
     font-size: 20px;
 }
 .modal-botones{
@@ -293,26 +269,24 @@ a{
 }
 
 #formulary{
-    display: grid;
-    grid-template-rows: repeat(4, 1fr);
+    display: grid
 }
 
+.inputFiles{
+    text-align: center;
+}
 
 .inputfile {
-
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+    border: none;
+    width: auto;
+    border-radius: 0%;
 }
 .plus{
     cursor: pointer;
 }
 
 .spans{
-
+    display: none;
     font-size: 12px;
     color: gray;
     margin-right: auto;
@@ -343,15 +317,17 @@ a{
 #selectTipoCasas{
     height: 2rem;
     border-radius: 10px;
-    width: 40rem;
-    margin-right: 1rem;
+    width: 40.5rem;
     margin-left: 1rem;
-    margin-bottom: 1rem;
     border: 2px solid;
-
 }
 
-
+#searchBar{
+    height: 2rem;
+    border-radius: 10px;
+    width: 40.5rem;
+    border: 2px solid;
+}
 
 #textSelectTipoCasas{
     margin-left: 7rem;
@@ -360,9 +336,8 @@ a{
 #selectTipoMaterial{
     height: 2rem;
     border-radius: 10px;
-    width: 40rem;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
+    width: 40.5rem;
+    margin-left: 1rem;
     border: 2px solid;
 }
 
@@ -373,9 +348,8 @@ a{
 #selectPisos{
     height: 2rem;
     border-radius: 10px;
-    width: 40rem;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
+    width: 40.5rem;
+    margin-left: 1rem;
     border: 2px solid;
 }
 
@@ -386,3 +360,177 @@ a{
 ::-webkit-input-placeholder {
     text-align: center;
  }
+
+
+@media screen and (min-width: 1400px) {
+    .Matriz{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        column-gap: 20px;
+    }
+
+    .inputdata{
+        margin-right: 150px;
+    }
+
+    .inputdata input{
+        width: 45rem;
+    }
+
+    #selectTipoCasas, #selectTipoMaterial, #selectPisos, #searchBar{
+        width: 45.5rem;
+    }
+
+    aside{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border: solid 2px;
+        border-radius: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 30rem;
+        width: 70%;
+        padding: 5px 0px;
+        row-gap: 10px;
+    }
+
+    section{
+        height: auto;
+        width: 30%;
+    }
+
+    .imagenSection{
+        margin: 0;
+        width: 100%;
+    }
+}
+
+.saveCancel{
+    display:flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.divSave{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F78811;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    border-radius: 10px;
+    border: none;
+}
+
+.divCancel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EA411D;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.saveCancel a, input[type=submit]{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.image{
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+/* Slideshow container */
+.slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+  }
+
+  /* Hide the images by default */
+  .mySlides {
+    display: none;
+  }
+
+  /* Next & previous buttons */
+  .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    background: rgba(0, 0, 0, 0.309);
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+  }
+
+  /* Position the "next button" to the right */
+  .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+
+  /* On hover, add a black background color with a little bit see-through */
+  .prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+  }
+
+  /* Caption text */
+  .text {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Number text (1/3 etc) */
+  .numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+  }
+
+  /* The dots/bullets/indicators */
+  .dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+  }
+
+  .active, .dot:hover {
+    background-color: #717171;
+  }
+
+  /* Fading animation */
+  .fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+  }
+
+  @keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+  }

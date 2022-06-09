@@ -76,8 +76,39 @@ class ActividadController extends Controller
      */
     public function show($id)
     {
-        $actividad = Actividad::find($id);
-        return view('proyectos.viewActivity', compact('actividad'));
+        $userId = auth()->user()->id;
+        $rol = auth()->user()->rol_id;
+        $privilegios = DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isAdmin = $privilegios->contains('nombre_privilegio', 'Administrar proyectos');
+        $isConsultar = $privilegios->contains('nombre_privilegio', 'Consultar proyectos');
+        $isMe = false;
+
+        //Obtener el proyecto al que pertenece la actividad. Para obtenerlo se debe tener en cuentas las tablas: proyectos, proyecto_etapas, etapas, actividad_etapas
+        $proyecto = DB::select('SELECT * FROM proyectos
+                                INNER JOIN proyecto_etapas ON proyecto_id = proyectos.id
+                                INNER JOIN etapas ON etapa_id = etapas.id
+                                INNER JOIN actividad_etapas ON actividad_etapas.etapa_id = etapas.id
+                                WHERE actividad_etapas.actividad_id = ?', [$id]);
+
+        //$proyecto = DB::select('SELECT * FROM proyectos LEFT JOIN proyecto_etapas ON proyecto_id = proyectos.id LEFT JOIN etapas ON etapas.id = etapa_id LEFT JOIN actividad_etapas ON actividad_etapas.etapa_id = etapas.id WHERE actividad_etapas.actividad_id = ?', [$id]);
+        $cliente = $proyecto[0]->cliente_id;
+
+
+        if($cliente == $userId){
+            $isMe = true;
+        }
+
+        if($isAdmin || $isConsultar || $isMe){
+            $actividad = Actividad::find($id);
+            return view('proyectos.viewActivity', compact('actividad'));
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -88,8 +119,32 @@ class ActividadController extends Controller
      */
     public function edit($id)
     {
-        $actividad = Actividad::find($id);
-        return view('proyectos.editActivity', compact('actividad'));
+        $rol = auth()->user()->rol_id;
+        $privilegios = DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $proyecto = DB::select('SELECT * FROM proyectos
+            INNER JOIN proyecto_etapas ON proyecto_id = proyectos.id
+            INNER JOIN etapas ON etapa_id = etapas.id
+            INNER JOIN actividad_etapas ON actividad_etapas.etapa_id = etapas.id
+            WHERE actividad_etapas.actividad_id = ?', [$id]);
+
+        $isAdmin = $privilegios->contains('nombre_privilegio', 'Administrar proyectos');
+        $isEncargado = false;
+
+        if($proyecto[0]->encargado_id == auth()->user()->id){
+            $isEncargado = true;
+        }
+
+        if($isAdmin || $isEncargado){
+            $actividad = Actividad::find($id);
+            return view('proyectos.editActivity', compact('actividad'));
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**

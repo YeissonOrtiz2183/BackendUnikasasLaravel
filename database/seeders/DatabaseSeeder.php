@@ -39,11 +39,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Privilegio::create([
-            'nombre_privilegio' => 'Consultar Rols'
+            'nombre_privilegio' => 'Consultar roles'
         ]);
 
         Privilegio::create([
-            'nombre_privilegio' => 'Administrar Rols'
+            'nombre_privilegio' => 'Administrar roles'
         ]);
 
         Privilegio::create([
@@ -90,7 +90,7 @@ class DatabaseSeeder extends Seeder
             'primer_nombre' => 'Yeisson',
             'segundo_nombre' => 'Estiven',
             'primer_apellido' => 'Ortiz',
-            'segundo_apellido' => 'Ortiz',
+            'segundo_apellido' => 'Torres',
             'tipo_documento' => 'CC',
             'numero_documento' => '1003614209',
             'telefono_usuario' => '3005311110',
@@ -100,6 +100,15 @@ class DatabaseSeeder extends Seeder
             'rol_id' => 1,
         ]);
 
+        //Asignar todos los privilegios al rol 1
+        $privilegios = Privilegio::all();
+        $rol = Rol::find(1);
+        foreach ($privilegios as $privilegio) {
+            \App\Models\RolPrivilegio::create([
+                'rol_id' => $rol->id,
+                'privilegio_id' => $privilegio->id,
+            ]);
+        }
         User::create([
             'primer_nombre' => 'Miguel',
             'segundo_nombre' => 'Angel',
@@ -115,7 +124,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\Producto::factory(10)->create();
-        \App\Models\RolPrivilegio::factory(10)->create();
         \App\Models\User::factory(10)->create();
         \App\Models\Etapa::factory(6)->create();
         \App\Models\Actividad::factory(10)->create();

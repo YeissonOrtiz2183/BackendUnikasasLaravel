@@ -14,7 +14,7 @@
             <circle cx="12" cy="12" r="9" />
             <path d="M10 10l4 4m0 -4l-4 4" />
           </svg>
-        <img class="avatar"src="../inicio/img/Unikasas.png">
+        <img class="avatar" src="https://scontent.fbog15-1.fna.fbcdn.net/v/t1.6435-9/106006473_102039921569195_4427339924898339768_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=cNpBmAQanLQAX8zZnHO&_nc_ht=scontent.fbog15-1.fna&oh=00_AT-folCaV1unHw4f_UuraBI9j0Xh9_E9SHS1GTXwbRTsSQ&oe=62C2E478">
         <h1>LOGIN</h1>
 
         <form action="{{ url('login') }}" method="POST">

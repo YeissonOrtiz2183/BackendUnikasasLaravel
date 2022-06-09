@@ -2,8 +2,10 @@
     font-family: Roboto;
 }
 
-body{
-    width: 89%;
+.workspace{
+    margin-top: 60px;
+    margin-left: 150px;
+    width: 90%;
 }
 
 .titleModule {
@@ -26,8 +28,10 @@ body{
     width: 180px;
     height: 40px;
     margin-bottom: 20px;
+    border: none;
     color: black;
     text-decoration: none;
+    font-size: 17px;
     text-transform: uppercase;
 }
 
@@ -42,6 +46,7 @@ body{
     margin-bottom: 20px;
     color: black;
     text-decoration: none;
+    font-size: 17px;
 }
 
 .formulario {
@@ -75,14 +80,19 @@ body{
 }
 
 .contenedor-campos {
-    margin-left: 8rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+    margin-top: 10px;
+
 }
 
 .confirmar {
     display: grid;
     grid-template-columns: 50% 50%;
     width: 30rem;
-    margin-left: 50rem;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 2rem;
 }
 
@@ -93,7 +103,7 @@ body{
     border-color: black;
 }
 
-.workspace form input[type= submit]{
+.workspace form input[type=submit]{
     height: 30px;
     background: orange;
     text-decoration: none;

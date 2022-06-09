@@ -1,3 +1,4 @@
+@extends('layouts.layout')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +15,7 @@
 </head>
 
 <body>
+    @section('content')
     <main class="workspace">
         <a onclick="history.back()">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -29,6 +31,7 @@
             {{ method_field('PATCH') }}
             <fieldset>
                 <div class="contenedor-campos">
+                @if($isMe)
                 <div class="campo">
                     <label>Primer nombre</label>
                     <input class="input-text" type="text"  name="primer_nombre" value="{{ $usuario->primer_nombre }}">
@@ -65,6 +68,8 @@
                     <label>Número de teléfono</label>
                     <input class="input-text" type="text" name="telefono_usuario" value="{{ $usuario->telefono_usuario }}">
                 </div>
+                @endif
+                @if($isUserAdmin)
                 <div class="campo">
                     <label>Roles</label>
                     <select name="rol_id">
@@ -84,6 +89,7 @@
                         <option value="Inactivo">Inactivo</option>
                     </select>
                 </div>
+                @endif
             </fieldset>
         </form>
         <div class="confirmar">
@@ -91,4 +97,5 @@
             <a onclick="history.back()" class="button-uno">Cancelar</a>
         </div>
     </main>
+    @endsection
 </body>

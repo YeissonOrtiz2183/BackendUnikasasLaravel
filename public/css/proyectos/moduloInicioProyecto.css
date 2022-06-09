@@ -111,11 +111,20 @@ section{
 }
 
 section img{
-    width: 100%;
+    max-width: 250px;
+    max-height: 200px;
     height: auto;
     padding: 5%;
     margin: auto;
 }
+
+@media screen and (min-width: 1400px){
+    section img{
+        max-width: 300px;
+        max-height: 200px;
+    }
+}
+
 
 .section__infoProyecto{
     display: grid;

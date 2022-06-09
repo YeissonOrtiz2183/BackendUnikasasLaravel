@@ -9,6 +9,9 @@ use App\Models\Actividad;
 use App\Models\ProyectoEtapa;
 use App\Models\Etapa;
 use App\Models\Audit;
+use App\Models\Cotizacion;
+use App\Models\Evento;
+
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProyectoController extends Controller
@@ -18,8 +21,56 @@ class ProyectoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function makeNotifications($userId){
+        $rol = $userId->rol_id;
+        $email = $userId->email;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isCotizacionAdmin = false;
+        $isEventoAdmin = false;
+        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
+            $isCotizacionAdmin = true;
+        }
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
+            $isEventoAdmin = true;
+        }
+
+        if($isCotizacionAdmin && $isEventoAdmin){
+            $cotizaciones = Cotizacion::where('estado_cotizacion', '=', 'Por responder')->get();
+            $numCotizaciones = $cotizaciones->count();
+            $eventos = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+            $numEventos = $eventos->count();
+            $notificaciones = array();
+            if ($numEventos > 0) {
+                $notificaciones[] = array('tipo' => 'Eventos', 'cantidad' => $numEventos);
+            }
+            if ($numCotizaciones > 0) {
+                $notificaciones[] = array('tipo' => 'Cotizaciones', 'cantidad' => $numCotizaciones);
+            }
+
+        }else{
+            $eventos = Evento::where('invitados_evento', 'like', "%$email%")->get();
+            $numEventos = $eventos->count();
+            $notificaciones = array();
+            if ($numEventos > 0) {
+                $notificaciones[] = array('tipo' => 'Eventos', 'cantidad' => $numEventos);
+            }
+        }
+
+
+        return $notificaciones;
+    }
+
     public function index(Request $request, $estado)
     {
+        $notificaciones = $this->makeNotifications(auth()->user());
+
+
         if ($estado == 'activo') {
             $estadoFind = ' = "En ejecución"';
         }elseif ($estado == 'inactivo') {
@@ -48,64 +99,92 @@ class ProyectoController extends Controller
             return $value->nombre_privilegio == 'Administrar proyectos';
         })){
 
-            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
+            if($request->has('search') && $request->has('filtro')){
+                if (!isset($request->filtro)) {
+                    $request->filtro = 'estado_proyecto';
+                } elseif (!isset($request->search)) {
+                    $request->search = '';
+                }
+
+                $proyectos = Proyecto::where('nombre_proyecto', 'LIKE', '%'.$request->search.'%')
+                ->join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
+                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
+                ->select('proyectos.*', 'encargado.primer_nombre as encargado_nombre', 'encargado.segundo_nombre as encargado_segundo_nombre', 'encargado.primer_apellido as encargado_apellido', 'encargado.segundo_apellido as encargado_segundo_apellido', 'cliente.primer_nombre as cliente_nombre', 'cliente.segundo_nombre as cliente_segundo_nombre', 'cliente.primer_apellido as cliente_apellido', 'cliente.segundo_apellido as cliente_segundo_apellido')
+                ->orWhere('encargado.primer_nombre', 'LIKE', '%'.$request->search.'%')
+                ->orWhere('cliente.primer_nombre', 'LIKE', '%'.$request->search.'%')
+                ->orWhere('encargado.primer_apellido', 'LIKE', '%'.$request->search.'%')
+                ->orWhere('cliente.primer_apellido', 'LIKE', '%'.$request->search.'%')
+                ->orderby($request->filtro)
+                ->paginate(10);
+
+                foreach ($proyectos as $proyecto) {
+                    $producto = $proyecto->producto_id;
+                    $imagen = DB::select('SELECT image.path
+                                        FROM image
+                                        INNER JOIN product_image ON product_image.image_id = image.id
+                                        INNER JOIN productos ON productos.id = product_image.producto_id
+                                        WHERE productos.id = ' .$producto);
+
+                    if(empty($imagen)){
+                        $imagen = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200';
+                    }else{
+                        $imagen = $imagen[0]->path;
+                    }
+                    $proyecto->image = $imagen;
+                }
+            }else{
+
+                $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio, proyectos.producto_id,
                                     encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
                                     cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
                                     FROM proyectos
                                     LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
                                     LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
                                     WHERE estado_proyecto ' .$estadoFind. 'ORDER BY proyectos.fecha_inicio DESC');
+
+                foreach ($proyectos as $proyecto) {
+                    //Traer la imagen del producto del proyecto. Join de la tabla proyectos con la tabla productos. Join de la tabla productos con la tabla product_image. Join de la tabla product_image con la tabla image.
+                    $producto = $proyecto->producto_id;
+                    $imagen = DB::select('SELECT image.path
+                                        FROM image
+                                        INNER JOIN product_image ON product_image.image_id = image.id
+                                        INNER JOIN productos ON productos.id = product_image.producto_id
+                                        WHERE productos.id = ' .$producto);
+
+                    if(empty($imagen)){
+                        $imagen = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200';
+                    }else{
+                        $imagen = $imagen[0]->path;
+                    }
+                    $proyecto->image = $imagen;
+                }
+            }
         }
         else{
 
-            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
+            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio, proyectos.producto_id,
                                     encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
                                     cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
                                     FROM proyectos
                                     LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
                                     LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
                                     WHERE estado_proyecto '.$estadoFind. ' AND ' .$request->user()->id. ' = cliente_id OR estado_proyecto ' .$estadoFind. ' AND ' .$request->user()->id. ' = encargado_id ORDER BY proyectos.fecha_inicio DESC');
-        }
 
-        // if($request->has('search') && $request->has('filtro')){
-        //     if (!isset($request->filtro)) {
-        //         $request->filtro = 'estado_proyecto';
-        //     } elseif (!isset($request->search)) {
-        //         $request->search = '';
-        //     }
+            foreach ($proyectos as $proyecto) {
+                //Traer la imagen del producto del proyecto. Join de la tabla proyectos con la tabla productos. Join de la tabla productos con la tabla product_image. Join de la tabla product_image con la tabla image.
+                $producto = $proyecto->producto_id;
+                $imagen = DB::select('SELECT image.path
+                                    FROM image
+                                    INNER JOIN product_image ON product_image.image_id = image.id
+                                    INNER JOIN productos ON productos.id = product_image.producto_id
+                                    WHERE productos.id = ' .$producto);
 
-            // $proyectos = Proyecto::where('nombre_proyecto', 'LIKE', '%'.$request->search.'%')
-            // ->join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-            // ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-            // ->select('proyectos.*', 'encargado.primer_nombre as encargado_nombre', 'encargado.segundo_nombre as encargado_segundo_nombre', 'encargado.primer_apellido as encargado_apellido', 'encargado.segundo_apellido as encargado_segundo_apellido', 'cliente.primer_nombre as cliente_nombre', 'cliente.segundo_nombre as cliente_segundo_nombre', 'cliente.primer_apellido as cliente_apellido', 'cliente.segundo_apellido as cliente_segundo_apellido')
-            // ->orWhere('encargado.primer_nombre', 'LIKE', '%'.$request->search.'%')
-            // ->orWhere('cliente.primer_nombre', 'LIKE', '%'.$request->search.'%')
-            // ->orWhere('encargado.primer_apellido', 'LIKE', '%'.$request->search.'%')
-            // ->orWhere('cliente.primer_apellido', 'LIKE', '%'.$request->search.'%')
-            // ->orderby($request->filtro, 'asc')
-            // ->paginate(10);
+                $proyecto->image = $imagen[0]->path;
+            }
+    }
 
-        // }else{
-
-        //     if ($estado == 'activo') {
-        //         $estadoFind = '"En ejecución"';
-        //     }elseif ($estado == 'inactivo') {
-        //         $estadoFind = '"Suspendido" OR estado_proyecto = "Finalizado"';
-        //     }
-
-            // $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
-            //                                 encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
-            //                                 cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
-            //                                 FROM proyectos
-            //                                 LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
-            //                                 LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
-            //                                 WHERE estado_proyecto ='.$estadoFind);
-
-        // }
-
-        return view('proyectos.moduloInicioProyecto', compact('proyectos', 'isAdmin'));
-
-
+        $notificaciones = $this->makeNotifications(auth()->user());
+        return view('proyectos.moduloInicioProyecto', compact('proyectos', 'isAdmin', 'notificaciones'));
     }
 
     /**
@@ -115,6 +194,8 @@ class ProyectoController extends Controller
      */
     public function create(Request $request)
     {
+        $notificaciones = $this->makeNotifications(auth()->user());
+
         $rol = $request->user()->rol_id;
 
         $privilegios = DB::table('rol_privilegios')
@@ -135,7 +216,7 @@ class ProyectoController extends Controller
             $productos = DB::select('SELECT productos.id, productos.nombre_producto, productos.descripcion_producto, productos.precio_producto
                                     FROM productos');
 
-            return view('proyectos.crearProyecto', compact('encargados', 'clientes', 'productos'));
+            return view('proyectos.crearProyecto', compact('encargados', 'clientes', 'productos', 'notificaciones'));
         }else{
             return redirect()->back();
         }
@@ -150,13 +231,12 @@ class ProyectoController extends Controller
     public function store(Request $request)
     {
         $datosProyecto = request()->except('_token');
+        $product = $datosProyecto['producto_id'];
 
-        $datosProyecto['producto_id'] = $datosProyecto['producto_id'][0];
         $str = $datosProyecto['cliente_id'];
         $int = (int) filter_var($str, FILTER_SANITIZE_NUMBER_INT);
 
         $datosProyecto['cliente_id'] = $int;
-
 
         Proyecto::insert($datosProyecto);
         $idProyecto = Proyecto::max('id');
@@ -221,6 +301,8 @@ class ProyectoController extends Controller
      */
     public function show($id)
     {
+        $notificaciones = $this->makeNotifications(auth()->user());
+
         $idEncargado = Proyecto::select('encargado_id')->where('id', '=', $id)->get();
         $idCliente = Proyecto::select('cliente_id')->where('id', '=', $id)->get();
         $userId = auth()->user()->id;
@@ -275,7 +357,7 @@ class ProyectoController extends Controller
                                     INNER JOIN etapas ON actEtp.etapa_id = etapas.id
                                     ORDER BY actividads.id ASC');
 
-            return view('proyectos.viewProyecto', compact('proyecto', 'etapas', 'actividades', 'isAdmin'));
+            return view('proyectos.viewProyecto', compact('proyecto', 'etapas', 'actividades', 'isAdmin', 'notificaciones'));
         } else {
             return redirect()->back();
         }
@@ -290,6 +372,8 @@ class ProyectoController extends Controller
      */
     public function edit($id)
     {
+        $notificaciones = $this->makeNotifications(auth()->user());
+
         $idEncargado = Proyecto::select('encargado_id')->where('id', '=', $id)->get();
         $idCliente = Proyecto::select('cliente_id')->where('id', '=', $id)->get();
         $userId = auth()->user()->id;
@@ -332,7 +416,7 @@ class ProyectoController extends Controller
                                     INNER JOIN etapas ON actEtp.etapa_id = etapas.id
                                     ORDER BY actividads.id ASC');
 
-            return view('proyectos.editProyecto', compact('proyecto', 'etapas', 'actividades'));
+            return view('proyectos.editProyecto', compact('proyecto', 'etapas', 'actividades', 'notificaciones'));
         }else{
             return redirect()->back();
         }
@@ -379,6 +463,8 @@ class ProyectoController extends Controller
 
     public function reporteProyectos(Request $request)
     {
+        $notificaciones = $this->makeNotifications(auth()->user());
+
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
 
@@ -445,7 +531,7 @@ class ProyectoController extends Controller
             $proyectoProductTable = $request->get('nombre_producto');
             $proyectoEncargadoTable = $request->get('primer_nombre');
             $proyectoClienteTable = $request->get('primer_nombre');
-            
+
             if($proyectoNombTable != ''){
                 $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
                                 ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
@@ -522,7 +608,7 @@ class ProyectoController extends Controller
                 }
             }
 
-            return view('proyectos.crearReporteProyectos', compact('proyectos'));
+            return view('proyectos.crearReporteProyectos', compact('proyectos', 'notificaciones'));
         } else {
             return redirect()->back();
         }
@@ -544,11 +630,12 @@ class ProyectoController extends Controller
         }
 
         if($isAdmin){
-            $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
-                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
-                                ->select('proyectos.*', 'encargado.primer_nombre as encargado_nombre', 'encargado.segundo_nombre as encargado_segundo_nombre', 'encargado.primer_apellido as encargado_apellido', 'encargado.segundo_apellido as encargado_segundo_apellido', 'cliente.primer_nombre as cliente_nombre', 'cliente.segundo_nombre as cliente_segundo_nombre', 'cliente.primer_apellido as cliente_apellido', 'cliente.segundo_apellido as cliente_segundo_apellido')
-                                ->get();
-                                   
+            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
+                                    encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
+                                    cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
+                                    FROM proyectos
+                                    LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
+                                    LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id');
             $proyectos = compact('proyectos');
             $pdf = Pdf::loadView('proyectos.exportPdf', $proyectos);
             return $pdf->setPaper('a3', 'landscape')->stream('reporteProyectos.pdf');
