@@ -26,15 +26,25 @@
                 <label class="search_parametros" for="itemSearch">Nombre del usuario:</label>
                     <select class="input-text" type="text" name="searchBar" id="searchBar">
                         <option value="null" selected disabled hidden>Seleccione el nombre del usuario</option>
-                @foreach ($usuarios as $usuario )
-                        <option value="{{ $usuario->primer_nombre  }}">{{ $usuario->primer_nombre }} {{ $usuario->primer_apellido }}</option>
-                @endforeach
+                        @foreach ($usuarios as $usuario )
+                            <option value="{{ $usuario->primer_nombre  }}">{{ $usuario->primer_nombre }} {{ $usuario->primer_apellido }}</option>
+                        @endforeach
                     </select>
 
-                <label class="search_parametros" for="fechaInicial">Fecha inicial:</label>
-                <input type="date" id="fechaInicial" name="fechaInicial">Fecha final:
-                <input type="date" id="fechaFinal" name="fechaFinal">
+                <label class="search_parametros" for="estado_usuario">Estado:</label>
+                <select class="input-text" type="text" name="estado_usuario" id="searchBar">
+                    <option value="null" selected disabled hidden>Seleccione el estado</option>
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
 
+                <label class="search_parametros" for="nombre_rol">Rol:</label>
+                <select class="input-text" type="text" name="nombre_rol" id="searchBar">
+                    <option value="null" selected disabled hidden>Seleccione el rol</option>
+                    @foreach ($roles as $rol )
+                        <option value="{{ $rol->nombre_rol  }}">{{ $rol->nombre_rol }}</option>
+                    @endforeach
+                </select>
 
             <div class="container">
                     <div class="formulario">
@@ -75,7 +85,11 @@
                             </div>
                             <div class="campo">
                                 <label>Estado:</label>
-                                <input class="checkbox" type="checkbox" id="estado_usuario" name="estado_usuario" value="estado_usuario">
+                                <input class="checkbox" type="checkbox" id="estadoUsuario" name="estado_usuario" value="estado_usuario">
+                            </div>
+                            <div class="campo">
+                                <label>Rol:</label>
+                                <input class="checkbox" type="checkbox" id="nombreRol" name="nombre_rol" value="nombre_rol">
                             </div>
                         </div>
 
@@ -132,6 +146,9 @@
                             @if(isset($usuario->estado_usuario))
                                 <th>Estado </th>
                             @endif
+                            @if(isset($usuario->nombre_rol))
+                                <th>Rol </th>
+                            @endif
                         </tr>
 
                         @foreach ($usuarios as $usuario)
@@ -164,6 +181,9 @@
                                 @endif
                                 @if(isset($usuario->estado_usuario))
                                     <td>{{ $usuario->estado_usuario }}</td>
+                                @endif
+                                @if(isset($usuario->nombre_rol))
+                                    <td>{{ $usuario->nombre_rol }}</td>
                                 @endif
                             </tr>
                         @endforeach

@@ -128,37 +128,38 @@
             </svg></a>@endif <a class="btn btn-light" href="{{ url('cotizaciones/'.$cotizacion->id) }}" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
               <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
               <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-            </svg></a><?php $id = $cotizacion->id ?> @if($isAdmin)<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal2"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+            </svg></a>@if($isAdmin)<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal2{{$cotizacion->id}}"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                 <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
               </svg></b></button>@endif</div>
+              <!-- Modal eliminar cotizacion -->
+              <div class="modal fade" id="exampleModal2{{$cotizacion->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 28vh">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="D" id="exampleModalLabel"> Eliminar la cotización</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="alert alert-danger text-center" role="alert">
+                      Esta seguro de que desea eliminar la cotizacion
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <form action="{{ url('cotizaciones/'.$cotizacion->id) }}" method="post">
+                        @csrf
+                          {{ method_field('DELETE') }}
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                      <input type="submit" class="btn btn-primary" value="Si">
+                    </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
             @endforeach
           </div>
         </div>
-        <!-- Modal eliminar cotizacion -->
-        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 28vh">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="D" id="exampleModalLabel"> Eliminar la cotización</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <div class="alert alert-danger text-center" role="alert">
-                Esta seguro de que desea eliminar la cotizacion
-                </div>
-              </div>
-              <div class="modal-footer">
-                <form action="{{ url('cotizaciones/'.$id) }}" method="post">
-                  @csrf
-                    {{ method_field('DELETE') }}
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <input type="submit" class="btn btn-primary" value="Si">
-              </form>
-              </div>
-            </div>
-          </div>
-        </div>
+      
         </div>
       </div>
       <div class="contenedorPaginacion">

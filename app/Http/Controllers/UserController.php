@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Audit;
+use App\Models\Rol;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -128,7 +129,7 @@ class UserController extends Controller
         return redirect('usuarios/' .$id);
     }
 
-    public function reporteUsuarios()
+    public function reporteUsuarios(Request $request)
     {
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -144,9 +145,31 @@ class UserController extends Controller
         }
 
         if($isAdmin){
-            $usuarios = User::all();
+            $nombreUsuario = $request->get('searchBar');
+
+            if($nombreUsuario != ''){
+                $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
+                                ->where('primer_nombre', 'LIKE', '%'.$nombreUsuario.'%')
+                                ->get();
+            } else {
+                $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
+                                ->select('users.*', 'rol.nombre_rol')
+                                ->get();
+            }
+
+            $estadoUsuario = $request->get('estado_usuario');
+            $rolUsuario = $request->get('nombre_rol');
+
+            if($rolUsuario != ''){
+                $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
+                                ->select('users.*', 'rol.nombre_rol')
+                                ->where('nombre_rol', 'LIKE', '%'.$rolUsuario.'%')
+                                ->get();
+            }
+
+            $roles = Rol::all();
             // return dd($usuarios);
-            return view('usuarios.crearReporteUsuarios', compact('usuarios'));
+            return view('usuarios.crearReporteUsuarios', compact('usuarios', 'roles'));
         } else {
             return redirect()->back();
         }
@@ -168,7 +191,10 @@ class UserController extends Controller
         }
 
         if($isAdmin){
-            $usuarios = User::all();
+            $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
+                            ->select('users.*', 'rol.nombre_rol')
+                            ->get();
+                            
             // return dd($proyectos);                                    
             $usuarios = compact('usuarios');
             $pdf = Pdf::loadView('usuarios.exportPdf', $usuarios);
