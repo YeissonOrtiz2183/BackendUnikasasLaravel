@@ -291,6 +291,8 @@ class UserController extends Controller
 
     public function reporteUsuarios()
     {
+        $notificaciones = $this->makeNotifications(auth()->user());
+
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
 
@@ -307,7 +309,7 @@ class UserController extends Controller
         if($isAdmin){
             $usuarios = User::all();
             // return dd($usuarios);
-            return view('usuarios.crearReporteUsuarios', compact('usuarios'));
+            return view('usuarios.crearReporteUsuarios', compact('usuarios', 'notificaciones'));
         } else {
             return redirect()->back();
         }

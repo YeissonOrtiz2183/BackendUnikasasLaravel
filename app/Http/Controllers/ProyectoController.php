@@ -463,6 +463,8 @@ class ProyectoController extends Controller
 
     public function reporteProyectos(Request $request)
     {
+        $notificaciones = $this->makeNotifications(auth()->user());
+
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
 
@@ -485,7 +487,7 @@ class ProyectoController extends Controller
                                     LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id');
 
             // return dd($proyectos);
-            return view('proyectos.crearReporteProyectos', compact('proyectos'));
+            return view('proyectos.crearReporteProyectos', compact('proyectos', 'notificaciones'));
         } else {
             return redirect()->back();
         }

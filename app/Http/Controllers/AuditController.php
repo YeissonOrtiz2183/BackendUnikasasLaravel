@@ -116,6 +116,8 @@ class AuditController extends Controller
 
     public function reporteAuditoria()
     {
+        $notificaciones = $this->makeNotifications(auth()->user());
+
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
 
@@ -132,7 +134,7 @@ class AuditController extends Controller
         if($isAdmin){
             $auditoria = DB::select('SELECT user_id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits LEFT JOIN users ON user_id = users.id ORDER BY fecha_accion ASC');
             // return dd($auditoria);
-            return view('auditoria.crearReporteAuditoria', compact('auditoria'));
+            return view('auditoria.crearReporteAuditoria', compact('auditoria', 'notificaciones'));
         } else {
             return redirect()->back();
         }
