@@ -97,6 +97,7 @@ class CotizacionController extends Controller
         if($estado != ''){
             $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->where('estado_cotizacion', 'like', "%$estado%")->paginate(10);
         }
+        dd($cotizaciones);
         return view('Cotizaciones.cotizaciones', compact('cotizaciones', 'isAdmin', 'notificaciones'));
     }
 

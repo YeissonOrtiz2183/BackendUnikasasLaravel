@@ -66,6 +66,9 @@
                     @endforeach
                 </div>
             </div>
+            <div class="contenedorpaginacion">
+                <p class="parrafoPaginacion">{{ $proyectos->links() }}</p>
+            </div>
         </div>
     </body>
     <script src="{{ asset('js/proyectos/inicio.js') }}"></script>

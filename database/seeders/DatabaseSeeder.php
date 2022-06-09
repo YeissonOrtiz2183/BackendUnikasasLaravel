@@ -100,7 +100,6 @@ class DatabaseSeeder extends Seeder
             'rol_id' => 1,
         ]);
 
-        //Asignar todos los privilegios al rol 1
         $privilegios = Privilegio::all();
         $rol = Rol::find(1);
         foreach ($privilegios as $privilegio) {
@@ -127,7 +126,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(10)->create();
         \App\Models\Etapa::factory(6)->create();
         \App\Models\Actividad::factory(10)->create();
-        \App\Models\Proyecto::factory(10)->create();
+        \App\Models\Proyecto::factory(40)->create();
         \App\Models\ProyectoEtapa::factory(10)->create();
         \App\Models\Cotizacion::factory(10)->create();
         \App\Models\ActividadEtapa::factory(10)->create();

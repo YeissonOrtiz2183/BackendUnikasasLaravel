@@ -288,7 +288,7 @@ class EventoController extends Controller
             $eventosMes = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->whereDate('fecha_evento', '>=', "$fechaInicial")->whereDate('fecha_evento', '<=', "$fechaFinal")->get();
             return view('Eventos.verDisponibilidad', compact('eventos', 'eventosMes'));
         } else {
-            // $eventos = Evento::all();
+            $eventos = Evento::all();
             return view('Eventos.verDisponibilidad', compact('eventos', 'notificaciones'));
         }
     }
@@ -405,7 +405,6 @@ class EventoController extends Controller
         if($isAdmin){
             $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->get();
             $eventos = compact('eventos');
-            // return dd($eventos);
             $pdf = Pdf::loadView('Eventos.exportPdf', $eventos);
             return $pdf->setPaper('a3', 'landscape')->stream('reporteEventos.pdf');
         }else{
