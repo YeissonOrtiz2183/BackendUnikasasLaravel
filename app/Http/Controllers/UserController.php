@@ -160,6 +160,13 @@ class UserController extends Controller
             $estadoUsuario = $request->get('estado_usuario');
             $rolUsuario = $request->get('nombre_rol');
 
+            if($estadoUsuario != ''){
+                $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
+                                ->select('users.*', 'rol.nombre_rol')
+                                ->where('estado_usuario', 'LIKE', '%'.$estadoUsuario.'%')
+                                ->get();
+            }
+
             if($rolUsuario != ''){
                 $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
                                 ->select('users.*', 'rol.nombre_rol')
@@ -194,8 +201,8 @@ class UserController extends Controller
             $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
                             ->select('users.*', 'rol.nombre_rol')
                             ->get();
-                            
-            // return dd($proyectos);                                    
+
+            // return dd($proyectos);
             $usuarios = compact('usuarios');
             $pdf = Pdf::loadView('usuarios.exportPdf', $usuarios);
             return $pdf->setPaper('a3', 'landscape')->stream('reporteUsuarios.pdf');
