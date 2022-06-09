@@ -44,6 +44,7 @@ aside{
     height: 30rem;
     width: 95%;
     row-gap: 10px;
+    padding: 5px 0px;
 }
 
 .inputdata{
@@ -391,6 +392,7 @@ a{
         margin-right: auto;
         height: 30rem;
         width: 70%;
+        padding: 5px 0px;
         row-gap: 10px;
     }
 
@@ -439,6 +441,11 @@ a{
     color: black;
     font-weight: bold;
     font-size: 18px;
+}
+
+.image{
+    max-width: 500px;
+    margin-top: 20px;
 }
 
 /* Slideshow container */
@@ -527,8 +534,3 @@ a{
     from {opacity: .4}
     to {opacity: 1}
   }
-
-.image{
-    max-width: 500px;
-    margin-top: 20px;
-}

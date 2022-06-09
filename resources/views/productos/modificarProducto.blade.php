@@ -76,6 +76,7 @@
                 <div id="filtroBusqueda" class="inputdata">
                 <label for="" id="textSelectTipoCasas">Tipo de casa: </label>
                     <select name="tipo_producto" id="selectTipoCasas">
+                    <option value="{{ $producto->tipo_producto }}">{{ $producto->tipo_producto }}</option>
                         <option value="Casa de uno solo agua">Casas de uno solo agua</option>
                         <option value="Casa en dos aguas">Casa en dos aguas</option>
                         <option value="Casa cuatro aguas">Casa cuatro aguas</option>
@@ -89,6 +90,7 @@
                 <div id="filtroBusqueda" class="inputdata">
                     <label for="" id="textMaterial">Tipo de material:</label>
                     <select name="material_producto" id="selectTipoMaterial">
+                        <option value="{{ $producto->material_producto }}m²">{{ $producto->material_producto }}</option>
                         <option value="Plaqueta">Plaqueta</option>
                         <option value="Bloquelon">Bloquelón</option>
                     </select>
@@ -101,8 +103,24 @@
                         <option value="2 Pisos">2 Pisos</option>
                     </select>
                 </div>
-
-
+                <div id="filtroBusqueda" class="inputdata">
+                    <label for="" id="textHabitaciones">Número de habitaciones:</label>
+                    <select name="habitaciones_producto" id="selectPisos">
+                        <option value="{{ $producto->habitaciones_producto }}m²">{{ $producto->habitaciones_producto }}</option>
+                        <option value="1 Habitación">1 habitación</option>
+                        <option value="2 Habitaciones">2 habitaciones</option>
+                        <option value="3 Habitaciones">3 habitaciones</option>
+                        <option value="4 Habitaciones">4 habitaciones</option>
+                        <option value="5 Habitaciones">5 habitaciones</option>
+                        <option value="6 Habitaciones">6 habitaciones</option>
+                        <option value="4 Habitaciones">7 habitaciones</option>
+                        <option value="4 Habitaciones">8 habitaciones</option>
+                    </select>
+                </div>
+                <div class="formL inputdata">
+                    <label class="labes">Tamaño(m²):</label>
+                    <input id="inputPrecioProducto" class="inputPrice" type="number" placeholder="Ingrese aqui el tamaño del producto" name="tamaño_producto" value="{{ $producto->tamaño_producto }}m²">
+                </div>
                 <div class="formL inputdata">
                     <label class="labes" for="itemSearch">Estado actual:</label>
                     <select class="input-text" type="text" name="estado_producto" id="searchBar">

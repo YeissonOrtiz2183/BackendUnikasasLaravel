@@ -63,6 +63,10 @@
                             <td><b>Material:</b> {{ $producto->material_producto }}</td>
                         </tr>
                         <tr>
+                            <td><b>Tamaño:</b> {{ $producto->tamaño_producto }}m²</td>
+                            <td><b>Habitaciones:</b> {{ $producto->habitaciones_producto }}</td>
+                        </tr>
+                        <tr>
                             <td><b>Pisos:</b> {{ $producto->pisos_producto }}</td>
                             <td><b>Estado:</b> {{ $producto->estado_Producto }}</td>
                         </tr>

@@ -17,8 +17,8 @@
                 <img src="{{ asset('storage/'.$product->image) }}" alt="">
                 <h2>{{ $product->nombre_producto }}</h2>
                 <div class="data">
-                    <p><b>Material:</b> {{ $product->material_producto }}</p>
-                    <p><b>Pisos:</b> {{ $product->pisos_producto }}</p>
+                    <p><b>Habitaciones:</b> {{ $product->habitaciones_producto }}</p>
+                    <p><b>Tamaño:</b> {{ $product->tamaño_producto }}</p>
                 </div>
                 <a href="{{ url('producto/' .$product->id) }}">Ver más imagenes</a>
             </div>

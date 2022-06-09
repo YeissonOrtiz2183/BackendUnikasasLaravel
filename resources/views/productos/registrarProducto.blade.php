@@ -92,8 +92,8 @@
             </div>
             <span id="errorDescripcionProducto" class="spans"></span>
             <div class="formL inputdata">
-            <label class="labes">Precio:</label>
-            <input id="inputPrecioProducto" class="inputPrice" type="number" placeholder="Ingrese aqui el precio del producto" name="precio_producto">
+                <label class="labes">Precio:</label>
+                <input id="inputPrecioProducto" class="inputPrice" type="number" placeholder="Ingrese aqui el precio del producto" name="precio_producto">
             </div>
             <span id="errorPrecioProducto" class="spans"></span>
             <div id="filtroBusqueda" class="inputdata">
@@ -120,7 +120,26 @@
                 <select name="pisos_producto" id="selectPisos">
                     <option value="1 Piso"> 1 piso</option>
                     <option value="2 Pisos">2 pisos</option>
+                    <option value="3 Pisos">3 pisos</option>
+                    <option value="4 Pisos">4 pisos</option>
                 </select>
+            </div>
+            <div id="filtroBusqueda" class="inputdata">
+                <label for="" id="textHabitaciones">Número de habitaciones:</label>
+                <select name="habitaciones_producto" id="selectPisos">
+                    <option value="1 Habitación">1 habitación</option>
+                    <option value="2 Habitaciones">2 habitaciones</option>
+                    <option value="3 Habitaciones">3 habitaciones</option>
+                    <option value="4 Habitaciones">4 habitaciones</option>
+                    <option value="5 Habitaciones">5 habitaciones</option>
+                    <option value="6 Habitaciones">6 habitaciones</option>
+                    <option value="4 Habitaciones">7 habitaciones</option>
+                    <option value="4 Habitaciones">8 habitaciones</option>
+                </select>
+            </div>
+            <div class="formL inputdata">
+                <label class="labes">Tamaño(m²):</label>
+                <input id="inputPrecioProducto" class="inputPrice" type="number" placeholder="Ingrese aqui el tamaño del producto" name="tamaño_producto">
             </div>
             <div class="formL inputdata">
                 <label class="labes" for="itemSearch">Estado actual:</label>
