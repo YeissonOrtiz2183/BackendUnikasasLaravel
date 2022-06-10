@@ -75,7 +75,6 @@
 
                 <div class="inputFiles">
                     <input required type="file" class="inputfile" id="file" name="images[]" onchange="readURL(this);" />
-                    <button>Eliminar imagen</button>
                 </div>
             </div>
         </section>
@@ -127,14 +126,14 @@
             <div id="filtroBusqueda" class="inputdata">
                 <label for="" id="textHabitaciones">Número de habitaciones:</label>
                 <select name="habitaciones_producto" id="selectPisos">
-                    <option value="1 Habitación">1 habitación</option>
-                    <option value="2 Habitaciones">2 habitaciones</option>
-                    <option value="3 Habitaciones">3 habitaciones</option>
-                    <option value="4 Habitaciones">4 habitaciones</option>
-                    <option value="5 Habitaciones">5 habitaciones</option>
-                    <option value="6 Habitaciones">6 habitaciones</option>
-                    <option value="4 Habitaciones">7 habitaciones</option>
-                    <option value="4 Habitaciones">8 habitaciones</option>
+                    <option value="1">1 habitación</option>
+                    <option value="2">2 habitaciones</option>
+                    <option value="3">3 habitaciones</option>
+                    <option value="4">4 habitaciones</option>
+                    <option value="5">5 habitaciones</option>
+                    <option value="6">6 habitaciones</option>
+                    <option value="4">7 habitaciones</option>
+                    <option value="4">8 habitaciones</option>
                 </select>
             </div>
             <div class="formL inputdata">

@@ -232,7 +232,7 @@ a:hover{
 
 @media(max-width: 1920px){
     .navLateral {
-        margin-top: 1.9%;
+        margin-top: 2.5%;
     }
 }
 
@@ -241,15 +241,15 @@ a:hover{
 }
 
 .contenedorPaginacion{
-    display: inline flex; 
-    width: 70%; 
-    margin: 0 auto; 
-    justify-content: 
-    flex-start!important; 
+    display: inline flex;
+    width: 70%;
+    margin: 0 auto;
+    justify-content:
+    flex-start!important;
     margin-left: 20%
 }
 
 .parrafoPaginacion{
-    display: inline flex; 
+    display: inline flex;
     justify-content: flex-start!important;
 }

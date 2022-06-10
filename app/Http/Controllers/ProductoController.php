@@ -306,9 +306,31 @@ class ProductoController extends Controller
         return redirect('productos/'.$producto->id);
     }
 
-    public function showCatalogue(){
-        $products = Producto::where('estado_Producto', '=', 'Publicado')->get();
+    public function showCatalogue(Request $request){
+        $filter = '';
+        $order = '';
+        if($request->has('filter')){
+            if($request->filter == 'habitaciones_mayor'){
+                $filter = 'habitaciones_producto';
+                $order = 'desc';
+            }
+            if($request->filter == 'habitaciones_menor'){
+                $filter = 'habitaciones_producto';
+                $order = 'asc';
+            }
+            if($request->filter == 'tamaño_mayor'){
+                $filter = 'tamaño_producto';
+                $order = 'desc';
+            }
+            if($request->filter == 'tamaño_menor'){
+                $filter = 'tamaño_producto';
+                $order = 'asc';
+            }
 
+            $products = Producto::where('estado_producto', '=', 'Publicado')->orderBy($filter, $order)->get();
+        }else{
+            $products = Producto::where('estado_Producto', '=', 'Publicado')->get();
+        }
         foreach($products as $product){
             $product->image = \DB::table('product_image')
                 ->join('image', 'product_image.image_id', '=', 'image.id')

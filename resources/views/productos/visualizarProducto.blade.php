@@ -64,7 +64,7 @@
                         </tr>
                         <tr>
                             <td><b>Tamaño:</b> {{ $producto->tamaño_producto }}m²</td>
-                            <td><b>Habitaciones:</b> {{ $producto->habitaciones_producto }}</td>
+                            <td><b>Habitaciones:</b> {{ $producto->habitaciones_producto }} habitaciones</td>
                         </tr>
                         <tr>
                             <td><b>Pisos:</b> {{ $producto->pisos_producto }}</td>

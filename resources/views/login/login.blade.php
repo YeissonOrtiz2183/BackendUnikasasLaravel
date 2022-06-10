@@ -21,11 +21,13 @@
             @csrf {{-- token de seguridad para el formulario  --}}
             <!--Ingresar nombre de usuario-->
             <label for="Nombre de usuario">Usuario</label>
-            <input type="text" placeholder="Ingrese usuario" name="email">
+            <input type="email" id="email" placeholder="Ingrese usuario" name="email">
 
             <!--Ingresar Password-->
             <label for="Contraseña">Contraseña</label>
-            <input type="password" placeholder="Ingrese contraseña" name="password">
+            <input type="password" placeholder="Ingrese contraseña" name="password" minlength="8" id="password">
+
+            <input type="checkbox" onclick="myFunction()" style="width: auto;">Show Password
 
             <button type="submit" id="loginButton">INGRESAR</button>
 
@@ -34,3 +36,13 @@
     </div>
 </body>
 </html>
+<script>
+    function myFunction() {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+          x.type = "text";
+        } else {
+          x.type = "password";
+        }
+    }
+</script>

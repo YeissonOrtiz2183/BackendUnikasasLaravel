@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Cotizacion;
 use App\Models\Evento;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\emailRegistrarUsuario;
 
 class UserController extends Controller
 {
@@ -171,6 +173,11 @@ class UserController extends Controller
 
         User::insert($datosUsuario);
 
+        $email = $datosUsuario['email'];
+        if($email){
+            Mail::to($email)->send(new emailRegistrarUsuario($datosUsuario));
+        }
+
         return redirect('usuarios');
     }
 
@@ -251,7 +258,6 @@ class UserController extends Controller
 
         if($isUserAdmin || $isMe){
             $usuario = User::findOrFail($id);
-            $usuario->password =
             $rol = DB::select('SELECT * FROM rols WHERE id = '.$usuario->rol_id.';');
             $roles = DB::select('SELECT * FROM rols;');
             return view('usuarios.editarUsuario', compact('usuario', 'rol', 'roles', 'isUserAdmin', 'isMe', 'notificaciones'));
@@ -270,8 +276,10 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $datosUsuario = request()->except('_token', '_method');
-        $password = $datosUsuario['numero_documento'];
-        $datosUsuario['password'] = bcrypt($password);
+        if($request->has('password')){
+            $datosUsuario['password'] = bcrypt($datosUsuario['password']);
+        }
+
         User::where('id', $id)->update($datosUsuario);
 
         $fechaActual = date("Y-m-d H:i:s");
@@ -279,13 +287,16 @@ class UserController extends Controller
         $time = $timestamp - (5 * 60 * 60);
         $fechaActual = date("Y-m-d H:i:s", $time);
 
-        Audit::insert([
-            'user_id' => auth()->user()->id,
-            'modulo' => 'usuario',
-            'tipo_accion' => "modificacion",
-            'fecha_accion' => $fechaActual,
-            'item' => $datosUsuario['primer_nombre'] ." ". $datosUsuario['segundo_nombre'] ." ". $datosUsuario['primer_apellido'] ." ". $datosUsuario['segundo_apellido']
-        ]);
+        if($request->has('estado_usuario') && $request->has('rol_id')){
+            $usuario = User::findOrFail($id);
+            Audit::insert([
+                'user_id' => auth()->user()->id,
+                'modulo' => 'usuario',
+                'tipo_accion' => "modificacion",
+                'fecha_accion' => $fechaActual,
+                'item' => $usuario->primer_nombre ." ". $usuario->segundo_nombre ." ". $usuario->primer_apellido ." ". $usuario->segundo_apellido
+            ]);
+        }
 
         return redirect('usuarios/' .$id);
     }

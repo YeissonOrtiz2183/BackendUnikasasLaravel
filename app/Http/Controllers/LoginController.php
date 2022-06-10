@@ -20,8 +20,7 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'estado_usuario' => 'Activo'])) {
-            // Authentication passed...
-            return redirect()->intended('proyectos/search/activo');
+            return redirect()->intended('usuarios');
         }
 
         return redirect()->back();

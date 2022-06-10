@@ -65,10 +65,6 @@
                     <input class="input-text" type="text" name="email" value="{{ $usuario->email }}">
                 </div>
                 <div class="campo">
-                    <label>Contraseña</label>
-                    <input class="input-text" type="password" name="password" value="{{ $usuario->password }}">
-                </div>
-                <div class="campo">
                     <label>Número de teléfono</label>
                     <input class="input-text" type="text" name="telefono_usuario" value="{{ $usuario->telefono_usuario }}">
                 </div>
@@ -97,9 +93,38 @@
             </fieldset>
         </form>
         <div class="confirmar">
+            @if($isMe)
+                <a href="#" class="btn" id="button" style="width: 200px;">Modificar contraseña</a>
+            @endif
             <button type="submit" form="editForm" class="button-dos">Guardar</button>
             <a onclick="history.back()" class="button-uno">Cancelar</a>
         </div>
     </main>
+
+    <section class="modal hidden">
+        <div class="modal-content">
+            <!-- Cambiar contraseña -->
+            <div class="modal-header">
+                <h2>Cambiar contraseña</h2>
+                <div class="form">
+                    <form action="{{ url('/usuarios/' .$usuario->id) }}" method="POST" id="changePasswordForm">
+                        @csrf {{-- token de seguridad para el formulario  --}}
+                        {{ method_field('PATCH') }}
+                        <div class="campo">
+                            <label>Contraseña nueva</label>
+                            <input class="input-text" type="password" value="" id="password-one" minlength="8">
+                        </div>
+                        <div class="campo">
+                            <label>Confirme contraseña</label>
+                            <input class="input-text" type="password" name="password" value="" id="password-two" onkeyup="validatePassword()" minlength="8">
+                        </div>
+                        <button type="submit" form="changePasswordForm" class="btn close" style="display: none;">Cambiar contraseña</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="{{ asset('js/usuarios/password.js') }}"></script>
     @endsection
 </body>
+</html>

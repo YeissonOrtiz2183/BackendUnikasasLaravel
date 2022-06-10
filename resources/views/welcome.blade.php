@@ -11,14 +11,25 @@
 <body>
     @section('content')
     <main class="workspace">
+        <form class="filter" action="{{ url('/') }}" method="GET">
+            @csrf
+            Ordenar por: <select name="filter" id="filter">
+                <option value="habitaciones_mayor">Cantidad de habitaciones (Mayor a menor)</option>
+                <option value="habitaciones_menor">Cantidad de habitaciones (Menor a mayor)</option>
+                <option value="tamaño_mayor">Tamaño de la casa (Mayor a menor)</option>
+                <option value="tamaño_menor">Tamaño de la casa (Menor a mayor)</option>
+            </select>
+            <button>Buscar</button>
+            <a href="{{ url('/') }}">Reset</a>
+        </form>
         <section class="container">
             @foreach($products as $product)
             <div class="producto">
                 <img src="{{ asset('storage/'.$product->image) }}" alt="">
                 <h2>{{ $product->nombre_producto }}</h2>
                 <div class="data">
-                    <p><b>Habitaciones:</b> {{ $product->habitaciones_producto }}</p>
-                    <p><b>Tamaño:</b> {{ $product->tamaño_producto }}</p>
+                    <p><b>Habitaciones:</b> {{ $product->habitaciones_producto }} habitaciones</p>
+                    <p><b>Tamaño:</b> {{ $product->tamaño_producto }}m²</p>
                 </div>
                 <a href="{{ url('producto/' .$product->id) }}">Ver más imagenes</a>
             </div>
