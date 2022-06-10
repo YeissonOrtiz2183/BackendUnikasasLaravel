@@ -4,6 +4,7 @@
     column-gap: 50px;
     row-gap: 20px;
     width: 100%;
+    margin-top: 20px;
 }
 
 .producto{
@@ -57,7 +58,7 @@
         max-height: 300px;
     }
     .container{
-        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        grid-template-columns: repeat(4, 435px);
     }
 }
 

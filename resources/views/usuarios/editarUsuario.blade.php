@@ -65,6 +65,10 @@
                     <input class="input-text" type="text" name="email" value="{{ $usuario->email }}">
                 </div>
                 <div class="campo">
+                    <label>Contraseña</label>
+                    <input class="input-text" type="password" name="password" value="{{ $usuario->password }}">
+                </div>
+                <div class="campo">
                     <label>Número de teléfono</label>
                     <input class="input-text" type="text" name="telefono_usuario" value="{{ $usuario->telefono_usuario }}">
                 </div>

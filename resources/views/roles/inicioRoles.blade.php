@@ -53,6 +53,9 @@
                         </div>
                     </section>
                     @endforeach
+                    <div class="contenedorpaginacion">
+                        <p class="parrafoPaginacion">{{ $roles->links() }}</p>
+                    </div>
                 </div>
                 <a href="{{ url('usuarios') }}">
                 <aside class="roles flex alinear-derecha">

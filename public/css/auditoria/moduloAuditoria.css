@@ -39,15 +39,11 @@ a:link{
     font-weight: 700;
 }
 
-.workspace form #searchBar{
-    width: 15%;
+.workspace input{
+    width: 40%;
     padding: 5px;
     border-radius: 10px;
     border-color: var(--black);
-}
-
-form .search_parametros {
-    margin-inline-start: 20px;
 }
 
 .workspace form input[type= submit]{

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('tipo_producto')->default('casa');
             $table->string('material_producto')->default('Plaqueta');
             $table->string('pisos_producto')->default('1 piso');
-            $table->string('tamaño_producto')->default('50m2');
+            $table->string('tamaño_producto')->default('50');
             $table->string('habitaciones_producto')->default('1');
             $table->string('estado_Producto')->default('Activo');
 

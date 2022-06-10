@@ -81,7 +81,7 @@ class RolController extends Controller
         if($request->has('search')){
             $roles = Rol::where('nombre_rol', 'LIKE', '%'.$request->search.'%')->paginate(10);
         }else{
-            $roles = Rol::All();
+            $roles = Rol::paginate(10);
         }
         return view('roles.inicioRoles', compact('roles', 'isAdmin', 'notificaciones'));
     }

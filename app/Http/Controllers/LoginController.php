@@ -9,7 +9,11 @@ class LoginController extends Controller
 {
     public function index()
     {
+        if (auth()->check()) {
+            return redirect()->intended('proyectos/search/activo');
+        }else{
         return view('login/login');
+        }
     }
 
     public function authenticate(Request $request){

@@ -102,13 +102,13 @@ class UserController extends Controller
                 ->orWhere('segundo_nombre', 'LIKE', '%'.$request->search.'%')
                 ->orWhere('primer_apellido', 'LIKE', '%'.$request->search.'%')
                 ->orWhere('segundo_apellido', 'LIKE', '%'.$request->search.'%')
-                ->paginate(30);
+                ->paginate(20);
             }else{
-                $usuarios = User::All();
+                $usuarios = User::paginate(20);
             }
             return view('usuarios.inicioUsuarios', compact('usuarios', 'isUserAdmin', 'canViewUsers', 'isRolAdmin', 'canViewRoles', 'notificaciones'));
         }else{
-            $usuarios = User::where('id', auth()->user()->id)->get();
+            $usuarios = User::where('id', auth()->user()->id)->paginate(1);
             return view('usuarios.inicioUsuarios', compact('usuarios', 'isUserAdmin', 'canViewUsers', 'isRolAdmin', 'canViewRoles', 'notificaciones'));
         }
     }
@@ -251,6 +251,7 @@ class UserController extends Controller
 
         if($isUserAdmin || $isMe){
             $usuario = User::findOrFail($id);
+            $usuario->password =
             $rol = DB::select('SELECT * FROM rols WHERE id = '.$usuario->rol_id.';');
             $roles = DB::select('SELECT * FROM rols;');
             return view('usuarios.editarUsuario', compact('usuario', 'rol', 'roles', 'isUserAdmin', 'isMe', 'notificaciones'));

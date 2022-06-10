@@ -111,10 +111,11 @@ class ProductoController extends Controller
                         $producto->imagen = $producto->imagen->path;
                     }
                 }
+                return view('productos.productosInicio', compact('productos', 'notificaciones', 'isProductoAdmin'));
 
             }else{
                 //Traer todos los productos seleccionar una imagen por producto. Tablas: productos, product_image, image
-                $productos = Producto::all();
+                $productos = Producto::paginate(30);
 
                 foreach($productos as $producto){
                     $producto->imagen = \DB::table('product_image')
@@ -129,8 +130,9 @@ class ProductoController extends Controller
                         $producto->imagen = $producto->imagen->path;
                     }
                 }
+                return view('productos.productosInicio', compact('productos', 'notificaciones', 'isProductoAdmin'));
             }
-            return view('productos.productosInicio', compact('productos', 'notificaciones', 'isProductoAdmin'));
+
         }else{
             return redirect()->back();
         }

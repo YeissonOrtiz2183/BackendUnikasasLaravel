@@ -53,6 +53,9 @@
                             </div>
                         </section>
                     @endforeach
+                    <div class="contenedorpaginacion">
+                        <p class="parrafoPaginacion">{{ $usuarios->links() }}</p>
+                    </div>
                 </div>
                 @if($isRolAdmin || $canViewRoles)
                 <a href="{{ url('roles') }}">

@@ -64,10 +64,10 @@
                         </div>
                     </section>
                     @endforeach
+                    <div class="contenedorpaginacion">
+                        <p class="parrafoPaginacion">{{ $proyectos->links() }}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="contenedorpaginacion">
-                <p class="parrafoPaginacion">{{ $proyectos->links() }}</p>
             </div>
         </div>
     </body>

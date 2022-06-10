@@ -71,6 +71,8 @@
                 </div>
             </div>
             @endif
+        <div class="maincenter">
+
 
             <div class="MatrizProductos main">
                 @foreach($productos as $producto)
@@ -105,8 +107,11 @@
                     </div>
                 </div>
                 @endforeach
-
             </div>
+            <div class="contenedorpaginacion">
+                <p class="parrafoPaginacion">{{ $productos->links() }}</p>
+            </div>
+        </div>
         </div>
     </main>
     <script src="{{ asset('js/productos/modales.js') }}"></script>

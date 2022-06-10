@@ -24,6 +24,11 @@ main{
         margin-left: auto;
         width: 93%;
     }
+    .maincenter {
+        width: 90%;
+        margin-right: 0px;
+        margin-left: auto;
+    }
 }
 
 h1{
@@ -95,14 +100,27 @@ h1{
     border-radius: 10px;
 }
 
+.maincenter{
+    width: 80%;
+    margin-right: 0px;
+    margin-left: auto;
+}
+
+@media screen and (min-width: 1400px){
+    .maincenter{
+        width: 89%;
+        margin-right: 0px;
+        margin-left: auto;
+    }
+}
+
 .MatrizProductos{
     display: flex;
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 80%;
-    margin-right: 0;
+    justify-content: center;
+    margin-right: auto;
     margin-left: auto;
 }
 

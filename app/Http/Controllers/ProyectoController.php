@@ -73,9 +73,11 @@ class ProyectoController extends Controller
 
 
         if ($estado == 'activo') {
-            $estadoFind = ' = "En ejecución"';
+            $estadoFind = "En ejecución";
+            $estadoFind2 = "En ejecución";
         }elseif ($estado == 'inactivo') {
-            $estadoFind = ' <> "En ejecución"';
+            $estadoFind = "Suspendido";
+            $estadoFind2 = "Finalizado";
         }
 
         $rol = $request->user()->rol_id;
@@ -116,7 +118,7 @@ class ProyectoController extends Controller
                 ->orWhere('encargado.primer_apellido', 'LIKE', '%'.$request->search.'%')
                 ->orWhere('cliente.primer_apellido', 'LIKE', '%'.$request->search.'%')
                 ->orderby($request->filtro)
-                ->paginate(15);
+                ->paginate(20);
 
                 foreach ($proyectos as $proyecto) {
                     $producto = $proyecto->producto_id;
@@ -134,15 +136,15 @@ class ProyectoController extends Controller
                     $proyecto->image = $imagen;
                 }
             }else{
-                $proyectos = Proyecto::where('estado_proyecto', '=', $estado)
+
+                $proyectos = Proyecto::where('estado_proyecto', '=', $estadoFind)
+                    ->orWhere('estado_proyecto', '=', $estadoFind2)
                     ->join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
                     ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
                     ->select('proyectos.*', 'encargado.primer_nombre as encargado_nombre', 'encargado.segundo_nombre as encargado_segundo_nombre', 'encargado.primer_apellido as encargado_apellido', 'encargado.segundo_apellido as encargado_segundo_apellido', 'cliente.primer_nombre as cliente_nombre', 'cliente.segundo_nombre as cliente_segundo_nombre', 'cliente.primer_apellido as cliente_apellido', 'cliente.segundo_apellido as cliente_segundo_apellido')
                     ->orderby('fecha_inicio', 'desc')
-                    ->paginate(15);
+                    ->paginate(20);
 
-
-                    dd($proyectos);
                 foreach ($proyectos as $proyecto) {
                     //Traer la imagen del producto del proyecto. Join de la tabla proyectos con la tabla productos. Join de la tabla productos con la tabla product_image. Join de la tabla product_image con la tabla image.
                     $producto = $proyecto->producto_id;
@@ -163,30 +165,25 @@ class ProyectoController extends Controller
         }
         else{
 
-            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio, proyectos.producto_id,
-                                    encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
-                                    cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
-                                    FROM proyectos
-                                    LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
-                                    LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
-                                    WHERE estado_proyecto '.$estadoFind. ' AND ' .$request->user()->id. ' = cliente_id OR estado_proyecto ' .$estadoFind. ' AND ' .$request->user()->id. ' = encargado_id ORDER BY proyectos.fecha_inicio DESC');
-
-
+            $proyectos = Proyecto::where('estado_proyecto', '=', $estadoFind)
+            ->where('cliente_id', '=', $request->user()->id)
+            ->orWhere('encargado_id', '=', $request->user()->id)
+            ->join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
+            ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
+            ->select('proyectos.*', 'encargado.primer_nombre as encargado_nombre', 'encargado.segundo_nombre as encargado_segundo_nombre', 'encargado.primer_apellido as encargado_apellido', 'encargado.segundo_apellido as encargado_segundo_apellido', 'cliente.primer_nombre as cliente_nombre', 'cliente.segundo_nombre as cliente_segundo_nombre', 'cliente.primer_apellido as cliente_apellido', 'cliente.segundo_apellido as cliente_segundo_apellido')
+            ->orderby('fecha_inicio', 'desc')
+            ->paginate(5);
 
             foreach ($proyectos as $proyecto) {
-                //Traer la imagen del producto del proyecto. Join de la tabla proyectos con la tabla productos. Join de la tabla productos con la tabla product_image. Join de la tabla product_image con la tabla image.
                 $producto = $proyecto->producto_id;
                 $imagen = DB::select('SELECT image.path
                                     FROM image
                                     INNER JOIN product_image ON product_image.image_id = image.id
                                     INNER JOIN productos ON productos.id = product_image.producto_id
                                     WHERE productos.id = ' .$producto);
-
                 $proyecto->image = $imagen[0]->path;
             }
         }
-
-        $proyectos = new Paginator($proyectos, 5, 1);
         $notificaciones = $this->makeNotifications(auth()->user());
         return view('proyectos.moduloInicioProyecto', compact('proyectos', 'isAdmin', 'notificaciones'));
     }

@@ -65,8 +65,11 @@ class AuditController extends Controller
     public function index(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $usuario_filter = '';
+        $date_filter = '';
+        $accion_filter = '';
 
-        if ($request->has('usuario_filter') && $request->has('accion_filter') && $request->has('date_filter')) {
+        if ($request->has('usuario_filter') || $request->has('accion_filter') || $request->has('date_filter')) {
             if ($request->date_filter == null) {
                 $fechaActual = date("Y-m-d");
                 $timestamp = strtotime($fechaActual);
@@ -78,36 +81,47 @@ class AuditController extends Controller
             $usuario_filter = $request->usuario_filter;
             $accion_filter = $request->accion_filter;
 
-            $audits = DB::select('SELECT user_id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits
-                                LEFT JOIN users ON user_id = users.id
-                                WHERE user_id = ' .$usuario_filter. '
-                                AND tipo_accion = "' .$accion_filter. '"
-                                AND fecha_accion LIKE "%' .$date_filter. '%"');
+            $audits = Audit::select('user_id', 'modulo', 'tipo_accion', 'fecha_accion', 'item', 'sub_item', 'users.primer_nombre as primer_nombre', 'segundo_nombre', 'primer_apellido', 'segundo_apellido')
+                ->join('users', 'user_id', '=', 'users.id')
+                ->where('fecha_accion', 'like', '%' . $date_filter . '%')
+                ->orWhere('user_id', '=', $usuario_filter)
+                ->orWhere('tipo_accion', '=', $accion_filter)
+                ->paginate(50);
 
-        } else if ($request->has('usuario_filter') && $request->has('accion_filter')) {
-            $usuario_filter = $request->usuario_filter;
-            $accion_filter = $request->accion_filter;
-
-            $audits = DB::select('SELECT user_id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits LEFT JOIN users ON user_id = users.id WHERE user_id = ? AND tipo_accion = ? ORDER BY fecha_accion DESC', [$usuario_filter, $accion_filter]);
-
-        } else if ($request->has('accion_filter') && $request->has('date_filter')) {
-            if ($request->date_filter == null) {
-                $fechaActual = date("Y-m-d");
-                $timestamp = strtotime($fechaActual);
-                $time = $timestamp - (5 * 60 * 60);
-                $date_filter = date('Y-m-d', $time);
-            }else{
-                $date_filter = $request->date_filter;
-            }
-            $accion_filter = $request->accion_filter;
-
-            $audits = DB::select('SELECT user_id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits
-                                LEFT JOIN users ON user_id = users.id
-                                WHERE tipo_accion = "' .$accion_filter. '"
-                                AND fecha_accion LIKE "%' .$date_filter. '%"');
         }
+        // } else if ($request->has('usuario_filter') && $request->has('accion_filter')) {
+        //     $usuario_filter = $request->usuario_filter;
+        //     $accion_filter = $request->accion_filter;
+
+        //     $audits = Audit::select('user_id', 'modulo', 'tipo_accion', 'fecha_accion', 'item', 'sub_item', 'users.primer_nombre as primer_nombre', 'segundo_nombre', 'primer_apellido', 'segundo_apellido')
+        //         ->join('users', 'user_id', '=', 'users.id')
+        //         ->where('user_id', '=', $usuario_filter)
+        //         ->where('tipo_accion', '=', $accion_filter)
+        //         ->orderBy('fecha_accion', 'desc')
+        //         ->paginate(50);
+
+        // } else if ($request->has('accion_filter') && $request->has('date_filter')) {
+        //     if ($request->date_filter == null) {
+        //         $fechaActual = date("Y-m-d");
+        //         $timestamp = strtotime($fechaActual);
+        //         $time = $timestamp - (5 * 60 * 60);
+        //         $date_filter = date('Y-m-d', $time);
+        //     }else{
+        //         $date_filter = $request->date_filter;
+        //     }
+        //     $accion_filter = $request->accion_filter;
+
+        //     $audits = Audit::select('user_id', 'modulo', 'tipo_accion', 'fecha_accion', 'item', 'sub_item', 'users.primer_nombre as primer_nombre', 'segundo_nombre', 'primer_apellido', 'segundo_apellido')
+        //         ->join('users', 'user_id', '=', 'users.id')
+        //         ->where('tipo_accion', '=', $accion_filter)
+        //         ->where('fecha_accion', 'like', '%' . $date_filter . '%')
+        //         ->paginate(50);
+        // }
         else {
-            $audits = DB::select('SELECT user_id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits LEFT JOIN users ON user_id = users.id ORDER BY fecha_accion DESC');
+            $audits = Audit::select('user_id', 'modulo', 'tipo_accion', 'fecha_accion', 'item', 'sub_item', 'users.primer_nombre as primer_nombre', 'segundo_nombre', 'primer_apellido', 'segundo_apellido')
+                ->join('users', 'user_id', '=', 'users.id')
+                ->orderBy('fecha_accion', 'desc')
+                ->paginate(50);
         }
 
         $autors = DB::select('SELECT DISTINCT primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, users.id as usuario FROM users LEFT JOIN audits ON audits.user_id = users.id WHERE users.id = audits.user_id');
