@@ -63,6 +63,33 @@ class ProductoController extends Controller
         return $notificaciones;
     }
 
+    public function eventosDia($userId){
+        $rol = $userId->rol_id;
+        $email = $userId->email;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isCotizacionAdmin = false;
+        $isEventoAdmin = false;
+        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
+            $isCotizacionAdmin = true;
+        }
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
+            $isEventoAdmin = true;
+        }
+
+        if($isCotizacionAdmin && $isEventoAdmin){
+            $eventosDelDia = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+        } else {
+            $eventosDelDia = '';
+        }
+        return $eventosDelDia;
+    }
+
     public function getPermissions(){
         $userId = auth()->user()->id;
         $rol = auth()->user()->rol_id;
@@ -90,6 +117,7 @@ class ProductoController extends Controller
     public function index(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $isProductoAdmin = $this->getPermissions()['isProductoAdmin'];
         $canViewProductos = $this->getPermissions()['canViewProductos'];
 
@@ -132,7 +160,7 @@ class ProductoController extends Controller
                     }
                 }
             }
-            return view('productos.productosInicio', compact('productos', 'notificaciones', 'isProductoAdmin'));
+            return view('productos.productosInicio', compact('productos', 'notificaciones', 'isProductoAdmin', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -147,10 +175,11 @@ class ProductoController extends Controller
     public function create()
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $isProductoAdmin = $this->getPermissions()['isProductoAdmin'];
 
         if($isProductoAdmin){
-            return view('productos.registrarProducto', compact('notificaciones'));
+            return view('productos.registrarProducto', compact('notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -210,6 +239,7 @@ class ProductoController extends Controller
     public function show( $id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $isProductoAdmin = $this->getPermissions()['isProductoAdmin'];
         $canViewProductos = $this->getPermissions()['canViewProductos'];
         $images = \DB::table('product_image')
@@ -220,7 +250,7 @@ class ProductoController extends Controller
 
         if($isProductoAdmin || $canViewProductos){
             $productos = Producto::find($id);
-            return view('productos.visualizarProducto', ['producto'=>$productos], compact('notificaciones', 'isProductoAdmin', 'images'));
+            return view('productos.visualizarProducto', ['producto'=>$productos], compact('notificaciones', 'isProductoAdmin', 'images', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -235,6 +265,7 @@ class ProductoController extends Controller
     public function edit($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $isProductoAdmin = $this->getPermissions()['isProductoAdmin'];
 
         if($isProductoAdmin){
@@ -244,7 +275,7 @@ class ProductoController extends Controller
                 ->select('image.path', 'image.id')
                 ->where('product_image.producto_id', '=', $id)
                 ->get();
-            return view('productos.modificarProducto', compact('producto', 'notificaciones', 'images'));
+            return view('productos.modificarProducto', compact('producto', 'notificaciones', 'images', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -365,6 +396,7 @@ class ProductoController extends Controller
     public function reporteProductos(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -447,7 +479,7 @@ class ProductoController extends Controller
                 $productos = DB::select('SELECT id' .$campos. ' FROM productos;');
             }
                 
-            return view('productos.crearReporteProductos', compact('productos'));
+            return view('productos.crearReporteProductos', compact('productos', 'notificaciones', 'eventosDelDiaHoy'));
         } else {
             return redirect()->back();
         }

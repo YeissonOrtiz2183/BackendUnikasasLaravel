@@ -66,10 +66,37 @@ class ProyectoController extends Controller
         return $notificaciones;
     }
 
+    public function eventosDia($userId){
+        $rol = $userId->rol_id;
+        $email = $userId->email;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isCotizacionAdmin = false;
+        $isEventoAdmin = false;
+        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
+            $isCotizacionAdmin = true;
+        }
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
+            $isEventoAdmin = true;
+        }
+
+        if($isCotizacionAdmin && $isEventoAdmin){
+            $eventosDelDia = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+        } else {
+            $eventosDelDia = '';
+        }
+        return $eventosDelDia;
+    }
+
     public function index(Request $request, $estado)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
-
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         if ($estado == 'activo') {
             $estadoFind = ' = "En ejecución"';
@@ -184,7 +211,7 @@ class ProyectoController extends Controller
     }
 
         $notificaciones = $this->makeNotifications(auth()->user());
-        return view('proyectos.moduloInicioProyecto', compact('proyectos', 'isAdmin', 'notificaciones'));
+        return view('proyectos.moduloInicioProyecto', compact('proyectos', 'isAdmin', 'notificaciones', 'eventosDelDiaHoy'));
     }
 
     /**
@@ -195,6 +222,7 @@ class ProyectoController extends Controller
     public function create(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = $request->user()->rol_id;
 
@@ -216,7 +244,7 @@ class ProyectoController extends Controller
             $productos = DB::select('SELECT productos.id, productos.nombre_producto, productos.descripcion_producto, productos.precio_producto
                                     FROM productos');
 
-            return view('proyectos.crearProyecto', compact('encargados', 'clientes', 'productos', 'notificaciones'));
+            return view('proyectos.crearProyecto', compact('encargados', 'clientes', 'productos', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -302,6 +330,7 @@ class ProyectoController extends Controller
     public function show($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $idEncargado = Proyecto::select('encargado_id')->where('id', '=', $id)->get();
         $idCliente = Proyecto::select('cliente_id')->where('id', '=', $id)->get();
@@ -357,7 +386,7 @@ class ProyectoController extends Controller
                                     INNER JOIN etapas ON actEtp.etapa_id = etapas.id
                                     ORDER BY actividads.id ASC');
 
-            return view('proyectos.viewProyecto', compact('proyecto', 'etapas', 'actividades', 'isAdmin', 'notificaciones'));
+            return view('proyectos.viewProyecto', compact('proyecto', 'etapas', 'actividades', 'isAdmin', 'notificaciones', 'eventosDelDiaHoy'));
         } else {
             return redirect()->back();
         }
@@ -373,6 +402,7 @@ class ProyectoController extends Controller
     public function edit($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $idEncargado = Proyecto::select('encargado_id')->where('id', '=', $id)->get();
         $idCliente = Proyecto::select('cliente_id')->where('id', '=', $id)->get();
@@ -416,7 +446,7 @@ class ProyectoController extends Controller
                                     INNER JOIN etapas ON actEtp.etapa_id = etapas.id
                                     ORDER BY actividads.id ASC');
 
-            return view('proyectos.editProyecto', compact('proyecto', 'etapas', 'actividades', 'notificaciones'));
+            return view('proyectos.editProyecto', compact('proyecto', 'etapas', 'actividades', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -464,6 +494,7 @@ class ProyectoController extends Controller
     public function reporteProyectos(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -581,7 +612,7 @@ class ProyectoController extends Controller
                                 LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
                                 INNER JOIN productos on proyectos.producto_id = productos.id;');         
             }
-            return view('proyectos.crearReporteProyectos', compact('proyectos', 'notificaciones'));
+            return view('proyectos.crearReporteProyectos', compact('proyectos', 'notificaciones', 'eventosDelDiaHoy'));
         } else {
             return redirect()->back();
         }

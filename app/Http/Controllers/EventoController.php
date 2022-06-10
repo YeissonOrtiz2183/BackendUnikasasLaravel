@@ -47,7 +47,6 @@ class EventoController extends Controller
             if ($numCotizaciones > 0) {
                 $notificaciones[] = array('tipo' => 'Cotizaciones', 'cantidad' => $numCotizaciones);
             }
-
         }else{
             $eventos = Evento::where('invitados_evento', 'like', "%$email%")->get();
             $numEventos = $eventos->count();
@@ -57,16 +56,41 @@ class EventoController extends Controller
             }
         }
 
-
         return $notificaciones;
     }
 
-    public $eventosR;
+    public function eventosDia($userId){
+        $rol = $userId->rol_id;
+        $email = $userId->email;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isCotizacionAdmin = false;
+        $isEventoAdmin = false;
+        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
+            $isCotizacionAdmin = true;
+        }
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
+            $isEventoAdmin = true;
+        }
+
+        if($isCotizacionAdmin && $isEventoAdmin){
+            $eventosDelDia = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+        } else {
+            $eventosDelDia = '';
+        }
+        return $eventosDelDia;
+    }
     //
     public function index(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
-
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
+        
         $rol = $request->user()->rol_id;
         $email = $request->user()->email;
         $isAdmin = false;
@@ -112,12 +136,13 @@ class EventoController extends Controller
                                 ->paginate(10);
         }
 
-        return view('Eventos.indexEventos', compact('eventos', 'isAdmin', 'notificaciones'));
+        return view('Eventos.indexEventos', compact('eventos', 'isAdmin', 'notificaciones', 'eventosDelDiaHoy'));
     }
 
     public function create()
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -135,7 +160,7 @@ class EventoController extends Controller
         if ($isAdmin) {
             // variable proyectos para mostrar los proyectos existentes en el formulario de creacion
             $proyectos = DB::table('proyectos')->get();
-            return view('Eventos.formCrearEvento', compact('proyectos', 'notificaciones'));
+            return view('Eventos.formCrearEvento', compact('proyectos', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -157,6 +182,7 @@ class EventoController extends Controller
     public function show($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $email = auth()->user()->email;
         $rol = auth()->user()->rol_id;
@@ -188,7 +214,7 @@ class EventoController extends Controller
         if($isAdmin || $isMember || $canView){
             // variable proyecto para acceder al proyecto al cual se encuentra asignado el evento
             $proyecto = Proyecto::findOrfail($evento->proyecto_id);
-            return view('Eventos.visualizarEvento', compact('evento', 'proyecto', 'notificaciones'));
+            return view('Eventos.visualizarEvento', compact('evento', 'proyecto', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -198,6 +224,7 @@ class EventoController extends Controller
     public function edit($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -215,7 +242,7 @@ class EventoController extends Controller
         if ($isAdmin) {
             $evento = Evento::findOrfail($id);
             $proyecto = Proyecto::findOrfail($evento->proyecto_id);
-            return view('Eventos.modificarEvento', compact('evento','proyecto', 'notificaciones'));
+            return view('Eventos.modificarEvento', compact('evento','proyecto', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -241,6 +268,7 @@ class EventoController extends Controller
     public function cancel($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -259,7 +287,7 @@ class EventoController extends Controller
             $evento = Evento::findOrfail($id);
             $proyecto = Proyecto::findOrfail($evento->proyecto_id);
 
-            return view('Eventos.formCancelarEvento', compact('evento','proyecto', 'notificaciones'));
+            return view('Eventos.formCancelarEvento', compact('evento','proyecto', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -268,6 +296,7 @@ class EventoController extends Controller
     public function disponibilidad(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $fechaInicial = $request->get('fecha');
         $fechaFinal = $request->get('fechaDos');
 
@@ -294,6 +323,7 @@ class EventoController extends Controller
     public function verDisponibilidad(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $fecha = $request->get('fecha');
         if($fecha != ''){
             $nuevafecha = explode('/', $fecha);
@@ -316,16 +346,17 @@ class EventoController extends Controller
                                 ->whereDate('fecha_evento', '<=', "$fechaFinal")
                                 ->get();
 
-            return view('Eventos.verDisponibilidad', compact('eventos', 'eventosMes'));
+            return view('Eventos.verDisponibilidad', compact('eventos', 'eventosMes', 'notificaciones', 'eventosDelDiaHoy'));
         } else {
             $eventos = Evento::all();
-            return view('Eventos.verDisponibilidad', compact('eventos', 'notificaciones'));
+            return view('Eventos.verDisponibilidad', compact('eventos', 'notificaciones', 'eventosDelDiaHoy'));
         }
     }
 
     public function reporteEventos(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
 
@@ -428,7 +459,7 @@ class EventoController extends Controller
                 $eventos = DB::select('SELECT eventos.id' .$campos. ' FROM eventos INNER JOIN proyectos on eventos.proyecto_id = proyectos.id;');
             }
 
-            return view('Eventos.crearReporteEvent', compact('eventos', 'notificaciones'));
+            return view('Eventos.crearReporteEvent', compact('eventos', 'notificaciones', 'eventosDelDiaHoy'));
 
         }else{
             return redirect()->back();

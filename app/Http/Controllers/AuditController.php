@@ -62,9 +62,37 @@ class AuditController extends Controller
         return $notificaciones;
     }
 
+    public function eventosDia($userId){
+        $rol = $userId->rol_id;
+        $email = $userId->email;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isCotizacionAdmin = false;
+        $isEventoAdmin = false;
+        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
+            $isCotizacionAdmin = true;
+        }
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
+            $isEventoAdmin = true;
+        }
+
+        if($isCotizacionAdmin && $isEventoAdmin){
+            $eventosDelDia = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+        } else {
+            $eventosDelDia = '';
+        }
+        return $eventosDelDia;
+    }
+
     public function index(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         if ($request->has('usuario_filter') && $request->has('accion_filter') && $request->has('date_filter')) {
             if ($request->date_filter == null) {
@@ -111,12 +139,13 @@ class AuditController extends Controller
         }
 
         $autors = DB::select('SELECT DISTINCT primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, users.id as usuario FROM users LEFT JOIN audits ON audits.user_id = users.id WHERE users.id = audits.user_id');
-        return view('auditoria.moduloAuditoriaInicio', compact('audits', 'autors', 'notificaciones'));
+        return view('auditoria.moduloAuditoriaInicio', compact('audits', 'autors', 'notificaciones', 'eventosDelDiaHoy'));
     }
 
     public function reporteAuditoria(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -213,10 +242,9 @@ class AuditController extends Controller
                     $campos .= ", `" .$valor. "`";
                 }
                 $auditoria = DB::select('SELECT audits.id' .$campos. ' FROM audits LEFT JOIN users ON user_id = users.id;');
-                // dd($uditoria);
             }
-            
-            return view('auditoria.crearReporteAuditoria', compact('auditoria', 'notificaciones'));
+            // dd($auditoria);
+            return view('auditoria.crearReporteAuditoria', compact('auditoria', 'notificaciones', 'eventosDelDiaHoy'));
         } else {
             return redirect()->back();
         }

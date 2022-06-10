@@ -23,7 +23,9 @@
       <br>
 
       <center><div class="card" style="width: 60%; z-index:1">
-          <img src="{{ asset('storage/' .$producto->image) }}" class="card-img-top" style="max-width: 400px; max-height:300px; margin: 20px auto;" class="img-thumbnail img-fluid">
+          @if(isset($producto->image))
+            <img src="{{ asset('storage/' .$producto->image) }}" class="card-img-top" style="max-width: 400px; max-height:300px; margin: 20px auto;" class="img-thumbnail img-fluid">
+          @endif
           <div class="card-body">
             <h5 class="card-title"><b>Producto: </b>{{ $producto->nombre_producto }}</h5>
             <p class="card-text"><b>Descripción: </b>{{ $producto->descripcion_producto }}</p>
