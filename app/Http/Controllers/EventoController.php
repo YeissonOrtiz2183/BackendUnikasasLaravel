@@ -341,8 +341,6 @@ class EventoController extends Controller
 
         if($isAdmin){
             $eventoNombre = $request->get('searchBar');
-            // if($eventoNombre != '')
-            //     return response()->json($request->except('_token'));
 
             $eventoFechaI = $request->get('fechaInicial'); // variables para el filtro de creacion del reporte
             $eventoFechaF = $request->get('fechaFinal');
@@ -422,7 +420,7 @@ class EventoController extends Controller
                 $arreglo[] = $eventoEstadTable;
             }
 
-            if($arreglo){
+            if($arreglo and $eventoNombTable){
                 $campos = '';
                 foreach($arreglo as $valor){
                     $campos .= ", `" .$valor. "`";

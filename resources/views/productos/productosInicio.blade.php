@@ -67,7 +67,7 @@
                 <a class="bot" id=""href="{{url('/productos/create')}}">Registrar Producto</a>
                 </div>
                 <div class="botonP">
-                <a class="bot"href="#">CREAR REPORTE</a>
+                <a class="bot"href="{{url('/reporteProductos')}}">CREAR REPORTE</a>
                 </div>
             </div>
             @endif

@@ -529,18 +529,20 @@ class ProyectoController extends Controller
             $proyectoCostoETable = $request->get('costo_estimado');
             $proyectoCostoFTable = $request->get('costo_final');
             $proyectoProductTable = $request->get('nombre_producto');
-            $proyectoEncargadoTable = $request->get('primer_nombre');
-            $proyectoClienteTable = $request->get('primer_nombre');
+            $proyectoEncargadoTable = $request->get('encargado_nombre');
+            $proyectoClienteTable = $request->get('cliente_nombre');
 
             $arreglo = [];
+            $arreglo[] = 'nombre_proyecto';
             if($proyectoNombTable){
                 $arreglo[] = $proyectoNombTable;
-            }
+            } 
+
             if($proyectoEstsdTable){
                 $arreglo[] = $proyectoEstsdTable;
             }
-            if($proyectoEstsdTable){
-                $arreglo[] = $proyectoEstsdTable;
+            if($proyectoFechaITable){
+                $arreglo[] = $proyectoFechaITable;
             }
             if($proyectoFechaFTable){
                 $arreglo[] = $proyectoFechaFTable;
@@ -569,14 +571,16 @@ class ProyectoController extends Controller
             if($proyectoClienteTable){
                 $arreglo[] = $proyectoClienteTable;
             }
-            if($arreglo){
+            if($arreglo and $proyectoNombTable){
                 $campos = '';
                 foreach($arreglo as $valor){
                     $campos .= ", `" .$valor. "`";
                 }
-                $proyectos= DB::select('SELECT proyectos.id' .$campos. ' FROM eventos;');
+                $proyectos= DB::select('SELECT proyectos.id' .$campos. ' FROM proyectos
+                                LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
+                                LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
+                                INNER JOIN productos on proyectos.producto_id = productos.id;');         
             }
-
             return view('proyectos.crearReporteProyectos', compact('proyectos', 'notificaciones'));
         } else {
             return redirect()->back();

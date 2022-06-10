@@ -79,11 +79,11 @@
                             </div>
                             <div class="campo">
                                 <label>Encargado: </label>
-                                <input class="checkbox" type="checkbox" id="encargadoNombre" name="encargado_nombre" value="primer_nombre">
+                                <input class="checkbox" type="checkbox" id="encargadoNombre" name="encargado_nombre" value="encargado_nombre">
                             </div>
                             <div class="campo">
                                 <label>Cliente: </label>
-                                <input class="checkbox" type="checkbox" id="clienteNombre" name="cliente_nombre" value="cliente_nombre">
+                                <input class="checkbox" type="checkbox" id="clienteNombre" name="cliente_nombre" value="primer_nombre">
                             </div>
                         </div>
 

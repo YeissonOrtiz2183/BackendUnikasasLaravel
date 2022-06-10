@@ -38,7 +38,7 @@
                             {{-- </div> --}}
                             <div class="resultados" style="width: 85%; margin: 0 auto">
                                 <h3 class="info">Resultados de busqueda del dia seleccionado</h3>
-                                @if (isset($eventos))
+                                @if(isset($eventos))
                                     @foreach ($eventos as $evento)
                                         <a class="eventoInfo" href="{{ url('eventos/'.$evento->id)}}"><p class="eventoDia"><b> Fecha: </b> {{ date('d/m/Y', strtotime($evento->fecha_evento)) }} <b> Desde: </b>{{ date('h:i A', strtotime($evento->hora_inicio)) }} <b> Hasta: </b> {{ date('h:i A', strtotime($evento->hora_fin))}}</p></a>
                                     @endforeach
@@ -46,7 +46,7 @@
                                     <h4>No existen eventos para el dia seleccionado</h4>
                                 @endif
                         
-                                @if (isset($eventosMes))
+                                @if(isset($eventosMes))
                                     <h3 class="info">Eventos existentes para el mes</h3>
                                     @foreach ($eventosMes as $evento)
                                         <a class="eventoInfo" href="{{ url('eventos/'.$evento->id)}}"><p class="eventoDia"><b> Fecha: </b> {{ date('d/m/Y', strtotime($evento->fecha_evento)) }} <b> Desde: </b>{{ date('h:i A', strtotime($evento->hora_inicio)) }} <b> Hasta: </b> {{ date('h:i A', strtotime($evento->hora_fin))}}</p></a>

@@ -11,6 +11,8 @@ use App\Models\Audit;
 use App\Mail\emailCrearCotizacion;
 use Illuminate\Support\Facades\Mail;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class ProductoController extends Controller
 {
     /**
@@ -358,6 +360,123 @@ class ProductoController extends Controller
         }
 
         return redirect('/');
+    }
+
+    public function reporteProductos(Request $request)
+    {
+        $notificaciones = $this->makeNotifications(auth()->user());
+
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+
+        $privilegios = DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar productos')){
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $productoNombre = $request->get('searchBar');
+            if($productoNombre){
+                $productos = Producto::select('*')->where('nombre_producto', 'like', "%$productoNombre%")->get();
+            } else {
+                $productos = Producto::all();
+            }
+            
+            $productoEstado = $request->get('estado_Producto1');
+            $productoPisos = $request->get('pisos_producto1');
+            
+            if($productoEstado){
+                $productos = Producto::select('*')->where('estado_Producto', '=', $productoEstado)->get();
+            }
+            if($productoPisos){
+                $productos = Producto::select('*')->where('pisos_producto', 'like', "%$productoPisos%")->get();
+            }
+
+            $productoNombTable = $request->get('nombre_producto');
+            $productoDescripTable = $request->get('descripcion_producto');
+            $productoPrecioTable = $request->get('precio_producto');
+            $productoTipoTable = $request->get('tipo_producto');
+            $productoMaterialTable = $request->get('material_producto');
+            $productoPisosTable = $request->get('pisos_producto');
+            $productoTamanioTable = $request->get('tamaño_producto');
+            $productoHabitacionTable = $request->get('habitaciones_producto');
+            $productoEstadoTable = $request->get('estado_Producto');
+
+            $arreglo = [];
+            if($productoNombTable){
+                $arreglo[] = $productoNombTable;  
+            }
+            if($productoDescripTable){
+                $arreglo[] = $productoDescripTable;
+            }
+            if($productoDescripTable){
+                $arreglo[] = $productoDescripTable;
+            }
+            if($productoPrecioTable){
+                $arreglo[] = $productoPrecioTable;
+            }
+            if($productoTipoTable){
+                $arreglo[] = $productoTipoTable;
+            }
+            if($productoMaterialTable){
+                $arreglo[] = $productoMaterialTable;
+            }
+            if($productoPisosTable){
+                $arreglo[] = $productoPisosTable;
+            }
+            if($productoTamanioTable){
+                $arreglo[] = $productoTamanioTable;
+            }
+            if($productoHabitacionTable){
+                $arreglo[] = $productoHabitacionTable;
+            }
+            if($productoEstadoTable){
+                $arreglo[] = $productoEstadoTable;
+            }
+
+            if($arreglo and $productoNombTable){ 
+                $campos = '';
+                foreach($arreglo as $valor){
+                    $campos .= ", `" .$valor. "`";
+                }
+                $productos = DB::select('SELECT id' .$campos. ' FROM productos;');
+            }
+                
+            return view('productos.crearReporteProductos', compact('productos'));
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function exportPdfProductos(Request $request)
+    {
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+
+        $privilegios = DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar productos')){
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $productos = Producto::all();
+            $productos = compact('productos');
+            $pdf = Pdf::loadView('productos.exportPdf', $productos);
+            return $pdf->setPaper('a3', 'landscape')->stream('reporteProductos.pdf');
+        } else {
+            return redirect()->back();
+        }
+        
     }
 
     /**

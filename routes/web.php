@@ -42,6 +42,7 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\notificaciones;
+use App\Models\Producto;
 
 Route::get('/', [ProductoController::class, 'showCatalogue']);
 Route::get('/producto/{id}', [ProductoController::class, 'showProduct'])->name('producto.showProduct');
@@ -62,6 +63,8 @@ Route::resource('roles', RolController::class)->middleware('auth')->middleware('
 Route::resource('auditoria', AuditController::class)->middleware('auth')->middleware('auditoria');
 
 Route::resource('productos', ProductoController::class)->middleware('auth');
+Route::get('/reporteProductos', [ProductoController::class, 'reporteProductos'])->middleware('auth');
+Route::get('/exportPdfProductos', [ProductoController::class, 'exportPdfProductos'])->middleware('auth');
 Route::resource('usuarios', UserController::class)->middleware('auth');
 Route::get('/reporteUsuarios', [UserController::class, 'reporteUsuarios'])->middleware('auth');
 Route::get('/exportPdfUsuarios', [UserController::class, 'exportPdfUsuarios'])->middleware('auth');

@@ -114,7 +114,7 @@ class AuditController extends Controller
         return view('auditoria.moduloAuditoriaInicio', compact('audits', 'autors', 'notificaciones'));
     }
 
-    public function reporteAuditoria()
+    public function reporteAuditoria(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
 
@@ -132,8 +132,90 @@ class AuditController extends Controller
         }
 
         if($isAdmin){
-            $auditoria = DB::select('SELECT user_id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits LEFT JOIN users ON user_id = users.id ORDER BY fecha_accion ASC');
-            // return dd($auditoria);
+            $auditoriaNombre = $request->get('searchBar');
+            if($auditoriaNombre){
+                $auditoria = DB::select('SELECT audits.id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits 
+                                LEFT JOIN users ON user_id = users.id
+                                WHERE primer_nombre LIKE "%' .$auditoriaNombre. '%" 
+                                ORDER BY fecha_accion ASC');
+                                
+            } else {
+                $auditoria = DB::select('SELECT audits.id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits LEFT JOIN users ON user_id = users.id ORDER BY fecha_accion ASC');
+            }
+
+            $auditoriaFechaI = $request->get('fechaInicial');
+            $auditoriaFechaF = $request->get('fechaFinal');
+
+            if($auditoriaFechaI){
+                $auditoria = DB::select('SELECT audits.id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits 
+                                LEFT JOIN users ON user_id = users.id
+                                WHERE fecha_accion = '.$auditoriaFechaI.'
+                                ORDER BY fecha_accion ASC');
+            }
+
+            if($auditoriaFechaI and $auditoriaFechaF){
+                $auditoria = DB::select('SELECT audits.id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits 
+                                LEFT JOIN users ON user_id = users.id
+                                WHERE fecha_accion >= '.$auditoriaFechaI.' AND fecha_accion <= '.$auditoriaFechaF.'
+                                ORDER BY fecha_accion ASC');
+            }
+
+            $auditPnombTable = $request->get('primer_nombre');
+            $auditSnombTable = $request->get('segundo_nombre');
+            $auditPapellTable = $request->get('primer_apellido');
+            $auditSapellTable = $request->get('segundo_apellido');
+            $auditModuloTable = $request->get('modulo');
+            $auditAccionTable = $request->get('tipo_accion');
+            $auditItemTable = $request->get('item');
+            $auditSubItemTable = $request->get('sub_item');
+            $auditFechaTable = $request->get('fecha_accion');
+
+            $arreglo = [];
+            $arreglo[] = 'primer_nombre';
+            $arreglo[] = 'primer_apellido';
+            if($auditPnombTable){
+                $arreglo[] = $auditPnombTable;
+            }
+            if($auditSnombTable){
+                $arreglo[] = $auditSnombTable;
+            }
+            if($auditPapellTable){
+                $arreglo[] = $auditPapellTable;
+            }
+            if($auditSapellTable){
+                $arreglo[] = $auditSapellTable;
+            }
+            if($auditModuloTable){
+                $arreglo[] = $auditModuloTable;
+            }
+            if($auditAccionTable){
+                $arreglo[] = $auditAccionTable;
+            }
+            if($auditAccionTable){
+                $arreglo[] = $auditAccionTable;
+            }
+            if($auditItemTable){
+                $arreglo[] = $auditItemTable;
+            }
+            if($auditItemTable){
+                $arreglo[] = $auditItemTable;
+            }
+            if($auditSubItemTable){
+                $arreglo[] = $auditSubItemTable;
+            }
+            if($auditFechaTable){
+                $arreglo[] = $auditFechaTable;
+            }
+
+            if($arreglo and $auditPnombTable){
+                $campos = '';
+                foreach($arreglo as $valor){
+                    $campos .= ", `" .$valor. "`";
+                }
+                $auditoria = DB::select('SELECT audits.id' .$campos. ' FROM audits LEFT JOIN users ON user_id = users.id;');
+                // dd($uditoria);
+            }
+            
             return view('auditoria.crearReporteAuditoria', compact('auditoria', 'notificaciones'));
         } else {
             return redirect()->back();
