@@ -75,25 +75,19 @@
             </div>
         </section>
         <section class="modalLayout hidden">
-            <div class="modalNotifications">
-                @if(isset($notificaciones))
-                    <ul>
-                        @foreach ($notificaciones as $notificacion)
-                            @if($notificacion['tipo'] == 'Eventos')
-                                <li>Existe {{ $notificacion['cantidad'] }} {{ $notificacion['tipo'] }} programado para el dia de hoy</li>
-                            @endif
-                        @endforeach
-                    </ul>
-                    <ul>
-                        @if(isset($eventosDelDiaHoy))
+            <div class="modalNotifications"> <?php $mensaje = 'No tiene eventos' ?>
+                    @if(!empty($eventosDelDiaHoy))
+                        <ul>
+                            <li>Eventos existentes para el dia de hoy</li>
                             @foreach ($eventosDelDiaHoy as $evento)
-                                <a href="{{ url('eventos/'.$evento->id) }}" class="eventoHoy">Hora de inicio {{ date('h:i A', strtotime($evento->hora_inicio)) }} - Hora final {{ date('h:i A', strtotime($evento->hora_fin)) }} </a>
+                                <li><a href="{{ url('eventos/'.$evento->id) }}" class="eventoHoy">Hora de inicio {{ date('h:i A', strtotime($evento->hora_inicio)) }} - Hora final {{ date('h:i A', strtotime($evento->hora_fin)) }} </a></li>
                             @endforeach
-                        @endif
-                    </ul>
-                @else
-                    <li>No existen eventos para el dia de hoy</li>
-                @endif
+                        </ul>
+                    @else
+                        <ul>
+                            <li>No tiene eventos</li>
+                        </ul>
+                    @endif
             </div>
         </section>
 
