@@ -13,7 +13,6 @@ use App\Models\Cotizacion;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\emailCrearEvento;
-use Hamcrest\Core\HasToString;
 
 class EventoController extends Controller
 {
@@ -48,7 +47,6 @@ class EventoController extends Controller
             if ($numCotizaciones > 0) {
                 $notificaciones[] = array('tipo' => 'Cotizaciones', 'cantidad' => $numCotizaciones);
             }
-
         }else{
             $eventos = Evento::where('invitados_evento', 'like', "%$email%")->get();
             $numEventos = $eventos->count();
@@ -58,15 +56,40 @@ class EventoController extends Controller
             }
         }
 
-
         return $notificaciones;
     }
 
-    public $eventosR;
+    public function eventosDia($userId){
+        $rol = $userId->rol_id;
+        $email = $userId->email;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isCotizacionAdmin = false;
+        $isEventoAdmin = false;
+        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
+            $isCotizacionAdmin = true;
+        }
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
+            $isEventoAdmin = true;
+        }
+
+        if($isCotizacionAdmin && $isEventoAdmin){
+            $eventosDelDia = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+        } else {
+            $eventosDelDia = '';
+        }
+        return $eventosDelDia;
+    }
     //
     public function index(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = $request->user()->rol_id;
         $email = $request->user()->email;
@@ -88,24 +111,38 @@ class EventoController extends Controller
             $campoTabla = $request->get('campoBusqueda');
 
             if($eventoBusqueda != ''){
-                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->where('nombre_evento', 'like', "%$eventoBusqueda%")->paginate(10);
+                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
+                                ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
+                                ->where('nombre_evento', 'like', "%$eventoBusqueda%")
+                                ->paginate(10);
             } else {
-                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->paginate(10);
+                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
+                                ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
+                                ->orderBy('eventos.id', 'DESC')
+                                ->paginate(10);
             }
 
             if($eventoBusqueda != '' && $campoTabla != ''){
-                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->where($campoTabla, 'like', "%$eventoBusqueda%")->paginate(10);
+                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
+                                ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
+                                ->where($campoTabla, 'like', "%$eventoBusqueda%")
+                                ->paginate(10);
             }
         }else{
-            $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->where('invitados_evento', 'like', "%$email%")->paginate(10);
+            $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
+                                ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
+                                ->where('invitados_evento', 'like', "%$email%")
+                                ->orderBy('eventos.id', 'DESC')
+                                ->paginate(10);
         }
 
-        return view('Eventos.indexEventos', compact('eventos', 'isAdmin', 'notificaciones'));
+        return view('Eventos.indexEventos', compact('eventos', 'isAdmin', 'notificaciones', 'eventosDelDiaHoy'));
     }
 
     public function create()
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -123,7 +160,7 @@ class EventoController extends Controller
         if ($isAdmin) {
             // variable proyectos para mostrar los proyectos existentes en el formulario de creacion
             $proyectos = DB::table('proyectos')->get();
-            return view('Eventos.formCrearEvento', compact('proyectos', 'notificaciones'));
+            return view('Eventos.formCrearEvento', compact('proyectos', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -145,6 +182,7 @@ class EventoController extends Controller
     public function show($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $email = auth()->user()->email;
         $rol = auth()->user()->rol_id;
@@ -176,7 +214,7 @@ class EventoController extends Controller
         if($isAdmin || $isMember || $canView){
             // variable proyecto para acceder al proyecto al cual se encuentra asignado el evento
             $proyecto = Proyecto::findOrfail($evento->proyecto_id);
-            return view('Eventos.visualizarEvento', compact('evento', 'proyecto', 'notificaciones'));
+            return view('Eventos.visualizarEvento', compact('evento', 'proyecto', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -186,6 +224,7 @@ class EventoController extends Controller
     public function edit($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -203,7 +242,7 @@ class EventoController extends Controller
         if ($isAdmin) {
             $evento = Evento::findOrfail($id);
             $proyecto = Proyecto::findOrfail($evento->proyecto_id);
-            return view('Eventos.modificarEvento', compact('evento','proyecto', 'notificaciones'));
+            return view('Eventos.modificarEvento', compact('evento','proyecto', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -229,6 +268,7 @@ class EventoController extends Controller
     public function cancel($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -247,7 +287,7 @@ class EventoController extends Controller
             $evento = Evento::findOrfail($id);
             $proyecto = Proyecto::findOrfail($evento->proyecto_id);
 
-            return view('Eventos.formCancelarEvento', compact('evento','proyecto', 'notificaciones'));
+            return view('Eventos.formCancelarEvento', compact('evento','proyecto', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -256,18 +296,26 @@ class EventoController extends Controller
     public function disponibilidad(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $fechaInicial = $request->get('fecha');
         $fechaFinal = $request->get('fechaDos');
 
         if($fechaInicial != ''){
             // dd($fechaInicial);
-            $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->where('fecha_evento', 'like', "$fechaInicial")->paginate(10);
+            $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
+                                ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
+                                ->where('fecha_evento', 'like', "$fechaInicial")
+                                ->paginate(10);
         } else {
             $eventos = Evento::paginate(10);
         }
 
         if($fechaInicial != '' && $fechaFinal != ''){
-            $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->whereDate('fecha_evento', '>=', "$fechaInicial")->whereDate('fecha_evento', '<=', "$fechaFinal")->paginate(10);
+            $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
+                                ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
+                                ->whereDate('fecha_evento', '>=', "$fechaInicial")
+                                ->whereDate('fecha_evento', '<=', "$fechaFinal")
+                                ->paginate(10);
         }
         return view('Eventos.disponibilidad', compact('eventos', 'notificaciones'));
     }
@@ -275,6 +323,7 @@ class EventoController extends Controller
     public function verDisponibilidad(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $fecha = $request->get('fecha');
         if($fecha != ''){
             $nuevafecha = explode('/', $fecha);
@@ -282,20 +331,32 @@ class EventoController extends Controller
             $mes = $nuevafecha[0];
             $annio = $nuevafecha[2];
             $fecha = $annio."-".$mes."-".$dia;
-            $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->where('fecha_evento', 'like', "$fecha")->get();
+
+            $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
+                                ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
+                                ->where('fecha_evento', 'like', "$fecha")
+                                ->get();
+
             $fechaInicial = $annio."-".$mes."-01";
             $fechaFinal = $annio."-".$mes."-31";
-            $eventosMes = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->whereDate('fecha_evento', '>=', "$fechaInicial")->whereDate('fecha_evento', '<=', "$fechaFinal")->get();
-            return view('Eventos.verDisponibilidad', compact('eventos', 'eventosMes'));
+
+            $eventosMes = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
+                                ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
+                                ->whereDate('fecha_evento', '>=', "$fechaInicial")
+                                ->whereDate('fecha_evento', '<=', "$fechaFinal")
+                                ->get();
+
+            return view('Eventos.verDisponibilidad', compact('eventos', 'eventosMes', 'notificaciones', 'eventosDelDiaHoy'));
         } else {
             $eventos = Evento::all();
-            return view('Eventos.verDisponibilidad', compact('eventos', 'notificaciones'));
+            return view('Eventos.verDisponibilidad', compact('eventos', 'notificaciones', 'eventosDelDiaHoy'));
         }
     }
 
     public function reporteEventos(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
 
@@ -311,24 +372,34 @@ class EventoController extends Controller
 
         if($isAdmin){
             $eventoNombre = $request->get('searchBar');
-            // if($eventoNombre != '')
-            //     return response()->json($request->except('_token'));
 
             $eventoFechaI = $request->get('fechaInicial'); // variables para el filtro de creacion del reporte
             $eventoFechaF = $request->get('fechaFinal');
 
             if($eventoNombre != ''){
-                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->where('nombre_evento', 'like', "%$eventoNombre%")->get();
+                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
+                                    ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
+                                    ->where('nombre_evento', 'like', "%$eventoNombre%")
+                                    ->get();
             } else {
-                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->get();
+                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
+                                    ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
+                                    ->get();
             }
 
             if($eventoFechaI != ''){
-                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->where('fecha_evento', 'like', "%$eventoFechaI%")->get();
+                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
+                                    ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
+                                    ->where('fecha_evento', 'like', "%$eventoFechaI%")
+                                    ->get();
             }
 
             if($eventoFechaI != '' && $eventoFechaF != ''){
-                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->whereDate('fecha_evento', '>=', "$eventoFechaI%")->whereDate('fecha_evento', '<=', "$eventoFechaF%")->get();
+                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
+                                    ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
+                                    ->whereDate('fecha_evento', '>=', "$eventoFechaI%")
+                                    ->whereDate('fecha_evento', '<=', "$eventoFechaF%")
+                                    ->get();
             }
 
             // filtro campos checkbox
@@ -344,42 +415,51 @@ class EventoController extends Controller
             $eventoMensajTable = $request->get('mensaje_evento');
             $eventoEstadTable = $request->get('estado_evento');
 
-            if($eventoNombTable != ''){
-                $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id', "$eventoNombTable")->get();
-                if($eventoFechTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id', "$eventoNombTable", "$eventoFechTable")->get();
-                }
-                if($eventoHorITable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable")->get();
-                }
-                if($eventoHorFTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable")->get();
-                }
-                if($eventoProyectTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable")->get();
-                }
-                if($eventoNotifTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable", "$eventoNotifTable")->get();
-                }
-                if($eventoInvitTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable", "$eventoNotifTable", "$eventoInvitTable")->get();
-                }
-                if($eventoLugTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable", "$eventoNotifTable", "$eventoInvitTable", "$eventoLugTable")->get();
-                }
-                if($eventoAsuntTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable", "$eventoNotifTable", "$eventoInvitTable", "$eventoLugTable", "$eventoAsuntTable")->get();
-                }
-                if($eventoMensajTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable", "$eventoNotifTable", "$eventoInvitTable", "$eventoLugTable", "$eventoAsuntTable", "$eventoMensajTable")->get();
-                }
-                if($eventoEstadTable != ''){
-                    $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id', "$eventoNombTable", "$eventoFechTable", "$eventoHorITable", "$eventoHorFTable", "$eventoProyectTable", "$eventoNotifTable", "$eventoInvitTable", "$eventoLugTable", "$eventoAsuntTable", "$eventoMensajTable", "$eventoEstadTable")->get();
-                }
-
+            $arreglo = [];
+            $arreglo[] = 'nombre_evento';
+            if($eventoNombTable){
+                $arreglo[] = $eventoNombTable;
+            }
+            if($eventoFechTable){
+                $arreglo[] = $eventoFechTable;
+            }
+            if($eventoHorITable){
+                $arreglo[] = $eventoHorITable;
+            }
+            if($eventoHorFTable){
+                $arreglo[] = $eventoHorFTable;
+            }
+            if($eventoProyectTable){
+                $arreglo[] = $eventoProyectTable;
+            }
+            if($eventoNotifTable){
+                $arreglo[] = $eventoNotifTable;
+            }
+            if($eventoInvitTable){
+                $arreglo[] = $eventoInvitTable;
+            }
+            if($eventoLugTable){
+                $arreglo[] = $eventoLugTable;
+            }
+            if($eventoAsuntTable){
+                $arreglo[] = $eventoAsuntTable;
+            }
+            if($eventoMensajTable){
+                $arreglo[] = $eventoMensajTable;
+            }
+            if($eventoEstadTable){
+                $arreglo[] = $eventoEstadTable;
             }
 
-            return view('Eventos.crearReporteEvent', compact('eventos', 'notificaciones'));
+            if($arreglo and $eventoNombTable){
+                $campos = '';
+                foreach($arreglo as $valor){
+                    $campos .= ", `" .$valor. "`";
+                }
+                $eventos = DB::select('SELECT eventos.id' .$campos. ' FROM eventos INNER JOIN proyectos on eventos.proyecto_id = proyectos.id;');
+            }
+
+            return view('Eventos.crearReporteEvent', compact('eventos', 'notificaciones', 'eventosDelDiaHoy'));
 
         }else{
             return redirect()->back();
@@ -403,7 +483,9 @@ class EventoController extends Controller
         }
 
         if($isAdmin){
-            $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')->get();
+            $eventos = Evento::join('proyectos', 'proyectos.id', '=', 'eventos.proyecto_id')
+                                ->select('eventos.id','nombre_evento', 'fecha_evento', 'hora_inicio', 'hora_fin', 'nombre_proyecto', 'notificacion_evento', 'invitados_evento', 'lugar_evento', 'asunto_evento', 'mensaje_evento', 'estado_evento')
+                                ->get();
             $eventos = compact('eventos');
             $pdf = Pdf::loadView('Eventos.exportPdf', $eventos);
             return $pdf->setPaper('a3', 'landscape')->stream('reporteEventos.pdf');

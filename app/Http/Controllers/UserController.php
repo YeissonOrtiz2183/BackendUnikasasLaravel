@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Audit;
+use App\Models\Rol;
 use Illuminate\Support\Facades\DB;
 use App\Models\Cotizacion;
 use App\Models\Evento;
@@ -65,9 +66,37 @@ class UserController extends Controller
         return $notificaciones;
     }
 
+    public function eventosDia($userId){
+        $rol = $userId->rol_id;
+        $email = $userId->email;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isCotizacionAdmin = false;
+        $isEventoAdmin = false;
+        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
+            $isCotizacionAdmin = true;
+        }
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
+            $isEventoAdmin = true;
+        }
+
+        if($isCotizacionAdmin && $isEventoAdmin){
+            $eventosDelDia = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+        } else {
+            $eventosDelDia = '';
+        }
+        return $eventosDelDia;
+    }
+
     public function index(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
 
@@ -108,10 +137,10 @@ class UserController extends Controller
             }else{
                 $usuarios = User::paginate(20);
             }
-            return view('usuarios.inicioUsuarios', compact('usuarios', 'isUserAdmin', 'canViewUsers', 'isRolAdmin', 'canViewRoles', 'notificaciones'));
+            return view('usuarios.inicioUsuarios', compact('usuarios', 'isUserAdmin', 'canViewUsers', 'isRolAdmin', 'canViewRoles', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             $usuarios = User::where('id', auth()->user()->id)->paginate(1);
-            return view('usuarios.inicioUsuarios', compact('usuarios', 'isUserAdmin', 'canViewUsers', 'isRolAdmin', 'canViewRoles', 'notificaciones'));
+            return view('usuarios.inicioUsuarios', compact('usuarios', 'isUserAdmin', 'canViewUsers', 'isRolAdmin', 'canViewRoles', 'notificaciones', 'eventosDelDiaHoy'));
         }
     }
 
@@ -123,6 +152,7 @@ class UserController extends Controller
     public function create()
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
 
@@ -140,7 +170,7 @@ class UserController extends Controller
 
         if($isUserAdmin){
             $roles = DB::select('SELECT * FROM rols;');
-            return view('usuarios.crearUsuario', compact('roles', 'notificaciones'));
+            return view('usuarios.crearUsuario', compact('roles', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -190,6 +220,7 @@ class UserController extends Controller
     public function show($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $userId = auth()->user()->id;
         $rol = auth()->user()->rol_id;
@@ -219,7 +250,7 @@ class UserController extends Controller
         if($isUserAdmin || $canViewUsers || $isMe){
             $usuario = User::findOrFail($id);
             $rol = DB::select('SELECT * FROM rols WHERE id = '.$usuario->rol_id.';');
-            return view('usuarios.viewUsuario', compact('usuario', 'isUserAdmin', 'canViewUsers', 'isMe', 'rol', 'notificaciones'));
+            return view('usuarios.viewUsuario', compact('usuario', 'isUserAdmin', 'canViewUsers', 'isMe', 'rol', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -234,6 +265,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $userId = auth()->user()->id;
         $rol = auth()->user()->rol_id;
@@ -260,7 +292,7 @@ class UserController extends Controller
             $usuario = User::findOrFail($id);
             $rol = DB::select('SELECT * FROM rols WHERE id = '.$usuario->rol_id.';');
             $roles = DB::select('SELECT * FROM rols;');
-            return view('usuarios.editarUsuario', compact('usuario', 'rol', 'roles', 'isUserAdmin', 'isMe', 'notificaciones'));
+            return view('usuarios.editarUsuario', compact('usuario', 'rol', 'roles', 'isUserAdmin', 'isMe', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -301,9 +333,10 @@ class UserController extends Controller
         return redirect('usuarios/' .$id);
     }
 
-    public function reporteUsuarios()
+    public function reporteUsuarios(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -319,9 +352,89 @@ class UserController extends Controller
         }
 
         if($isAdmin){
-            $usuarios = User::all();
-            // return dd($usuarios);
-            return view('usuarios.crearReporteUsuarios', compact('usuarios', 'notificaciones'));
+            $nombreUsuario = $request->get('searchBar');
+
+            if($nombreUsuario != ''){
+                $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
+                                ->where('primer_nombre', 'LIKE', '%'.$nombreUsuario.'%')
+                                ->get();
+            } else {
+                $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
+                                ->select('users.*', 'rol.nombre_rol')
+                                ->get();
+            }
+
+            $estadoUsuario = $request->get('estado_usuario');
+            $rolUsuario = $request->get('nombre_rol');
+
+            if($estadoUsuario != ''){
+                $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
+                                ->select('users.*', 'rol.nombre_rol')
+                                ->where('estado_usuario', '=', $estadoUsuario)
+                                ->get();
+            }
+
+            if($rolUsuario != ''){
+                $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
+                                ->select('users.*', 'rol.nombre_rol')
+                                ->where('nombre_rol', 'LIKE', '%'.$rolUsuario.'%')
+                                ->get();
+            }
+
+            $pNombreUsuario = $request->get('primer_nombre');
+            $sNombreUsuario = $request->get('segundo_nombre');
+            $pApellidoUsuario = $request->get('primer_apellido');
+            $sApellidoUsuario = $request->get('segundo_apellido');
+            $tipoDocUsuario = $request->get('tipo_documento');
+            $numDocUsuario = $request->get('numero_documento');
+            $numTelUsuario = $request->get('telefono_usuario');
+            $emailUsuario = $request->get('email');
+            $estadoUsuario = $request->get('estado_usuario');
+            $rolUsuario = $request->get('nombre_rol');
+
+            $arreglo = [];
+            $pNombreUsuario = 'primer_nombre';
+            $pApellidoUsuario = 'primer_apellido';
+            if($pNombreUsuario){
+                $arreglo[] = $pNombreUsuario;
+            }
+            if($sNombreUsuario){
+                $arreglo[] = $sNombreUsuario;
+            }
+            if($pApellidoUsuario){
+                $arreglo[] = $pApellidoUsuario;
+            }
+            if($sApellidoUsuario){
+                $arreglo[] = $sApellidoUsuario;
+            }
+            if($tipoDocUsuario){
+                $arreglo[] = $tipoDocUsuario;
+            }
+            if($numDocUsuario){
+                $arreglo[] = $numDocUsuario;
+            }
+            if($numTelUsuario){
+                $arreglo[] = $numTelUsuario;
+            }
+            if($emailUsuario){
+                $arreglo[] = $emailUsuario;
+            }
+            if($estadoUsuario){
+                $arreglo[] = $estadoUsuario;
+            }
+            if($rolUsuario){
+                $arreglo[] = $rolUsuario;
+            }
+            if($arreglo and $pNombreUsuario){
+                $campos = '';
+                foreach($arreglo as $valor){
+                    $campos .= ", `" .$valor. "`";
+                }
+                $usuarios = DB::select('SELECT users.id' .$campos. ' FROM users INNER JOIN rols on users.rol_id = rols.id;');
+            }
+
+            $roles = Rol::all();
+            return view('usuarios.crearReporteUsuarios', compact('usuarios', 'notificaciones', 'roles', 'eventosDelDiaHoy'));
         } else {
             return redirect()->back();
         }
@@ -343,8 +456,10 @@ class UserController extends Controller
         }
 
         if($isAdmin){
-            $usuarios = User::all();
-            // return dd($proyectos);
+            $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
+                            ->select('users.*', 'rol.nombre_rol')
+                            ->get();
+
             $usuarios = compact('usuarios');
             $pdf = Pdf::loadView('usuarios.exportPdf', $usuarios);
             return $pdf->setPaper('a3', 'landscape')->stream('reporteUsuarios.pdf');

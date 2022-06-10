@@ -59,10 +59,37 @@ class CotizacionController extends Controller
         return $notificaciones;
     }
 
+    public function eventosDia($userId){
+        $rol = $userId->rol_id;
+        $email = $userId->email;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isCotizacionAdmin = false;
+        $isEventoAdmin = false;
+        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
+            $isCotizacionAdmin = true;
+        }
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
+            $isEventoAdmin = true;
+        }
+
+        if($isCotizacionAdmin && $isEventoAdmin){
+            $eventosDelDia = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+        } else {
+            $eventosDelDia = '';
+        }
+        return $eventosDelDia;
+    }
+
     public function index(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
-
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $rol = $request->user()->rol_id;
         $isAdmin = false;
         $privilegios = \DB::table('rol_privilegios')
@@ -81,28 +108,44 @@ class CotizacionController extends Controller
         $estado = $request->get('estado');
 
         if($cliente != ''){
-            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->where('nombres_cotizante', 'like', "%$cliente%")->paginate(10);
+            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')
+                                        ->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')
+                                        ->where('nombres_cotizante', 'like', "%$cliente%")
+                                        ->paginate(10);
         } else{
-            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->paginate(10);
+            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')
+                                        ->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')
+                                        ->orderBy('cotizacions.id', 'DESC')
+                                        ->paginate(10);
         }
 
         if($codigo != ''){
-            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->where('cotizacions.id', 'like', "$codigo")->paginate(10);
+            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')
+                                        ->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')
+                                        ->where('cotizacions.id', 'like', "$codigo")
+                                        ->paginate(10);
         }
 
         if($fecha != ''){
-            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->where('fecha_cotizacion', 'like', "%$fecha%")->paginate(10);
+            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')
+                                        ->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')
+                                        ->where('fecha_cotizacion', 'like', "%$fecha%")
+                                        ->paginate(10);
         }
 
         if($estado != ''){
-            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->where('estado_cotizacion', 'like', "%$estado%")->paginate(10);
+            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')
+                                        ->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')
+                                        ->where('estado_cotizacion', 'like', "%$estado%")
+                                        ->paginate(10);
         }
-        return view('Cotizaciones.cotizaciones', compact('cotizaciones', 'isAdmin', 'notificaciones'));
+        return view('Cotizaciones.cotizaciones', compact('cotizaciones', 'isAdmin', 'notificaciones', 'eventosDelDiaHoy'));
     }
 
     public function create()
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -118,7 +161,7 @@ class CotizacionController extends Controller
 
         if($isAdmin){
             $productos = Producto::all();
-            return view('Cotizaciones.CrearCotizacion.crearCotizacion', compact('productos', 'notificaciones'));
+            return view('Cotizaciones.CrearCotizacion.crearCotizacion', compact('productos', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -129,6 +172,7 @@ class CotizacionController extends Controller
     public function edit($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -147,7 +191,7 @@ class CotizacionController extends Controller
             $producto = Producto::findOrfail($cotizacion->producto_id);
             $productos = Producto::all();
 
-            return view('Cotizaciones.editarCotizacion.editarCotizacion', compact('cotizacion', 'producto', 'productos', 'notificaciones'));
+            return view('Cotizaciones.editarCotizacion.editarCotizacion', compact('cotizacion', 'producto', 'productos', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -159,7 +203,7 @@ class CotizacionController extends Controller
         $cotizacion = request()->except('_token');
         $email= request('email_cotizante');
         Cotizacion::insert($cotizacion);
-        // obtener id para enviar al correo del cliente
+        // obtener id despues de la insercion para enviarlo por correo al cliente
         $cotizacionEmail = Cotizacion::latest('id')->first();
         // Enviar email de la cotización
         if($email){
@@ -172,6 +216,7 @@ class CotizacionController extends Controller
     public function show($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $canView = false;
@@ -196,7 +241,7 @@ class CotizacionController extends Controller
                                         WHERE productos.id = ' .$cotizacion->producto_id. ' LIMIT 1');
 
             $producto->image = $imagen[0]->path;
-            return view('Cotizaciones.visualizarCotizacion.vistaCotizacion', compact('cotizacion', 'producto', 'notificaciones'));
+            return view('Cotizaciones.visualizarCotizacion.vistaCotizacion', compact('cotizacion', 'producto', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -223,6 +268,7 @@ class CotizacionController extends Controller
     public function contestarCotizacion($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -239,7 +285,7 @@ class CotizacionController extends Controller
         if($isAdmin){
             $cotizacion = Cotizacion::findOrFail($id);
             $producto = Producto::findOrfail($cotizacion->producto_id);
-            return view('Cotizaciones.contestarCotizacion.contestarCotizacion', compact('cotizacion', 'producto', 'notificaciones'));
+            return view('Cotizaciones.contestarCotizacion.contestarCotizacion', compact('cotizacion', 'producto', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -261,7 +307,10 @@ class CotizacionController extends Controller
         }
 
         if($isAdmin){
-            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')->get();
+            $cotizaciones = Cotizacion::join('productos', 'productos.id', '=', 'cotizacions.producto_id')
+                                        ->select('cotizacions.id', 'nombres_cotizante', 'apellidos_cotizante', 'email_cotizante', 'telefono_cotizante', 'ciudad_cotizante', 'ubicacion_cotizante', 'fecha_cotizacion', 'comentarios_cotizacion', 'estado_cotizacion', 'nombre_producto', 'descripcion_producto', 'precio_producto')
+                                        ->get();
+                                        
             $cotizaciones = compact('cotizaciones');
 
             $pdf = Pdf::loadView('cotizaciones.pdf.exportPdf', $cotizaciones);

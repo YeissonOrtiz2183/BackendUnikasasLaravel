@@ -85,10 +85,6 @@
                                 <label>Estado:</label>
                                 <input class="checkbox" type="checkbox" id="estado" name="estado_evento" value="estado_evento">
                             </div>
-                            <div class="campo">
-                                <label>Seleccionar Todos:</label>
-                                <input class="checkbox" type="checkbox">
-                            </div>
                         </div>
 
                         <div class="botones">

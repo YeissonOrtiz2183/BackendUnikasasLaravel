@@ -56,6 +56,33 @@ class RolController extends Controller
         return $notificaciones;
     }
 
+    public function eventosDia($userId){
+        $rol = $userId->rol_id;
+        $email = $userId->email;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isCotizacionAdmin = false;
+        $isEventoAdmin = false;
+        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
+            $isCotizacionAdmin = true;
+        }
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
+            $isEventoAdmin = true;
+        }
+
+        if($isCotizacionAdmin && $isEventoAdmin){
+            $eventosDelDia = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+        } else {
+            $eventosDelDia = '';
+        }
+        return $eventosDelDia;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -64,6 +91,7 @@ class RolController extends Controller
     public function index(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $privilegios = DB::table('rol_privilegios')
@@ -83,7 +111,7 @@ class RolController extends Controller
         }else{
             $roles = Rol::paginate(10);
         }
-        return view('roles.inicioRoles', compact('roles', 'isAdmin', 'notificaciones'));
+        return view('roles.inicioRoles', compact('roles', 'isAdmin', 'notificaciones', 'eventosDelDiaHoy'));
     }
 
     /**
@@ -94,6 +122,7 @@ class RolController extends Controller
     public function create()
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $privilegios = DB::table('rol_privilegios')
@@ -110,7 +139,7 @@ class RolController extends Controller
 
         if($isAdmin){
             $privilegios = DB::select('SELECT * FROM privilegios');
-            return view('roles.crearRol', compact('privilegios', 'notificaciones'));
+            return view('roles.crearRol', compact('privilegios', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -162,6 +191,7 @@ class RolController extends Controller
     public function show($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $privilegios = DB::table('rol_privilegios')
@@ -178,7 +208,7 @@ class RolController extends Controller
 
         $rol = Rol::find($id);
         $privilegios = DB::select('SELECT * FROM privilegios INNER JOIN rol_privilegios ON privilegios.id = rol_privilegios.privilegio_id WHERE rol_privilegios.rol_id = ?', [$id]);
-        return view('roles.verRol', compact('rol', 'privilegios', 'isAdmin', 'notificaciones'));
+        return view('roles.verRol', compact('rol', 'privilegios', 'isAdmin', 'notificaciones', 'eventosDelDiaHoy'));
     }
 
     /**
@@ -190,6 +220,7 @@ class RolController extends Controller
     public function edit($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $privilegios = DB::table('rol_privilegios')
@@ -209,7 +240,7 @@ class RolController extends Controller
 
             $privilegios = DB::select('SELECT * FROM privilegios INNER JOIN rol_privilegios ON privilegios.id = rol_privilegios.privilegio_id WHERE rol_privilegios.rol_id = ?', [$id]);
             $privilegiosNoAsignados = DB::select('SELECT * FROM privilegios WHERE privilegios.id NOT IN (SELECT privilegio_id FROM rol_privilegios WHERE rol_privilegios.rol_id = ?)', [$id]);
-            return view('roles.modificarRol', compact('rol', 'privilegios', 'privilegiosNoAsignados', 'notificaciones'));
+            return view('roles.modificarRol', compact('rol', 'privilegios', 'privilegiosNoAsignados', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }

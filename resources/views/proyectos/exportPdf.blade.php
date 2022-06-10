@@ -59,23 +59,41 @@
                     @foreach ($proyectos as $proyecto)
                     @if($contador == 0)
                     <tr>@if(isset($proyecto->id))
-                            <th>Id </th>
-                        @endif
-                        @if(isset($proyecto->nombre_proyecto))
-                            <th>Nombre </th>
-                        @endif
-                        @if(isset($proyecto->estado_proyecto))
-                            <th>Estado </th>
-                        @endif
-                        @if(isset($proyecto->fecha_inicio))
-                            <th>Fecha inicial </th>
-                        @endif
-                        @if(isset($proyecto->encargado_nombre))
-                            <th>Encargado </th>
-                        @endif
-                        @if(isset($proyecto->cliente_nombre))
-                            <th>Cliente </th>
-                        @endif
+                                <th>Id </th>
+                            @endif
+                            @if(isset($proyecto->nombre_proyecto))
+                                <th>Nombre </th>
+                            @endif
+                            @if(isset($proyecto->estado_proyecto))
+                                <th>Estado </th>
+                            @endif
+                            @if(isset($proyecto->fecha_inicio))
+                                <th>Fecha inicial </th>
+                            @endif
+                            @if(isset($proyecto->fecha_fin))
+                                <th>Fecha final </th>
+                            @endif
+                            @if(isset($proyecto->ciudad_proyecto))
+                                <th>Ciudad proyecto </th>
+                            @endif
+                            @if(isset($proyecto->direccion_proyecto))
+                                <th>Direccion proyecto </th>
+                            @endif
+                            @if(isset($proyecto->costo_estimado))
+                                <th>Costo estimado </th>
+                            @endif
+                            @if(isset($proyecto->costo_final))
+                                <th>Costo final </th>
+                            @endif
+                            @if(isset($proyecto->nombre_producto))
+                                <th>Nombre producto </th>
+                            @endif
+                            @if(isset($proyecto->encargado_nombre))
+                                <th>Nombre encargado </th>
+                            @endif
+                            @if(isset($proyecto->cliente_nombre))
+                                <th>Nombre cliente </th>
+                            @endif
                         <?php $contador += 1; ?>
                         @endif
                     @endforeach
@@ -95,6 +113,24 @@
                             @endif
                             @if(isset($proyecto->fecha_inicio))
                                 <td>{{ $proyecto->fecha_inicio }}</td>
+                            @endif
+                            @if(isset($proyecto->fecha_fin))
+                                <td>{{ $proyecto->fecha_fin }}</td>
+                            @endif
+                            @if(isset($proyecto->ciudad_proyecto))
+                                <td>{{ $proyecto->ciudad_proyecto }}</td>
+                            @endif
+                            @if(isset($proyecto->direccion_proyecto))
+                                <td>{{ $proyecto->direccion_proyecto }}</td>
+                            @endif
+                            @if(isset($proyecto->costo_estimado))
+                                <td>{{ $proyecto->costo_estimado }}</td>
+                            @endif
+                            @if(isset($proyecto->costo_final))
+                                <td>{{ $proyecto->costo_final }}</td>
+                            @endif
+                            @if(isset($proyecto->nombre_producto))
+                                <td>{{ $proyecto->nombre_producto }}</td>
                             @endif
                             @if(isset($proyecto->encargado_nombre))
                                 <td>{{ $proyecto->encargado_nombre }} {{ $proyecto->encargado_apellido }}</td>

@@ -67,10 +67,37 @@ class ProyectoController extends Controller
         return $notificaciones;
     }
 
+    public function eventosDia($userId){
+        $rol = $userId->rol_id;
+        $email = $userId->email;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isCotizacionAdmin = false;
+        $isEventoAdmin = false;
+        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
+            $isCotizacionAdmin = true;
+        }
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
+            $isEventoAdmin = true;
+        }
+
+        if($isCotizacionAdmin && $isEventoAdmin){
+            $eventosDelDia = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+        } else {
+            $eventosDelDia = '';
+        }
+        return $eventosDelDia;
+    }
+
     public function index(Request $request, $estado)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
-
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         if ($estado == 'activo') {
             $estadoFind = "En ejecución";
@@ -185,7 +212,7 @@ class ProyectoController extends Controller
             }
         }
         $notificaciones = $this->makeNotifications(auth()->user());
-        return view('proyectos.moduloInicioProyecto', compact('proyectos', 'isAdmin', 'notificaciones'));
+        return view('proyectos.moduloInicioProyecto', compact('proyectos', 'isAdmin', 'notificaciones', 'eventosDelDiaHoy'));
     }
 
     /**
@@ -196,6 +223,7 @@ class ProyectoController extends Controller
     public function create(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = $request->user()->rol_id;
 
@@ -217,7 +245,7 @@ class ProyectoController extends Controller
             $productos = DB::select('SELECT productos.id, productos.nombre_producto, productos.descripcion_producto, productos.precio_producto
                                     FROM productos');
 
-            return view('proyectos.crearProyecto', compact('encargados', 'clientes', 'productos', 'notificaciones'));
+            return view('proyectos.crearProyecto', compact('encargados', 'clientes', 'productos', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -303,6 +331,7 @@ class ProyectoController extends Controller
     public function show($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $idEncargado = Proyecto::select('encargado_id')->where('id', '=', $id)->get();
         $idCliente = Proyecto::select('cliente_id')->where('id', '=', $id)->get();
@@ -358,7 +387,7 @@ class ProyectoController extends Controller
                                     INNER JOIN etapas ON actEtp.etapa_id = etapas.id
                                     ORDER BY actividads.id ASC');
 
-            return view('proyectos.viewProyecto', compact('proyecto', 'etapas', 'actividades', 'isAdmin', 'notificaciones'));
+            return view('proyectos.viewProyecto', compact('proyecto', 'etapas', 'actividades', 'isAdmin', 'notificaciones', 'eventosDelDiaHoy'));
         } else {
             return redirect()->back();
         }
@@ -374,6 +403,7 @@ class ProyectoController extends Controller
     public function edit($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $idEncargado = Proyecto::select('encargado_id')->where('id', '=', $id)->get();
         $idCliente = Proyecto::select('cliente_id')->where('id', '=', $id)->get();
@@ -417,7 +447,7 @@ class ProyectoController extends Controller
                                     INNER JOIN etapas ON actEtp.etapa_id = etapas.id
                                     ORDER BY actividads.id ASC');
 
-            return view('proyectos.editProyecto', compact('proyecto', 'etapas', 'actividades', 'notificaciones'));
+            return view('proyectos.editProyecto', compact('proyecto', 'etapas', 'actividades', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -465,6 +495,7 @@ class ProyectoController extends Controller
     public function reporteProyectos(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
 
         $rol = auth()->user()->rol_id;
         $isAdmin = false;
@@ -480,15 +511,109 @@ class ProyectoController extends Controller
         }
 
         if($isAdmin){
-            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
-                                    encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
-                                    cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
-                                    FROM proyectos
-                                    LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
-                                    LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id');
+            $nombreProyecto = $request->get('searchBar');
+           if($nombreProyecto != ''){
+                $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
+                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
+                                ->select('proyectos.*', 'encargado.primer_nombre as encargado_nombre', 'encargado.segundo_nombre as encargado_segundo_nombre', 'encargado.primer_apellido as encargado_apellido', 'encargado.segundo_apellido as encargado_segundo_apellido', 'cliente.primer_nombre as cliente_nombre', 'cliente.segundo_nombre as cliente_segundo_nombre', 'cliente.primer_apellido as cliente_apellido', 'cliente.segundo_apellido as cliente_segundo_apellido')
+                                ->where('nombre_proyecto', 'LIKE', '%'.$nombreProyecto.'%')
+                                ->get();
+           } else {
+                $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto,
+                                proyectos.fecha_inicio, proyectos.ciudad_proyecto, proyectos.direccion_proyecto,
+                                proyectos.costo_estimado, proyectos.estado_proyecto, proyectos.fecha_fin,
+                                proyectos.costo_final, proyectos.suspension_proyecto, productos.nombre_producto as nombre_producto,
+                                encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
+                                cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
+                                FROM proyectos
+                                LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
+                                LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
+                                INNER JOIN productos on proyectos.producto_id = productos.id');
+           }
 
-            // return dd($proyectos);
-            return view('proyectos.crearReporteProyectos', compact('proyectos', 'notificaciones'));
+           $proyectoFechaI = $request->get('fechaInicial');
+           $proyectoFechaF = $request->get('fechaFinal');
+
+           if($proyectoFechaI != ''){
+                $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
+                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
+                                ->select('proyectos.*', 'encargado.primer_nombre as encargado_nombre', 'encargado.segundo_nombre as encargado_segundo_nombre', 'encargado.primer_apellido as encargado_apellido', 'encargado.segundo_apellido as encargado_segundo_apellido', 'cliente.primer_nombre as cliente_nombre', 'cliente.segundo_nombre as cliente_segundo_nombre', 'cliente.primer_apellido as cliente_apellido', 'cliente.segundo_apellido as cliente_segundo_apellido')
+                                ->where('fecha_inicio', 'like', "%$proyectoFechaI%")
+                                ->get();
+            }
+
+            if($proyectoFechaI != '' && $proyectoFechaF != ''){
+                $proyectos = Proyecto::join('users as encargado', 'encargado.id', '=', 'proyectos.encargado_id')
+                                ->join('users as cliente', 'cliente.id', '=', 'proyectos.cliente_id')
+                                ->select('proyectos.*', 'encargado.primer_nombre as encargado_nombre', 'encargado.segundo_nombre as encargado_segundo_nombre', 'encargado.primer_apellido as encargado_apellido', 'encargado.segundo_apellido as encargado_segundo_apellido', 'cliente.primer_nombre as cliente_nombre', 'cliente.segundo_nombre as cliente_segundo_nombre', 'cliente.primer_apellido as cliente_apellido', 'cliente.segundo_apellido as cliente_segundo_apellido')
+                                ->whereDate('fecha_inicio', '>=', "$proyectoFechaI%")
+                                ->whereDate('fecha_inicio', '<=', "$proyectoFechaF%")
+                                ->get();
+            }
+
+            // filtro campos checkbox
+            $proyectoNombTable = $request->get('nombre_proyecto');
+            $proyectoEstsdTable = $request->get('estado_proyecto');
+            $proyectoFechaITable = $request->get('fecha_inicio');
+            $proyectoFechaFTable = $request->get('fecha_fin');
+            $proyectoCiudFTable = $request->get('ciudad_proyecto');
+            $proyectoDirrecciFTable = $request->get('direccion_proyecto');
+            $proyectoCostoETable = $request->get('costo_estimado');
+            $proyectoCostoFTable = $request->get('costo_final');
+            $proyectoProductTable = $request->get('nombre_producto');
+            $proyectoEncargadoTable = $request->get('encargado_nombre');
+            $proyectoClienteTable = $request->get('cliente_nombre');
+
+            $arreglo = [];
+            $arreglo[] = 'nombre_proyecto';
+            if($proyectoNombTable){
+                $arreglo[] = $proyectoNombTable;
+            } 
+
+            if($proyectoEstsdTable){
+                $arreglo[] = $proyectoEstsdTable;
+            }
+            if($proyectoFechaITable){
+                $arreglo[] = $proyectoFechaITable;
+            }
+            if($proyectoFechaFTable){
+                $arreglo[] = $proyectoFechaFTable;
+            }
+            if($proyectoFechaFTable){
+                $arreglo[] = $proyectoFechaFTable;
+            }
+            if($proyectoCiudFTable){
+                $arreglo[] = $proyectoCiudFTable;
+            }
+            if($proyectoDirrecciFTable){
+                $arreglo[] = $proyectoDirrecciFTable;
+            }
+            if($proyectoCostoETable){
+                $arreglo[] = $proyectoCostoETable;
+            }
+            if($proyectoCostoFTable){
+                $arreglo[] = $proyectoCostoFTable;
+            }
+            if($proyectoProductTable){
+                $arreglo[] = $proyectoProductTable;
+            }
+            if($proyectoEncargadoTable){
+                $arreglo[] = $proyectoEncargadoTable;
+            }
+            if($proyectoClienteTable){
+                $arreglo[] = $proyectoClienteTable;
+            }
+            if($arreglo and $proyectoNombTable){
+                $campos = '';
+                foreach($arreglo as $valor){
+                    $campos .= ", `" .$valor. "`";
+                }
+                $proyectos= DB::select('SELECT proyectos.id' .$campos. ' FROM proyectos
+                                LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
+                                LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
+                                INNER JOIN productos on proyectos.producto_id = productos.id;');         
+            }
+            return view('proyectos.crearReporteProyectos', compact('proyectos', 'notificaciones', 'eventosDelDiaHoy'));
         } else {
             return redirect()->back();
         }
@@ -510,14 +635,16 @@ class ProyectoController extends Controller
         }
 
         if($isAdmin){
-            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto, proyectos.fecha_inicio,
-                                    encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
-                                    cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
-                                    FROM proyectos
-                                    LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
-                                    LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id');
-
-            // return dd($proyectos);
+            $proyectos = DB::select('SELECT proyectos.id, proyectos.nombre_proyecto, proyectos.estado_proyecto,
+                                proyectos.fecha_inicio, proyectos.ciudad_proyecto, proyectos.direccion_proyecto,
+                                proyectos.costo_estimado, proyectos.estado_proyecto, proyectos.fecha_fin,
+                                proyectos.costo_final, proyectos.suspension_proyecto, productos.nombre_producto as nombre_producto,
+                                encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
+                                cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido
+                                FROM proyectos
+                                LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
+                                LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
+                                INNER JOIN productos on proyectos.producto_id = productos.id');
             $proyectos = compact('proyectos');
             $pdf = Pdf::loadView('proyectos.exportPdf', $proyectos);
             return $pdf->setPaper('a3', 'landscape')->stream('reporteProyectos.pdf');

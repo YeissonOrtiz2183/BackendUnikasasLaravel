@@ -303,3 +303,12 @@ iframe{
     }
 }
 
+.modalNotifications .eventoHoy{
+    text-decoration: none;
+    color: black;
+    background-color: #ffa500;
+    border: 1px solid black;
+    border-radius: 8px;
+    margin-left: 2%;
+    padding: 1%;
+}

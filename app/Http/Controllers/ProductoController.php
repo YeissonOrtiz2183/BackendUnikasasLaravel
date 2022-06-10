@@ -11,6 +11,8 @@ use App\Models\Audit;
 use App\Mail\emailCrearCotizacion;
 use Illuminate\Support\Facades\Mail;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class ProductoController extends Controller
 {
     /**
@@ -61,6 +63,33 @@ class ProductoController extends Controller
         return $notificaciones;
     }
 
+    public function eventosDia($userId){
+        $rol = $userId->rol_id;
+        $email = $userId->email;
+        $privilegios = \DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        $isCotizacionAdmin = false;
+        $isEventoAdmin = false;
+        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
+            $isCotizacionAdmin = true;
+        }
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
+            $isEventoAdmin = true;
+        }
+
+        if($isCotizacionAdmin && $isEventoAdmin){
+            $eventosDelDia = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+        } else {
+            $eventosDelDia = '';
+        }
+        return $eventosDelDia;
+    }
+
     public function getPermissions(){
         $userId = auth()->user()->id;
         $rol = auth()->user()->rol_id;
@@ -88,6 +117,7 @@ class ProductoController extends Controller
     public function index(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $isProductoAdmin = $this->getPermissions()['isProductoAdmin'];
         $canViewProductos = $this->getPermissions()['canViewProductos'];
 
@@ -132,7 +162,7 @@ class ProductoController extends Controller
                 }
                 return view('productos.productosInicio', compact('productos', 'notificaciones', 'isProductoAdmin'));
             }
-
+            return view('productos.productosInicio', compact('productos', 'notificaciones', 'isProductoAdmin', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -147,10 +177,11 @@ class ProductoController extends Controller
     public function create()
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $isProductoAdmin = $this->getPermissions()['isProductoAdmin'];
 
         if($isProductoAdmin){
-            return view('productos.registrarProducto', compact('notificaciones'));
+            return view('productos.registrarProducto', compact('notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -210,6 +241,7 @@ class ProductoController extends Controller
     public function show( $id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $isProductoAdmin = $this->getPermissions()['isProductoAdmin'];
         $canViewProductos = $this->getPermissions()['canViewProductos'];
         $images = \DB::table('product_image')
@@ -220,7 +252,7 @@ class ProductoController extends Controller
 
         if($isProductoAdmin || $canViewProductos){
             $productos = Producto::find($id);
-            return view('productos.visualizarProducto', ['producto'=>$productos], compact('notificaciones', 'isProductoAdmin', 'images'));
+            return view('productos.visualizarProducto', ['producto'=>$productos], compact('notificaciones', 'isProductoAdmin', 'images', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -235,6 +267,7 @@ class ProductoController extends Controller
     public function edit($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
         $isProductoAdmin = $this->getPermissions()['isProductoAdmin'];
 
         if($isProductoAdmin){
@@ -244,7 +277,7 @@ class ProductoController extends Controller
                 ->select('image.path', 'image.id')
                 ->where('product_image.producto_id', '=', $id)
                 ->get();
-            return view('productos.modificarProducto', compact('producto', 'notificaciones', 'images'));
+            return view('productos.modificarProducto', compact('producto', 'notificaciones', 'images', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
         }
@@ -382,6 +415,124 @@ class ProductoController extends Controller
         }
 
         return redirect('/');
+    }
+
+    public function reporteProductos(Request $request)
+    {
+        $notificaciones = $this->makeNotifications(auth()->user());
+        $eventosDelDiaHoy = $this->eventosDia(auth()->user());
+
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+
+        $privilegios = DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar productos')){
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $productoNombre = $request->get('searchBar');
+            if($productoNombre){
+                $productos = Producto::select('*')->where('nombre_producto', 'like', "%$productoNombre%")->get();
+            } else {
+                $productos = Producto::all();
+            }
+
+            $productoEstado = $request->get('estado_Producto1');
+            $productoPisos = $request->get('pisos_producto1');
+
+            if($productoEstado){
+                $productos = Producto::select('*')->where('estado_Producto', '=', $productoEstado)->get();
+            }
+            if($productoPisos){
+                $productos = Producto::select('*')->where('pisos_producto', 'like', "%$productoPisos%")->get();
+            }
+
+            $productoNombTable = $request->get('nombre_producto');
+            $productoDescripTable = $request->get('descripcion_producto');
+            $productoPrecioTable = $request->get('precio_producto');
+            $productoTipoTable = $request->get('tipo_producto');
+            $productoMaterialTable = $request->get('material_producto');
+            $productoPisosTable = $request->get('pisos_producto');
+            $productoTamanioTable = $request->get('tamaño_producto');
+            $productoHabitacionTable = $request->get('habitaciones_producto');
+            $productoEstadoTable = $request->get('estado_Producto');
+
+            $arreglo = [];
+            if($productoNombTable){
+                $arreglo[] = $productoNombTable;
+            }
+            if($productoDescripTable){
+                $arreglo[] = $productoDescripTable;
+            }
+            if($productoDescripTable){
+                $arreglo[] = $productoDescripTable;
+            }
+            if($productoPrecioTable){
+                $arreglo[] = $productoPrecioTable;
+            }
+            if($productoTipoTable){
+                $arreglo[] = $productoTipoTable;
+            }
+            if($productoMaterialTable){
+                $arreglo[] = $productoMaterialTable;
+            }
+            if($productoPisosTable){
+                $arreglo[] = $productoPisosTable;
+            }
+            if($productoTamanioTable){
+                $arreglo[] = $productoTamanioTable;
+            }
+            if($productoHabitacionTable){
+                $arreglo[] = $productoHabitacionTable;
+            }
+            if($productoEstadoTable){
+                $arreglo[] = $productoEstadoTable;
+            }
+
+            if($arreglo and $productoNombTable){
+                $campos = '';
+                foreach($arreglo as $valor){
+                    $campos .= ", `" .$valor. "`";
+                }
+                $productos = DB::select('SELECT id' .$campos. ' FROM productos;');
+            }
+
+            return view('productos.crearReporteProductos', compact('productos', 'notificaciones', 'eventosDelDiaHoy'));
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function exportPdfProductos(Request $request)
+    {
+        $rol = auth()->user()->rol_id;
+        $isAdmin = false;
+
+        $privilegios = DB::table('rol_privilegios')
+            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
+            ->select('privilegios.nombre_privilegio')
+            ->where('rol_privilegios.rol_id', '=', $rol)
+            ->get();
+
+        if($privilegios->contains('nombre_privilegio', 'Administrar productos')){
+            $isAdmin = true;
+        }
+
+        if($isAdmin){
+            $productos = Producto::all();
+            $productos = compact('productos');
+            $pdf = Pdf::loadView('productos.exportPdf', $productos);
+            return $pdf->setPaper('a3', 'landscape')->stream('reporteProductos.pdf');
+        } else {
+            return redirect()->back();
+        }
+
     }
 
     /**

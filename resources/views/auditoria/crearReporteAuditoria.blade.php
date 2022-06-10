@@ -26,9 +26,9 @@
                 <label class="search_parametros" for="itemSearch">Nombre del usuario:</label>
                     <select class="input-text" type="text" name="searchBar" id="searchBar">
                         <option value="null" selected disabled hidden>Seleccione el nombre del usuario</option>
-                @foreach ($auditoria as $audit )
-                        <option value="{{ $audit->primer_nombre  }}">{{ $audit->primer_nombre }} {{ $audit->primer_apellido }}</option>
-                @endforeach
+                        @foreach ($auditoria as $audit )
+                            <option value="{{ $audit->primer_nombre  }}">{{ $audit->primer_nombre }} {{ $audit->primer_apellido }}</option>
+                        @endforeach
                     </select>
 
                 <label class="search_parametros" for="fechaInicial">Fecha inicial:</label>
@@ -105,7 +105,7 @@
                         <?php $contador = 0; ?>
                         @foreach ($auditoria as $audit)
                         @if($contador == 0)
-                        <tr>@if(isset($audit->user_id))
+                        <tr>@if(isset($audit->id))
                                 <th>Id </th>
                             @endif
                             @if(isset($audit->primer_nombre))
@@ -141,8 +141,8 @@
                         </tr>
 
                         @foreach ($auditoria as $audit)
-                            <tr>@if(isset($audit->user_id))
-                                    <td>{{ $audit->user_id }}</td>
+                            <tr>@if(isset($audit->id))
+                                    <td>{{ $audit->id }}</td>
                                 @endif
                                 @if(isset($audit->primer_nombre))
                                     <td>{{ $audit->primer_nombre }}</td>

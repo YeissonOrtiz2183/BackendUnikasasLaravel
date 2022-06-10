@@ -88,6 +88,9 @@
                     @if(isset($usuario->estado_usuario))
                         <th>Estado </th>
                     @endif
+                    @if(isset($usuario->nombre_rol))
+                        <th>Rol </th>
+                    @endif
                         <?php $contador += 1; ?>
                         @endif
                     @endforeach
@@ -125,6 +128,9 @@
                             @endif
                             @if(isset($usuario->estado_usuario))
                                 <td>{{ $usuario->estado_usuario }}</td>
+                            @endif
+                            @if(isset($usuario->nombre_rol))
+                                <td>{{ $usuario->nombre_rol }}</td>
                             @endif
                         </tr>
                     @endforeach
