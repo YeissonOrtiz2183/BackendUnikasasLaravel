@@ -52,33 +52,18 @@ class RolController extends Controller
             }
         }
 
-
         return $notificaciones;
     }
 
-    public function eventosDia($userId){
-        $rol = $userId->rol_id;
+    public function eventosDia($userId)
+    {
         $email = $userId->email;
-        $privilegios = \DB::table('rol_privilegios')
-            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
-            ->select('privilegios.nombre_privilegio')
-            ->where('rol_privilegios.rol_id', '=', $rol)
-            ->get();
-
-        $isCotizacionAdmin = false;
-        $isEventoAdmin = false;
-        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
-            $isCotizacionAdmin = true;
-        }
-
-        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
-            $isEventoAdmin = true;
-        }
-
-        if($isCotizacionAdmin && $isEventoAdmin){
-            $eventosDelDia = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+        if($email){
+            $eventosDelDia = Evento::where('invitados_evento', 'like', "%$email%")
+                                    ->where('fecha_evento', '=', date('Y-m-d'))
+                                    ->get();
         } else {
-            $eventosDelDia = '';
+            $eventosDelDia = null;
         }
         return $eventosDelDia;
     }

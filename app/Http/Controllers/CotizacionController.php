@@ -63,8 +63,9 @@ class CotizacionController extends Controller
     {
         $email = $userId->email;
         if($email){
-            $eventosDelDia = Evento::where('invitados_evento', '=', $email)->get();
-            // dd($eventosDelDia);
+            $eventosDelDia = Evento::where('invitados_evento', 'like', "%$email%")
+                                    ->where('fecha_evento', '=', date('Y-m-d'))
+                                    ->get();
         } else {
             $eventosDelDia = null;
         }

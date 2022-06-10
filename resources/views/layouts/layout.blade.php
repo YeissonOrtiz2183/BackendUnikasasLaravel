@@ -75,19 +75,20 @@
             </div>
         </section>
         <section class="modalLayout hidden">
-            <div class="modalNotifications"> <?php $mensaje = 'No tiene eventos' ?>
-                    @if(!empty($eventosDelDiaHoy))
-                        <ul>
-                            <li>Eventos existentes para el dia de hoy</li>
-                            @foreach ($eventosDelDiaHoy as $evento)
-                                <li><a href="{{ url('eventos/'.$evento->id) }}" class="eventoHoy">Hora de inicio {{ date('h:i A', strtotime($evento->hora_inicio)) }} - Hora final {{ date('h:i A', strtotime($evento->hora_fin)) }} </a></li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <ul>
-                            <li>No tiene eventos</li>
-                        </ul>
+            <div class="modalNotifications"> 
+                <ul>@if(isset($eventosDelDiaHoy))
+                        <?php $cont = 1; ?>
+                        @forelse ($eventosDelDiaHoy as $evento)
+                            @if($cont == 1)
+                                <li>Eventos existentes para el dia de hoy</li>
+                                <?php $cont += 1;?>
+                            @endif
+                            <li><a href="{{ url('eventos/'.$evento->id) }}" class="eventoHoy"><b>Dia: </b>{{ date('d - M', strtotime($evento->fecha_evento)) }} <b>Hora de inicio:</b> {{ date('h:i A', strtotime($evento->hora_inicio)) }} <b> Hora final:</b> {{ date('h:i A', strtotime($evento->hora_fin)) }} </a></li>
+                        @empty
+                            <li>No tiene eventos agendados para el dia de hoy</li>
+                        @endforelse
                     @endif
+                </ul>
             </div>
         </section>
 
