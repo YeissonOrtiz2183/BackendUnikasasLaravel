@@ -137,11 +137,10 @@ class UserController extends Controller
             }else{
                 $usuarios = User::paginate(20);
             }
-            return view('usuarios.inicioUsuarios', compact('usuarios', 'isUserAdmin', 'canViewUsers', 'isRolAdmin', 'canViewRoles', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             $usuarios = User::where('id', auth()->user()->id)->paginate(1);
-            return view('usuarios.inicioUsuarios', compact('usuarios', 'isUserAdmin', 'canViewUsers', 'isRolAdmin', 'canViewRoles', 'notificaciones', 'eventosDelDiaHoy'));
         }
+        return view('usuarios.inicioUsuarios', compact('usuarios', 'isUserAdmin', 'canViewUsers', 'isRolAdmin', 'canViewRoles', 'notificaciones', 'eventosDelDiaHoy'));
     }
 
     /**
