@@ -25,7 +25,7 @@
 
             <!--Ingresar Password-->
             <label for="Contraseña">Contraseña</label>
-            <input type="password" placeholder="Ingrese contraseña" name="password" minlength="8" id="password">
+            <input type="password" placeholder="Ingrese contraseña" name="password" minlength="8" maxlength="30" id="password">
 
             <input type="checkbox" onclick="myFunction()" style="width: auto;">Show Password
 

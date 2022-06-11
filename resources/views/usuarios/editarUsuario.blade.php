@@ -34,7 +34,7 @@
                 @if($isMe)
                 <div class="campo">
                     <label>Primer nombre</label>
-                    <input class="input-text" type="text"  name="primer_nombre" value="{{ $usuario->primer_nombre }}">
+                    <input class="input-text" type="text"  name="primer_nombre" value="{{ $usuario->primer_nombre }}" pattern="">
                 </div>
                 <div class="campo">
                     <label>Segundo nombre</label>
@@ -112,11 +112,11 @@
                         {{ method_field('PATCH') }}
                         <div class="campo">
                             <label>Contraseña nueva</label>
-                            <input class="input-text" type="password" value="" id="password-one" minlength="8">
+                            <input class="input-text" type="password" value="" id="password-one" minlength="8"  maxlength="30" placeholder="Minimo 8 Caracteres. Al menos una letra y un numero" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$" onkeyup="validatePassword()">
                         </div>
                         <div class="campo">
                             <label>Confirme contraseña</label>
-                            <input class="input-text" type="password" name="password" value="" id="password-two" onkeyup="validatePassword()" minlength="8">
+                            <input class="input-text" type="password" name="password" value="" id="password-two" onkeyup="validatePassword()" placeholder="Minimo 8 Caracteres. Al menos una letra y un numero" minlength="8" maxlength="30" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$">
                         </div>
                         <button type="submit" form="changePasswordForm" class="btn close" style="display: none;">Cambiar contraseña</button>
                     </form>

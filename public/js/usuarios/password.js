@@ -12,15 +12,8 @@ button.addEventListener('click', () => {
     }
 );
 
-close.forEach(item => {
-    item.addEventListener('click', () => {
-        modal.classList.remove('visible');
-        modal.classList.add('hidden');
-    });
-});
-
 function validatePassword() {
-    if (paswword.value == password2.value) {
+    if (paswword.value == password2.value && paswword.value != '') {
         close[0].style.display = 'block';
         console.log('ok')
     } else {
