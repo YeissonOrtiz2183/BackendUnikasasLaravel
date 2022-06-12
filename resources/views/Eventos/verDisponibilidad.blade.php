@@ -39,18 +39,20 @@
                             <div class="resultados" style="width: 85%; margin: 0 auto">
                                 <h3 class="info">Resultados de busqueda del dia seleccionado</h3>
                                 @if(isset($eventos))
-                                    @foreach ($eventos as $evento)
+                                    @forelse ($eventos as $evento)
                                         <a class="eventoInfo" href="{{ url('eventos/'.$evento->id)}}"><p class="eventoDia"><b> Fecha: </b> {{ date('d/m/Y', strtotime($evento->fecha_evento)) }} <b> Desde: </b>{{ date('h:i A', strtotime($evento->hora_inicio)) }} <b> Hasta: </b> {{ date('h:i A', strtotime($evento->hora_fin))}}</p></a>
-                                    @endforeach
-                                @else
-                                    <h4>No existen eventos para el dia seleccionado</h4>
+                                    @empty
+                                        <h4>No existen eventos para el dia seleccionado</h4>
+                                    @endforelse    
                                 @endif
                         
                                 @if(isset($eventosMes))
                                     <h3 class="info">Eventos existentes para el mes</h3>
-                                    @foreach ($eventosMes as $evento)
+                                    @forelse ($eventosMes as $evento)
                                         <a class="eventoInfo" href="{{ url('eventos/'.$evento->id)}}"><p class="eventoDia"><b> Fecha: </b> {{ date('d/m/Y', strtotime($evento->fecha_evento)) }} <b> Desde: </b>{{ date('h:i A', strtotime($evento->hora_inicio)) }} <b> Hasta: </b> {{ date('h:i A', strtotime($evento->hora_fin))}}</p></a>
-                                    @endforeach
+                                    @empty
+                                        <h4>No hay eventos existentes para el mes</h4>
+                                    @endforelse   
                                 @endif
                             </div>
                         </div> 

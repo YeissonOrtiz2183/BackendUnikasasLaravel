@@ -9,6 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Visualizar evento</title>
         <link rel="stylesheet" href="{{ asset('css/Eventos/visualizarEvento.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/Eventos/modalesEventos.css')}}">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     </head>
@@ -38,14 +39,31 @@
             
                         <div class="botones">
                             <a href="{{ url('eventos/'.$evento->id.'/edit')}}"><input type="button" value="Modificar evento" class="modificar"></a>
-                            <a href="{{ url('eventos/'.$evento->id.'/cancel') }}"><input type="button" value="Cancelar evento" class="cancelar"></a>
+                            @if($evento->estado_evento == 'Cancelado')
+                                <input type="button" value="Cancelar evento" class="cancelar" id="cancelar" title="El evento ya se encuentra cancelado">
+                            @else
+                                <a href="{{ url('eventos/'.$evento->id.'/cancel') }}"><input type="button" value="Cancelar evento" class="cancelar"></a>
+                            @endif
                         </div>
                     </div>
-                    
                 </form>
             </div>
         </div>
     </div>
+    {{-- Modal evento cancelado --}}
+    <section class="modalEvento hidden">
+        <div class="modal__content_evento">
+            <div class="iconClose">
+                <span class="material-icons iconoCerrar">highlight_off</span>
+            </div>
+            <h1>Cancelación de evento</h1>
+            <h2>No se puede cancelar un evento que ya se encunetra cancelado</h2>
+            <form action="" method="POST">
+                <button type="button" class="modal_content_buttons aceptar" id="aceptar">Aceptar</button>
+            </form>
+        </div>
+    </section>
+    <script src="{{ asset('js/Eventos/modalEventoCancelado.js') }}"></script>
     </body>
     </html>
 @endsection

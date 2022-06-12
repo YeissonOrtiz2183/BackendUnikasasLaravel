@@ -27,6 +27,11 @@ $(function(){
         checkButton();
     });
 
+    let eventReason = $("#eventReason").val(); 
+    if(eventReason != ''){
+        check_eventReason();
+        checkButton();
+    }
     $("#eventReason").focusout(function(){
         check_eventReason();
         checkButton();
@@ -65,7 +70,7 @@ $(function(){
     }
 
     function check_eventReason(){
-        let pattern = /^[a-zA-ZZñáéíóúüÑÁÉÍÓÚ0-9 ]*$/;
+        let pattern = /^[a-zA-ZñáéíóúüÑÁÉÍÓÚ0-9,. ]*$/;
         let eventReason = $("#eventReason").val();
 
         if(pattern.test(eventReason) && eventReason !== ''){

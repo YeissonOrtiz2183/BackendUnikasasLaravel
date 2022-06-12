@@ -95,7 +95,8 @@
                         <div class="campo">
                             <label for="eventAsisstant" style="padding-right: 3%;">Agregar invitados:</label>
                             <div class="inputValidate">
-                                <input type="text" placeholder="Ingrese el correo de los invitados separados por una coma ejm: ejm@email.com, " id="eventAsisstant" name="invitados_evento" style="width: 98%;">
+                                <p>Para agregar los invitados al evento en caso de ser mas de 1 invitado, agreguelos separados por una coma seguido de un espacio en blanco</p>
+                                <input type="text" placeholder="Ingrese el correo de los invitados ejm: correo@mail.com" id="eventAsisstant" name="invitados_evento" style="width: 98%;">
                                 <span id="eventAsisstant_error_message" class="error_form"></span>
                             </div>
                         </div>

@@ -30,7 +30,7 @@
         <p>Codial saludo:<p>
         <p>Ha sido invitado a participar en un evento agendado para la fecha: 
             @if(isset($info['fecha_evento']))
-                <span>{{ $info['fecha_evento']; }},</span>
+                <span>{{  $info['fecha_evento']; }},</span>
             @endif
             @if(isset($info['hora_inicio']))
                 <span> el horario asignado va desde las {{ $info['hora_inicio']; }}</span>
@@ -53,7 +53,7 @@
         <p>Lo esperamos...<p><br>
         
         <p>Para mas información sobre nuestros productos visite nuestro sitio web en el siguiente enlace:</p>
-        <a href="www.youtube.com.co"><span>Ir al sitio</span></a>
+        <a href="https://m.facebook.com/Unikasas-102039611569226/"><span>Ir al sitio</span></a>
     </div>
 </body>
 </html>

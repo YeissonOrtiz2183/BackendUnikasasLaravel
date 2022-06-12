@@ -8,7 +8,6 @@ use App\Models\Evento;
 use App\Models\Proyecto;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Config;
 use App\Models\Cotizacion;
 
 use Illuminate\Support\Facades\Mail;
@@ -145,7 +144,9 @@ class EventoController extends Controller
 
         if ($isAdmin) {
             // variable proyectos para mostrar los proyectos existentes en el formulario de creacion
-            $proyectos = DB::table('proyectos')->get();
+            $proyectos = DB::table('proyectos')
+                            ->where('estado_proyecto', '=', 'En ejecución')
+                            ->get();
             return view('Eventos.formCrearEvento', compact('proyectos', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
@@ -156,10 +157,13 @@ class EventoController extends Controller
     {
         $datosEvento = request()->except('_token');
         $email= request('invitados_evento');
+        $emailSeparado = explode(',', $email);
         Evento::insert($datosEvento);
 
         if($email){
-            Mail::to($email)->send(new emailCrearEvento($datosEvento));
+            foreach($emailSeparado as $email){
+                Mail::to($email)->send(new emailCrearEvento($datosEvento));
+            }
         }
 
         return redirect('eventos')->with('mensaje', 'El evento se agrego exitosamente');
@@ -241,11 +245,14 @@ class EventoController extends Controller
         Evento::where('id', '=', $id)->update($datosEvento);
 
         $respuesta = request('eventReason');
-        // dd($respuesta);
+    
         if($respuesta){
             $datos = request()->except(['_token','_method']);
             $email= request('eventAssistant');
-            Mail::to($email)->send(new emailCancelarEvento($datos));
+            $emailSeparado = explode(', ', $email);
+            foreach($emailSeparado as $email){
+                Mail::to($email)->send(new emailCancelarEvento($datos));
+            }
         }
         // $evento = Evento::findOrFail($id);
         return redirect('eventos')->with('mensaje', 'El evento ha sido modificado');
@@ -334,7 +341,7 @@ class EventoController extends Controller
 
             return view('Eventos.verDisponibilidad', compact('eventos', 'eventosMes', 'notificaciones', 'eventosDelDiaHoy'));
         } else {
-            $eventos = Evento::all();
+            $eventos = Evento::where('fecha_evento', '=', date('Y-m-d'));
             return view('Eventos.verDisponibilidad', compact('eventos', 'notificaciones', 'eventosDelDiaHoy'));
         }
     }
