@@ -52,3 +52,11 @@ La ejecución en XAMPP se recomienda realizar desde la rama development.
 - 6. En la terminal de comando debemos movernos a la carpeta run_project. Para realizar esta acción debemos ejecutar el comando: cd ./run_project 
 - 7. Por ultimo, se debe ejecutar el comando: .\start.bat
 - 8. El aplicativo estará disponible dentro del puerto 80 del localhost.
+
+**Autenticación**
+Para ingresar al sistema se puede realizar mediante los siguientes datos de usuario:
+
+ - Correo electronico: ortizyeison2183@gmail.com
+ - Password: 1003614209
+ - Correo electronico: miguelguevara1071@gmail.com
+ - Password: 1071304206
