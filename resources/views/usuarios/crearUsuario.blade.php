@@ -55,11 +55,11 @@
             </div>
             <div class="campo">
                 <label>Numero de documento:</label>
-                <input class="input-text" type="number" name="numero_documento" pattern="{7,}" requierd>
+                <input class="input-text" type="text" name="numero_documento" pattern="^[0-9]{7,12}$" requierd>
             </div>
             <div class="campo">
                 <label>Número de teléfono:</label>
-                <input class="input-text" type="number" name="telefono_usuario" pattern="{10}" required>
+                <input class="input-text" type="text" name="telefono_usuario" pattern="[0-9]{10}" required>
             </div>
             <div class="campo">
                 <label>Correo electrónico:</label>
