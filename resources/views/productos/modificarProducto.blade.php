@@ -30,7 +30,7 @@
                   <!-- Full-width images with number and caption text -->
                   @foreach($images as $image)
                   <div class="mySlides fade">
-                    <img src="{{ asset('storage/' .$image->path) }}" class="image img">
+                    <img src="{{ asset('storage/'. $image->path) }}" class="image img">
                   </div>
                   @endforeach
 

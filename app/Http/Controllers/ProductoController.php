@@ -201,7 +201,7 @@ class ProductoController extends Controller
 
         //Iterar sobre $datosProducto['images'] para guardar cada imagen en la carpeta storage/app/public/uploads/productos/
         foreach($images as $image){
-            $path = $image->store('uploads', 'public');
+            $path = $image->store('files', 'public');
             \DB::table('image')->insert([
                 'path' => $path,
             ]);
@@ -238,7 +238,7 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function show( $id)
+    public function show($id)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
         $eventosDelDiaHoy = $this->eventosDia(auth()->user());
@@ -300,7 +300,7 @@ class ProductoController extends Controller
         if($request->hasFile('images')){
             $images = $request->file('images');
             foreach($images as $image){
-                $path = $image->store('uploads', 'public');
+                $path = $image->store('files', 'public');
                 \DB::table('image')->insert([
                     'path' => $path,
                 ]);
