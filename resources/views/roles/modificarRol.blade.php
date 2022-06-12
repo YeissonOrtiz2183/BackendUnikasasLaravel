@@ -31,7 +31,7 @@
             <fieldset>
                 <div class="campo">
                     <label>Nombre</label>
-                    <input class="input-text" type="text" value="{{ $rol->nombre_rol }}" name="nombre_rol">
+                    <input class="input-text" type="text" value="{{ $rol->nombre_rol }}" name="nombre_rol" pattern="^[A-Z]{1,30}$">
                 </div>
                 <h3 class="privilegios">Privilegios:</h3>
             <div class="contenedor-campos">

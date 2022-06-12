@@ -12,8 +12,8 @@
 
 $(
     function() {
-        
-        $("#projectName_error_message").hide();     // Esta linea es para esconder la etiqueta <span></span> que contiene 
+
+        $("#projectName_error_message").hide();     // Esta linea es para esconder la etiqueta <span></span> que contiene
         $("#projectDirector_error_message").hide(); // el mensaje a mostar en caso de que un campo tenga un error
         $("#projectCost_error_message").hide();
         $("#projectCity_error_message").hide();
@@ -26,7 +26,7 @@ $(
         // Estas variables que inicializo en true es para al final poder validar si el formulario está llenado correctamente
         // Es necesario crear una variable para cada campo para hacer mas controlable el formulario
 
-        let error_projectName = true; 
+        let error_projectName = true;
         let error_projectDirector = true;
         let error_projectCost = true;
         let error_projectCity = true;
@@ -78,14 +78,14 @@ $(
 
         $("#projectClient").focusout(function() {
             check_projectClient();
-            checkButton();   
+            checkButton();
         })
 
 
         // Creación de las funciones que validaran los campos
 
         function check_projectName(){                                                           // Declaración de la función que me validara un campo
-            let pattern = /^[a-zA-Z ]*$/;                                                       // Guardo una RegEx en una variable para validar lo que ingresa el usuario en el input
+            let pattern = /^[a-zA-Z0-9 ]*$/;                                                       // Guardo una RegEx en una variable para validar lo que ingresa el usuario en el input
             let projectName = $("#projectName").val();                                          // Obtengo lo que ingreso el usuario
 
             if (pattern.test(projectName) && projectName !== '') {                              // Evaluo que los datos ingresados cumplan lo necesario
@@ -147,9 +147,9 @@ $(
         }
 
         function check_projectAddress() {
-            let pattern = /^[a-zA-Z ]{8,50}$/;
+            let pattern = /^[a-zA-Z0-9#/-_() ]{3,50}$/;
             let valueAddress = $("#projectAddress").val();
-            
+
             if (pattern.test(valueAddress)) {
                 $("#projectAddress_error_message").hide()
                 $("#projectAddress").css("border", "2px solid green");
@@ -196,7 +196,7 @@ $(
 
         function check_projectClient() {
             let valueClient = $("input[name=projectClient]").val();
-            let pattern = /^[0-9]+$/;
+            let pattern = /^[A-Za-z0-9]+$/;
             if (!pattern.test(valueClient)) {
                 $("#projectClient_error_message").html("Seleccione un cliente")
                 $("#projectClient_error_message").show()
@@ -220,8 +220,8 @@ $(
         // <input type="submit" value="ENVIAR" id="submit" disabled>
 
         function checkButton() {
-            if (error_projectName == false && error_projectDirector == false && error_projectCost == false 
-                && error_projectAddress == false && error_projectCity == false && error_projectDate == false 
+            if (error_projectName == false && error_projectDirector == false && error_projectCost == false
+                && error_projectAddress == false && error_projectCity == false && error_projectDate == false
                 && error_projectProduct == false && error_projectClient == false) {
                     $("#submit").prop('disabled', false);
             }
