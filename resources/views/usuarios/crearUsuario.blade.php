@@ -31,19 +31,19 @@
             <div class="contenedor-campos">
             <div class="campo">
                 <label>Primer nombre:</label>
-                <input class="input-text" type="text" name="primer_nombre">
+                <input class="input-text" type="text" name="primer_nombre" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$" required>
             </div>
             <div class="campo">
                 <label>Segundo nombre:</label>
-                <input class="input-text" type="text" name="segundo_nombre">
+                <input class="input-text" type="text" name="segundo_nombre" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$">
             </div>
             <div class="campo">
                 <label>Primer apellido:</label>
-                <input class="input-text" type="text" name="primer_apellido">
+                <input class="input-text" type="text" name="primer_apellido" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$" required>
             </div>
             <div class="campo">
                 <label>Segundo apellido:</label>
-                <input class="input-text" type="text" name="segundo_apellido">
+                <input class="input-text" type="text" name="segundo_apellido" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$">
             </div>
             <div class="campo">
                 <label>Tipo de documento:</label>
@@ -55,15 +55,15 @@
             </div>
             <div class="campo">
                 <label>Numero de documento:</label>
-                <input class="input-text" type="number" name="numero_documento">
+                <input class="input-text" type="number" name="numero_documento" pattern="{7,}" requierd>
             </div>
             <div class="campo">
                 <label>Número de teléfono:</label>
-                <input class="input-text" type="number" name="telefono_usuario">
+                <input class="input-text" type="number" name="telefono_usuario" pattern="{10}" required>
             </div>
             <div class="campo">
                 <label>Correo electrónico:</label>
-                <input class="input-text" type="email" name="email">
+                <input class="input-text" type="email" name="email" required>
             </div>
             <div class="campo">
                 <label>Roles:</label>

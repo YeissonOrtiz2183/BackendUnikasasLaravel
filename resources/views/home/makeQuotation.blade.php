@@ -21,7 +21,7 @@
     </svg></a>
       <h1 style="text-align: center; margin-bottom: 1%"><strong>Crear cotización</strong></h1>
       <div class="container">
-      <form class="row g-4" action="{{ url('cotizaciones') }}" method="POST">
+      <form class="row g-4" action="{{ url('producto/' .$product->id. '/send') }}" method="POST">
         @csrf {{-- token de seguridad para el formulario  --}}
 
           <div class="col-md-4 inputValidate">
