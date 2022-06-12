@@ -584,20 +584,24 @@ class ProyectoController extends Controller
                 $arreglo[] = $proyectoProductTable;
             }
             if($proyectoEncargadoTable){
-                $arreglo[] = $proyectoEncargadoTable;
+                // $arreglo[] = 'encargado.primer_nombre as encargado_nombre';
+                // $arreglo[] = 'encargado.primer_apellido as encargado_apellido';
             }
             if($proyectoClienteTable){
-                $arreglo[] = $proyectoClienteTable;
+                // $arreglo[] = 'cliente.primer_nombre as encargado_nombre';
+                // $arreglo[] = 'cliente.primer_apellido as encargado_apellido';
             }
             if($arreglo and $proyectoNombTable){
                 $campos = '';
                 foreach($arreglo as $valor){
                     $campos .= ", `" .$valor. "`";
                 }
-                $proyectos= DB::select('SELECT proyectos.id' .$campos. ' FROM proyectos
+                $proyectos= DB::select('SELECT proyectos.id' .$campos. ', encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
+                                cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido FROM proyectos
                                 LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
                                 LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
-                                INNER JOIN productos on proyectos.producto_id = productos.id;');         
+                                INNER JOIN productos on proyectos.producto_id = productos.id;');   
+                
             }
             return view('proyectos.crearReporteProyectos', compact('proyectos', 'notificaciones', 'eventosDelDiaHoy'));
         } else {

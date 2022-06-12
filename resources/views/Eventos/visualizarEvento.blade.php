@@ -39,7 +39,7 @@
             
                         <div class="botones">
                             <a href="{{ url('eventos/'.$evento->id.'/edit')}}"><input type="button" value="Modificar evento" class="modificar"></a>
-                            @if($evento->estado_evento == 'Cancelado')
+                            @if($evento->estado_evento == 'Cancelado' || $evento->estado_evento == 'Finalizado')
                                 <input type="button" value="Cancelar evento" class="cancelar" id="cancelar" title="El evento ya se encuentra cancelado">
                             @else
                                 <a href="{{ url('eventos/'.$evento->id.'/cancel') }}"><input type="button" value="Cancelar evento" class="cancelar"></a>
@@ -57,7 +57,7 @@
                 <span class="material-icons iconoCerrar">highlight_off</span>
             </div>
             <h1>Cancelación de evento</h1>
-            <h2>No se puede cancelar un evento que ya se encunetra cancelado</h2>
+            <h2>No se puede cancelar un evento que ya se encunetre cancelado o finalizado</h2>
             <form action="" method="POST">
                 <button type="button" class="modal_content_buttons aceptar" id="aceptar">Aceptar</button>
             </form>

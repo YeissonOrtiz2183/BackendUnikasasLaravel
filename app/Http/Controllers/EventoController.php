@@ -12,6 +12,7 @@ use App\Models\Cotizacion;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\emailCrearEvento;
+use App\Mail\emailNotificacionEvento;
 
 class EventoController extends Controller
 {
@@ -75,6 +76,7 @@ class EventoController extends Controller
     {
         $notificaciones = $this->makeNotifications(auth()->user());
         $eventosDelDiaHoy = $this->eventosDia(auth()->user());
+        $eventosFinalizados = $this->finalizarEstadoEvento();
 
         $rol = $request->user()->rol_id;
         $email = $request->user()->email;
@@ -242,6 +244,7 @@ class EventoController extends Controller
     public function update(Request $request, $id)
     {
         $datosEvento = request()->except(['_token','_method', "eventName", "eventDate", "eventTime", "eventProyect", "eventAssistant", "eventReason"]);
+        
         Evento::where('id', '=', $id)->update($datosEvento);
 
         $respuesta = request('eventReason');
@@ -509,4 +512,63 @@ class EventoController extends Controller
             return redirect()->back();
         }
     }
+
+    public function finalizarEstadoEvento(){
+        // Finalizar el estado del evento una vez se pase de la fecha del mismo
+        $eventos = Evento::all()->where('estado_evento', '=', 'Activo');
+        $diaActual = date("d");
+        $mesActual = date("m");
+        $annioActual = date("Y");
+        $datos = (['estado_evento' => 'Finalizado']);
+        foreach($eventos as $evento){
+            $eventoDia = date('d', strtotime($evento->fecha_evento));
+            $eventoMes = date('m', strtotime($evento->fecha_evento));
+            $eventoAnnio = date('Y', strtotime($evento->fecha_evento));
+            $id = $evento->id;
+            if($diaActual > $eventoDia AND $mesActual == $eventoMes AND $annioActual == $eventoAnnio){
+                Evento::where('id', '=', $id)->update($datos);
+            }
+            $eventosNotificacion = $this->enviarNotificaciónEvento();
+        }                  
+    }
+
+    public function enviarNotificaciónEvento(){
+        // Enviar la notificación del evento segun la hora programada para el mismo
+        $eventos = Evento::all()->where('estado_evento', '=', 'Activo');
+        $diaActual = date('d');
+        $mesActual = date('m');
+        $annioActual = date('Y');
+        $horaActual = date('h') - 5;
+        $minutosActuales = date('i');
+        $horarioActual = date('A');
+        $contador = 1;
+        foreach($eventos as $evento){
+
+            $eventoDia = date('d', strtotime($evento->fecha_evento));
+            $eventoMes = date('m', strtotime($evento->fecha_evento));
+            $eventoAnnio = date('Y', strtotime($evento->fecha_evento));
+            
+            if($diaActual == $eventoDia AND $mesActual == $eventoMes AND $annioActual == $eventoAnnio){
+                $horaEvento = date('h', strtotime($evento->hora_inicio));
+                $minutosEvento = date('i', strtotime($evento->hora_inicio));
+                $horarioEvento = date('A', strtotime($evento->hora_inicio));
+               
+                if($horaActual <= $horaEvento AND $horarioActual == $horarioEvento){
+                    $horaNotificacion = intval($horaEvento) - intval($horaActual);
+                    $minutosNotificacion = intval($minutosActuales) - intval($minutosEvento);
+                
+                    if($horaNotificacion == 1 AND $minutosNotificacion = 0){
+                        $email= $evento->invitados_evento;
+                        // dd($email);
+                        $emailSeparado = explode(', ', $email);
+                        foreach($emailSeparado as $email){
+                            Mail::to($email)->send(new emailNotificacionEvento($evento));
+                        }
+                    }
+                    
+                }
+            }
+        } 
+    }
+
 }

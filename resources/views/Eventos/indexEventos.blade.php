@@ -27,7 +27,7 @@
                             <option value="nombre_evento">Nombre del evento</option>
                             <option value="invitados_evento">Invitados del evento</option>
                             <option value="lugar_evento">Lugar del evento</option>
-                            <option value="estado_evento">Estado Activo - Inactivo</option>
+                            <option value="estado_evento">Estado.Activ-Cancel-Final</option>
                     </select>
                 </div>
             </form>

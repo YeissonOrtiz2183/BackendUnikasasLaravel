@@ -337,11 +337,11 @@ class UserController extends Controller
         }
 
         if($isAdmin){
-            $nombreUsuario = $request->get('searchBar');
+            $nombreUsuarioOne = $request->get('searchBar');
 
-            if($nombreUsuario != ''){
+            if($nombreUsuarioOne != ''){
                 $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
-                                ->where('primer_nombre', 'LIKE', '%'.$nombreUsuario.'%')
+                                ->where('primer_nombre', 'LIKE', '%'.$nombreUsuarioOne.'%')
                                 ->get();
             } else {
                 $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
@@ -349,20 +349,20 @@ class UserController extends Controller
                                 ->get();
             }
 
-            $estadoUsuario = $request->get('estado_usuario');
-            $rolUsuario = $request->get('nombre_rol');
+            $estadoUsuarioOne = $request->get('estado_usuario1');
+            $rolUsuarioOne = $request->get('nombre_rol1');
 
-            if($estadoUsuario != ''){
+            if($estadoUsuarioOne != ''){
                 $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
                                 ->select('users.*', 'rol.nombre_rol')
-                                ->where('estado_usuario', '=', $estadoUsuario)
+                                ->where('estado_usuario', '=', $estadoUsuarioOne)
                                 ->get();
             }
 
-            if($rolUsuario != ''){
+            if($rolUsuarioOne != ''){
                 $usuarios = User::join('rols as rol', 'rol.id', '=', 'users.rol_id')
                                 ->select('users.*', 'rol.nombre_rol')
-                                ->where('nombre_rol', 'LIKE', '%'.$rolUsuario.'%')
+                                ->where('nombre_rol', 'LIKE', '%'.$rolUsuarioOne.'%')
                                 ->get();
             }
 
@@ -378,8 +378,8 @@ class UserController extends Controller
             $rolUsuario = $request->get('nombre_rol');
 
             $arreglo = [];
-            $pNombreUsuario = 'primer_nombre';
-            $pApellidoUsuario = 'primer_apellido';
+            $arreglo[] = 'primer_nombre';
+            $arreglo[] = 'primer_apellido';
             if($pNombreUsuario){
                 $arreglo[] = $pNombreUsuario;
             }

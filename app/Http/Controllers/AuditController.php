@@ -177,14 +177,14 @@ class AuditController extends Controller
             if($auditoriaFechaI){
                 $auditoria = DB::select('SELECT audits.id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits
                                 LEFT JOIN users ON user_id = users.id
-                                WHERE fecha_accion = '.$auditoriaFechaI.'
+                                WHERE fecha_accion like "'.$auditoriaFechaI.'%"
                                 ORDER BY fecha_accion ASC');
             }
 
             if($auditoriaFechaI and $auditoriaFechaF){
                 $auditoria = DB::select('SELECT audits.id, modulo, tipo_accion, fecha_accion, item, sub_item, users.primer_nombre as primer_nombre, segundo_nombre, primer_apellido, segundo_apellido FROM audits
                                 LEFT JOIN users ON user_id = users.id
-                                WHERE fecha_accion >= '.$auditoriaFechaI.' AND fecha_accion <= '.$auditoriaFechaF.'
+                                WHERE fecha_accion >= "'.$auditoriaFechaI.'%" AND fecha_accion <= "'.$auditoriaFechaF.'%"
                                 ORDER BY fecha_accion ASC');
             }
 
