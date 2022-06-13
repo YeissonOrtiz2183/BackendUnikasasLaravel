@@ -82,17 +82,17 @@
         <aside>
             <div class="formL inputdata">
                 <label class="labes">Nombre del producto:</label>
-                <input id="inputNombreProducto" type="text" name="nombre_producto" >
+                <input id="inputNombreProducto" type="text" name="nombre_producto" placeholder="Ingrese el nombre del producto. Sin puntos ni comas" pattern="^[A-Za-z0-9]{1,60}$" required>
             </div>
             <span id="errorNombreProducto" class="spans"></span>
             <div class="formL inputdata">
                 <label class="labes">Descripción:</label>
-                <input id="inputDescripcionProducto" class="descrip" name="descripcion_producto"type="text" placeholder="Ingrese aqui la descripción del producto">
+                <input id="inputDescripcionProducto" class="descrip" name="descripcion_producto"type="text" placeholder="Ingrese aqui la descripción del producto (Max 200 caracteres)" maxlength="200" pattern="^[A-Za-z0-9.,-_]{1,200}$" required>
             </div>
             <span id="errorDescripcionProducto" class="spans"></span>
             <div class="formL inputdata">
                 <label class="labes">Precio:</label>
-                <input id="inputPrecioProducto" class="inputPrice" type="number" placeholder="Ingrese aqui el precio del producto" name="precio_producto">
+                <input id="inputPrecioProducto" class="inputPrice" type="number" placeholder="Ingrese aqui el precio del producto. Sin puntos, ni comas o espacios" name="precio_producto" required>
             </div>
             <span id="errorPrecioProducto" class="spans"></span>
             <div id="filtroBusqueda" class="inputdata">
@@ -138,7 +138,7 @@
             </div>
             <div class="formL inputdata">
                 <label class="labes">Tamaño(m²):</label>
-                <input id="inputPrecioProducto" class="inputPrice" type="number" placeholder="Ingrese aqui el tamaño del producto" name="tamaño_producto">
+                <input id="inputPrecioProducto" class="inputPrice" type="number" placeholder="Ingrese aqui el tamaño del producto" name="tamaño_producto" required>
             </div>
             <div class="formL inputdata">
                 <label class="labes" for="itemSearch">Estado actual:</label>

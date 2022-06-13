@@ -30,7 +30,7 @@
             <fieldset>
                 <div class="campo">
                     <label>Nombre</label>
-                    <input class="input-text" type="text" name="nombre_rol">
+                    <input class="input-text" type="text" name="nombre_rol" pattern="^[A-Za-z]+$" required>
                 </div>
                 <h3 class="privilegios">Privilegios:</h3>
             <div class="contenedor-campos">

@@ -19,7 +19,7 @@
             <h1 class="titleModule">Roles</h1>
             <form class="searchForm" action="{{ url('roles') }}">
                 <label>Buscar rol:</label>
-                <input type="text" name="search" id="searchBar">
+                <input type="text" name="search" id="searchBar" pattern="^[A-Za-z]+$">
                 <input type="submit" value="Buscar">
             </form>
             <div class= "lista-usuarios">

@@ -77,6 +77,8 @@ Route::get('/exportPdfAuditoria', [AuditController::class, 'exportPdfAuditoria']
 Route::get('index', [LoginController::class, 'index']);
 Route::post('login', [LoginController::class, 'authenticate']);
 Route::post('logout', [LoginController::class, 'logout']);
+Route::get('forgotform', [LoginController::class, 'restore']);
+Route::post('forgot', [LoginController::class, 'restorePassword']);
 Route::get('notificaciones', [notificaciones::class, 'makeNotifications']);
 
 ?>

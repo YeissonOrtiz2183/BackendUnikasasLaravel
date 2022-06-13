@@ -58,18 +58,18 @@
         <aside>
             <div class="formL inputdata">
                     <label class="labes">Nombre del producto:</label>
-                    <input id="inputNombreProducto" type="text" name="nombre_producto" value="{{$producto->nombre_producto}}">
+                    <input id="inputNombreProducto" type="text" name="nombre_producto" value="{{$producto->nombre_producto}}" pattern="^[A-Za-z0-9]{1,60}$" required>
                 </div>
                 <span id="errorNombreProducto" class="spans"></span>
                 <div class="formL inputdata">
                     <label class="labes">Descripcion:</label>
-                    <input id="inputDescripcionProducto" class="descrip" name="descripcion_producto"type="text"  value="{{$producto->descripcion_producto}}">
+                    <input id="inputDescripcionProducto" class="descrip" name="descripcion_producto"type="text"  value="{{$producto->descripcion_producto}}" pattern="^[A-Za-z0-9-_.,]{1,200}$" required>
                 </div>
                 <span id="errorDescripcionProducto" class="spans"></span>
 
                 <div class="formL inputdata">
                 <label class="labes">Precio:</label>
-                <input id="inputPrecioProducto" class="inputPrice"type="text"  name="precio_producto" value="{{$producto->precio_producto}}">
+                <input id="inputPrecioProducto" class="inputPrice"type="text"  name="precio_producto" value="{{$producto->precio_producto}}" required>
                 </div>
                 <span id="errorPrecioProducto" class="spans"></span>
 
@@ -119,7 +119,7 @@
                 </div>
                 <div class="formL inputdata">
                     <label class="labes">Tamaño(m²):</label>
-                    <input id="inputPrecioProducto" class="inputPrice" type="number" placeholder="Ingrese aqui el tamaño del producto" name="tamaño_producto" value="{{ $producto->tamaño_producto }}">
+                    <input id="inputPrecioProducto" class="inputPrice" type="number" placeholder="Ingrese aqui el tamaño del producto" name="tamaño_producto" value="{{ $producto->tamaño_producto }}" required>
                 </div>
                 <div class="formL inputdata">
                     <label class="labes" for="itemSearch">Estado actual:</label>
@@ -132,7 +132,6 @@
 
                 <div class="saveCancel">
                     <div class="divSave">
-                     <!--   <input type="submit" value="Modificar" class="divSave" id="enviar">  -->
                     <a class="save" id="save" href="#">Modificar</a>
                     </div>
 
@@ -140,7 +139,6 @@
                         <a class="cancel"href="{{url('productos/'. $producto->id)}}">Cancelar</a>
                     </div>
                 </div>
-                <!--Realizar barra de seleccionar estado-->
 
         </aside>
 

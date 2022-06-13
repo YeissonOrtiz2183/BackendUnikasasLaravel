@@ -20,18 +20,18 @@
         <form action="{{ url('login') }}" method="POST">
             @csrf {{-- token de seguridad para el formulario  --}}
             <!--Ingresar nombre de usuario-->
-            <label for="Nombre de usuario">Usuario</label>
+            <label for="Nombre de usuario">Correo electronico</label>
             <input type="email" id="email" placeholder="Ingrese usuario" name="email">
 
             <!--Ingresar Password-->
             <label for="Contraseña">Contraseña</label>
-            <input type="password" placeholder="Ingrese contraseña" name="password" minlength="8" id="password">
+            <input type="password" placeholder="Ingrese contraseña" name="password" minlength="8" maxlength="30" id="password">
 
             <input type="checkbox" onclick="myFunction()" style="width: auto;">Show Password
 
             <button type="submit" id="loginButton">INGRESAR</button>
 
-            <a href="#">Olvidé mi contraseña</a>
+            <a href="{{ url('/forgotform') }}">Olvidé mi contraseña</a>
         </form>
     </div>
 </body>

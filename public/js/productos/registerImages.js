@@ -12,8 +12,7 @@ function readURL(input) {
 
     input.style.display = 'none';
 
-    const inputTwo = `<input type="file" class="inputfile" id="file${count}" name="images[]" onchange="readURL(this);" />
-                    <button id="image${count}" type="button">Eliminar imagen</button>`;
+    const inputTwo = `<input type="file" class="inputfile" id="file${count}" name="images[]" onchange="readURL(this);" />`;
     inputTwo.files = input.files[0];
 
     formulario.insertAdjacentHTML('beforeend', inputTwo);
@@ -44,4 +43,7 @@ function insertImage (data) {
         divImage.insertAdjacentHTML('beforeend', img);
         divDots.insertAdjacentHTML('beforeend', dot);
     }
+}
+
+function removeImage () {
 }
