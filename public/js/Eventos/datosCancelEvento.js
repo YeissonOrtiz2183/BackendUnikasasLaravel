@@ -7,5 +7,4 @@ if(minutos <= 9){
 }
 
 horario = hora+':'+minutos;
-console.log(horario);
 document.getElementById("eventTime").value = horario;

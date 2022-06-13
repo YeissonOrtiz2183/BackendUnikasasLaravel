@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Enviar correo de creación de evento</title>
+    <title>Enviar correo de notificación</title>
     <style>
         h2, p, span{
             color: black;
@@ -25,22 +25,22 @@
     </style>
 </head>
 <body>
-    <h2>Invitación a participar en el evento sobre el proyecto</h2>
+    <h2>Notificación a participar en el evento sobre el proyecto</h2>
     <div>
         <p>Codial saludo:<p>
-        <p>Ha sido invitado a participar en un evento agendado para la fecha: 
+        <p>El motivo del siguiente correo es informarle que falta una hora para que empiece el evento que se tenia propuesto para la fecha: 
             @if(isset($info['fecha_evento']))
                 <span>{{  $info['fecha_evento']; }},</span>
             @endif
             @if(isset($info['hora_inicio']))
-                <span> el horario asignado va desde las {{ $info['hora_inicio']; }}</span>
+                <span> en el horario que va desde las {{ $info['hora_inicio']; }}</span>
                 @if(isset($info['hora_fin']))
                     <span>hasta las {{ $info['hora_fin']; }}.</span></p>   
                 @endif 
             @endif 
         
         @if(isset($info['lugar_evento']))
-            <p>El lugar elegido para la realización del evento es: <span>{{ $info['lugar_evento']; }}.</span><p>
+            <p>Recordarle que el lugar elegido para la realización del evento es: <span>{{ $info['lugar_evento']; }}.</span><p>
         @endif
 
         @if(isset($info['asunto_evento']))

@@ -31,15 +31,15 @@
                         @endforeach
                     </select>
 
-                <label class="search_parametros" for="estado_usuario">Estado:</label>
-                <select class="input-text" type="text" name="estado_usuario" id="searchBar">
+                <label class="search_parametros" for="estado_usuario1">Estado:</label>
+                <select class="input-text" type="text" name="estado_usuario1" id="searchBar">
                     <option value="null" selected disabled hidden>Seleccione el estado</option>
                     <option value="Activo">Activo</option>
                     <option value="Inactivo">Inactivo</option>
                 </select>
 
-                <label class="search_parametros" for="nombre_rol">Rol:</label>
-                <select class="input-text" type="text" name="nombre_rol" id="searchBar">
+                <label class="search_parametros" for="nombre_rol1">Rol:</label>
+                <select class="input-text" type="text" name="nombre_rol1" id="searchBar">
                     <option value="null" selected disabled hidden>Seleccione el rol</option>
                     @foreach ($roles as $rol )
                         <option value="{{ $rol->nombre_rol  }}">{{ $rol->nombre_rol }}</option>

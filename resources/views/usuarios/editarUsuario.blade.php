@@ -34,19 +34,19 @@
                 @if($isMe)
                 <div class="campo">
                     <label>Primer nombre</label>
-                    <input class="input-text" type="text"  name="primer_nombre" value="{{ $usuario->primer_nombre }}" pattern="">
+                    <input class="input-text" type="text"  name="primer_nombre" value="{{ $usuario->primer_nombre }}" pattern="[A-Za-z]+" placeholder="Ingrese el primer nombre" required>
                 </div>
                 <div class="campo">
                     <label>Segundo nombre</label>
-                    <input class="input-text" type="text" name="segundo_nombre" value="{{ $usuario->segundo_nombre }}">
+                    <input class="input-text" type="text" name="segundo_nombre" value="{{ $usuario->segundo_nombre }}" pattern="[A-Za-z]+" placeholder="Ingrese el primer nombre (Opcional)">
                 </div>
                 <div class="campo">
                     <label>Primer apellido</label>
-                    <input class="input-text" type="text" name="primer_apellido" value="{{ $usuario->primer_apellido }}">
+                    <input class="input-text" type="text" name="primer_apellido" value="{{ $usuario->primer_apellido }}" pattern="[A-Za-z]+" required placeholder="Ingrese el primer nombre">
                 </div>
                 <div class="campo">
                     <label>Segundo apellido</label>
-                    <input class="input-text" type="text" name="segundo_apellido" value="{{ $usuario->segundo_apellido }}">
+                    <input class="input-text" type="text" name="segundo_apellido" value="{{ $usuario->segundo_apellido }}" pattern="[A-Za-z]+" placeholder="Ingrese el primer nombre (Opcional)">
                 </div>
                 <div class="campo">
                     <label>Tipo de documento</label>
@@ -58,15 +58,15 @@
                 </div>
                 <div class="campo">
                     <label>Numero de documento</label>
-                    <input class="input-text" type="number" name="numero_documento" value="{{ $usuario->numero_documento }}">
+                    <input class="input-text" type="text" name="numero_documento" value="{{ $usuario->numero_documento }}" pattern="[0-9]{7,12}" placeholder="Ej: 1004512201" required>
                 </div>
                 <div class="campo">
                     <label>Correo electrónico</label>
-                    <input class="input-text" type="text" name="email" value="{{ $usuario->email }}">
+                    <input class="input-text" type="text" name="email" value="{{ $usuario->email }}" placeholder="Ej: myemail@gmail.com" required>
                 </div>
                 <div class="campo">
                     <label>Número de teléfono</label>
-                    <input class="input-text" type="text" name="telefono_usuario" value="{{ $usuario->telefono_usuario }}">
+                    <input class="input-text" type="text" name="telefono_usuario" value="{{ $usuario->telefono_usuario }}" pattern="[0-9]{10}" placeholder="Ej: 3215235872" required>
                 </div>
                 @endif
                 @if($isUserAdmin)

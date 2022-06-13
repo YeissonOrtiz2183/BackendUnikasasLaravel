@@ -19,7 +19,7 @@
             <h1 class="titleModule">Usuarios</h1>
             <form class="searchForm" action="{{ url('usuarios') }}">
                 <label>Buscar usuario:</label>
-                <input type="text" name="search" id="searchBar">
+                <input type="text" name="search" id="searchBar" pattern="^[A-Za-z]{1,20}$">
                 <input type="submit" value="Buscar">
             </form>
             <div class= "lista-usuarios">

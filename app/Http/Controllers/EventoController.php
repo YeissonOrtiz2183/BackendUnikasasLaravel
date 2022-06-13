@@ -8,11 +8,11 @@ use App\Models\Evento;
 use App\Models\Proyecto;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Config;
 use App\Models\Cotizacion;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\emailCrearEvento;
+use App\Mail\emailNotificacionEvento;
 
 class EventoController extends Controller
 {
@@ -59,37 +59,24 @@ class EventoController extends Controller
         return $notificaciones;
     }
 
-    public function eventosDia($userId){
-        $rol = $userId->rol_id;
+    public function eventosDia($userId)
+    {
         $email = $userId->email;
-        $privilegios = \DB::table('rol_privilegios')
-            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
-            ->select('privilegios.nombre_privilegio')
-            ->where('rol_privilegios.rol_id', '=', $rol)
-            ->get();
-
-        $isCotizacionAdmin = false;
-        $isEventoAdmin = false;
-        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
-            $isCotizacionAdmin = true;
-        }
-
-        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
-            $isEventoAdmin = true;
-        }
-
-        if($isCotizacionAdmin && $isEventoAdmin){
-            $eventosDelDia = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+        if($email){
+            $eventosDelDia = Evento::where('invitados_evento', 'like', "%$email%")
+                                    ->where('fecha_evento', '=', date('Y-m-d'))
+                                    ->get();
         } else {
-            $eventosDelDia = '';
+            $eventosDelDia = null;
         }
         return $eventosDelDia;
     }
-    //
+    
     public function index(Request $request)
     {
         $notificaciones = $this->makeNotifications(auth()->user());
         $eventosDelDiaHoy = $this->eventosDia(auth()->user());
+        $eventosFinalizados = $this->finalizarEstadoEvento();
 
         $rol = $request->user()->rol_id;
         $email = $request->user()->email;
@@ -159,7 +146,9 @@ class EventoController extends Controller
 
         if ($isAdmin) {
             // variable proyectos para mostrar los proyectos existentes en el formulario de creacion
-            $proyectos = DB::table('proyectos')->get();
+            $proyectos = DB::table('proyectos')
+                            ->where('estado_proyecto', '=', 'En ejecución')
+                            ->get();
             return view('Eventos.formCrearEvento', compact('proyectos', 'notificaciones', 'eventosDelDiaHoy'));
         }else{
             return redirect()->back();
@@ -170,10 +159,13 @@ class EventoController extends Controller
     {
         $datosEvento = request()->except('_token');
         $email= request('invitados_evento');
+        $emailSeparado = explode(',', $email);
         Evento::insert($datosEvento);
 
         if($email){
-            Mail::to($email)->send(new emailCrearEvento($datosEvento));
+            foreach($emailSeparado as $email){
+                Mail::to($email)->send(new emailCrearEvento($datosEvento));
+            }
         }
 
         return redirect('eventos')->with('mensaje', 'El evento se agrego exitosamente');
@@ -252,14 +244,18 @@ class EventoController extends Controller
     public function update(Request $request, $id)
     {
         $datosEvento = request()->except(['_token','_method', "eventName", "eventDate", "eventTime", "eventProyect", "eventAssistant", "eventReason"]);
+        
         Evento::where('id', '=', $id)->update($datosEvento);
 
         $respuesta = request('eventReason');
-        // dd($respuesta);
+    
         if($respuesta){
             $datos = request()->except(['_token','_method']);
             $email= request('eventAssistant');
-            Mail::to($email)->send(new emailCancelarEvento($datos));
+            $emailSeparado = explode(', ', $email);
+            foreach($emailSeparado as $email){
+                Mail::to($email)->send(new emailCancelarEvento($datos));
+            }
         }
         // $evento = Evento::findOrFail($id);
         return redirect('eventos')->with('mensaje', 'El evento ha sido modificado');
@@ -348,7 +344,7 @@ class EventoController extends Controller
 
             return view('Eventos.verDisponibilidad', compact('eventos', 'eventosMes', 'notificaciones', 'eventosDelDiaHoy'));
         } else {
-            $eventos = Evento::all();
+            $eventos = Evento::where('fecha_evento', '=', date('Y-m-d'));
             return view('Eventos.verDisponibilidad', compact('eventos', 'notificaciones', 'eventosDelDiaHoy'));
         }
     }
@@ -516,4 +512,63 @@ class EventoController extends Controller
             return redirect()->back();
         }
     }
+
+    public function finalizarEstadoEvento(){
+        // Finalizar el estado del evento una vez se pase de la fecha del mismo
+        $eventos = Evento::all()->where('estado_evento', '=', 'Activo');
+        $diaActual = date("d");
+        $mesActual = date("m");
+        $annioActual = date("Y");
+        $datos = (['estado_evento' => 'Finalizado']);
+        foreach($eventos as $evento){
+            $eventoDia = date('d', strtotime($evento->fecha_evento));
+            $eventoMes = date('m', strtotime($evento->fecha_evento));
+            $eventoAnnio = date('Y', strtotime($evento->fecha_evento));
+            $id = $evento->id;
+            if($diaActual > $eventoDia AND $mesActual == $eventoMes AND $annioActual == $eventoAnnio){
+                Evento::where('id', '=', $id)->update($datos);
+            }
+            $eventosNotificacion = $this->enviarNotificaciónEvento();
+        }                  
+    }
+
+    public function enviarNotificaciónEvento(){
+        // Enviar la notificación del evento segun la hora programada para el mismo
+        $eventos = Evento::all()->where('estado_evento', '=', 'Activo');
+        $diaActual = date('d');
+        $mesActual = date('m');
+        $annioActual = date('Y');
+        $horaActual = date('h') - 5;
+        $minutosActuales = date('i');
+        $horarioActual = date('A');
+        $contador = 1;
+        foreach($eventos as $evento){
+
+            $eventoDia = date('d', strtotime($evento->fecha_evento));
+            $eventoMes = date('m', strtotime($evento->fecha_evento));
+            $eventoAnnio = date('Y', strtotime($evento->fecha_evento));
+            
+            if($diaActual == $eventoDia AND $mesActual == $eventoMes AND $annioActual == $eventoAnnio){
+                $horaEvento = date('h', strtotime($evento->hora_inicio));
+                $minutosEvento = date('i', strtotime($evento->hora_inicio));
+                $horarioEvento = date('A', strtotime($evento->hora_inicio));
+               
+                if($horaActual <= $horaEvento AND $horarioActual == $horarioEvento){
+                    $horaNotificacion = intval($horaEvento) - intval($horaActual);
+                    $minutosNotificacion = intval($minutosActuales) - intval($minutosEvento);
+                
+                    if($horaNotificacion == 1 AND $minutosNotificacion = 0){
+                        $email= $evento->invitados_evento;
+                        // dd($email);
+                        $emailSeparado = explode(', ', $email);
+                        foreach($emailSeparado as $email){
+                            Mail::to($email)->send(new emailNotificacionEvento($evento));
+                        }
+                    }
+                    
+                }
+            }
+        } 
+    }
+
 }

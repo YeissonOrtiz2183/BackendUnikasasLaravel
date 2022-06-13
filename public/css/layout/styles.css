@@ -312,3 +312,10 @@ iframe{
     margin-left: 2%;
     padding: 1%;
 }
+
+@media (max-width: 1680px) {
+    .modalNotifications .eventoHoy{
+        padding: 1.5%;
+        font-size: 15px;
+    }
+}

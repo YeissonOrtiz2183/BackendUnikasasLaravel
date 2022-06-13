@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Enviar correo de cancelación del evento</title>
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
     <style>
         h2, p, span{
             color: black;
@@ -37,7 +41,7 @@
         <p>Agradecemos su atención, quedamos atentos a cualquier inquietud...<p><br>
         
         <p>Para mas información sobre nuestros productos visite nuestro sitio web en el siguiente enlace:</p>
-        <a href="www.youtube.com.co"><span>Ir al sitio</span></a>
+        <a href="https://m.facebook.com/Unikasas-102039611569226/"><span>Ir al sitio</span></a>
     </div>
 </body>
 </html>

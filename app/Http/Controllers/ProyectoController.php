@@ -67,29 +67,15 @@ class ProyectoController extends Controller
         return $notificaciones;
     }
 
-    public function eventosDia($userId){
-        $rol = $userId->rol_id;
+    public function eventosDia($userId)
+    {
         $email = $userId->email;
-        $privilegios = \DB::table('rol_privilegios')
-            ->join('privilegios', 'rol_privilegios.privilegio_id', '=', 'privilegios.id')
-            ->select('privilegios.nombre_privilegio')
-            ->where('rol_privilegios.rol_id', '=', $rol)
-            ->get();
-
-        $isCotizacionAdmin = false;
-        $isEventoAdmin = false;
-        if($privilegios->contains('nombre_privilegio', 'Administrar cotizaciones') || $privilegios->contains('nombre_privilegio', 'Consultar cotizaciones')){
-            $isCotizacionAdmin = true;
-        }
-
-        if($privilegios->contains('nombre_privilegio', 'Administrar eventos') || $privilegios->contains('nombre_privilegio', 'Consultar eventos')){
-            $isEventoAdmin = true;
-        }
-
-        if($isCotizacionAdmin && $isEventoAdmin){
-            $eventosDelDia = Evento::where('fecha_evento', '=', date('Y-m-d'))->get();
+        if($email){
+            $eventosDelDia = Evento::where('invitados_evento', 'like', "%$email%")
+                                    ->where('fecha_evento', '=', date('Y-m-d'))
+                                    ->get();
         } else {
-            $eventosDelDia = '';
+            $eventosDelDia = null;
         }
         return $eventosDelDia;
     }
@@ -598,20 +584,24 @@ class ProyectoController extends Controller
                 $arreglo[] = $proyectoProductTable;
             }
             if($proyectoEncargadoTable){
-                $arreglo[] = $proyectoEncargadoTable;
+                // $arreglo[] = 'encargado.primer_nombre as encargado_nombre';
+                // $arreglo[] = 'encargado.primer_apellido as encargado_apellido';
             }
             if($proyectoClienteTable){
-                $arreglo[] = $proyectoClienteTable;
+                // $arreglo[] = 'cliente.primer_nombre as encargado_nombre';
+                // $arreglo[] = 'cliente.primer_apellido as encargado_apellido';
             }
             if($arreglo and $proyectoNombTable){
                 $campos = '';
                 foreach($arreglo as $valor){
                     $campos .= ", `" .$valor. "`";
                 }
-                $proyectos= DB::select('SELECT proyectos.id' .$campos. ' FROM proyectos
+                $proyectos= DB::select('SELECT proyectos.id' .$campos. ', encargado.primer_nombre as encargado_nombre, encargado.primer_apellido as encargado_apellido,
+                                cliente.primer_nombre as cliente_nombre, cliente.primer_apellido as cliente_apellido FROM proyectos
                                 LEFT JOIN users as encargado ON proyectos.encargado_id = encargado.id
                                 LEFT JOIN users as cliente ON proyectos.cliente_id = cliente.id
-                                INNER JOIN productos on proyectos.producto_id = productos.id;');         
+                                INNER JOIN productos on proyectos.producto_id = productos.id;');   
+                
             }
             return view('proyectos.crearReporteProyectos', compact('proyectos', 'notificaciones', 'eventosDelDiaHoy'));
         } else {
